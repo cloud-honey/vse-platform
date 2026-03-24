@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSE Tower Tycoon — Sprint Dashboard</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; padding: 20px; }
+.header { text-align: center; margin-bottom: 30px; }
+.header h1 { font-size: 24px; color: #58a6ff; }
+.header .phase { color: #8b949e; font-size: 14px; margin-top: 4px; }
+.header .updated { color: #484f58; font-size: 12px; margin-top: 4px; }
+.stats { display: flex; gap: 16px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+.stat-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 16px 24px; text-align: center; min-width: 120px; }
+.stat-card .num { font-size: 28px; font-weight: bold; }
+.stat-card .label { font-size: 12px; color: #8b949e; margin-top: 4px; }
+.done .num { color: #3fb950; }
+.progress .num { color: #d29922; }
+.pending .num { color: #8b949e; }
+.blocked .num { color: #f85149; }
+.section { margin-bottom: 24px; }
+.section h2 { font-size: 16px; color: #58a6ff; margin-bottom: 12px; border-bottom: 1px solid #21262d; padding-bottom: 8px; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; padding: 8px 12px; background: #161b22; color: #8b949e; font-size: 12px; font-weight: 600; border-bottom: 1px solid #30363d; }
+td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-done { background: #0d2818; color: #3fb950; }
+.badge-in_progress { background: #2a1f00; color: #d29922; }
+.badge-pending { background: #1c1c1c; color: #8b949e; }
+.badge-blocked { background: #2d0b0b; color: #f85149; }
+.badge-pass { background: #0d2818; color: #3fb950; }
+.badge-fail { background: #2d0b0b; color: #f85149; }
+.badge-warning { background: #2a1f00; color: #d29922; }
+.badge-issue { background: #2a1f00; color: #d29922; }
+.check { color: #3fb950; }
+.cross { color: #f85149; }
+.escalation { background: #161b22; border: 1px solid #f85149; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.escalation .esc-title { color: #f85149; font-weight: 600; }
+.decided { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; }
+.decided ul { list-style: none; padding: 0; }
+.decided li { padding: 4px 0; font-size: 13px; }
+.decided li::before { content: '✅ '; }
+.open-q { background: #161b22; border: 1px solid #d29922; border-radius: 8px; padding: 12px 16px; }
+.open-q ul { list-style: none; padding: 0; }
+.open-q li { padding: 4px 0; font-size: 13px; }
+.open-q li::before { content: '❓ '; }
+.reload-btn { position: fixed; bottom: 20px; right: 20px; background: #238636; color: #fff; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+.reload-btn:hover { background: #2ea043; }
+.sprint-goal { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; text-align: center; }
+.sprint-goal .label { color: #8b949e; font-size: 12px; }
+.sprint-goal .goal { color: #c9d1d9; font-size: 15px; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>🏗️ VSE Tower Tycoon</h1>
+  <div class="phase" id="phase"></div>
+  <div class="updated" id="updated"></div>
+</div>
+
+<div class="sprint-goal">
+  <div class="label">Sprint <span id="sprint-num"></span> Goal</div>
+  <div class="goal" id="sprint-goal"></div>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="section">
+  <h2>📋 Tasks</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Task</th><th>Assignee</th><th>Layer</th><th>Status</th><th>QA</th><th>Design</th><th>Human ✓</th><th>Notes</th></tr></thead>
+    <tbody id="tasks"></tbody>
+  </table>
+</div>
+
+<div class="section" id="escalation-section" style="display:none">
+  <h2>🚨 Escalations</h2>
+  <div id="escalations"></div>
+</div>
+
+<div class="section" id="design-section" style="display:none">
+  <h2>⚠️ Design Issues</h2>
+  <div id="design-issues"></div>
+</div>
+
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+  <div class="section" style="flex:1; min-width: 280px;" id="decided-section">
+    <h2>✅ Decided</h2>
+    <div class="decided"><ul id="decided"></ul></div>
+  </div>
+  <div class="section" style="flex:1; min-width: 280px;" id="openq-section" style="display:none">
+    <h2>❓ Open Questions</h2>
+    <div class="open-q"><ul id="open-questions"></ul></div>
+  </div>
+</div>
+
+<button class="reload-btn" onclick="loadData()">🔄 Reload</button>
+
+<script>
+async function loadData() {
+  try {
+    const res = await fetch('VSE_Sprint_Status.json?' + Date.now());
+    const d = await res.json();
+
+    document.getElementById('phase').textContent = d.phase || '';
+    document.getElementById('updated').textContent = 'Updated: ' + (d.updated_at || 'N/A');
+    document.getElementById('sprint-num').textContent = d.sprint || 0;
+    document.getElementById('sprint-goal').textContent = d.sprint_goal || '';
+
+    const counts = { done: 0, in_progress: 0, pending: 0, blocked: 0 };
+    (d.tasks || []).forEach(t => { counts[t.status] = (counts[t.status] || 0) + 1; });
+    document.getElementById('stats').innerHTML = `
+      <div class="stat-card done"><div class="num">${counts.done}</div><div class="label">Done</div></div>
+      <div class="stat-card progress"><div class="num">${counts.in_progress}</div><div class="label">In Progress</div></div>
+      <div class="stat-card pending"><div class="num">${counts.pending}</div><div class="label">Pending</div></div>
+      <div class="stat-card blocked"><div class="num">${counts.blocked}</div><div class="label">Blocked</div></div>
+    `;
+
+    const tbody = document.getElementById('tasks');
+    tbody.innerHTML = '';
+    (d.tasks || []).forEach(t => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><code>${t.id}</code></td>
+        <td>${t.title}</td>
+        <td>${t.assignee}</td>
+        <td>${t.layer}</td>
+        <td><span class="badge badge-${t.status}">${t.status}</span></td>
+        <td><span class="badge badge-${t.qa_status}">${t.qa_status}</span></td>
+        <td><span class="badge badge-${t.design_check}">${t.design_check}</span></td>
+        <td>${t.confirmed_by_human ? '<span class="check">✅</span>' : '<span class="cross">⏳</span>'}</td>
+        <td>${t.notes || ''}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const escDiv = document.getElementById('escalations');
+    const escSection = document.getElementById('escalation-section');
+    if (d.escalations && d.escalations.length > 0) {
+      escSection.style.display = 'block';
+      escDiv.innerHTML = d.escalations.map(e => `<div class="escalation"><span class="esc-title">${e}</span></div>`).join('');
+    } else {
+      escSection.style.display = 'none';
+    }
+
+    const diDiv = document.getElementById('design-issues');
+    const diSection = document.getElementById('design-section');
+    if (d.design_issues && d.design_issues.length > 0) {
+      diSection.style.display = 'block';
+      diDiv.innerHTML = d.design_issues.map(e => `<div class="escalation"><span class="esc-title">${e}</span></div>`).join('');
+    } else {
+      diSection.style.display = 'none';
+    }
+
+    const decidedUl = document.getElementById('decided');
+    decidedUl.innerHTML = (d.decided || []).map(i => `<li>${i}</li>`).join('');
+
+    const oqUl = document.getElementById('open-questions');
+    const oqSection = document.getElementById('openq-section');
+    if (d.open_questions && d.open_questions.length > 0) {
+      oqSection.style.display = 'block';
+      oqUl.innerHTML = d.open_questions.map(i => `<li>${i}</li>`).join('');
+    } else {
+      oqSection.style.display = 'none';
+    }
+  } catch (e) {
+    console.error('Load failed:', e);
+  }
+}
+
+loadData();
+setInterval(loadData, 30000);
+</script>
+</body>
+</html>

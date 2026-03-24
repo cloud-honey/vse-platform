@@ -1,0 +1,135 @@
+{
+  "sprint": 0,
+  "updated_at": "2026-03-24T13:00:00",
+  "phase": "Phase 1",
+  "sprint_goal": "프로젝트 셋업 완료 — git init, 폴더 구조, Sprint 1 태스크 분해",
+  "overall_status": "in_progress",
+  "tasks": [
+    {
+      "id": "TASK-00-001",
+      "title": "크로스 검증 완료 (GPT/Gemini/DeepSeek/Opus)",
+      "assignee": "Claude",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "4개 모델 검증 완료. 미결 5개 해소."
+    },
+    {
+      "id": "TASK-00-002",
+      "title": "CLAUDE.md 작성",
+      "assignee": "Claude",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "Phase 1 구현 사양 확정"
+    },
+    {
+      "id": "TASK-00-003",
+      "title": "AI Team 운영 규칙 확정",
+      "assignee": "Claude",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": ""
+    },
+    {
+      "id": "TASK-00-004",
+      "title": "타일 그리드 좌표계 결정",
+      "assignee": "Opus",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "32x32px, 좌하단 원점, Y축 위로. CLAUDE.md 반영 완료."
+    },
+    {
+      "id": "TASK-00-005",
+      "title": "스프라이트 해상도 & 아트 스타일 결정",
+      "assignee": "Opus",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "32x32px 픽셀아트, 팔레트 16~32색. CLAUDE.md 반영 완료."
+    },
+    {
+      "id": "TASK-00-006",
+      "title": "CI/CD 정책 결정",
+      "assignee": "Opus",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "GitHub Actions, macOS 빌드 자동 확인. CLAUDE.md 반영 완료."
+    },
+    {
+      "id": "TASK-00-007",
+      "title": "에러 핸들링 정책 결정",
+      "assignee": "Opus",
+      "layer": "설계",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "assert + error code, exception 금지. CLAUDE.md 반영 완료."
+    },
+    {
+      "id": "TASK-00-008",
+      "title": "프로젝트 폴더 셋업 + DevTeam 등록",
+      "assignee": "붐",
+      "layer": "인프라",
+      "status": "done",
+      "qa_status": "pass",
+      "design_check": "pass",
+      "confirmed_by_human": true,
+      "notes": "vse-platform/ 폴더, DevTeam 프로젝트 허브 등록, 대시보드 생성"
+    },
+    {
+      "id": "TASK-00-009",
+      "title": "git init + 첫 커밋",
+      "assignee": "붐",
+      "layer": "인프라",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-00-010",
+      "title": "Sprint 1 태스크 분해",
+      "assignee": "붐 (Opus)",
+      "layer": "설계",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    }
+  ],
+  "escalations": [],
+  "design_issues": [],
+  "open_questions": [
+    "라이선스 분리 (Layer 0 MIT / Layer 1 상업)"
+  ],
+  "decided": [
+    "SimClock Tick: 100ms (10 TPS)",
+    "ECS: EnTT",
+    "Serialization: MessagePack",
+    "Phase 1 플랫폼: macOS + Steam",
+    "엘리베이터: LOOK 알고리즘",
+    "타일: 32x32px, 좌하단 원점, Y축 위로",
+    "스프라이트: 픽셀아트 32x32, 팔레트 16~32색",
+    "CI/CD: GitHub Actions",
+    "에러핸들링: assert + error code, exception 금지"
+  ]
+}
