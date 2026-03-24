@@ -1,102 +1,14 @@
 {
-  "sprint": 0,
-  "updated_at": "2026-03-24T13:00:00",
+  "sprint": 1,
+  "updated_at": "2026-03-24T13:10:00",
   "phase": "Phase 1",
-  "sprint_goal": "프로젝트 셋업 완료 — git init, 폴더 구조, Sprint 1 태스크 분해",
+  "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
   "tasks": [
     {
-      "id": "TASK-00-001",
-      "title": "크로스 검증 완료 (GPT/Gemini/DeepSeek/Opus)",
-      "assignee": "Claude",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "4개 모델 검증 완료. 미결 5개 해소."
-    },
-    {
-      "id": "TASK-00-002",
-      "title": "CLAUDE.md 작성",
-      "assignee": "Claude",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "Phase 1 구현 사양 확정"
-    },
-    {
-      "id": "TASK-00-003",
-      "title": "AI Team 운영 규칙 확정",
-      "assignee": "Claude",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": ""
-    },
-    {
-      "id": "TASK-00-004",
-      "title": "타일 그리드 좌표계 결정",
-      "assignee": "Opus",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "32x32px, 좌하단 원점, Y축 위로. CLAUDE.md 반영 완료."
-    },
-    {
-      "id": "TASK-00-005",
-      "title": "스프라이트 해상도 & 아트 스타일 결정",
-      "assignee": "Opus",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "32x32px 픽셀아트, 팔레트 16~32색. CLAUDE.md 반영 완료."
-    },
-    {
-      "id": "TASK-00-006",
-      "title": "CI/CD 정책 결정",
-      "assignee": "Opus",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "GitHub Actions, macOS 빌드 자동 확인. CLAUDE.md 반영 완료."
-    },
-    {
-      "id": "TASK-00-007",
-      "title": "에러 핸들링 정책 결정",
-      "assignee": "Opus",
-      "layer": "설계",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "assert + error code, exception 금지. CLAUDE.md 반영 완료."
-    },
-    {
-      "id": "TASK-00-008",
-      "title": "프로젝트 폴더 셋업 + DevTeam 등록",
-      "assignee": "붐",
-      "layer": "인프라",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "pass",
-      "confirmed_by_human": true,
-      "notes": "vse-platform/ 폴더, DevTeam 프로젝트 허브 등록, 대시보드 생성"
-    },
-    {
-      "id": "TASK-00-009",
-      "title": "git init + 첫 커밋",
-      "assignee": "붐",
+      "id": "TASK-01-001",
+      "title": "CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성",
+      "assignee": "DeepSeek",
       "layer": "인프라",
       "status": "pending",
       "qa_status": "pending",
@@ -105,15 +17,103 @@
       "notes": ""
     },
     {
-      "id": "TASK-00-010",
-      "title": "Sprint 1 태스크 분해",
-      "assignee": "붐 (Opus)",
-      "layer": "설계",
+      "id": "TASK-01-002",
+      "title": "SimClock 구현 (100ms tick, 렌더링 분리)",
+      "assignee": "DeepSeek",
+      "layer": "Layer 0",
       "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": ""
+    },
+    {
+      "id": "TASK-01-003",
+      "title": "ConfigManager + JSON 로딩",
+      "assignee": "DeepSeek",
+      "layer": "Layer 0",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-01-004",
+      "title": "IGridSystem 인터페이스 + RealEstate 구현 (30층, 좌하단 원점)",
+      "assignee": "DeepSeek",
+      "layer": "Layer 0+1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-01-005",
+      "title": "EventBus 구현 (단일 버스 + replicable 플래그)",
+      "assignee": "DeepSeek",
+      "layer": "Layer 0",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-01-006",
+      "title": "IAgentSystem + NPC 기본 이동 (ECS 컴포넌트)",
+      "assignee": "DeepSeek",
+      "layer": "Layer 0+1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-01-007",
+      "title": "SDL2 윈도우 + 타일 그리드 렌더링",
+      "assignee": "Claude Code",
+      "layer": "Layer 3",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "TASK-01-001,004 완료 후 시작"
+    },
+    {
+      "id": "TASK-01-008",
+      "title": "NPC 스프라이트 렌더링 + 이동 표시",
+      "assignee": "Claude Code",
+      "layer": "Layer 3",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "TASK-01-006,007 완료 후 시작"
+    },
+    {
+      "id": "TASK-01-009",
+      "title": "Dear ImGui 디버그 패널 (시간, NPC 상태)",
+      "assignee": "Claude Code",
+      "layer": "Layer 3",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": ""
+    },
+    {
+      "id": "TASK-01-010",
+      "title": "통합 + 프로토타입 동작 확인",
+      "assignee": "붐 + QA",
+      "layer": "전체",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "모든 태스크 완료 후"
     }
   ],
   "escalations": [],
@@ -130,6 +130,8 @@
     "타일: 32x32px, 좌하단 원점, Y축 위로",
     "스프라이트: 픽셀아트 32x32, 팔레트 16~32색",
     "CI/CD: GitHub Actions",
-    "에러핸들링: assert + error code, exception 금지"
+    "에러핸들링: assert + error code, exception 금지",
+    "운영구조: 붐=PM(설계/판단), DevTeam=자율실행, 파일기반 맥락유지",
+    "프로젝트폴더: 단일 경로 /home/sykim/.openclaw/workspace/vse-platform/"
   ]
 }

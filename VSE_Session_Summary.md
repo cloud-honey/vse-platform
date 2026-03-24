@@ -130,24 +130,67 @@ Layer 3  SDL2 Renderer  IRenderCommand 기반. Dirty Rect.
 
 ---
 
-## 다음에 해야 할 것
+## 운영 구조 (2026-03-24 확정)
 
-1. **git 저장소 초기화** — `git init` + 첫 커밋 (CLAUDE.md, VSE_AI_Team.md)
-2. **붐(Opus 모드)에게 Phase 1 첫 스프린트 태스크 분해 지시**
-3. **구현 시작** — 타일 그리드 + NPC 하나 화면에 띄우기
+### 토큰 최적화 구조
+```
+마스터 (텔레그램, 한국어)
+   ↕
+붐 (PM — 설계/판단만, 코드 안 읽음)
+   ↕ 파일 기반 지시
+DevTeam (dev/qa — 자율 실행, 결과 파일에 기록)
+   ↕
+vse-platform/ 폴더 (단일 경로)
+```
 
-> ✅ 설계 미결 사항 0개. 바로 구현 진입 가능한 상태.
-> Opus 강조: "2주 안에 타일 그리드 + NPC 이동 프로토타입. 안 나오면 완성 확률 급락."
+- **붐**: 스펙 작성 → DevTeam 지시 → 결과 확인 → 마스터 보고
+- **DevTeam**: 태스크 스펙 파일 읽기 → 구현 → QA → 결과 파일 기록 → 완료 보고
+- **맥락 유지**: 파일에 기록 (대화가 아닌 파일이 맥락의 원천)
+- **프로젝트 폴더**: `/home/sykim/.openclaw/workspace/vse-platform/` (단일, 복제 없음)
+
+### 세션 복원 방법
+1. `VSE_Session_Summary.md` + `CLAUDE.md` 읽기 → 풀 컨텍스트
+2. `VSE_Sprint_Status.json` → 현재 진행 상태
+3. `git log` → 마지막 커밋 확인
+
+---
+
+## 완료 사항
+
+| 단계 | 상태 | 날짜 |
+|---|---|---|
+| git init + 첫 커밋 | ✅ `d4a6a73` | 2026-03-24 |
+| Sprint 1 태스크 분해 (10개) | ✅ 마스터 컨펌 | 2026-03-24 |
+| DevTeam 프로젝트 허브 등록 | ✅ | 2026-03-24 |
+| 대시보드 연결 (localhost:5173/vse-dashboard/) | ✅ | 2026-03-24 |
+
+---
+
+## 현재 상태: Sprint 1 구현 진행 중
+
+**Sprint 1 목표:** 타일 그리드 + NPC 이동 프로토타입 (2주, ~2026-04-07)
+
+| ID | 태스크 | 담당 | Layer | 상태 |
+|---|---|---|---|---|
+| TASK-01-001 | CMake 프로젝트 구조 + 의존성 | DeepSeek | 인프라 | ⏳ |
+| TASK-01-002 | SimClock (100ms tick) | DeepSeek | Layer 0 | ⏳ |
+| TASK-01-003 | ConfigManager + JSON | DeepSeek | Layer 0 | ⏳ |
+| TASK-01-004 | IGridSystem + RealEstate | DeepSeek | Layer 0+1 | ⏳ |
+| TASK-01-005 | EventBus | DeepSeek | Layer 0 | ⏳ |
+| TASK-01-006 | IAgentSystem + NPC 이동 | DeepSeek | Layer 0+1 | ⏳ |
+| TASK-01-007 | SDL2 타일 그리드 렌더링 | Claude Code | Layer 3 | ⏳ |
+| TASK-01-008 | NPC 스프라이트 렌더링 | Claude Code | Layer 3 | ⏳ |
+| TASK-01-009 | Dear ImGui 디버그 패널 | Claude Code | Layer 3 | ⏳ |
+| TASK-01-010 | 통합 + 동작 확인 | 붐 + QA | 전체 | ⏳ |
 
 ---
 
 ## 새 세션에서 이 파일을 받은 AI에게
 
-당신이 지금 이 파일을 받았다면:
-1. 이 요약과 CLAUDE.md를 모두 읽었을 것입니다
-2. 위 "다음에 해야 할 것" 중 어느 단계에 있는지 Human에게 확인하세요
-3. CLAUDE.md가 모든 구현 판단의 기준입니다
-4. 모르는 것은 추측하지 말고 Human에게 물어보세요
+1. 이 요약과 `CLAUDE.md`를 읽으면 컨텍스트 복원 완료
+2. `VSE_Sprint_Status.json`에서 현재 태스크 상태 확인
+3. CLAUDE.md가 모든 구현 판단의 기준
+4. 모르는 것은 추측 말고 Human에게 질문
 
 ---
-*이 파일은 세션이 끝날 때마다 업데이트하세요.*
+*이 파일은 세션이 끝날 때마다 업데이트한다.*
