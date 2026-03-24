@@ -37,6 +37,7 @@ FetchContent_Declare(
     GIT_SHALLOW    TRUE
 )
 set(SDL2TTF_INSTALL OFF CACHE BOOL "" FORCE)
+set(SDL2TTF_VENDORED ON CACHE BOOL "" FORCE)  # use bundled freetype/harfbuzz
 FetchContent_MakeAvailable(SDL2_ttf)
 
 # ──────────────────────────────────────────────

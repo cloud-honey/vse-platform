@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 
 project(TowerTycoon
     VERSION 0.1.0
@@ -89,4 +90,6 @@ endif()
 # Tests
 # ──────────────────────────────────────────────
 enable_testing()
+# Catch2 cmake extras (provides catch_discover_tests)
+list(APPEND CMAKE_MODULE_PATH "${catch2_SOURCE_DIR}/extras")
 add_subdirectory(tests)

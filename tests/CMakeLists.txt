@@ -1,4 +1,5 @@
 add_executable(TowerTycoonTests
+    PlaceholderTest.cpp
     # Tests will be added as tasks are implemented
     # Example: GridSystemTests.cpp
 )
