@@ -245,3 +245,24 @@ std::optional<TileCoord> GridSystem::findAnchor(TileCoord anyTile) const {
 ---
 
 *이 보고서는 외부 AI 검증·검토 요청용입니다. 8번 미결 사항 위주로 의견 주시면 됩니다.*
+
+---
+
+## 10. 외부 AI 검토 결과 (Claude, 2026-03-24)
+
+**검토 모델**: Claude  
+**종합 평가**: ✅ 통과 — TASK-01-004 승인
+
+### 미결 사항 처리 방향 (Claude 권장)
+
+| # | 항목 | 결론 |
+|---|------|------|
+| 1 | `buildFloor()` 순서 제약 | **Phase 1 현재 방식 유지** — 개발 편의, Phase 2에서 결정 |
+| 2 | `getFloorTiles()` 반환 범위 | 빈 타일 포함 현재 방식 유지 (렌더러 전체 그리드 필요) |
+| 3 | `findNearestEmpty()` 탐색 방향 | Manhattan 현재 방식 유지, Phase 2에서 horizontal-first 검토 |
+| 4 | `tileWidth` auxiliary 저장 | 현재 방식 유지 (anchor 찾기 전 임시 참조 유용) |
+| 5 | 층 0 로비 타일 | **TASK-01-005 IAgentSystem 구현 시 처리** |
+
+### 추가 권장 사항
+- CI 헤더 인터페이스 변경 감지 테스트 추가 검토 (붐2 사고 재발 방지)
+- `buildFloor()` 순서 제약은 설계 문서(VSE_Design_Spec)에 Phase 2 예정으로 명시할 것
