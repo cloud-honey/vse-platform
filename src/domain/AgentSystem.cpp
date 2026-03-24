@@ -63,7 +63,7 @@ Result<EntityId> AgentSystem::spawnAgent(entt::registry& reg,
 
     auto& posComp = reg.emplace<PositionComponent>(entity);
     posComp.tile   = pos;
-    posComp.pixel  = {pos.x * 32, pos.floor * 32};  // Phase 1: 32px per tile
+    posComp.pixel  = {pos.x * 32.0f, pos.floor * 32.0f};  // Phase 1: 32px per tile
     posComp.facing = Direction::Right;
 
     auto& schedComp = reg.emplace<AgentScheduleComponent>(entity);
