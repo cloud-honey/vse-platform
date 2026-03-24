@@ -1,6 +1,6 @@
 # VSE Design Specification — Phase 1
-> Version: 1.1 | Author: 붐 (PM) | Date: 2026-03-24
-> Source of truth: `CLAUDE.md` v1.1 | This document details HOW to implement what CLAUDE.md defines.
+> Version: 1.3 | Author: 붐 (PM) | Date: 2026-03-24
+> Source of truth: `CLAUDE.md` v1.2 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
 > v1.2: Final review 6 items — true fixed-tick loop, CLAUDE.md sync, EnTT snapshot save/restore, Bootstrapper=composition root, config immutable ticks, document consistency
@@ -13,7 +13,7 @@ Layer 0 is split into two parts:
 
 | Sub-layer | Location | Contains | Rules |
 |---|---|---|---|
-| **Core API** | `include/core/` | Interfaces (`I*`), shared types, contracts, enums | No concrete implementation. Pure virtual or POD only. |
+| **Core API** | `include/core/` | `I*.h` = pure virtual interfaces. `Types.h`/`Error.h` = POD/enums. Other `.h` = Core Runtime service **declarations** (concrete class, but header only — impl in `src/core/`). | `I*.h`: no concrete impl. Other headers: no game-specific rules. |
 | **Core Runtime** | `src/core/` | Shared runtime services: `SimClock`, `EventBus`, `ConfigManager`, `ContentRegistry`, `LocaleManager`, `Bootstrapper` | Generic infrastructure only. **No game-specific rules.** A "building satisfaction formula" belongs in Layer 1, not here. |
 
 **Layer 1** (`domain/`) = Game-specific logic. RealEstateDomain. Only layer allowed to contain game rules.
@@ -173,8 +173,20 @@ struct TileCoord {
     bool operator!=(const TileCoord& o) const { return !(*this == o); }
 };
 
+} // namespace vse — temporarily close for hash specialization
+
+// std::hash specialization for TileCoord (needed for unordered_map keys)
+template<>
+struct std::hash<vse::TileCoord> {
+    size_t operator()(const vse::TileCoord& c) const noexcept {
+        return std::hash<int>()(c.x) ^ (std::hash<int>()(c.floor) << 16);
+    }
+};
+
+namespace vse { // reopen
+
 // Pixel position (render space). Origin: top-left (SDL2 convention).
-// Conversion: pixelY = (MAX_FLOORS - 1 - floor) * TILE_SIZE
+// Conversion: pixelY = (config.maxFloors - 1 - floor) * config.tileSize
 struct PixelPos {
     float x;
     float y;
@@ -292,7 +304,7 @@ enum class EventType : uint16_t {
     TenantRemoved,
     StarRatingChanged,
 
-    // Input/Command
+    // Input/Command — notification AFTER command is processed (for UI feedback/logging, not for command delivery)
     GameCommandIssued = 700,
 
     // System
@@ -436,16 +448,18 @@ namespace vse {
 
 class EventBus;  // forward declaration
 
-// SimClock: 100ms fixed tick. Decoupled from rendering.
-// Owns game time progression. Speed multiplier controls ticks-per-update.
+// SimClock: tick counter + game time converter. No accumulator — that lives in Bootstrapper.
+// SimClock is a pure simulation clock: advance tick, query time, emit events.
 class SimClock {
 public:
     explicit SimClock(EventBus& bus);
 
-    void update(double realDeltaMs);    // Called every frame with real elapsed ms
+    // Called by Bootstrapper's tick loop. Advances tick by 1, emits TickAdvanced.
+    void advanceTick();
+
     void pause();
     void resume();
-    void setSpeed(int multiplier);      // 1x, 2x, 4x (ticks per update)
+    void setSpeed(int multiplier);      // 1x, 2x, 4x — Bootstrapper reads this for accumulator scaling
 
     // Getters
     SimTick currentTick() const;
@@ -459,11 +473,11 @@ public:
 private:
     EventBus& eventBus_;
     SimTick tick_ = 0;
-    double accumulator_ = 0.0;         // ms accumulated since last tick
-    int speed_ = 1;                     // ticks per update cycle
+    int speed_ = 1;
     bool paused_ = false;
 
-    void advanceTick();                 // Emit TickAdvanced + check day/hour change
+    // Internal: check hour/day boundary after tick advance
+    void checkTimeBoundaries(SimTick oldTick, SimTick newTick);
 };
 
 } // namespace vse
@@ -473,7 +487,7 @@ private:
 - Fixed tick: 100ms real time = 1 sim tick
 - **Phase 1 mapping: 1 tick = 1 game minute** (Phase 1 hard-coded, Phase 2 configurable)
 - 1440 ticks = 1 game day (24h × 60min)
-- Speed multiplier (1x/2x/4x) = `maxTicksPerFrame` in the fixed-tick loop, not real-time scaling
+- Speed multiplier (1x/2x/4x): Bootstrapper multiplies `realDeltaMs * speed` into accumulator → more ticks per second
 - `tickMs` and `ticksPerGameMinute` exist in `game_config.json` for documentation only — if values differ from (100, 1), log a warning and use the hard-coded values
 - `TickAdvanced` event emitted every tick
 - `HourChanged` emitted when game minute crosses an hour boundary (i.e., minute was 59 → becomes 0)
@@ -808,7 +822,8 @@ public:
     virtual void despawnAgent(entt::registry& reg, EntityId id) = 0;
     virtual int activeAgentCount() const = 0;
 
-    virtual void update(entt::registry& reg, const GameTime& time, float dt) = 0;
+    // dt removed: fixed-tick = always TICK_MS. GameTime from SimClock.
+    virtual void update(entt::registry& reg, const GameTime& time) = 0;
 
     virtual std::optional<AgentState> getState(entt::registry& reg, EntityId id) const = 0;
     virtual std::vector<EntityId> getAgentsOnFloor(entt::registry& reg, int floor) const = 0;
@@ -859,8 +874,8 @@ public:
     virtual Result<bool> boardPassenger(EntityId elevator, EntityId agent, int targetFloor) = 0;
     virtual void exitPassenger(EntityId elevator, EntityId agent) = 0;
 
-    // Per-tick update — LOOK algorithm + state machine
-    virtual void update(float dt) = 0;
+    // Per-tick update — LOOK algorithm + state machine. No dt: fixed-tick.
+    virtual void update(const GameTime& time) = 0;
 
     // Query
     virtual std::optional<ElevatorSnapshot> getElevatorState(EntityId id) const = 0;
@@ -1021,11 +1036,12 @@ public:
 ```
 
 **Entity Persistence (authoritative):**
-- Phase 1: **EnTT snapshot** (`entt::snapshot` / `entt::snapshot_loader`)
+- Phase 1: **EnTT snapshot** (`entt::snapshot` / `entt::snapshot_loader`) for entity + component data
 - EnTT handles entity ID remapping internally during load — no separate stable ID layer needed
-- Save pipeline: `entt::snapshot` → serialize to MessagePack with version header
-- Load pipeline: MessagePack → `entt::snapshot_loader` → registry restored
 - All entity cross-references (e.g., `ElevatorComponent::passengers`) are automatically remapped by EnTT
+- **Non-ECS state requires custom serialization:** GridSystem internal state (`floors_`, tile occupancy), Economy state (balance, income/expense records), StarRating state — these live outside the registry and must be serialized/deserialized separately by each system
+- Save pipeline: SaveMetadata + system custom data + `entt::snapshot` → MessagePack with version header
+- Load pipeline: MessagePack → verify metadata → restore system state → `entt::snapshot_loader` → recalculate derived caches
 - Phase 2: save format migration + optional stable ID for modding support
 
 ### 5.9 ContentRegistry
@@ -1285,10 +1301,14 @@ private:
     // GameCommand queue (populated by InputMapper, consumed by domain)
     // std::vector<GameCommand> commandQueue_;  // In cpp
 
+    // Tick loop state — Bootstrapper owns the accumulator, not SimClock
+    double accumulator_ = 0.0;
+    static constexpr int MAX_TICKS_PER_FRAME = 8;  // spiral-of-death guard
+
     void updateSim(double deltaMsReal);
     void render();
     void handleInput();     // SDL_PollEvent → InputMapper → commandQueue_
-    void processCommands(); // commandQueue_ → domain system calls
+    void processCommands(); // drain commandQueue_ → domain system calls → clear queue
     bool running_ = false;
 };
 
@@ -1368,6 +1388,7 @@ struct BuildingComponent {
 ```
 
 > Changed from v1.0: EventBus::flush() moved to **start** of tick (was after SimClock). This ensures deferred delivery rule is respected: tick N events → flush at tick N+1 start.
+> v1.3: All domain system `update()` signatures unified to `(entt::registry&, const GameTime&)`. No `float dt` parameter — fixed-tick means dt is always `TICK_MS / 1000.0`. Systems that need registry get it from Bootstrapper. GameTime from SimClock.
 
 ---
 
@@ -1457,16 +1478,18 @@ Initialize failure at any step: log error, shutdown already-initialized systems 
 │     └─ SDL_PollEvent → InputMapper → commandQueue_          │
 │                                                             │
 │  2. updateSim(realDeltaMs)                                 │
-│     accumulator_ += realDeltaMs                             │
+│     accumulator_ += realDeltaMs * simClock_->speed()        │
 │     ticksThisFrame = 0                                      │
 │                                                             │
 │     while (accumulator_ >= TICK_MS                          │
-│            && ticksThisFrame < maxTicksPerFrame_):          │
+│            && ticksThisFrame < MAX_TICKS_PER_FRAME          │
+│            && !simClock_->isPaused()):                       │
 │       ├─ accumulator_ -= TICK_MS                            │
 │       ├─ ticksThisFrame++                                   │
 │       ├─ EventBus::flush()         [deliver tick N-1 events]│
-│       ├─ SimClock::advanceTick()   [tick N, queue→N+1]     │
-│       ├─ processCommands()         [GameCommand → domain]   │
+│       ├─ simClock_->advanceTick()  [tick N, queue→N+1]     │
+│       ├─ if (ticksThisFrame == 1):                          │
+│       │     processCommands()      [drain commandQueue_]    │
 │       ├─ AgentSystem::update()                              │
 │       ├─ TransportSystem::update()                          │
 │       ├─ EconomyEngine::update()                            │
@@ -1487,8 +1510,11 @@ Initialize failure at any step: log error, shutdown already-initialized systems 
 
 **Fixed-tick rules:**
 - System update runs per **tick**, not per frame
-- `maxTicksPerFrame_` = speed multiplier × safety cap (prevents spiral-of-death on frame drops)
-- Speed 1x: max 1 tick/frame, 2x: max 2, 4x: max 4 (+ safety margin for catch-up)
+- **Speed mechanism:** `accumulator_ += realDeltaMs * speed`. Speed 2x → accumulator fills 2× faster → ~20 ticks/sec. Speed 4x → ~40 ticks/sec.
+- **MAX_TICKS_PER_FRAME:** spiral-of-death guard. Value = `speed * 2` (e.g., 4x → cap 8). Excess accumulator carries over to next frame.
+- **Accumulator lives in Bootstrapper** (not SimClock). SimClock is a pure tick counter.
+- **processCommands():** drains the entire commandQueue_ and clears it. Runs only on the first tick of each frame to prevent duplicate command execution.
+- **Pause:** `simClock_->isPaused()` skips the while loop entirely. Accumulator does NOT grow while paused.
 - `render()` runs exactly once per frame regardless of how many ticks were processed
 - When `accumulator_ < TICK_MS`, no sim update runs — only render with interpolated positions
 
@@ -1753,6 +1779,7 @@ public:
 | 2026-03-24 | 1.0 | Initial design spec. All Layer 0 interfaces, ECS components, dependency map, init order, JSON schemas, data flow. |
 | 2026-03-24 | 1.1 | Cross-review 11 items applied: (P0) Layer 0 split clarified, EntityId=entt::entity, SimClock tick-time rules, EventBus deferred-only with payload structs, GameCommand input flow; (P1) Grid anchor/occupancy rules, Elevator FSM 6-state, SaveLoad scope+restore order, StarRatingSystem/AsyncLoader/MemoryPool consistency fixes, IAudioCommand spec; (P2) defaults-vs-config policy, test coverage expanded. System update order corrected (flush first). |
 | 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
+| 2026-03-24 | 1.3 | Self-review 9 fixes: **[Critical]** (C-1) speed multiplier now `accumulator += dt * speed` instead of tick cap, (C-2) accumulator ownership moved from SimClock to Bootstrapper — SimClock is pure tick counter; **[Important]** (I-1) Core API header rule clarified (I*.h = pure virtual, others = runtime declarations), (I-2) processCommands() drain-once-per-frame rule, (I-3) system update() signatures unified to `(registry&, GameTime&)` — no dt param, (I-4) SaveLoad: non-ECS state (Grid floors_, Economy balance) requires custom serialization alongside EnTT snapshot; **[Minor]** PixelPos config ref, GameCommandIssued = post-process notification, TileCoord std::hash added. |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*

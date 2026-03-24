@@ -127,23 +127,27 @@ Layer 3  SDL2 Renderer  IRenderCommand/GameCommand 기반. Input → GameCommand
 매 프레임:
   1. handleInput(): SDL_PollEvent → InputMapper → commandQueue
   2. updateSim(realDeltaMs):
-     accumulator += realDeltaMs
-     while (accumulator >= TICK_MS):       ← tick 기준 루프 (frame 기준 아님)
+     accumulator += realDeltaMs * speed   ← speed 곱해서 배속 구현
+     ticksThisFrame = 0
+     while (accumulator >= TICK_MS && ticksThisFrame < MAX_TICKS_PER_FRAME):
        accumulator -= TICK_MS
-       EventBus::flush()                   ← tick N-1 이벤트 배달
-       SimClock::advanceTick()             ← tick N 시작, TickAdvanced 발행(→N+1로 큐잉)
-       processCommands()                   ← GameCommand → Domain
+       ticksThisFrame++
+       EventBus::flush()                  ← tick N-1 이벤트 배달
+       SimClock::advanceTick()            ← tick N 시작, TickAdvanced 발행(→N+1로 큐잉)
+       if (ticksThisFrame == 1):
+         processCommands()                ← 첫 tick에서만 drain (프레임당 1회)
        AgentSystem::update()
        TransportSystem::update()
        EconomyEngine::update()
        StarRatingSystem::update()
-       ContentRegistry::checkAndReload()   ← N ticks마다
+       ContentRegistry::checkAndReload()  ← N ticks마다
   3. render(): RenderFrame 수집 → SDLRenderer
 ```
 
 - **system update는 frame 기준이 아니라 tick 기준으로 돈다**
-- speed multiplier(1x/2x/4x): 1 프레임 내 tick loop 최대 반복 횟수를 바꿈 (accumulator cap)
-- 프레임 드랍 시 누적된 tick을 한꺼번에 처리 (단, maxTicksPerFrame 상한으로 spiral-of-death 방지)
+- **배속 원리:** `accumulator += realDeltaMs * speed`. 2x면 accumulator가 2배 빠르게 차서 초당 20 tick, 4x면 40 tick.
+- **MAX_TICKS_PER_FRAME:** spiral-of-death 방지 상한. `speed * 2` 정도 (예: 4x → 상한 8). 이 이상은 프레임 드랍 허용.
+- **processCommands():** commandQueue_를 **drain(전부 소비 후 비움)**. 1프레임 내 첫 tick에서만 실행 — 이후 tick은 빈 큐라 no-op.
 - render()는 tick loop 밖에서 1 프레임당 1회만 호출
 
 ### config vs 고정값 정책
@@ -213,9 +217,9 @@ struct SaveHeader {
 ```
 
 ### Entity 저장/복원 방식 (확정)
-- **Phase 1: EnTT snapshot 기반** (`entt::snapshot` / `entt::snapshot_loader`)
-- EnTT의 내장 직렬화 기능으로 registry 전체를 저장·복원
+- **Phase 1: EnTT snapshot 기반** (`entt::snapshot` / `entt::snapshot_loader`) — entity + component 저장용
 - entity ID는 EnTT가 내부적으로 재매핑 (별도 stable ID 불필요)
+- **Non-ECS 시스템 내부 상태** (GridSystem floors_, Economy balance/records, StarRating)는 **시스템별 커스텀 직렬화**로 별도 처리
 - 복원 순서: Grid → Tenant → Elevator → Agent → Economy → StarRating → SimClock (상세: VSE_Design_Spec.md §5.8)
 - Phase 2: save format migration + stable ID 검토
 
