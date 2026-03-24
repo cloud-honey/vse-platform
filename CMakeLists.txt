@@ -1,0 +1,92 @@
+cmake_minimum_required(VERSION 3.21)
+
+project(TowerTycoon
+    VERSION 0.1.0
+    DESCRIPTION "Tower Tycoon — SimTower-style building management simulation"
+    LANGUAGES CXX
+)
+
+# ──────────────────────────────────────────────
+# Global settings
+# ──────────────────────────────────────────────
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+endif()
+
+# ──────────────────────────────────────────────
+# macOS: support both Apple Silicon and Intel
+# ──────────────────────────────────────────────
+if(APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "macOS architectures" FORCE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0" CACHE STRING "Minimum macOS version" FORCE)
+endif()
+
+# ──────────────────────────────────────────────
+# Fetch dependencies
+# ──────────────────────────────────────────────
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(FetchDependencies)
+
+# ──────────────────────────────────────────────
+# Compiler warnings (project code only)
+# ──────────────────────────────────────────────
+add_library(project_warnings INTERFACE)
+target_compile_options(project_warnings INTERFACE
+    -Wall
+    -Wextra
+    -Wpedantic
+    -fno-exceptions
+)
+
+# ──────────────────────────────────────────────
+# Include directories
+# ──────────────────────────────────────────────
+add_library(project_includes INTERFACE)
+target_include_directories(project_includes INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+# ──────────────────────────────────────────────
+# Main executable
+# ──────────────────────────────────────────────
+add_executable(TowerTycoon
+    src/main.cpp
+)
+
+target_link_libraries(TowerTycoon PRIVATE
+    project_warnings
+    project_includes
+    SDL2::SDL2-static
+    SDL2::SDL2main
+    SDL2_image
+    SDL2_ttf
+    imgui
+    EnTT::EnTT
+    nlohmann_json::nlohmann_json
+    msgpack-cxx
+    spdlog::spdlog
+)
+
+# macOS: link required frameworks
+if(APPLE)
+    target_link_libraries(TowerTycoon PRIVATE
+        "-framework Cocoa"
+        "-framework IOKit"
+        "-framework CoreFoundation"
+        "-framework CoreAudio"
+        "-framework AudioToolbox"
+        "-framework Metal"
+        "-framework QuartzCore"
+    )
+endif()
+
+# ──────────────────────────────────────────────
+# Tests
+# ──────────────────────────────────────────────
+enable_testing()
+add_subdirectory(tests)

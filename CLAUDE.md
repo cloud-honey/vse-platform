@@ -1,5 +1,5 @@
 # CLAUDE.md — VSE Platform Phase 1 구현 사양서
-> Version: 1.0 | 대상: 붐(PM) + DeepSeek(개발) + Claude Code(렌더링)
+> Version: 1.2 | 대상: 붐(PM) + DeepSeek(개발) + Claude Code(렌더링)
 > 이 파일이 모든 구현 판단의 최우선 기준이다. 여기 없는 것은 Human에게 먼저 묻는다.
 
 ---
@@ -45,42 +45,65 @@
 ## 아키텍처 레이어
 
 ```
-Layer 0  VSE Core       인터페이스만. 구체 구현 금지.
-Layer 1  Domain Module  RealEstateDomain. 게임 로직 전담.
+Layer 0  VSE Core
+  ├─ Core API      include/core/   인터페이스(I*), 공유 타입, 열거형. 구체 구현 금지.
+  └─ Core Runtime  src/core/       공용 인프라(SimClock, EventBus, ConfigManager 등).
+                                   게임 규칙(만족도 계산, 임대료 공식 등) 금지.
+Layer 1  Domain Module  RealEstateDomain. 게임 규칙은 여기에만.
 Layer 2  Content Pack   JSON + 스프라이트. 코드 변경 없이 DLC 가능.
-Layer 3  SDL2 Renderer  IRenderCommand 기반. Dirty Rect.
+Layer 3  SDL2 Renderer  IRenderCommand/GameCommand 기반. Input → GameCommand → Domain.
 ```
 
 **레이어 경계 위반 예시 (금지):**
 - Layer 3 렌더러 내부에서 게임 로직 계산 → 금지
-- Layer 0 인터페이스에 구체 구현 포함 → 금지
+- Core API(include/core/)에 구체 구현 포함 → 금지
+- Core Runtime(src/core/)에 게임 규칙 포함 → 금지 (예: 만족도 공식, 임대료 계산)
 - Layer 1 도메인에서 SDL2 직접 호출 → 금지
+- Layer 1 도메인에서 SDL_Event 직접 읽기 → 금지 (GameCommand 통해서만)
 
 ---
 
 ## Layer 0 모듈 목록 (Phase 1 구현 기준)
 
+### Core API (include/core/ — 인터페이스·타입만)
+
 | 모듈 | 구현 여부 | 비고 |
 |---|---|---|
-| IGridSystem | ✅ 구현 | |
-| IAgentSystem | ✅ 구현 | |
-| ITransportSystem | ✅ 구현 | |
-| EventBus | ✅ 구현 | 단일 버스 + replicable 플래그. 듀얼 채널은 Phase 3. |
-| IEconomyEngine | ✅ 구현 | 기본 수입/지출만 |
-| SimClock | ✅ 구현 | 100ms 고정 틱. 렌더링과 분리. |
-| LocaleManager | ✅ 구현 | ko / en 우선 |
-| ContentRegistry | ✅ 구현 | 핫 리로드 포함 |
-| ConfigManager | ✅ 구현 | |
-| ISaveLoad | ✅ 구현 | MessagePack. 버전 번호 기록. Migration은 Phase 2. |
-| Bootstrapper | ✅ 구현 | 초기화 순서 관리 |
-| IAsyncLoader | ✅ 구현 | 리소스 비동기 로딩 |
-| IMemoryPool | ✅ 구현 | NPC/타일 오브젝트 할당 최적화 |
+| IGridSystem | ✅ 인터페이스 | 구현은 Layer 1 domain/ |
+| IAgentSystem | ✅ 인터페이스 | 구현은 Layer 1 domain/ |
+| ITransportSystem | ✅ 인터페이스 | 구현은 Layer 1 domain/ |
+| IEconomyEngine | ✅ 인터페이스 | 구현은 Layer 1 domain/ |
+| ISaveLoad | ✅ 인터페이스 | 구현은 Layer 1 domain/ |
+| IAsyncLoader | ✅ 인터페이스 | 구현은 src/core/AsyncLoader.cpp |
+| IMemoryPool | ✅ 인터페이스 | 구현은 src/core/MemoryPool.cpp |
+| IRenderCommand | ✅ 구조체 | RenderFrame 등 — Layer 3 소비 |
+| IAudioCommand | ✅ 구조체 | BGM/SFX 커맨드 |
+| InputTypes | ✅ 구조체 | GameCommand — Layer 3 생성, Domain 소비 |
+| Types.h / Error.h | ✅ 공유타입 | EntityId = entt::entity |
 | SpatialPartitioning | ⚠️ 선언만 | 성능 실측 후 구현 결정 |
-| INetworkAdapter + IAuthority | ⚠️ 선언만 | 메서드 비워둠. Phase 3. |
-| IIoTAdapter | ❌ 없음 | Phase 2. 슬롯 주석만 허용. |
-| ISpatialRule | ❌ 없음 | Phase 2+. |
-| AuditLogger | ❌ 없음 | spdlog 사용. |
-| VariableEncryption | ❌ 없음 | Steam 출시 후 재검토. |
+| INetworkAdapter + IAuthority | ⚠️ 선언만 | Phase 3. 메서드 비워둠. |
+
+### Core Runtime (src/core/ — 공용 인프라, 게임 규칙 금지)
+
+| 모듈 | 구현 여부 | 비고 |
+|---|---|---|
+| EventBus | ✅ 구현 | 단일 버스 + replicable 플래그. **Deferred-only.** |
+| SimClock | ✅ 구현 | 100ms 고정 틱. 1 tick = 1 game minute. |
+| ConfigManager | ✅ 구현 | game_config.json 로드 |
+| ContentRegistry | ✅ 구현 | 핫 리로드 포함 |
+| LocaleManager | ✅ 구현 | ko / en 우선 |
+| Bootstrapper | ✅ 구현 | Composition root — 시스템 조립·초기화 순서 관리. 장기적으로 인터페이스 기반 조립으로 전환 예정. |
+| AsyncLoader | ✅ 구현 | IAsyncLoader 구현체 |
+| MemoryPool | ✅ 구현 | IMemoryPool 구현체 |
+
+### 존재하지 않는 것
+
+| 모듈 | 비고 |
+|---|---|
+| IIoTAdapter | Phase 2. 슬롯 주석만 허용. |
+| ISpatialRule | Phase 2+. |
+| AuditLogger | spdlog 사용. |
+| VariableEncryption | Steam 출시 후 재검토. |
 
 ---
 
@@ -89,6 +112,7 @@ Layer 3  SDL2 Renderer  IRenderCommand 기반. Dirty Rect.
 | 항목 | 값 | 비고 |
 |---|---|---|
 | SimClock Tick | 100ms (10 TPS) | 고정. 변경 시 Human 승인 필요. |
+| Tick → GameTime | 1 tick = 1 game minute | 1440 ticks/day. Phase 1 고정. |
 | 렌더링 | 60fps 목표 | 시뮬과 독립 루프 |
 | NPC 최대 | 50명 | Phase 1 하드 상한 |
 | 층수 최대 | 30층 | Phase 1 하드 상한 |
@@ -96,6 +120,40 @@ Layer 3  SDL2 Renderer  IRenderCommand 기반. Dirty Rect.
 | 테넌트 종류 | 3종 | 사무실 / 주거 / 상업 |
 | 타겟 프레임 | 60fps | 최소 30fps 유지 |
 | 모바일 메모리 | 해당 없음 | Phase 1은 macOS만 |
+
+### 메인 루프 규칙 (fixed-tick loop — 확정)
+
+```
+매 프레임:
+  1. handleInput(): SDL_PollEvent → InputMapper → commandQueue
+  2. updateSim(realDeltaMs):
+     accumulator += realDeltaMs
+     while (accumulator >= TICK_MS):       ← tick 기준 루프 (frame 기준 아님)
+       accumulator -= TICK_MS
+       EventBus::flush()                   ← tick N-1 이벤트 배달
+       SimClock::advanceTick()             ← tick N 시작, TickAdvanced 발행(→N+1로 큐잉)
+       processCommands()                   ← GameCommand → Domain
+       AgentSystem::update()
+       TransportSystem::update()
+       EconomyEngine::update()
+       StarRatingSystem::update()
+       ContentRegistry::checkAndReload()   ← N ticks마다
+  3. render(): RenderFrame 수집 → SDLRenderer
+```
+
+- **system update는 frame 기준이 아니라 tick 기준으로 돈다**
+- speed multiplier(1x/2x/4x): 1 프레임 내 tick loop 최대 반복 횟수를 바꿈 (accumulator cap)
+- 프레임 드랍 시 누적된 tick을 한꺼번에 처리 (단, maxTicksPerFrame 상한으로 spiral-of-death 방지)
+- render()는 tick loop 밖에서 1 프레임당 1회만 호출
+
+### config vs 고정값 정책
+
+| 구분 | 규칙 |
+|---|---|
+| `defaults::` (Types.h) | JSON 로드 실패 시에만 쓰는 fallback. 코드에서 직접 참조 금지. |
+| `game_config.json` | 런타임 값의 유일한 출처. ConfigManager 통해서만 접근. |
+| `balance.json` | 핫 리로드 가능. ContentRegistry 통해서만 접근. |
+| `tickMs`, `ticksPerGameMinute` | **Phase 1에서는 config에 기록만, 런타임 변경 불가.** config 값이 고정값(100, 1)과 다르면 초기화 시 경고 로그 출력 후 고정값 사용. |
 
 ---
 
@@ -122,20 +180,20 @@ class AgentMovementSystem {
 ## EventBus 사용 규칙
 
 ```cpp
-// Phase 1: 단일 EventBus + replicable 플래그
+// Phase 1: 단일 EventBus + replicable 플래그 + deferred-only
 struct Event {
     EventType type;
     bool replicable = false;  // Phase 3 네트워크 동기화 대상 여부
-    // payload...
+    EntityId source;
+    std::any payload;
 };
-
-// InternalEvent (시각 효과, 애니메이션 — replicable=false)
-// ExportableEvent (상태 변경, 경제 이벤트 — replicable=true)
 ```
 
+- **Deferred-only:** tick N에서 publish() → tick N+1 시작 시 flush()에서 배달. 즉시 배달 금지.
 - 모든 이벤트는 타입 선언 시 replicable 여부 명시
 - UI/애니메이션 이벤트는 replicable=false 기본
 - 경제/상태 변경 이벤트는 replicable=true 기본
+- flush() 중 새로 publish된 이벤트는 다음 tick에 배달 (double buffer)
 
 ---
 
@@ -153,6 +211,13 @@ struct SaveHeader {
     // ...
 };
 ```
+
+### Entity 저장/복원 방식 (확정)
+- **Phase 1: EnTT snapshot 기반** (`entt::snapshot` / `entt::snapshot_loader`)
+- EnTT의 내장 직렬화 기능으로 registry 전체를 저장·복원
+- entity ID는 EnTT가 내부적으로 재매핑 (별도 stable ID 불필요)
+- 복원 순서: Grid → Tenant → Elevator → Agent → Economy → StarRating → SimClock (상세: VSE_Design_Spec.md §5.8)
+- Phase 2: save format migration + stable ID 검토
 
 ---
 
@@ -301,6 +366,7 @@ DeepSeek / Claude Code에게 태스크를 줄 때 반드시 포함:
 |---|---|---|
 | 2026-03 | 1.0 | 크로스 검증 완료 후 최초 작성. |
 | 2026-03 | 1.1 | 미결 4개 전부 확정. 타일 좌표계·스프라이트·CI/CD·에러핸들링 추가. |
+| 2026-03-24 | 1.2 | Layer 0 = Core API + Core Runtime 분리 정의. EventBus deferred-only 규칙 추가. fixed-tick loop 확정. config vs 고정값 정책. EnTT snapshot 기반 저장/복원. Bootstrapper = composition root 명시. GameCommand 입력 흐름 추가. |
 
 ---
 *이 파일의 내용을 변경하려면 반드시 Human 승인 후 붐(PM)이 업데이트한다.*

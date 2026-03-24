@@ -3,6 +3,7 @@
 > Source of truth: `CLAUDE.md` v1.1 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
+> v1.2: Final review 6 items — true fixed-tick loop, CLAUDE.md sync, EnTT snapshot save/restore, Bootstrapper=composition root, config immutable ticks, document consistency
 
 ---
 
@@ -470,9 +471,10 @@ private:
 
 **SimClock Time Rules (authoritative):**
 - Fixed tick: 100ms real time = 1 sim tick
-- **Phase 1 mapping: 1 tick = 1 game minute** (configurable in Phase 2)
+- **Phase 1 mapping: 1 tick = 1 game minute** (Phase 1 hard-coded, Phase 2 configurable)
 - 1440 ticks = 1 game day (24h × 60min)
-- Speed multiplier (1x/2x/4x) = number of ticks consumed per update cycle, not real-time scaling
+- Speed multiplier (1x/2x/4x) = `maxTicksPerFrame` in the fixed-tick loop, not real-time scaling
+- `tickMs` and `ticksPerGameMinute` exist in `game_config.json` for documentation only — if values differ from (100, 1), log a warning and use the hard-coded values
 - `TickAdvanced` event emitted every tick
 - `HourChanged` emitted when game minute crosses an hour boundary (i.e., minute was 59 → becomes 0)
 - `DayChanged` emitted when game time reaches 00:00
@@ -1018,7 +1020,13 @@ public:
 11. Recalculate derived caches (agent paths, interpolated positions)
 ```
 
-Note: Save format uses MessagePack with version header. Migration logic is Phase 2.
+**Entity Persistence (authoritative):**
+- Phase 1: **EnTT snapshot** (`entt::snapshot` / `entt::snapshot_loader`)
+- EnTT handles entity ID remapping internally during load — no separate stable ID layer needed
+- Save pipeline: `entt::snapshot` → serialize to MessagePack with version header
+- Load pipeline: MessagePack → `entt::snapshot_loader` → registry restored
+- All entity cross-references (e.g., `ElevatorComponent::passengers`) are automatically remapped by EnTT
+- Phase 2: save format migration + optional stable ID for modding support
 
 ### 5.9 ContentRegistry
 
@@ -1244,6 +1252,9 @@ class IEconomyEngine;
 class ISaveLoad;
 class StarRatingSystem;    // Added: was missing in v1.0
 
+// Bootstrapper: **composition root** that owns all systems and manages their lifecycle.
+// It knows concrete types (GridSystem, AgentSystem, etc.) because that is the composition
+// root's job. Long-term: transition to interface-based assembly (factory/DI) for testability.
 class Bootstrapper {
 public:
     Bootstrapper();
@@ -1437,36 +1448,49 @@ Initialize failure at any step: log error, shutdown already-initialized systems 
 
 ## 9. Data Flow Diagrams
 
-### 9.1 Main Loop (per frame)
+### 9.1 Main Loop — True Fixed-Tick Loop (authoritative)
 
 ```
-┌─ Frame Start ─────────────────────────────────────┐
-│                                                     │
-│  1. handleInput()                                   │
-│     └─ SDL_PollEvent → InputMapper → commandQueue_  │
-│                                                     │
-│  2. updateSim(realDeltaMs)                         │
-│     ├─ EventBus::flush()          [deliver tick N-1]│
-│     ├─ SimClock::update(realDeltaMs)               │
-│     │   └─ if accumulated >= 100ms → advanceTick() │
-│     │       └─ publish(TickAdvanced) [queued→N+1]  │
-│     ├─ processCommands()          [GameCommand→domain]│
-│     ├─ AgentSystem::update(registry, gameTime, dt) │
-│     ├─ TransportSystem::update(dt)                 │
-│     ├─ EconomyEngine::update(gameTime)             │
-│     └─ StarRatingSystem::update()                  │
-│                                                     │
-│  3. render()                                        │
-│     ├─ Collect RenderFrame from all systems         │
-│     ├─ SDLRenderer::render(frame)                  │
-│     │   ├─ TileRenderer::draw(frame.tiles)         │
-│     │   ├─ AgentRenderer::draw(frame.agents)       │
-│     │   ├─ UIRenderer::draw(frame.ui)              │
-│     │   └─ DebugPanel::draw() [if debug mode]      │
-│     └─ SDL_RenderPresent()                          │
-│                                                     │
-└─ Frame End ───────────────────────────────────────┘
+┌─ Frame Start ──────────────────────────────────────────────┐
+│                                                             │
+│  1. handleInput()                                           │
+│     └─ SDL_PollEvent → InputMapper → commandQueue_          │
+│                                                             │
+│  2. updateSim(realDeltaMs)                                 │
+│     accumulator_ += realDeltaMs                             │
+│     ticksThisFrame = 0                                      │
+│                                                             │
+│     while (accumulator_ >= TICK_MS                          │
+│            && ticksThisFrame < maxTicksPerFrame_):          │
+│       ├─ accumulator_ -= TICK_MS                            │
+│       ├─ ticksThisFrame++                                   │
+│       ├─ EventBus::flush()         [deliver tick N-1 events]│
+│       ├─ SimClock::advanceTick()   [tick N, queue→N+1]     │
+│       ├─ processCommands()         [GameCommand → domain]   │
+│       ├─ AgentSystem::update()                              │
+│       ├─ TransportSystem::update()                          │
+│       ├─ EconomyEngine::update()                            │
+│       ├─ StarRatingSystem::update()                         │
+│       └─ ContentRegistry::checkAndReload() [every N ticks]  │
+│                                                             │
+│  3. render()                      [1x per frame, outside tick loop]│
+│     ├─ Collect RenderFrame from all systems                 │
+│     ├─ SDLRenderer::render(frame)                          │
+│     │   ├─ TileRenderer::draw(frame.tiles)                 │
+│     │   ├─ AgentRenderer::draw(frame.agents)               │
+│     │   ├─ UIRenderer::draw(frame.ui)                      │
+│     │   └─ DebugPanel::draw() [if debug mode]              │
+│     └─ SDL_RenderPresent()                                  │
+│                                                             │
+└─ Frame End ────────────────────────────────────────────────┘
 ```
+
+**Fixed-tick rules:**
+- System update runs per **tick**, not per frame
+- `maxTicksPerFrame_` = speed multiplier × safety cap (prevents spiral-of-death on frame drops)
+- Speed 1x: max 1 tick/frame, 2x: max 2, 4x: max 4 (+ safety margin for catch-up)
+- `render()` runs exactly once per frame regardless of how many ticks were processed
+- When `accumulator_ < TICK_MS`, no sim update runs — only render with interpolated positions
 
 ### 9.2 NPC Daily Cycle
 
@@ -1701,7 +1725,7 @@ public:
 | Layer 1 has no SDL2 calls | `grep -rn "SDL_\|#include.*SDL" src/domain/ include/domain/` returns nothing |
 | Domain produces RenderFrame only | Domain systems return data structs, never call render functions |
 | Input goes through GameCommand | `grep -rn "SDL_Event\|SDL_Poll" src/domain/ src/core/` returns nothing |
-| ConfigManager is the only JSON reader | No `nlohmann::json` in domain code except via ConfigManager/ContentRegistry |
+| Domain never reads JSON directly | `grep -rn "nlohmann::json\|json::" src/domain/ include/domain/` returns nothing |
 
 ---
 
@@ -1713,8 +1737,12 @@ public:
 | **Runtime values** | `game_config.json` via ConfigManager | `config.getInt("simulation.maxFloors", defaults::MAX_FLOORS)` |
 | **Hot-reloadable tuning** | `balance.json` via ContentRegistry | Rent, satisfaction rates — change without restart |
 | **Content definitions** | `tenants.json` via ContentRegistry | Tenant types, sprites |
+| **Immutable (Phase 1)** | Hard-coded in SimClock | `tickMs=100`, `ticksPerGameMinute=1` — config mismatch → warn + use hard-coded |
 
-**Rule:** Code always reads from ConfigManager/ContentRegistry. `defaults::` constants are **only** used as fallback parameters in `getInt(key, default)` calls. No direct use of `defaults::` in game logic.
+**Rules:**
+- Code always reads from ConfigManager/ContentRegistry. `defaults::` constants are **only** used as fallback parameters in `getInt(key, default)` calls. No direct use of `defaults::` in game logic.
+- **Domain layer must not read JSON directly.** JSON loading is handled only by ConfigManager and ContentRegistry (approved runtime/content services).
+- Content hot-reload frequency: `Bootstrapper` calls `ContentRegistry::checkAndReload()` every 600 ticks (~60 seconds at 10 TPS). This interval is a `defaults::` constant, not from config.
 
 ---
 
@@ -1724,6 +1752,7 @@ public:
 |---|---|---|
 | 2026-03-24 | 1.0 | Initial design spec. All Layer 0 interfaces, ECS components, dependency map, init order, JSON schemas, data flow. |
 | 2026-03-24 | 1.1 | Cross-review 11 items applied: (P0) Layer 0 split clarified, EntityId=entt::entity, SimClock tick-time rules, EventBus deferred-only with payload structs, GameCommand input flow; (P1) Grid anchor/occupancy rules, Elevator FSM 6-state, SaveLoad scope+restore order, StarRatingSystem/AsyncLoader/MemoryPool consistency fixes, IAudioCommand spec; (P2) defaults-vs-config policy, test coverage expanded. System update order corrected (flush first). |
+| 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*

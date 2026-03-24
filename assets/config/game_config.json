@@ -1,0 +1,53 @@
+{
+    "_comment": "Tower Tycoon — Phase 1 game configuration. All tunable values live here.",
+    "simulation": {
+        "tickRateMs": 100,
+        "maxNpcCount": 50,
+        "maxFloors": 30,
+        "timeScaleFactors": [1, 2, 4]
+    },
+    "grid": {
+        "tileSizePx": 32,
+        "floorHeightPx": 32,
+        "tilesPerFloor": 20
+    },
+    "elevator": {
+        "maxShafts": 4,
+        "speedTilesPerTick": 1,
+        "capacity": 8
+    },
+    "tenant": {
+        "office": {
+            "baseRent": 500,
+            "maintenanceCost": 100
+        },
+        "residential": {
+            "baseRent": 300,
+            "maintenanceCost": 80
+        },
+        "commercial": {
+            "baseRent": 700,
+            "maintenanceCost": 150
+        }
+    },
+    "npc": {
+        "movementSpeedTilesPerTick": 0.5,
+        "satisfactionDecayRate": 0.01,
+        "satisfactionGainRate": 0.05
+    },
+    "rating": {
+        "thresholds": {
+            "oneStar": 0.2,
+            "twoStar": 0.4,
+            "threeStar": 0.6,
+            "fourStar": 0.8,
+            "fiveStar": 1.0
+        }
+    },
+    "rendering": {
+        "targetFps": 60,
+        "minimumFps": 30,
+        "windowWidth": 1280,
+        "windowHeight": 720
+    }
+}
