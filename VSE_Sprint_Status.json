@@ -10,11 +10,11 @@
       "title": "CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성",
       "assignee": "DeepSeek",
       "layer": "인프라",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "CMake structure, CI, placeholder test, build fixes. Commit a179345. Build on macOS only (SDL2)."
     },
     {
       "id": "TASK-01-002",
