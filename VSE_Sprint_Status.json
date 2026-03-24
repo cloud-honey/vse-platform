@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T17:51:00",
+  "updated_at": "2026-03-24T18:04:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -32,11 +32,11 @@
       "title": "ConfigManager + JSON 로딩",
       "assignee": "DeepSeek",
       "layer": "Layer 0",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "dot notation, typed getters, VSE_PROJECT_ROOT 매크로로 경로 해결"
     },
     {
       "id": "TASK-01-004",
@@ -183,6 +183,12 @@
       "time": "17:51",
       "title": "TASK-01-002 외부 검토 반영 — 수정 완료",
       "detail": "3개 AI 모델(GPT-5.4/Gemini/DeepSeek) 만장일치 수정사항 적용: ①speed→Bootstrapper 이동(advanceTick 항상 1 tick) ②restoreState silent ③setSpeed runtime guard ④신규 테스트 2개. 14/14 통과. 커밋 29af76f"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "18:04",
+      "title": "TASK-01-003 ConfigManager 구현 완료",
+      "detail": "붐2 구현 + 붐 직접 수정(경로 매크로). dot notation, typed getters, 26/26 테스트 통과. 커밋 c9bf3a6"
     }
   ],
   "references": [
