@@ -180,21 +180,19 @@ TEST_CASE("GridSystem - 엘리베이터 샤프트에 테넌트 배치 거부", "
     REQUIRE(result.ok() == false);
 }
 
-TEST_CASE("GridSystem - findAnchor", "[GridSystem]") {
+TEST_CASE("GridSystem - anchor 내부 탐색 동작 (removeTenant 간접 검증)", "[GridSystem]") {
+    // findAnchor()는 private helper — removeTenant()가 내부에서 호출
+    // auxiliary 타일로 removeTenant() 호출 시 anchor까지 포함해 전체 span 제거됨을 검증
     MAKE_GRID(grid);
     grid.buildFloor(1);
     grid.placeTenant({5, 1}, TenantType::Residential, 3, EntityId{1000});
 
-    // auxiliary 타일 → anchor 반환
-    auto anchor = grid.findAnchor({7, 1});
-    REQUIRE(anchor.has_value() == true);
-    REQUIRE(anchor->x == 5);
-    REQUIRE(anchor->floor == 1);
-
-    // anchor 타일 → 자기 자신 반환
-    auto anchorSelf = grid.findAnchor({5, 1});
-    REQUIRE(anchorSelf.has_value() == true);
-    REQUIRE(anchorSelf->x == 5);
+    // (7,1) = auxiliary — 제거 후 (5,1), (6,1), (7,1) 전체 비어야 함
+    auto result = grid.removeTenant({7, 1});
+    REQUIRE(result.ok() == true);
+    REQUIRE(grid.isTileEmpty({5, 1}) == true);
+    REQUIRE(grid.isTileEmpty({6, 1}) == true);
+    REQUIRE(grid.isTileEmpty({7, 1}) == true);
 }
 
 TEST_CASE("GridSystem - findNearestEmpty", "[GridSystem]") {
@@ -206,4 +204,71 @@ TEST_CASE("GridSystem - findNearestEmpty", "[GridSystem]") {
     auto nearest = grid.findNearestEmpty({5, 1}, 5);
     REQUIRE(nearest.has_value() == true);
     REQUIRE(grid.isTileEmpty(nearest.value()) == true);
+}
+
+// ── GPT-5.4 검토 후 추가 테스트 ──────────────────────────────────────────────
+
+TEST_CASE("GridSystem - floor 0 로비 초기화", "[GridSystem]") {
+    MAKE_GRID(grid);
+
+    // 층 0 전 타일이 isLobby=true여야 함
+    auto tiles = grid.getFloorTiles(0);
+    REQUIRE(tiles.empty() == false);
+    for (auto& [coord, tile] : tiles) {
+        REQUIRE(tile.isLobby == true);
+    }
+}
+
+TEST_CASE("GridSystem - floor 1은 로비 아님", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+
+    auto tiles = grid.getFloorTiles(1);
+    for (auto& [coord, tile] : tiles) {
+        REQUIRE(tile.isLobby == false);
+    }
+}
+
+TEST_CASE("GridSystem - getFloorTiles 반환 개수 = floorWidth", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    grid.placeTenant({5, 1}, TenantType::Office, 2, EntityId{999});
+
+    auto tiles = grid.getFloorTiles(1);
+    REQUIRE(static_cast<int>(tiles.size()) == grid.floorWidth());
+}
+
+TEST_CASE("GridSystem - findNearestEmpty: 같은 층 우선", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    grid.buildFloor(2);
+
+    // (5,1) 점유, (6,1) 비어있음, (5,2)도 비어있음
+    // → 같은 층(1)의 (6,1)이 먼저 반환돼야 함
+    grid.placeTenant({5, 1}, TenantType::Office, 1, EntityId{100});
+    auto nearest = grid.findNearestEmpty({5, 1}, 5);
+    REQUIRE(nearest.has_value() == true);
+    REQUIRE(nearest->floor == 1);  // 같은 층 우선
+}
+
+TEST_CASE("GridSystem - findNearestEmpty: 좌 우선 tie-break", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+
+    // (5,1) 점유, (4,1)과 (6,1) 동일 거리 — 좌(4) 먼저
+    grid.placeTenant({5, 1}, TenantType::Office, 1, EntityId{200});
+    auto nearest = grid.findNearestEmpty({5, 1}, 3);
+    REQUIRE(nearest.has_value() == true);
+    REQUIRE(nearest->floor == 1);
+    REQUIRE(nearest->x == 4);  // 좌 우선
+}
+
+TEST_CASE("GridSystem - findNearestEmpty: searchRadius 경계", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+
+    // (5,1) 채우고 반경 0 탐색 → nullopt
+    grid.placeTenant({5, 1}, TenantType::Office, 1, EntityId{300});
+    auto result = grid.findNearestEmpty({5, 1}, 0);
+    REQUIRE(result.has_value() == false);
 }

@@ -37,8 +37,11 @@ public:
     virtual Result<bool> placeElevatorShaft(int x, int bottomFloor, int topFloor) = 0;
     virtual bool isElevatorShaft(TileCoord pos) const = 0;
 
+    /**
+     * 가장 가까운 빈 타일 탐색.
+     * 탐색 우선순위: 같은 층 우선 → 가까운 층 → 좌/우 순서 고정 (결정적 tie-break).
+     */
     virtual std::optional<TileCoord> findNearestEmpty(TileCoord from, int searchRadius) const = 0;
-    virtual std::optional<TileCoord> findAnchor(TileCoord anyTile) const = 0;
 };
 
 } // namespace vse

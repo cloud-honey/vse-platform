@@ -24,7 +24,6 @@ public:
     Result<bool> placeElevatorShaft(int x, int bottomFloor, int topFloor) override;
     bool isElevatorShaft(TileCoord pos) const override;
     std::optional<TileCoord> findNearestEmpty(TileCoord from, int searchRadius) const override;
-    std::optional<TileCoord> findAnchor(TileCoord anyTile) const override;
 
 private:
     EventBus& eventBus_;
@@ -38,6 +37,10 @@ private:
     std::unordered_map<int, FloorData> floors_;
 
     size_t tileIndex(int x) const;
+
+    // Internal helper — not part of IGridSystem public contract
+    // Walks left from anyTile to find the anchor tile of a multi-tile tenant.
+    std::optional<TileCoord> findAnchor(TileCoord anyTile) const;
 };
 
 } // namespace vse

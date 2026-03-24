@@ -12,8 +12,12 @@ GridSystem::GridSystem(EventBus& bus, const ConfigManager& config)
     , floorWidth_(config.getInt("grid.tilesPerFloor", 20))
 {
     // 층 0은 게임 시작 시 자동 건설 (로비)
+    // floor 0 전 타일을 isLobby=true로 초기화 — NPC 스폰/디스폰 기준점
     FloorData floor0;
     floor0.tiles.resize(floorWidth_);
+    for (auto& tile : floor0.tiles) {
+        tile.isLobby = true;
+    }
     floor0.built = true;
     floors_[0] = floor0;
 }
@@ -250,28 +254,45 @@ std::optional<TileCoord> GridSystem::findNearestEmpty(TileCoord from, int search
     if (!isValidCoord(from) || searchRadius <= 0) {
         return std::nullopt;
     }
-    
-    // 층이 건설되었는지 확인
+
     if (!isFloorBuilt(from.floor)) {
         return std::nullopt;
     }
-    
-    // BFS 방식으로 검색
-    for (int radius = 1; radius <= searchRadius; ++radius) {
-        for (int dx = -radius; dx <= radius; ++dx) {
-            for (int dy = -radius; dy <= radius; ++dy) {
-                if (std::abs(dx) != radius && std::abs(dy) != radius) {
-                    continue; // 내부 점은 건너뜀
-                }
-                
-                TileCoord pos{from.x + dx, from.floor + dy};
-                if (isValidCoord(pos) && isFloorBuilt(pos.floor) && isTileEmpty(pos)) {
-                    return pos;
+
+    // 탐색 우선순위:
+    // 1. 같은 층(dy=0) 우선
+    // 2. 가까운 층 순 (|dy| 오름차순)
+    // 3. 수평 거리 오름차순 (|dx| 오름차순)
+    // 4. 같은 거리면 좌 우선 (dx 음수 먼저) — 결정적 tie-break
+    // 5. 층 방향은 위(+dy) 먼저 — 결정적 tie-break
+    for (int floorDelta = 0; floorDelta <= searchRadius; ++floorDelta) {
+        // 같은 층(floorDelta=0) → 위 → 아래 순
+        int floorOffsets[3] = {0, floorDelta, -floorDelta};
+        int numOffsets = (floorDelta == 0) ? 1 : 2;
+
+        for (int fi = 0; fi < numOffsets; ++fi) {
+            int dy = floorOffsets[fi];
+            int targetFloor = from.floor + dy;
+
+            if (targetFloor < 0 || targetFloor >= maxFloors_) continue;
+            if (!isFloorBuilt(targetFloor)) continue;
+
+            int maxXDelta = searchRadius - std::abs(dy);
+            // 수평: 좌 우선 (dx=0, -1, 1, -2, 2 ... 순)
+            for (int absDx = 0; absDx <= maxXDelta; ++absDx) {
+                int dxList[2] = {-absDx, absDx};
+                int numDx = (absDx == 0) ? 1 : 2;
+                for (int xi = 0; xi < numDx; ++xi) {
+                    int dx = dxList[xi];
+                    TileCoord pos{from.x + dx, targetFloor};
+                    if (pos == from) continue;  // 시작점 제외
+                    if (!isValidCoord(pos)) continue;
+                    if (isTileEmpty(pos)) return pos;
                 }
             }
         }
     }
-    
+
     return std::nullopt;
 }
 
