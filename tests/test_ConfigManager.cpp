@@ -11,12 +11,18 @@ static std::string configPath() {
     return std::string(VSE_PROJECT_ROOT) + "/assets/config/game_config.json";
 }
 
+TEST_CASE("ConfigManager - 로드 전 isLoaded false", "[ConfigManager]") {
+    vse::ConfigManager config;
+    REQUIRE(config.isLoaded() == false);
+}
+
 TEST_CASE("ConfigManager - 파일 로드 성공", "[ConfigManager]") {
     vse::ConfigManager config;
     auto result = config.loadFromFile(configPath());
     
     REQUIRE(result.ok() == true);
     REQUIRE(result.value == true);
+    REQUIRE(config.isLoaded() == true);
 }
 
 TEST_CASE("ConfigManager - 존재하지 않는 파일", "[ConfigManager]") {

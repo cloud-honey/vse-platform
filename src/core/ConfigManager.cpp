@@ -1,6 +1,8 @@
 #include "core/ConfigManager.h"
+#include <spdlog/spdlog.h>
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 namespace vse {
 
@@ -21,6 +23,7 @@ Result<bool> ConfigManager::loadFromFile(const std::string& path) {
     }
     
     data_ = result;
+    loaded_ = true;
     return Result<bool>::success(true);
 }
 
@@ -53,9 +56,13 @@ bool ConfigManager::has(const std::string& key) const {
 }
 
 int ConfigManager::getInt(const std::string& key, int defaultVal) const {
+    assert(loaded_ && "ConfigManager::getInt() called before loadFromFile()");
     const nlohmann::json* node = find(key);
-    if (node && node->is_number_integer()) {
-        return node->get<int>();
+    if (!node) return defaultVal;
+    if (node->is_number_integer()) return node->get<int>();
+    // float 키에 getInt 호출 — 타입 불일치 경고
+    if (node->is_number_float()) {
+        spdlog::warn("ConfigManager::getInt('{}') — key is float, returning defaultVal. Use getFloat() instead.", key);
     }
     return defaultVal;
 }
