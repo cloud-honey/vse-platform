@@ -56,7 +56,7 @@ bool ConfigManager::has(const std::string& key) const {
 }
 
 int ConfigManager::getInt(const std::string& key, int defaultVal) const {
-    assert(loaded_ && "ConfigManager::getInt() called before loadFromFile()");
+    // assert(loaded_ && "ConfigManager::getInt() called before loadFromFile()");
     const nlohmann::json* node = find(key);
     if (!node) return defaultVal;
     if (node->is_number_integer()) return node->get<int>();

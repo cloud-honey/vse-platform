@@ -238,3 +238,121 @@ TEST_CASE("TransportSystem - LOOK: 위로 이동 중 위쪽 콜 먼저", "[Trans
     auto snap = f.transport.getElevatorState(elevId);
     REQUIRE(snap->state == ElevatorState::MovingUp);
 }
+
+// ── 추가 테스트 (GPT-5.4 검토 반영) ──────────────────────────────────────────
+
+TEST_CASE("TransportSystem - createElevator 생성 시 ElevatorArrived 미발행", "[TransportSystem]") {
+    TFixture f;
+    // TFixture 생성자(buildFloor, placeElevatorShaft)가 이미 이벤트를 발행했을 수 있음
+    // → createElevator 전후 delta가 0이어야 함 (생성 시 이벤트 추가 없음)
+    size_t before = f.bus.pendingCount();
+    f.transport.createElevator(5, 0, 2, 8);
+    size_t after = f.bus.pendingCount();
+    REQUIRE(after == before);  // 생성으로 인한 이벤트 추가 없어야 함
+}
+
+TEST_CASE("TransportSystem - 중간 층 연속 정차 (2→8, 3·5 중간 콜)", "[TransportSystem]") {
+    TFixture f;
+    // 층 0~5 빌드
+    for (int i = 3; i <= 5; i++) f.grid.buildFloor(i);
+    f.grid.placeElevatorShaft(5, 3, 5);
+    auto r = f.transport.createElevator(5, 0, 5, 8);
+    EntityId elevId = r.value;
+
+    // 층 5 목적지 콜 + 경유지 3층 콜
+    f.transport.callElevator(5, 5, ElevatorDirection::Up);
+    f.transport.callElevator(5, 3, ElevatorDirection::Up);
+
+    // tick1: Idle → MovingUp (nextTarget=3, 가까운 위쪽 우선)
+    f.transport.update(GameTime{0,9,0});
+    auto s1 = f.transport.getElevatorState(elevId);
+    REQUIRE(s1->state == ElevatorState::MovingUp);
+
+    // tick2: floor=1, tick3: floor=2, tick4: floor=3 → DoorOpening
+    f.transport.update(GameTime{0,9,0}); // floor=1
+    f.transport.update(GameTime{0,9,0}); // floor=2
+    f.transport.update(GameTime{0,9,0}); // floor=3 → DoorOpening
+    auto s4 = f.transport.getElevatorState(elevId);
+    REQUIRE(s4->currentFloor == 3);
+    REQUIRE(s4->state == ElevatorState::DoorOpening);
+}
+
+TEST_CASE("TransportSystem - 반대 방향 콜 보류 (위로 이동 중 Down 콜 나중 처리)", "[TransportSystem]") {
+    TFixture f;
+    for (int i = 3; i <= 4; i++) f.grid.buildFloor(i);
+    f.grid.placeElevatorShaft(5, 3, 4);
+    auto r = f.transport.createElevator(5, 0, 4, 8);
+    EntityId elevId = r.value;
+
+    // 위쪽 콜 먼저
+    f.transport.callElevator(5, 4, ElevatorDirection::Up);
+    // 아래쪽 콜 동시 (반대 방향)
+    f.transport.callElevator(5, 1, ElevatorDirection::Down);
+
+    // tick1: Idle → MovingUp (위쪽 콜 우선, nextTarget=4)
+    f.transport.update(GameTime{0,9,0});
+    auto s1 = f.transport.getElevatorState(elevId);
+    // 위로 이동 시작했어야 함
+    REQUIRE(s1->state == ElevatorState::MovingUp);
+}
+
+TEST_CASE("TransportSystem - 같은 shaft 2대 배차", "[TransportSystem]") {
+    TFixture f;
+    for (int i = 3; i <= 4; i++) f.grid.buildFloor(i);
+    f.grid.placeElevatorShaft(5, 3, 4);
+
+    // shaft=5에 2대 생성 (범위가 달라야 중복 체크 통과)
+    auto r1 = f.transport.createElevator(5, 0, 2, 8);
+    auto r2 = f.transport.createElevator(5, 3, 4, 8);
+    REQUIRE(r1.ok());
+    REQUIRE(r2.ok());
+    REQUIRE(r1.value != r2.value);  // EntityId 충돌 없어야 함
+    REQUIRE(f.transport.getAllElevators().size() == 2);
+
+    // 층 1 호출 → car1(0~2층) 담당, car2(3~4층)는 범위 밖
+    f.transport.callElevator(5, 1, ElevatorDirection::Up);
+    f.transport.update(GameTime{0,9,0});
+
+    // car1이 MovingUp, car2는 Idle 유지
+    auto s1 = f.transport.getElevatorState(r1.value);
+    auto s2 = f.transport.getElevatorState(r2.value);
+    REQUIRE(s1->state == ElevatorState::MovingUp);
+    REQUIRE(s2->state == ElevatorState::Idle);
+}
+
+TEST_CASE("TransportSystem - DoorClosing 중 같은 층 재호출 → 재오픈", "[TransportSystem]") {
+    TFixture f;
+    auto r = f.transport.createElevator(5, 0, 2, 8);
+    EntityId elevId = r.value;
+
+    // 층 1 도착 → Boarding (doorOpenTicks=3)
+    // tick1: Idle → MovingUp
+    // tick2: MovingUp → DoorOpening (floor=1 도착)
+    // tick3: DoorOpening → Boarding (doorTicks=3)
+    // tick4: doorTicks=2, tick5: doorTicks=1, tick6: doorTicks=0 → DoorClosing
+    f.transport.callElevator(5, 1, ElevatorDirection::Up);
+    for (int i = 0; i < 6; i++) f.transport.update(GameTime{0,9,0});
+    auto sc = f.transport.getElevatorState(elevId);
+    REQUIRE(sc->state == ElevatorState::DoorClosing);
+
+    // DoorClosing 상태에서 같은 층 재호출 → 다음 tick에 DoorOpening 재전환
+    f.transport.callElevator(5, 1, ElevatorDirection::Up);
+    f.transport.update(GameTime{0,9,0}); // DoorClosing → 같은 층 콜 감지 → DoorOpening
+    auto sr = f.transport.getElevatorState(elevId);
+    REQUIRE(sr->state == ElevatorState::DoorOpening);
+}
+
+TEST_CASE("TransportSystem - EntityId entt registry 발급 (충돌 없음)", "[TransportSystem]") {
+    TFixture f;
+    for (int i = 3; i <= 4; i++) f.grid.buildFloor(i);
+    f.grid.placeElevatorShaft(5, 3, 4);
+
+    auto r1 = f.transport.createElevator(5, 0, 2, 8);
+    auto r2 = f.transport.createElevator(5, 3, 4, 8);
+    REQUIRE(r1.ok());
+    REQUIRE(r2.ok());
+    // entt registry 발급이므로 id가 겹치지 않아야 함
+    REQUIRE(r1.value != r2.value);
+    REQUIRE(r1.value != INVALID_ENTITY);
+    REQUIRE(r2.value != INVALID_ENTITY);
+}

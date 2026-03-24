@@ -2,6 +2,7 @@
 #include <spdlog/spdlog.h>
 #include <algorithm>
 #include <cmath>
+#include <climits>
 
 namespace vse {
 
@@ -37,8 +38,9 @@ Result<EntityId> TransportSystem::createElevator(int shaftX, int bottomFloor,
         }
     }
 
-    // ElevatorCar 생성 — entt 없이 단순 uint32 ID 사용
-    EntityId id = static_cast<EntityId>(static_cast<entt::entity>(nextCarId_++));
+    // EntityId를 entt::registry에서 발급 (ECS 일관성 유지)
+    entt::entity entity = registry_.create();
+    EntityId id = static_cast<EntityId>(entity);
     ElevatorCar car;
     car.id           = id;
     car.shaftX       = shaftX;
@@ -55,28 +57,66 @@ Result<EntityId> TransportSystem::createElevator(int shaftX, int bottomFloor,
     spdlog::debug("TransportSystem::createElevator: id={}, shaftX={}, {}~{}",
                   static_cast<uint32_t>(id), shaftX, bottomFloor, topFloor);
 
-    publishEvent(EventType::ElevatorArrived, id);  // 초기 생성 알림 재활용
+    // 생성 시 ElevatorArrived 미발행 — "생성"과 "도착" 이벤트는 의미가 다름
     return Result<EntityId>::success(id);
 }
 
 void TransportSystem::callElevator(int shaftX, int floor,
                                     ElevatorDirection preferredDir)
 {
-    // 해당 shaftX의 엘리베이터 찾기
+    // 같은 shaftX의 car 중 최적 car 선택 (다중 car 배차)
+    uint32_t bestKey = pickBestCar(shaftX, floor, preferredDir);
+    if (bestKey == UINT32_MAX) {
+        spdlog::warn("TransportSystem::callElevator: no elevator for shaftX={}", shaftX);
+        return;
+    }
+
+    ElevatorCar& car = cars_[bestKey];
+    HallCall hc{floor, preferredDir};
+    car.hallCalls.insert(hc);  // 중복 자동 병합 (set)
+
+    // 대기 인원 증가
+    waitingCount_[floor]++;
+
+    spdlog::debug("TransportSystem::callElevator: shaftX={}, floor={}, carId={}",
+                  shaftX, floor, static_cast<uint32_t>(car.id));
+}
+
+uint32_t TransportSystem::pickBestCar(int shaftX, int floor,
+                                       ElevatorDirection dir) const
+{
+    // 같은 shaftX, 운행 범위에 floor가 포함된 car들 수집 후 최적 선택
+    // 우선순위:
+    //   1순위: Idle car 중 가장 가까운 것
+    //   2순위: 현재 방향이 요청 방향과 일치하고, 이동 중 floor가 경로 상에 있는 것
+    //   3순위: 그 외 가장 가까운 것
+    uint32_t bestKey  = UINT32_MAX;
+    int      bestScore = INT_MAX;  // 낮을수록 좋음
+
     for (auto& [uid, car] : cars_) {
         if (car.shaftX != shaftX) continue;
         if (floor < car.bottomFloor || floor > car.topFloor) continue;
 
-        HallCall hc{floor, preferredDir};
-        car.hallCalls.insert(hc);  // 중복 자동 병합 (set)
+        int dist = std::abs(car.currentFloor - floor);
+        int score;
 
-        // 대기 인원 증가
-        waitingCount_[floor]++;
+        if (car.state == ElevatorState::Idle) {
+            score = dist;  // 1순위: Idle + 거리
+        } else if ((car.direction == ElevatorDirection::Up && dir == ElevatorDirection::Up
+                    && car.currentFloor <= floor) ||
+                   (car.direction == ElevatorDirection::Down && dir == ElevatorDirection::Down
+                    && car.currentFloor >= floor)) {
+            score = 1000 + dist;  // 2순위: 같은 방향 경로상
+        } else {
+            score = 2000 + dist;  // 3순위: 반대 방향
+        }
 
-        spdlog::debug("TransportSystem::callElevator: shaftX={}, floor={}", shaftX, floor);
-        return;
+        if (score < bestScore) {
+            bestScore = score;
+            bestKey   = uid;
+        }
     }
-    spdlog::warn("TransportSystem::callElevator: no elevator for shaftX={}", shaftX);
+    return bestKey;
 }
 
 Result<bool> TransportSystem::boardPassenger(EntityId elevator,
@@ -224,6 +264,18 @@ void TransportSystem::tickCar(ElevatorCar& car, const GameTime& /*time*/)
     }
 
     case ElevatorState::DoorClosing: {
+        // 같은 층에 새로운 홀 콜이 있으면 바로 재오픈
+        // (lookNextTarget은 currentFloor를 제외하므로 별도 체크)
+        bool sameFloorCall = false;
+        for (auto& hc : car.hallCalls) {
+            if (hc.floor == car.currentFloor) { sameFloorCall = true; break; }
+        }
+        if (sameFloorCall) {
+            car.state     = ElevatorState::DoorOpening;
+            car.doorTicks = doorOpenTicks_;
+            break;
+        }
+
         // 다음 목적지 결정
         int next = lookNextTarget(car);
         if (next == -1) {
@@ -232,7 +284,7 @@ void TransportSystem::tickCar(ElevatorCar& car, const GameTime& /*time*/)
             car.direction = ElevatorDirection::Idle;
             car.nextTarget = -1;
         } else if (next == car.currentFloor) {
-            // 같은 층에 또 다른 콜
+            // carCalls에 현재 층이 있는 경우 (lookNextTarget이 currentFloor 반환하는 케이스)
             car.state     = ElevatorState::DoorOpening;
             car.doorTicks = doorOpenTicks_;
         } else {

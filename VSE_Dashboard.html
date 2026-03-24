@@ -170,6 +170,27 @@ h1 span{color:var(--accent);}
 
 .empty{padding:16px;text-align:center;font-size:11px;color:var(--text2);font-family:var(--mono);}
 
+/* ── HISTORY ITEMS ───────────────────────────────────── */
+.hitem{display:flex;gap:10px;padding:7px 8px;border-radius:6px;margin-bottom:2px;}
+.hitem:nth-child(odd){background:rgba(255,255,255,.02);}
+.htime{font-family:var(--mono);font-size:9px;color:var(--accent);
+  white-space:nowrap;padding-top:2px;flex-shrink:0;min-width:40px;}
+.hbody{}
+.htitle{font-size:12px;font-weight:500;margin-bottom:2px;}
+.hdetail{font-size:10px;color:var(--text2);line-height:1.4;}
+
+/* ── REFERENCE ITEMS ─────────────────────────────────── */
+.ritem{display:flex;flex-direction:column;gap:3px;padding:8px 10px;
+  border-radius:6px;margin-bottom:3px;border:1px solid transparent;}
+.ritem:hover{background:var(--surface2);border-color:var(--border);}
+.rtop{display:flex;align-items:center;gap:6px;}
+.rtitle{font-size:12px;font-weight:500;flex:1;}
+.rtag{font-family:var(--mono);font-size:9px;padding:1px 6px;border-radius:4px;flex-shrink:0;}
+.rtag-설계{background:rgba(79,142,247,.15);color:var(--accent);}
+.rtag-역분석{background:rgba(124,111,255,.15);color:#7c6fff;}
+.rtag-참고{background:rgba(46,204,138,.12);color:var(--green);}
+.rdesc{font-size:10px;color:var(--text2);line-height:1.4;}
+
 /* ── FOOTER ──────────────────────────────────────────── */
 .footer{font-family:var(--mono);font-size:10px;color:var(--text2);
   text-align:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--border);}
@@ -309,6 +330,27 @@ h1 span{color:var(--accent);}
     </div>
   </div><!-- /mgrid -->
 
+  <!-- HISTORY + REFERENCES GRID -->
+  <div class="bgrid" id="extraGrid">
+
+    <div class="sec">
+      <div class="sec-hdr">
+        <div class="sec-ttl">📋 진행 히스토리</div>
+        <div class="sec-cnt" id="historyCount">0</div>
+      </div>
+      <div class="ilist" id="historyList"><div class="empty">Loading...</div></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-hdr">
+        <div class="sec-ttl">📚 참고 자료</div>
+        <div class="sec-cnt" id="refCount">0</div>
+      </div>
+      <div class="ilist" id="refList"><div class="empty">Loading...</div></div>
+    </div>
+
+  </div>
+
   <!-- BOTTOM GRID -->
   <div class="bgrid">
 
@@ -441,6 +483,34 @@ function render(d){
   document.getElementById('issueList').innerHTML=iss.length
     ?iss.map(i=>`<div class="ac ac-yellow"><div class="ac-ttl" style="color:var(--yellow)">${i.title||''}</div><div class="ac-desc">${i.description||''}</div></div>`).join('')
     :'<div class="empty">No design issues ✓</div>';
+
+  /* History */
+  const hist=(d.history||[]).slice().reverse(); // newest first
+  document.getElementById('historyCount').textContent=hist.length;
+  document.getElementById('historyList').innerHTML=hist.length
+    ?hist.map(h=>`
+      <div class="hitem">
+        <div class="htime">${h.time||''}</div>
+        <div class="hbody">
+          <div class="htitle">${h.title||''}</div>
+          <div class="hdetail">${h.detail||''}</div>
+        </div>
+      </div>`).join('')
+    :'<div class="empty">히스토리 없음</div>';
+
+  /* References */
+  const refs=d.references||[];
+  document.getElementById('refCount').textContent=refs.length;
+  document.getElementById('refList').innerHTML=refs.length
+    ?refs.map(r=>`
+      <div class="ritem">
+        <div class="rtop">
+          <div class="rtitle">${r.title||''}</div>
+          <span class="rtag rtag-${r.tag||'참고'}">${r.tag||'참고'}</span>
+        </div>
+        <div class="rdesc">${r.desc||''}</div>
+      </div>`).join('')
+    :'<div class="empty">참고 자료 없음</div>';
 }
 
 /* Fetch JSON, fallback to inline data */

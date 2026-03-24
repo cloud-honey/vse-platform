@@ -3,6 +3,7 @@
 #include "core/IGridSystem.h"
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
+#include <entt/entt.hpp>
 #include <unordered_map>
 #include <vector>
 #include <set>
@@ -16,10 +17,20 @@ namespace vse {
  * - ElevatorCar: 엘리베이터 1대 상태 (FSM + 탑승객 + 콜 큐)
  * - LookScheduler: LOOK 알고리즘 다음 정지 층 계산
  *
+ * EntityId 발급 정책:
+ * - 엘리베이터 EntityId는 내부 entt::registry에서 발급
+ * - AgentSystem 등 다른 registry와 충돌 없음 (독립 registry)
+ * - 외부에서는 EntityId 값만 사용, 내부 registry는 노출 금지
+ *
+ * callElevator() 다중 car 배차 정책 (Phase 1):
+ * - 같은 shaftX에 여러 car가 있으면 최적 car 선택
+ * - 기준: Idle 우선, 이동 중이면 현재 방향과 일치하는 car, 거리 최단
+ *
  * Phase 1 제약:
- * - 엘리베이터당 shaftX 기준으로 GridSystem shaft 위치 사용
  * - doorOpenTicks: config "elevator.doorOpenTicks" (기본 3틱)
  * - speedTilesPerTick: config "elevator.speedTilesPerTick" (기본 1)
+ * - floatFloor: 현재 Phase 1에서는 currentFloor와 동일 (미구현 placeholder)
+ *   Phase 3 렌더러 연동 시 틱 간 보간으로 교체 예정
  */
 class TransportSystem : public ITransportSystem {
 public:
@@ -57,7 +68,7 @@ private:
         int               topFloor;
         int               capacity;
         int               currentFloor   = 0;
-        float             floatFloor     = 0.0f;  // 보간용
+        float             floatFloor     = 0.0f;  // Phase 1: currentFloor와 동일 (렌더러 보간 placeholder)
         ElevatorState     state          = ElevatorState::Idle;
         ElevatorDirection direction      = ElevatorDirection::Idle;
         int               doorTicks      = 0;     // 남은 door open 틱
@@ -73,17 +84,20 @@ private:
     int             speedTilesPerTick_;
     int             defaultCapacity_;
 
-    // EntityId → ElevatorCar
+    // EntityId 발급용 독립 registry (AgentSystem registry와 독립)
+    entt::registry  registry_;
+    // EntityId (uint32) → ElevatorCar
     std::unordered_map<uint32_t, ElevatorCar> cars_;
     // floor → 대기 인원 수
     std::unordered_map<int, int> waitingCount_;
-    // 다음 엔티티 ID 발급용 (registry 없이 단순 카운터)
-    uint32_t nextCarId_ = 1;
 
     // ── Internal helpers ───────────────────────────────────────────────────
     void tickCar(ElevatorCar& car, const GameTime& time);
     int  lookNextTarget(const ElevatorCar& car) const;
     void publishEvent(EventType type, EntityId source);
+    // 같은 shaftX의 car 목록에서 콜에 응답할 최적 car 선택
+    // 반환: cars_ key (uint32_t), 없으면 UINT32_MAX
+    uint32_t pickBestCar(int shaftX, int floor, ElevatorDirection dir) const;
 };
 
 } // namespace vse
