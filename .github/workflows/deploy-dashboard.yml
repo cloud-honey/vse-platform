@@ -1,0 +1,24 @@
+name: Deploy VSE Dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'VSE_Sprint_Status.json'
+      - 'vse-dashboard/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sync JSON into dashboard folder
+        run: cp VSE_Sprint_Status.json vse-dashboard/VSE_Sprint_Status.json
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy vse-dashboard --project-name=ai-devteam-outputs --branch=main
