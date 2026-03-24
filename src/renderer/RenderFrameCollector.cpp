@@ -3,9 +3,11 @@
 namespace vse {
 
 RenderFrameCollector::RenderFrameCollector(const IGridSystem& grid,
-                                            const ITransportSystem& transport)
+                                            const ITransportSystem& transport,
+                                            int tileSizePx)
     : grid_(grid)
     , transport_(transport)
+    , tileSizePx_(tileSizePx)
 {}
 
 RenderFrame RenderFrameCollector::collect() const
@@ -13,7 +15,7 @@ RenderFrame RenderFrameCollector::collect() const
     RenderFrame frame;
     frame.maxFloors = grid_.maxFloors();
     frame.floorWidth = grid_.floorWidth();
-    frame.tileSize = 32;  // ConfigManager에서 읽어야 하지만 Phase 1은 32 고정
+    frame.tileSize = tileSizePx_;
     frame.drawGrid = drawGrid_;
     frame.drawDebugInfo = drawDebugInfo_;
 

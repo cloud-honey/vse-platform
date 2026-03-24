@@ -17,7 +17,8 @@ namespace vse {
 class Camera {
 public:
     Camera() = default;
-    Camera(int viewportW, int viewportH, int tileSize);
+    Camera(int viewportW, int viewportH, int tileSize,
+           float minZoom = 0.25f, float maxZoom = 4.0f);
 
     // ── 카메라 이동 ──────────────────
     void pan(float dx, float dy);       // 픽셀 단위 이동
@@ -26,21 +27,14 @@ public:
     void centerOn(float worldX, float worldY);
 
     // ── 좌표 변환 ────────────────────
-    // 월드 좌표(px) → 화면 좌표(px)
     float worldToScreenX(float worldX) const;
     float worldToScreenY(float worldY) const;
-
-    // 화면 좌표(px) → 월드 좌표(px)
     float screenToWorldX(float screenX) const;
     float screenToWorldY(float screenY) const;
-
-    // 타일 좌표 → 화면 좌표(px)
     float tileToScreenX(int tileX) const;
     float tileToScreenY(int tileFloor) const;
-
-    // 화면 좌표(px) → 타일 좌표
-    int screenToTileX(float screenX) const;
-    int screenToTileFloor(float screenY) const;
+    int   screenToTileX(float screenX) const;
+    int   screenToTileFloor(float screenY) const;
 
     // ── Getters ──────────────────────
     float x()         const { return x_; }
@@ -49,19 +43,20 @@ public:
     int   viewportW() const { return viewportW_; }
     int   viewportH() const { return viewportH_; }
     int   tileSize()  const { return tileSize_; }
+    float minZoom()   const { return minZoom_; }
+    float maxZoom()   const { return maxZoom_; }
 
     void setViewport(int w, int h) { viewportW_ = w; viewportH_ = h; }
 
 private:
-    float x_         = 0.0f;   // 카메라 좌하단 월드X (px)
-    float y_         = 0.0f;   // 카메라 좌하단 월드Y (px)
+    float x_         = 0.0f;
+    float y_         = 0.0f;
     float zoom_      = 1.0f;
     int   viewportW_ = 1280;
     int   viewportH_ = 720;
     int   tileSize_  = 32;
-
-    static constexpr float MIN_ZOOM = 0.25f;
-    static constexpr float MAX_ZOOM = 4.0f;
+    float minZoom_   = 0.25f;
+    float maxZoom_   = 4.0f;
 };
 
 } // namespace vse

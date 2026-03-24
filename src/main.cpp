@@ -17,27 +17,33 @@
 
 using namespace vse;
 
-static constexpr int   WINDOW_W     = 1280;
-static constexpr int   WINDOW_H     = 720;
-static constexpr int   TICK_MS      = 100;   // 100ms = 10 TPS
-static constexpr int   MAX_TICKS_PER_FRAME = 8;
+static constexpr int MAX_TICKS_PER_FRAME = 8;
 
 int main(int /*argc*/, char* /*argv*/[])
 {
     spdlog::info("Tower Tycoon starting...");
 
+    // ── Config 로딩 (모든 수치는 여기서) ────────────────
+    ConfigManager config;
+    config.loadFromFile("assets/config/game_config.json");
+
+    const int windowW     = config.getInt("rendering.windowWidth",  1280);
+    const int windowH     = config.getInt("rendering.windowHeight", 720);
+    const int tileSizePx  = config.getInt("grid.tileSizePx",        32);
+    const int tickMs      = config.getInt("simulation.tickRateMs",  100);
+    const float zoomMin   = config.getFloat("rendering.zoomMin",    0.25f);
+    const float zoomMax   = config.getFloat("rendering.zoomMax",    4.0f);
+    const float panSpeed  = config.getFloat("rendering.cameraPanSpeed", 8.0f);
+
     // ── SDL2 + Renderer 초기화 ──────────────────────────
     SDLRenderer sdlRenderer;
-    if (!sdlRenderer.init(WINDOW_W, WINDOW_H, "Tower Tycoon")) {
+    if (!sdlRenderer.init(windowW, windowH, "Tower Tycoon")) {
         return 1;
     }
 
     // ── Domain 시스템 조립 ──────────────────────────────
-    EventBus      eventBus;
-    ConfigManager config;
-    config.loadFromFile("assets/config/game_config.json");
-
-    entt::registry  registry;
+    EventBus       eventBus;
+    entt::registry registry;
     GridSystem      grid(eventBus, config);
     AgentSystem     agents(grid, eventBus);
     TransportSystem transport(grid, eventBus, config);
@@ -46,23 +52,23 @@ int main(int /*argc*/, char* /*argv*/[])
     for (int f = 1; f <= 4; ++f) grid.buildFloor(f);
     grid.placeElevatorShaft(5, 0, 4);
     transport.createElevator(5, 0, 4, 8);
-    transport.createElevator(5, 0, 2, 4);   // 2대째 (범위 다름)
+    transport.createElevator(5, 0, 2, 4);
 
-    // ── Layer 3 초기화 ──────────────────────────────────
-    Camera camera(WINDOW_W, WINDOW_H, 32);
-    // 로비 근처에 카메라 중심
+    // ── Layer 3 초기화 (Config 기반) ────────────────────
+    Camera camera(windowW, windowH, tileSizePx, zoomMin, zoomMax);
     camera.centerOn(
-        static_cast<float>(grid.floorWidth() * 32 / 2),
-        static_cast<float>(2 * 32)
+        static_cast<float>(grid.floorWidth() * tileSizePx / 2),
+        static_cast<float>(2 * tileSizePx)
     );
 
     InputMapper inputMapper;
-    RenderFrameCollector collector(grid, transport);
+    inputMapper.setPanSpeed(panSpeed);
+    RenderFrameCollector collector(grid, transport, tileSizePx);
 
     // ── 게임 상태 ───────────────────────────────────────
-    bool running = true;
-    bool paused  = false;
-    int  speed   = 1;       // 1x, 2x, 4x
+    bool running  = true;
+    bool paused   = false;
+    int  speed    = 1;
     bool drawGrid = true;
     bool drawDebug = true;
     SimTick currentTick = 0;
@@ -83,7 +89,7 @@ int main(int /*argc*/, char* /*argv*/[])
         }
         inputMapper.processHeldKeys(commands);
 
-        // ── 커맨드 처리 (카메라/시스템) ─────────────────
+        // ── 커맨드 처리 (카메라/시스템 + 도메인) ────────
         for (const auto& cmd : commands) {
             switch (cmd.type) {
             case CommandType::Quit:
@@ -110,6 +116,32 @@ int main(int /*argc*/, char* /*argv*/[])
                 drawDebug = !drawDebug;
                 drawGrid  = drawDebug;
                 break;
+
+            // ── 도메인 커맨드 ────────────────────────
+            case CommandType::BuildFloor:
+                grid.buildFloor(cmd.buildFloor.floor);
+                break;
+            case CommandType::PlaceTenant:
+                grid.placeTenant(
+                    TileCoord{cmd.placeTenant.x, cmd.placeTenant.floor},
+                    static_cast<TenantType>(cmd.placeTenant.tenantType),
+                    cmd.placeTenant.width,
+                    INVALID_ENTITY);
+                break;
+            case CommandType::PlaceElevatorShaft:
+                grid.placeElevatorShaft(
+                    cmd.placeShaft.shaftX,
+                    cmd.placeShaft.bottomFloor,
+                    cmd.placeShaft.topFloor);
+                break;
+            case CommandType::CreateElevator:
+                transport.createElevator(
+                    cmd.createElevator.shaftX,
+                    cmd.createElevator.bottomFloor,
+                    cmd.createElevator.topFloor,
+                    cmd.createElevator.capacity);
+                break;
+
             default:
                 break;
             }
@@ -120,8 +152,8 @@ int main(int /*argc*/, char* /*argv*/[])
             accumulator += realDeltaMs * speed;
             int ticksThisFrame = 0;
 
-            while (accumulator >= TICK_MS && ticksThisFrame < MAX_TICKS_PER_FRAME) {
-                accumulator -= TICK_MS;
+            while (accumulator >= tickMs && ticksThisFrame < MAX_TICKS_PER_FRAME) {
+                accumulator -= tickMs;
                 ticksThisFrame++;
 
                 eventBus.flush();
@@ -129,13 +161,11 @@ int main(int /*argc*/, char* /*argv*/[])
                 GameTime time = GameTime::fromTick(currentTick);
                 currentTick++;
 
-                // Domain 시스템 업데이트
                 agents.update(registry, time);
                 transport.update(time);
             }
 
-            // spiral-of-death 방지
-            if (accumulator > TICK_MS * MAX_TICKS_PER_FRAME) {
+            if (accumulator > tickMs * MAX_TICKS_PER_FRAME) {
                 accumulator = 0;
             }
         }

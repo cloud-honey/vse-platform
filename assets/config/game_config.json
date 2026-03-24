@@ -49,6 +49,9 @@
         "targetFps": 60,
         "minimumFps": 30,
         "windowWidth": 1280,
-        "windowHeight": 720
+        "windowHeight": 720,
+        "zoomMin": 0.25,
+        "zoomMax": 4.0,
+        "cameraPanSpeed": 8.0
     }
 }

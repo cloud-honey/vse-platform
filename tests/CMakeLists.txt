@@ -7,6 +7,7 @@ add_executable(TowerTycoonTests
     test_TransportSystem.cpp
     test_Camera.cpp
     test_RenderFrame.cpp
+    test_InputMapper.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE

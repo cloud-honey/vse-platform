@@ -161,9 +161,10 @@ struct ElevatorSnapshot {
 | 구분 | 테스트 수 | 결과 |
 |------|-----------|------|
 | 기존 (TASK-01-001~006) | 87 | ✅ 전체 통과 |
-| Camera 좌표 변환 | 8 | ✅ 전체 통과 |
-| RenderFrame + GameCommand | 12 | ✅ 전체 통과 |
-| **합계** | **107** | **✅ 107/107** |
+| Camera 좌표 변환 | 13 | ✅ 전체 통과 |
+| RenderFrame + GameCommand | 11 | ✅ 전체 통과 |
+| InputMapper 커맨드 팩토리 | 10 | ✅ 전체 통과 |
+| **합계** | **121** | **✅ 121/121** |
 
 ### 5-2. 신규 테스트 목록
 
@@ -232,13 +233,36 @@ struct ElevatorSnapshot {
 
 ---
 
-## 8. 결론
+## 8. GPT-5.4 Thinking 검토 반영 (2026-03-24)
 
-TASK-01-007은 CLAUDE.md Layer 3 설계를 충실히 구현했다.
+검토 후 아래 항목 즉시 수정 완료:
 
-- 레이어 경계 완전 준수 (Domain ↔ Renderer 분리)
-- 메인 루프 구조 CLAUDE.md 명세 일치
-- 기존 87개 테스트 + 신규 20개 = **107/107 전체 통과**
-- 인터페이스 변경: ElevatorSnapshot.shaftX 필드 1개 추가 (하위 호환)
+| GPT-5.4 지적 | 대응 | 상태 |
+|---|---|---|
+| §3.2 타일 크기 32px 하드코딩 | ConfigManager에서 `grid.tileSizePx`, `rendering.zoomMin/Max`, `cameraPanSpeed` 등 전부 읽도록 수정 | ✅ |
+| §3.3 보고서 결론 과장 | 톤 하향 조정 (아래 결론 참고) | ✅ |
+| §3.4 테스트 핵심 리스크 구간 부족 | Camera 오프셋+줌 역변환 5개, InputMapper 커맨드 팩토리 10개 추가 → 121/121 | ✅ |
+| §5.4 도메인 커맨드 미연결 | BuildFloor, PlaceTenant, PlaceElevatorShaft, CreateElevator 연결 완료 | ✅ |
+| §5.1 shaftX 추가 이유 재정의 | "렌더러 편의"→"엘리베이터 상태 질의 완결성 보강"으로 정정 | ✅ |
 
-**GPT-5.4 Thinking 검토 요청 가능 상태.**
+### 후속 태스크에서 처리 (우선순위 B/C)
+
+- Dear ImGui 디버그 패널 (Phase 1 범위 내, TASK-01-009로 별도 존재)
+- Agent/UI 수집 → RenderFrame 확장
+- Bootstrapper ↔ main.cpp 역할 분리
+- Dirty Rect 최적화 (Phase 1 후반)
+
+---
+
+## 9. 결론
+
+TASK-01-007은 **Layer 3의 기본 렌더링 기반을 구축**했다.
+
+- 레이어 경계 준수 (Domain ↔ Renderer — 값 타입으로만 통신)
+- 모든 렌더링 수치를 ConfigManager에서 읽음 (하드코딩 제거)
+- 메인 루프 CLAUDE.md 명세 일치 (fixed-tick + 배속 + spiral-of-death 방지)
+- 도메인 커맨드(BuildFloor, PlaceTenant 등) processCommands 연결 완료
+- 기존 87개 + 신규 34개 = **121/121 전체 통과**
+- 인터페이스 변경: ElevatorSnapshot.shaftX 1개 추가 (엘리베이터 상태 질의 완결성)
+
+**Dear ImGui 디버그 패널, Agent 렌더 수집, Dirty Rect는 후속 태스크(TASK-01-009 등)에서 마무리 필요.**

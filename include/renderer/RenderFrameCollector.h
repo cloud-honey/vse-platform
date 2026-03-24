@@ -16,7 +16,8 @@ namespace vse {
  */
 class RenderFrameCollector {
 public:
-    RenderFrameCollector(const IGridSystem& grid, const ITransportSystem& transport);
+    RenderFrameCollector(const IGridSystem& grid, const ITransportSystem& transport,
+                         int tileSizePx = 32);
 
     // 현재 도메인 상태를 기반으로 RenderFrame 생성
     RenderFrame collect() const;
@@ -28,6 +29,7 @@ public:
 private:
     const IGridSystem&      grid_;
     const ITransportSystem& transport_;
+    int  tileSizePx_    = 32;
     bool drawGrid_      = true;
     bool drawDebugInfo_ = true;
 };
