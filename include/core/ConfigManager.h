@@ -47,7 +47,8 @@ private:
     nlohmann::json data_;
     bool loaded_ = false;
 
-    // dot notation으로 중첩 JSON 노드 탐색
+    // dot notation으로 중첩 JSON 노드 탐색 (반복문 기반 순회)
+    // object key만 지원. array index (예: "arr.0") 미지원 — raw()로 직접 접근할 것.
     const nlohmann::json* find(const std::string& key) const;
 };
 
