@@ -11,14 +11,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout vse-platform (JSON source)
+        uses: actions/checkout@v4
+        with:
+          path: vse-platform
 
-      - name: Sync JSON into dashboard folder
-        run: cp VSE_Sprint_Status.json vse-dashboard/VSE_Sprint_Status.json
+      - name: Checkout boom-master-dashboard (full dist)
+        uses: actions/checkout@v4
+        with:
+          repository: cloud-honey/boom-master-dashboard
+          token: ${{ secrets.GH_PAT }}
+          path: dashboard
 
-      - name: Deploy to Cloudflare Pages
+      - name: Sync JSON and HTML into dist/vse-dashboard
+        run: |
+          cp vse-platform/VSE_Sprint_Status.json dashboard/dist/vse-dashboard/VSE_Sprint_Status.json
+          cp vse-platform/vse-dashboard/index.html dashboard/dist/vse-dashboard/index.html
+
+      - name: Deploy full dist to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages deploy vse-dashboard --project-name=ai-devteam-outputs --branch=main
+          command: pages deploy dashboard/dist --project-name=ai-devteam-outputs --branch=main
