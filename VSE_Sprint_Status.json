@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T18:30:00",
+  "updated_at": "2026-03-24T19:05:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -43,11 +43,11 @@
       "title": "IGridSystem 인터페이스 + RealEstate 구현 (30층, 좌하단 원점)",
       "assignee": "DeepSeek",
       "layer": "Layer 0+1",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "IGridSystem 인터페이스 + GridSystem 구현. dot notation config, 엘리베이터 샤프트, 멀티타일 테넌트, anchor 자동 탐색"
     },
     {
       "id": "TASK-01-005",
@@ -195,6 +195,12 @@
       "time": "18:30",
       "title": "TASK-01-003 검토 반영 완료",
       "detail": "3개 AI 검토 반영: isLoaded() 추가, getInt float 경고 로그, 헤더 주석 보강. 27/27 통과. 커밋 0bd8006"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "19:05",
+      "title": "TASK-01-004 IGridSystem + GridSystem 구현 완료",
+      "detail": "붐2 파일 생성(타임아웃) → 붐 직접 완성. EventBus/ConfigManager abstract 훼손 복구. 18/18 테스트 통과. 커밋 ad8ab8d"
     }
   ],
   "references": [
