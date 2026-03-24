@@ -76,11 +76,11 @@
       "title": "SDL2 윈도우 + 타일 그리드 렌더링",
       "assignee": "Claude Code",
       "layer": "Layer 3",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": "TASK-01-001,004 완료 후 시작"
+      "notes": "SDL2 윈도우 + 타일/엘리베이터 렌더링 + Camera + InputMapper + main loop. 107/107 테스트."
     },
     {
       "id": "TASK-01-008",
