@@ -1376,15 +1376,16 @@ struct BuildingComponent {
 ### 6.3 System Update Order (per tick)
 
 ```
-1. EventBus::flush()            — Deliver events from previous tick (tick N-1 → subscribers)
-2. SimClock::update()           — Advance tick, publish TickAdvanced (queued for N+1)
-3. Bootstrapper::processCommands() — Execute GameCommands from input
-4. AgentSystem::update()        — NPC AI decisions, pathfinding, movement
-5. TransportSystem::update()    — Elevator FSM + LOOK algorithm
-6. EconomyEngine::update()      — Rent/maintenance on DayChanged
-7. StarRatingSystem::update()   — Recalculate satisfaction average
-8. ContentRegistry::checkAndReload()  — Hot-reload (every N ticks, not every tick)
-9. [Render] Collect RenderFrame → SDLRenderer::render()
+1. eventBus_->flush()                — Deliver events from previous tick (tick N-1 → subscribers)
+2. processCommands()                 — Drain GameCommand queue (first tick of frame only)
+3. simClock_->advanceTick()          — Advance one fixed tick, emit TickAdvanced (queued for N+1)
+4. agentSystem_->update(reg, time)   — NPC AI decisions, pathfinding, movement
+5. transportSystem_->update(reg, time) — Elevator FSM + LOOK algorithm
+6. economyEngine_->update(reg, time) — Rent/maintenance on DayChanged
+7. starRatingSystem_->update(reg, time) — Recalculate satisfaction average
+8. contentRegistry_->checkAndReload()   — Hot-reload (every N ticks, not every tick)
+--- (outside tick loop) ---
+9. render()                          — Collect RenderFrame → SDLRenderer (1x per frame)
 ```
 
 > Changed from v1.0: EventBus::flush() moved to **start** of tick (was after SimClock). This ensures deferred delivery rule is respected: tick N events → flush at tick N+1 start.

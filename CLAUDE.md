@@ -170,12 +170,13 @@ Layer 3  SDL2 Renderer  IRenderCommand/GameCommand 기반. Input → GameCommand
 
 ```cpp
 // 컴포넌트 예시 — 데이터만
-struct PositionComponent { int x, y, floor; };
-struct AgentComponent { AgentType type; float satisfaction; };
+struct PositionComponent { int x; int floor; };
+struct AgentComponent { AgentRole role; NeedsState needs; EntityId currentBuilding; };
 
-// System 예시 — 로직만
-class AgentMovementSystem {
-    void update(entt::registry& reg, float dt);
+// System 예시 — fixed-tick 기반, dt 없음
+// All gameplay systems update on fixed simulation ticks, not variable frame delta.
+class AgentSystem {
+    void update(entt::registry& reg, const GameTime& time);
 };
 ```
 

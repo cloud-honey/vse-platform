@@ -111,7 +111,7 @@ TASK-[스프린트번호]-[순번]  예: TASK-01-003
 붐은 각 태스크 완료 시 아래 항목을 체크하고 Human에게 보고한다.
 
 ```
-[ ] Layer 경계 위반 없음 (Layer 0에 구현체 없음)
+[ ] Layer 경계 위반 없음 (Core API에 concrete 구현 없음, Core Runtime에 게임 규칙 없음)
 [ ] 하드코딩 없음 (수치 전부 ConfigManager/JSON)
 [ ] 네이밍 컨벤션 준수 (CLAUDE.md 기준)
 [ ] 메모리 소유권 컨벤션 준수 (unique_ptr 우선)
@@ -163,7 +163,7 @@ TASK-[스프린트번호]-[순번]  예: TASK-01-003
 ### DeepSeek — 개발
 
 **절대 규칙:**
-- Layer 경계 위반 금지 (Layer 0 인터페이스 직접 구현 금지)
+- Layer 경계 위반 금지 (Core API = 인터페이스/POD만, Core Runtime = 게임 규칙 금지, Domain 로직은 Layer 1)
 - CLAUDE.md 네이밍 컨벤션 준수
 - 하드코딩 금지 — 수치는 ConfigManager/JSON
 - 단위 테스트 반드시 함께 생성
