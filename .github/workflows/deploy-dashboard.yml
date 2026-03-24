@@ -1,36 +1,21 @@
-name: Deploy VSE Dashboard
+name: Trigger Dashboard Deploy
 
 on:
   push:
     branches: [main]
     paths:
       - 'VSE_Sprint_Status.json'
-      - 'vse-dashboard/**'
+      - 'vse-dashboard/index.html'
 
 jobs:
-  deploy:
+  trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout vse-platform (JSON source)
-        uses: actions/checkout@v4
-        with:
-          path: vse-platform
-
-      - name: Checkout boom-master-dashboard (full dist)
-        uses: actions/checkout@v4
-        with:
-          repository: cloud-honey/boom-master-dashboard
-          token: ${{ secrets.GH_PAT }}
-          path: dashboard
-
-      - name: Sync JSON and HTML into dist/vse-dashboard
+      - name: Trigger boom-master-dashboard deploy
         run: |
-          cp vse-platform/VSE_Sprint_Status.json dashboard/dist/vse-dashboard/VSE_Sprint_Status.json
-          cp vse-platform/vse-dashboard/index.html dashboard/dist/vse-dashboard/index.html
-
-      - name: Deploy full dist to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          command: pages deploy dashboard/dist --project-name=ai-devteam-outputs --branch=main
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/cloud-honey/boom-master-dashboard/dispatches \
+            -d '{"event_type": "vse-dashboard-update"}'
+          echo "Triggered deploy on boom-master-dashboard"
