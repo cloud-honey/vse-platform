@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T13:45:00",
+  "updated_at": "2026-03-24T16:28:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -11,10 +11,10 @@
       "assignee": "DeepSeek",
       "layer": "인프라",
       "status": "done",
-      "qa_status": "pending",
+      "qa_status": "pass",
       "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "CMake structure, CI, placeholder test, build fixes. Commit a179345. Build on macOS only (SDL2)."
+      "confirmed_by_human": true,
+      "notes": "CMake structure, CI, placeholder test. Linux 빌드 추가(find_package). Commits: a179345, c204e67. ctest 1/1 ✅"
     },
     {
       "id": "TASK-01-002",
@@ -119,9 +119,14 @@
   "escalations": [],
   "design_issues": [],
   "open_questions": [
-    "라이선스 분리 (Layer 0 MIT / Layer 1 상업)"
+    "라이선스 분리 (Layer 0 MIT / Layer 1 상업)",
+    "스트레스 정확한 수치 임계값 (YootTower 소스 공개 대기)",
+    "엘리베이터 대기 허용 틱 수"
   ],
   "decided": [
+    "역분석 문서: supplement_01~04.md 완성 (별점/경제/테넌트/재난/엘리베이터/렌더링/오디오)",
+    "YootTower GitHub: 원본 소스 공개 예정 — 미확인 13개 항목 추후 확인 가능",
+    "Linux 빌드: SDL2 find_package로 전환 완료",
     "SimClock Tick: 100ms (10 TPS)",
     "ECS: EnTT",
     "Serialization: MessagePack",
