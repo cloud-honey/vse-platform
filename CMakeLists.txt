@@ -51,6 +51,9 @@ add_library(project_includes INTERFACE)
 target_include_directories(project_includes INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+target_compile_definitions(project_includes INTERFACE
+    SPDLOG_NO_EXCEPTIONS  # required: project uses -fno-exceptions
+)
 
 # ──────────────────────────────────────────────
 # Main executable
@@ -62,10 +65,9 @@ add_executable(TowerTycoon
 target_link_libraries(TowerTycoon PRIVATE
     project_warnings
     project_includes
-    SDL2::SDL2-static
-    SDL2::SDL2main
-    SDL2_image
-    SDL2_ttf
+    SDL2::SDL2
+    SDL2_image::SDL2_image
+    SDL2_ttf::SDL2_ttf
     imgui
     EnTT::EnTT
     nlohmann_json::nlohmann_json

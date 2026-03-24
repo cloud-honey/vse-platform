@@ -1,44 +1,11 @@
 include(FetchContent)
 
 # ──────────────────────────────────────────────
-# SDL2
+# SDL2 — system package (apt/brew) preferred
 # ──────────────────────────────────────────────
-FetchContent_Declare(
-    SDL2
-    GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    GIT_TAG        release-2.28.5
-    GIT_SHALLOW    TRUE
-)
-set(SDL_SHARED OFF CACHE BOOL "" FORCE)
-set(SDL_STATIC ON  CACHE BOOL "" FORCE)
-set(SDL_TEST   OFF CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(SDL2)
-
-# ──────────────────────────────────────────────
-# SDL2_image
-# ──────────────────────────────────────────────
-FetchContent_Declare(
-    SDL2_image
-    GIT_REPOSITORY https://github.com/libsdl-org/SDL_image.git
-    GIT_TAG        release-2.8.2
-    GIT_SHALLOW    TRUE
-)
-set(SDL2IMAGE_INSTALL OFF CACHE BOOL "" FORCE)
-set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(SDL2_image)
-
-# ──────────────────────────────────────────────
-# SDL2_ttf
-# ──────────────────────────────────────────────
-FetchContent_Declare(
-    SDL2_ttf
-    GIT_REPOSITORY https://github.com/libsdl-org/SDL_ttf.git
-    GIT_TAG        release-2.22.0
-    GIT_SHALLOW    TRUE
-)
-set(SDL2TTF_INSTALL OFF CACHE BOOL "" FORCE)
-set(SDL2TTF_VENDORED ON CACHE BOOL "" FORCE)  # use bundled freetype/harfbuzz
-FetchContent_MakeAvailable(SDL2_ttf)
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 # ──────────────────────────────────────────────
 # EnTT (header-only)
@@ -47,7 +14,7 @@ FetchContent_Declare(
     EnTT
     GIT_REPOSITORY https://github.com/skypjack/entt.git
     GIT_TAG        v3.13.2
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
 FetchContent_MakeAvailable(EnTT)
 
@@ -58,7 +25,7 @@ FetchContent_Declare(
     imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui.git
     GIT_TAG        docking
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
 FetchContent_GetProperties(imgui)
 if(NOT imgui_POPULATED)
@@ -77,7 +44,7 @@ if(NOT imgui_POPULATED)
         ${imgui_SOURCE_DIR}
         ${imgui_SOURCE_DIR}/backends
     )
-    target_link_libraries(imgui PUBLIC SDL2::SDL2-static)
+    target_link_libraries(imgui PUBLIC SDL2::SDL2)
     target_compile_options(imgui PRIVATE -w)  # suppress warnings in third-party code
 endif()
 
@@ -88,7 +55,7 @@ FetchContent_Declare(
     nlohmann_json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
     GIT_TAG        v3.11.3
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
 set(JSON_BuildTests OFF CACHE BOOL "" FORCE)
 set(JSON_Install   OFF CACHE BOOL "" FORCE)
@@ -101,10 +68,11 @@ FetchContent_Declare(
     msgpack
     GIT_REPOSITORY https://github.com/msgpack/msgpack-c.git
     GIT_TAG        cpp-6.1.1
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
-set(MSGPACK_BUILD_TESTS   OFF CACHE BOOL "" FORCE)
+set(MSGPACK_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
 set(MSGPACK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(MSGPACK_USE_BOOST      OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(msgpack)
 
 # ──────────────────────────────────────────────
@@ -114,7 +82,7 @@ FetchContent_Declare(
     spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog.git
     GIT_TAG        v1.14.1
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
 set(SPDLOG_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(SPDLOG_BUILD_TESTS    OFF CACHE BOOL "" FORCE)
@@ -127,7 +95,7 @@ FetchContent_Declare(
     Catch2
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
     GIT_TAG        v3.6.0
-    GIT_SHALLOW    TRUE
+    GIT_SHALLOW    FALSE
 )
 set(CATCH_INSTALL_DOCS    OFF CACHE BOOL "" FORCE)
 set(CATCH_INSTALL_EXTRAS  OFF CACHE BOOL "" FORCE)
