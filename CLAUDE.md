@@ -1,5 +1,5 @@
 # CLAUDE.md — VSE Platform Phase 1 구현 사양서
-> Version: 1.2 | 대상: 붐(PM) + DeepSeek(개발) + Claude Code(렌더링)
+> Version: 1.3 | 대상: 붐(PM) + DeepSeek(개발) + Claude Code(렌더링)
 > 이 파일이 모든 구현 판단의 최우선 기준이다. 여기 없는 것은 Human에게 먼저 묻는다.
 
 ---
@@ -220,8 +220,9 @@ struct SaveHeader {
 ### Entity 저장/복원 방식 (확정)
 - **Phase 1: EnTT snapshot 기반** (`entt::snapshot` / `entt::snapshot_loader`) — entity + component 저장용
 - entity ID는 EnTT가 내부적으로 재매핑 (별도 stable ID 불필요)
+- 엔티티 간 참조 (passengers, homeTenant, workplace)는 같은 snapshot 내에서만 자동 안전 — **SaveLoad 테스트에서 반드시 round-trip 검증**
 - **Non-ECS 시스템 내부 상태** (GridSystem floors_, Economy balance/records, StarRating)는 **시스템별 커스텀 직렬화**로 별도 처리
-- 복원 순서: Grid → Tenant → Elevator → Agent → Economy → StarRating → SimClock (상세: VSE_Design_Spec.md §5.8)
+- **복원 순서**: (1) snapshot_loader로 전체 ECS 복원 → (2) non-ECS 상태 복원 → (3) derived cache 재계산 (상세: VSE_Design_Spec.md §5.8)
 - Phase 2: save format migration + stable ID 검토
 
 ---
@@ -372,6 +373,7 @@ DeepSeek / Claude Code에게 태스크를 줄 때 반드시 포함:
 | 2026-03 | 1.0 | 크로스 검증 완료 후 최초 작성. |
 | 2026-03 | 1.1 | 미결 4개 전부 확정. 타일 좌표계·스프라이트·CI/CD·에러핸들링 추가. |
 | 2026-03-24 | 1.2 | Layer 0 = Core API + Core Runtime 분리 정의. EventBus deferred-only 규칙 추가. fixed-tick loop 확정. config vs 고정값 정책. EnTT snapshot 기반 저장/복원. Bootstrapper = composition root 명시. GameCommand 입력 흐름 추가. |
+| 2026-03-24 | 1.3 | External review (DeepSeek R1 + GPT-5.4) 반영: spawnAgent() EntityId 기반 재설계, SaveLoad 참조 안전성 테스트 의무화, ECS 예시 최신화, PixelPos x 변환식, 버전 동기화. |
 
 ---
 *이 파일의 내용을 변경하려면 반드시 Human 승인 후 붐(PM)이 업데이트한다.*

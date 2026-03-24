@@ -1,6 +1,6 @@
 # VSE Design Specification — Phase 1
-> Version: 1.3 | Author: 붐 (PM) | Date: 2026-03-24
-> Source of truth: `CLAUDE.md` v1.2 | This document details HOW to implement what CLAUDE.md defines.
+> Version: 1.4 | Author: 붐 (PM) | Date: 2026-03-24
+> Source of truth: `CLAUDE.md` v1.3 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
 > v1.2: Final review 6 items — true fixed-tick loop, CLAUDE.md sync, EnTT snapshot save/restore, Bootstrapper=composition root, config immutable ticks, document consistency
@@ -186,7 +186,9 @@ struct std::hash<vse::TileCoord> {
 namespace vse { // reopen
 
 // Pixel position (render space). Origin: top-left (SDL2 convention).
-// Conversion: pixelY = (config.maxFloors - 1 - floor) * config.tileSize
+// Conversion:
+//   pixelX = tile.x * config.tileSize
+//   pixelY = (config.maxFloors - 1 - tile.floor) * config.tileSize
 struct PixelPos {
     float x;
     float y;
@@ -818,7 +820,9 @@ class IAgentSystem {
 public:
     virtual ~IAgentSystem() = default;
 
-    virtual Result<EntityId> spawnAgent(entt::registry& reg, TileCoord spawnPos, TenantType workplace, EntityId homeTenant) = 0;
+    // homeTenantId: resident's home tenant entity. workplaceId: assigned workplace tenant entity.
+    // spawnPos: optional override — if not provided, defaults to homeTenant position.
+    virtual Result<EntityId> spawnAgent(entt::registry& reg, EntityId homeTenantId, EntityId workplaceId, std::optional<TileCoord> spawnPos = std::nullopt) = 0;
     virtual void despawnAgent(entt::registry& reg, EntityId id) = 0;
     virtual int activeAgentCount() const = 0;
 
@@ -918,6 +922,12 @@ public:
 - Car calls are generated when a passenger boards (from their `targetFloor`)
 - LOOK: complete all stops in current direction, then reverse. No direction change mid-sweep.
 - Idle: when callQueue is empty and no passengers, elevator stays at current floor
+
+**Implementation guide — internal separation within TransportSystem:**
+- `ElevatorCarFSM`: per-elevator state machine handling door open/close, dwell time, boarding/alighting, movement state transitions. Each car owns its own FSM instance.
+- `LookScheduler`: collects hall calls + car calls, determines next stop floor, enforces same-direction-first rule, merges duplicate calls. Shared across all elevators in a shaft group.
+- `TransportSystem::update()` iterates each elevator: (1) LookScheduler picks next target, (2) ElevatorCarFSM advances state, (3) emit events (ElevatorArrived, PassengerBoarded, etc.)
+- This is an **internal design guideline**, not a public API boundary — both classes live inside `src/domain/TransportSystem.cpp`.
 
 ### 5.7 IEconomyEngine
 
@@ -1038,10 +1048,11 @@ public:
 **Entity Persistence (authoritative):**
 - Phase 1: **EnTT snapshot** (`entt::snapshot` / `entt::snapshot_loader`) for entity + component data
 - EnTT handles entity ID remapping internally during load — no separate stable ID layer needed
-- All entity cross-references (e.g., `ElevatorComponent::passengers`) are automatically remapped by EnTT
+- Entity cross-references (e.g., `ElevatorComponent::passengers`, `AgentComponent::homeTenant`, `AgentComponent::workplace`) are remapped by EnTT **only if all referenced entities exist within the same snapshot**. Do not assume automatic safety — SaveLoad tests must explicitly verify these references survive a round-trip.
 - **Non-ECS state requires custom serialization:** GridSystem internal state (`floors_`, tile occupancy), Economy state (balance, income/expense records), StarRating state — these live outside the registry and must be serialized/deserialized separately by each system
+- **Restore sequence:** (1) MessagePack → verify metadata, (2) `entt::snapshot_loader` restores all entities + components in one pass (Tenant, Elevator, Agent created together), (3) restore non-ECS system state (Grid floors_, Economy balance), (4) recalculate derived caches from restored ECS data (agent paths, interpolated positions, system internal indexes). Steps 3-4 must run **after** ECS restore completes.
 - Save pipeline: SaveMetadata + system custom data + `entt::snapshot` → MessagePack with version header
-- Load pipeline: MessagePack → verify metadata → restore system state → `entt::snapshot_loader` → recalculate derived caches
+- **SaveLoad test requirements (Phase 1):** passenger EntityId round-trip, homeTenant/workplace reference validity, Grid tile occupancy consistency after load, Economy balance equality
 - Phase 2: save format migration + optional stable ID for modding support
 
 ### 5.9 ContentRegistry
@@ -1781,6 +1792,7 @@ public:
 | 2026-03-24 | 1.1 | Cross-review 11 items applied: (P0) Layer 0 split clarified, EntityId=entt::entity, SimClock tick-time rules, EventBus deferred-only with payload structs, GameCommand input flow; (P1) Grid anchor/occupancy rules, Elevator FSM 6-state, SaveLoad scope+restore order, StarRatingSystem/AsyncLoader/MemoryPool consistency fixes, IAudioCommand spec; (P2) defaults-vs-config policy, test coverage expanded. System update order corrected (flush first). |
 | 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
 | 2026-03-24 | 1.3 | Self-review 9 fixes: **[Critical]** (C-1) speed multiplier now `accumulator += dt * speed` instead of tick cap, (C-2) accumulator ownership moved from SimClock to Bootstrapper — SimClock is pure tick counter; **[Important]** (I-1) Core API header rule clarified (I*.h = pure virtual, others = runtime declarations), (I-2) processCommands() drain-once-per-frame rule, (I-3) system update() signatures unified to `(registry&, GameTime&)` — no dt param, (I-4) SaveLoad: non-ECS state (Grid floors_, Economy balance) requires custom serialization alongside EnTT snapshot; **[Minor]** PixelPos config ref, GameCommandIssued = post-process notification, TileCoord std::hash added. |
+| 2026-03-24 | 1.4 | External review (DeepSeek R1 + GPT-5.4): (3.2) SaveLoad entity cross-reference safety — removed "automatically safe" assertion, added round-trip test requirements, clarified restore sequence (ECS first → non-ECS → derived caches); (3.3) spawnAgent() redesigned to `(reg, homeTenantId, workplaceId, optional spawnPos)` — EntityId-based; (3.4) TransportSystem internal separation guide added (ElevatorCarFSM + LookScheduler); (3.5) PixelPos x conversion formula added; (3.6) CLAUDE.md version synced to v1.3. |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*

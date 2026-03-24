@@ -153,11 +153,11 @@
 | # | 항목 | 판정 | 상태 |
 |---|------|------|------|
 | 3.1 | processCommands() 위치 | 보류 | 현행 유지 (문서 명확화로 충분) |
-| 3.2 | 엔티티 직렬화 참조 안전성 | 수정 채택 | ⏳ 반영 대기 |
-| 3.3 | spawnAgent() 시그니처 | 수정 채택 | ⏳ 반영 대기 |
-| 3.4 | FSM/LOOK 분리 가이드 | 채택 | ⏳ 반영 대기 |
-| 3.5 | PixelPos x 변환식 | 채택 | ⏳ 반영 대기 |
-| 3.6 | 버전 동기화 (CLAUDE.md v1.3) | 채택 | ⏳ 반영 대기 |
+| 3.2 | 엔티티 직렬화 참조 안전성 | 수정 채택 | ✅ 반영 완료 (`848b416` → Design Spec §5.8, CLAUDE.md §Entity) |
+| 3.3 | spawnAgent() 시그니처 | 수정 채택 | ✅ 반영 완료 (EntityId 기반 + optional spawnPos) |
+| 3.4 | FSM/LOOK 분리 가이드 | 채택 | ✅ 반영 완료 (ElevatorCarFSM + LookScheduler 가이드) |
+| 3.5 | PixelPos x 변환식 | 채택 | ✅ 반영 완료 (pixelX = tile.x * tileSize) |
+| 3.6 | 버전 동기화 (CLAUDE.md v1.3) | 채택 | ✅ 반영 완료 (Design Spec v1.4, CLAUDE.md v1.3) |
 
 ---
 
