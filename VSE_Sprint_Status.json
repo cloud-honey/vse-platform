@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T17:22:00",
+  "updated_at": "2026-03-24T17:51:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -21,11 +21,11 @@
       "title": "SimClock 구현 (100ms tick, 렌더링 분리)",
       "assignee": "DeepSeek",
       "layer": "Layer 0",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "3개 AI 검토 반영. speed→Bootstrapper, restoreState silent, 14/14 테스트"
     },
     {
       "id": "TASK-01-003",
@@ -171,6 +171,18 @@
       "time": "16:28",
       "title": "대시보드 aidev.abamti.com 외부 배포",
       "detail": "Cloudflare Pages 배포 완료. https://aidev.abamti.com/vse-dashboard/"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "17:36",
+      "title": "TASK-01-002 SimClock+EventBus 구현 완료",
+      "detail": "붐2(DeepSeek) 구현. advanceTick/pause/resume/setSpeed/restoreState/HourChanged/DayChanged. 12/12 테스트 통과. 커밋 e6c5aa6"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "17:51",
+      "title": "TASK-01-002 외부 검토 반영 — 수정 완료",
+      "detail": "3개 AI 모델(GPT-5.4/Gemini/DeepSeek) 만장일치 수정사항 적용: ①speed→Bootstrapper 이동(advanceTick 항상 1 tick) ②restoreState silent ③setSpeed runtime guard ④신규 테스트 2개. 14/14 통과. 커밋 29af76f"
     }
   ],
   "references": [
