@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T19:05:00",
+  "updated_at": "2026-03-24T19:40:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -54,11 +54,11 @@
       "title": "EventBus 구현 (단일 버스 + replicable 플래그)",
       "assignee": "DeepSeek",
       "layer": "Layer 0",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "IAgentSystem + AgentSystem. ECS 컴포넌트 5종(Position/Agent/Schedule/Path/ElevatorPassenger). 스케줄 기반 상태 전환(Idle↔Working↔Resting). GridSystem 연동."
     },
     {
       "id": "TASK-01-006",
@@ -201,6 +201,12 @@
       "time": "19:05",
       "title": "TASK-01-004 IGridSystem + GridSystem 구현 완료",
       "detail": "붐2 파일 생성(타임아웃) → 붐 직접 완성. EventBus/ConfigManager abstract 훼손 복구. 18/18 테스트 통과. 커밋 ad8ab8d"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "19:40",
+      "title": "TASK-01-005 IAgentSystem + AgentSystem 구현 완료",
+      "detail": "붐 직접 구현. ECS 컴포넌트 5종, 스케줄 기반 상태 전환, GridSystem 연동. 15/15 신규 테스트, 전체 60/60. 커밋 2a22c9a"
     }
   ],
   "references": [
