@@ -10,14 +10,18 @@ static std::string cfgPath() {
     return std::string(VSE_PROJECT_ROOT) + "/assets/config/game_config.json";
 }
 
+// ConfigManager를 먼저 로드하기 위한 helper — 멤버 초기화 전 loadFromFile 보장
+struct PreloadedConfig : ConfigManager {
+    PreloadedConfig() { loadFromFile(cfgPath()); }
+};
+
 struct TFixture {
-    EventBus      bus;
-    ConfigManager cfg;
-    GridSystem    grid;
-    TransportSystem transport;
+    EventBus         bus;
+    PreloadedConfig  cfg;   // 생성자에서 자동 loadFromFile
+    GridSystem       grid;
+    TransportSystem  transport;
 
     TFixture() : grid(bus, cfg), transport(grid, bus, cfg) {
-        cfg.loadFromFile(cfgPath());
         // 층 0~2 건설
         grid.buildFloor(1);
         grid.buildFloor(2);

@@ -11,13 +11,18 @@ static std::string cfgPath() {
     return std::string(VSE_PROJECT_ROOT) + "/assets/config/game_config.json";
 }
 
+// ConfigManager를 생성자에서 미리 로드하는 헬퍼
+struct PreloadedConfig : ConfigManager {
+    PreloadedConfig() { loadFromFile(cfgPath()); }
+};
+
 // 테스트 픽스처 — GridSystem + AgentSystem + entt::registry
 struct Fixture {
-    EventBus      bus;
-    ConfigManager cfg;
-    GridSystem    grid;
-    AgentSystem   agents;
-    entt::registry reg;
+    EventBus         bus;
+    PreloadedConfig  cfg;   // 멤버 초기화 전 loadFromFile 보장
+    GridSystem       grid;
+    AgentSystem      agents;
+    entt::registry   reg;
 
     // 테넌트 EntityId 시뮬레이션 — GridSystem에 실제 배치
     EntityId homeTenantId  = INVALID_ENTITY;
@@ -27,7 +32,6 @@ struct Fixture {
         : grid(bus, cfg)
         , agents(grid, bus)
     {
-        cfg.loadFromFile(cfgPath());
 
         // 층 0은 자동 건설됨 (GridSystem 생성자)
         // 층 1 건설
