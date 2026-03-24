@@ -12,7 +12,7 @@ void SimClock::advanceTick() {
     }
 
     SimTick oldTick = tick_;
-    tick_ += speed_;
+    tick_ += 1;
     
     checkTimeBoundaries(oldTick, tick_);
     
@@ -33,6 +33,9 @@ void SimClock::resume() {
 void SimClock::setSpeed(int multiplier) {
     // 1x, 2x, 4x만 허용
     assert(multiplier == 1 || multiplier == 2 || multiplier == 4);
+    if (multiplier != 1 && multiplier != 2 && multiplier != 4) {
+        return; // release 빌드 안전망
+    }
     speed_ = multiplier;
 }
 
@@ -53,12 +56,11 @@ bool SimClock::isPaused() const {
 }
 
 void SimClock::restoreState(SimTick tick, int speed, bool paused) {
-    SimTick oldTick = tick_;
+    // Silent restore — 이벤트 발행 없음
+    // 세이브 로드는 "상태 복원"이지 "시간 경과"가 아님
     tick_ = tick;
     speed_ = speed;
     paused_ = paused;
-    
-    checkTimeBoundaries(oldTick, tick_);
 }
 
 void SimClock::checkTimeBoundaries(SimTick oldTick, SimTick newTick) {

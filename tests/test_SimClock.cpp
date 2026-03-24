@@ -70,17 +70,12 @@ TEST_CASE("SimClock 속도 배수", "[SimClock]") {
     EventBus bus;
     SimClock clock(bus);
     
-    // 속도 설정
     clock.setSpeed(2);
     REQUIRE(clock.speed() == 2);
     
-    clock.setSpeed(4);
-    REQUIRE(clock.speed() == 4);
-    
-    // 속도에 따른 tick 증가 확인
-    clock.setSpeed(2);
+    // advanceTick은 speed에 관계없이 항상 1 tick만 증가
     clock.advanceTick();
-    REQUIRE(clock.currentTick() == 2); // 2배 속도이므로 2 증가
+    REQUIRE(clock.currentTick() == 1);
 }
 
 TEST_CASE("SimClock HourChanged 이벤트", "[SimClock]") {
@@ -244,4 +239,47 @@ TEST_CASE("EventBus pendingCount", "[EventBus]") {
     
     bus.flush();
     REQUIRE(bus.pendingCount() == 0);
+}
+
+TEST_CASE("SimClock restoreState silent", "[SimClock]") {
+    EventBus bus;
+    SimClock clock(bus);
+    
+    int hourCount = 0;
+    int dayCount = 0;
+    bus.subscribe(EventType::HourChanged, [&](const Event&) { hourCount++; });
+    bus.subscribe(EventType::DayChanged, [&](const Event&) { dayCount++; });
+    
+    // 1일 1시간 지점으로 복원
+    clock.restoreState(1500, 1, false);
+    bus.flush();
+    
+    REQUIRE(hourCount == 0);
+    REQUIRE(dayCount == 0);
+    REQUIRE(bus.pendingCount() == 0);
+}
+
+TEST_CASE("EventBus publish during flush", "[EventBus]") {
+    EventBus bus;
+    
+    int firstCount = 0;
+    int secondCount = 0;
+    
+    bus.subscribe(EventType::TickAdvanced, [&](const Event&) {
+        firstCount++;
+        // flush 중에 새 이벤트 발행
+        bus.publish(Event{EventType::HourChanged});
+    });
+    bus.subscribe(EventType::HourChanged, [&](const Event&) {
+        secondCount++;
+    });
+    
+    bus.publish(Event{EventType::TickAdvanced});
+    bus.flush(); // TickAdvanced 처리 → HourChanged 큐에 추가
+    
+    REQUIRE(firstCount == 1);
+    REQUIRE(secondCount == 0); // 현재 flush에서는 미처리
+    
+    bus.flush(); // HourChanged 처리
+    REQUIRE(secondCount == 1);
 }
