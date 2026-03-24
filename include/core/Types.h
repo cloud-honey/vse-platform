@@ -1,0 +1,163 @@
+#pragma once
+#include <cstdint>
+#include <optional>
+#include <string>
+#include <entt/entt.hpp>
+
+namespace vse {
+
+// ── Coordinate ──────────────────────────────
+// Origin: bottom-left. Y increases upward. floor 0 = ground.
+struct TileCoord {
+    int x;
+    int floor;      // 0 = ground, negative = basement (Phase 2)
+
+    bool operator==(const TileCoord& o) const { return x == o.x && floor == o.floor; }
+    bool operator!=(const TileCoord& o) const { return !(*this == o); }
+};
+
+} // namespace vse — temporarily close for hash specialization
+
+// std::hash specialization for TileCoord (needed for unordered_map keys)
+template<>
+struct std::hash<vse::TileCoord> {
+    size_t operator()(const vse::TileCoord& c) const noexcept {
+        return std::hash<int>()(c.x) ^ (std::hash<int>()(c.floor) << 16);
+    }
+};
+
+namespace vse { // reopen
+
+// Pixel position (render space). Origin: top-left (SDL2 convention).
+// Conversion:
+//   pixelX = tile.x * config.tileSize
+//   pixelY = (config.maxFloors - 1 - tile.floor) * config.tileSize
+struct PixelPos {
+    float x;
+    float y;
+};
+
+// ── Entity IDs ──────────────────────────────
+// Phase 1: EntityId = entt::entity directly. No separate stable ID layer.
+// Stable ID for save/load is deferred to Phase 2 SaveLoad detailed design.
+using EntityId = entt::entity;
+constexpr EntityId INVALID_ENTITY = entt::null;
+
+// ── Time ────────────────────────────────────
+using SimTick = uint64_t;        // Monotonic tick counter
+using GameMinute = uint32_t;     // In-game minutes since day 0
+
+struct GameTime {
+    int day;         // 0-indexed
+    int hour;        // 0-23
+    int minute;      // 0-59
+
+    GameMinute toMinutes() const { return day * 1440 + hour * 60 + minute; }
+
+    static GameTime fromTick(SimTick tick) {
+        int totalMin = static_cast<int>(tick);  // 1 tick = 1 game minute
+        return GameTime{
+            totalMin / 1440,
+            (totalMin % 1440) / 60,
+            totalMin % 60
+        };
+    }
+};
+
+// ── Enums ───────────────────────────────────
+enum class TenantType : uint8_t {
+    Office = 0,
+    Residential,
+    Commercial,
+    COUNT           // Always last
+};
+
+enum class AgentState : uint8_t {
+    Idle = 0,
+    Moving,
+    Working,
+    Resting,
+    WaitingElevator,
+    InElevator,
+    Leaving,        // Dissatisfied, leaving building
+    COUNT
+};
+
+enum class Direction : uint8_t {
+    Left = 0,
+    Right,
+    Up,             // Stairs/elevator
+    Down
+};
+
+enum class ElevatorDirection : uint8_t {
+    Idle = 0,
+    Up,
+    Down
+};
+
+enum class StarRating : uint8_t {
+    Star0 = 0,
+    Star1,
+    Star2,
+    Star3,
+    Star4,
+    Star5
+};
+
+// ── Event Types ─────────────────────────────
+enum class EventType : uint16_t {
+    // SimClock
+    TickAdvanced = 100,
+    DayChanged,
+    HourChanged,
+
+    // Grid
+    TileOccupied = 200,
+    TileVacated,
+    FloorBuilt,
+
+    // Agent
+    AgentSpawned = 300,
+    AgentDespawned,
+    AgentMoved,
+    AgentStateChanged,
+    AgentSatisfactionChanged,
+
+    // Transport
+    ElevatorCalled = 400,
+    ElevatorArrived,
+    ElevatorBoarded,
+    ElevatorExited,
+
+    // Economy
+    IncomeReceived = 500,
+    ExpensePaid,
+    RentCollected,
+    BalanceChanged,
+
+    // Building
+    TenantPlaced = 600,
+    TenantRemoved,
+    StarRatingChanged,
+
+    // Input/Command — notification AFTER command is processed (for UI feedback/logging, not for command delivery)
+    GameCommandIssued = 700,
+
+    // System
+    GameSaved = 900,
+    GameLoaded,
+    ConfigReloaded,
+};
+
+// ── Constants ───────────────────────────────
+// Role: fallback values when game_config.json fails to load.
+namespace defaults {
+    constexpr int MAX_FLOORS = 30;
+    constexpr int TILE_SIZE = 32;
+    constexpr int ELEVATOR_CAPACITY = 8;
+    constexpr int INITIAL_MONEY = 100000;
+    constexpr int TICKS_PER_SECOND = 60;   // Fixed-tick loop frequency
+}
+
+} // namespace vse
