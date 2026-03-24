@@ -266,3 +266,32 @@ std::optional<TileCoord> GridSystem::findAnchor(TileCoord anyTile) const {
 ### 추가 권장 사항
 - CI 헤더 인터페이스 변경 감지 테스트 추가 검토 (붐2 사고 재발 방지)
 - `buildFloor()` 순서 제약은 설계 문서(VSE_Design_Spec)에 Phase 2 예정으로 명시할 것
+
+---
+
+## 11. GPT-5.4 Thinking 검토 결과 및 수정 사항 (2026-03-24)
+
+**검토 모델**: GPT-5.4 Thinking  
+**판정**: 조건부 승인 → 수정 완료 후 확정 승인
+
+### 핵심 지적 및 조치
+
+| 지적 | 조치 | 커밋 |
+|------|------|------|
+| `findAnchor()` / `isAnchor`가 Layer 0 공개 인터페이스에 불필요하게 노출 | `IGridSystem`에서 제거, `GridSystem` private 헬퍼로 환원 | aabed3e |
+| floor 0 로비 타일 미초기화 (`isLobby=false`) | 생성자에서 floor 0 전 타일 `isLobby=true` 초기화 | aabed3e |
+| `findNearestEmpty()` 탐색 우선순위 미정의 | same-floor-first + 좌 우선 결정적 tie-break로 교체 | aabed3e |
+
+### 추가된 테스트 (+6개)
+- `floor 0 로비 초기화` — 전 타일 isLobby=true 확인
+- `floor 1은 로비 아님` — buildFloor 후 isLobby=false 확인
+- `getFloorTiles 반환 개수 = floorWidth` — 계약 고정
+- `findNearestEmpty: 같은 층 우선` — same-floor-first 검증
+- `findNearestEmpty: 좌 우선 tie-break` — dx=-1이 dx=+1보다 우선
+- `findNearestEmpty: searchRadius 경계` — radius=0 → nullopt
+
+### 최종 테스트 현황
+- GridSystem: 24/24
+- 전체 누적: **66/66** (SimClock 14 + ConfigManager 13 + GridSystem 24 + AgentSystem 15)
+
+### 확정 승인
