@@ -1,0 +1,93 @@
+name: AI Code Review
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reports/*_Report.md'
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Find new report
+        id: find_report
+        run: |
+          # 가장 최근 변경된 보고서 파일 찾기
+          REPORT=$(git diff --name-only HEAD~1 HEAD -- 'reports/*_Report.md' | head -1)
+          echo "report=$REPORT" >> $GITHUB_OUTPUT
+          echo "Found report: $REPORT"
+
+      - name: Run AI Reviews
+        if: steps.find_report.outputs.report != ''
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          REPORT="${{ steps.find_report.outputs.report }}"
+          REPORT_NAME=$(basename "$REPORT" .md)
+          REVIEW_DIR="reports/reviews"
+          mkdir -p "$REVIEW_DIR"
+          CONTENT=$(cat "$REPORT")
+
+          PROMPT="당신은 C++ 시니어 엔지니어입니다. 아래 VSE Platform 구현 보고서를 검토하고, 설계 정합성·레이어 경계·테스트 품질·미결 사항에 대해 한국어로 간결하게 검토 의견을 작성해 주세요.
+
+보고서 내용:
+$CONTENT"
+
+          # DeepSeek 검토
+          echo "Running DeepSeek review..."
+          DS_RESPONSE=$(curl -s -X POST https://api.deepseek.com/chat/completions \
+            -H "Authorization: Bearer $DEEPSEEK_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"model\": \"deepseek-chat\",
+              \"messages\": [{\"role\": \"user\", \"content\": $(echo "$PROMPT" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}],
+              \"max_tokens\": 2000
+            }")
+          DS_TEXT=$(echo "$DS_RESPONSE" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['choices'][0]['message']['content'])" 2>/dev/null || echo "DeepSeek API 오류")
+
+          # Gemini 검토
+          echo "Running Gemini review..."
+          GM_RESPONSE=$(curl -s -X POST \
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$GEMINI_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"contents\": [{\"parts\": [{\"text\": $(echo "$PROMPT" | python3 -c 'import json,sys; print(json.dumps(sys.stdin.read()))')}]}]
+            }")
+          GM_TEXT=$(echo "$GM_RESPONSE" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['candidates'][0]['content']['parts'][0]['text'])" 2>/dev/null || echo "Gemini API 오류")
+
+          # 결과 저장
+          DATE=$(date '+%Y-%m-%d %H:%M')
+          cat > "$REVIEW_DIR/${REPORT_NAME}_AI_Review.md" << EOF
+          # AI 자동 검토 결과 — ${REPORT_NAME}
+
+          > 생성일: ${DATE} UTC
+          > 원본 보고서: ${REPORT}
+
+          ---
+
+          ## DeepSeek 검토 의견
+
+          ${DS_TEXT}
+
+          ---
+
+          ## Gemini 검토 의견
+
+          ${GM_TEXT}
+          EOF
+
+          echo "Review saved to $REVIEW_DIR/${REPORT_NAME}_AI_Review.md"
+
+      - name: Commit review results
+        if: steps.find_report.outputs.report != ''
+        run: |
+          git config user.name "Boom AI"
+          git config user.email "boom@openclaw.ai"
+          git add reports/reviews/
+          git diff --staged --quiet || git commit -m "auto-review: AI 검토 결과 저장 — ${{ steps.find_report.outputs.report }}"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/cloud-honey/vse-platform.git main
