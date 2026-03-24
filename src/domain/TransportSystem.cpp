@@ -349,6 +349,7 @@ std::optional<ElevatorSnapshot> TransportSystem::getElevatorState(EntityId id) c
     const ElevatorCar& car = it->second;
     ElevatorSnapshot snap;
     snap.id                 = car.id;
+    snap.shaftX             = car.shaftX;
     snap.currentFloor       = car.currentFloor;
     snap.interpolatedFloor  = car.floatFloor;
     snap.state              = car.state;

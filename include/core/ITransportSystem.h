@@ -12,6 +12,7 @@ namespace vse {
  */
 struct ElevatorSnapshot {
     EntityId              id;
+    int                   shaftX;           // 렌더러용 shaft 위치
     int                   currentFloor;
     float                 interpolatedFloor;  // 렌더러용 보간 위치
     ElevatorState         state;

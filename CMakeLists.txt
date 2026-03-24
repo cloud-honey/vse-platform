@@ -65,6 +65,10 @@ add_executable(TowerTycoon
     src/domain/TransportSystem.cpp
     src/core/EventBus.cpp
     src/core/ConfigManager.cpp
+    src/renderer/Camera.cpp
+    src/renderer/SDLRenderer.cpp
+    src/renderer/InputMapper.cpp
+    src/renderer/RenderFrameCollector.cpp
 )
 
 target_link_libraries(TowerTycoon PRIVATE

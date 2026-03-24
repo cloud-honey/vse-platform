@@ -1,74 +1,154 @@
 #include <SDL.h>
 #include <spdlog/spdlog.h>
 
+#include "core/EventBus.h"
+#include "core/ConfigManager.h"
+#include "domain/GridSystem.h"
+#include "domain/AgentSystem.h"
+#include "domain/TransportSystem.h"
+#include "renderer/SDLRenderer.h"
+#include "renderer/Camera.h"
+#include "renderer/InputMapper.h"
+#include "renderer/RenderFrameCollector.h"
+#include "core/InputTypes.h"
+
 // [PHASE-2] IIoTAdapter: BACnet/IP 연동 예정
 // [PHASE-3] INetworkAdapter: 권위 서버 모델 예정
+
+using namespace vse;
+
+static constexpr int   WINDOW_W     = 1280;
+static constexpr int   WINDOW_H     = 720;
+static constexpr int   TICK_MS      = 100;   // 100ms = 10 TPS
+static constexpr int   MAX_TICKS_PER_FRAME = 8;
 
 int main(int /*argc*/, char* /*argv*/[])
 {
     spdlog::info("Tower Tycoon starting...");
 
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
-        spdlog::error("SDL_Init failed: {}", SDL_GetError());
+    // ── SDL2 + Renderer 초기화 ──────────────────────────
+    SDLRenderer sdlRenderer;
+    if (!sdlRenderer.init(WINDOW_W, WINDOW_H, "Tower Tycoon")) {
         return 1;
     }
 
-    SDL_Window* window = SDL_CreateWindow(
-        "Tower Tycoon",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        1280,
-        720,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
+    // ── Domain 시스템 조립 ──────────────────────────────
+    EventBus      eventBus;
+    ConfigManager config;
+    config.loadFromFile("assets/config/game_config.json");
+
+    entt::registry  registry;
+    GridSystem      grid(eventBus, config);
+    AgentSystem     agents(grid, eventBus);
+    TransportSystem transport(grid, eventBus, config);
+
+    // 초기 건물 설정 — 5층 빌드 + 엘리베이터 1축 2대
+    for (int f = 1; f <= 4; ++f) grid.buildFloor(f);
+    grid.placeElevatorShaft(5, 0, 4);
+    transport.createElevator(5, 0, 4, 8);
+    transport.createElevator(5, 0, 2, 4);   // 2대째 (범위 다름)
+
+    // ── Layer 3 초기화 ──────────────────────────────────
+    Camera camera(WINDOW_W, WINDOW_H, 32);
+    // 로비 근처에 카메라 중심
+    camera.centerOn(
+        static_cast<float>(grid.floorWidth() * 32 / 2),
+        static_cast<float>(2 * 32)
     );
 
-    if (window == nullptr) {
-        spdlog::error("SDL_CreateWindow failed: {}", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
+    InputMapper inputMapper;
+    RenderFrameCollector collector(grid, transport);
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(
-        window,
-        -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    );
-
-    if (renderer == nullptr) {
-        spdlog::error("SDL_CreateRenderer failed: {}", SDL_GetError());
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return 1;
-    }
-
-    spdlog::info("Window created successfully (1280x720)");
-
+    // ── 게임 상태 ───────────────────────────────────────
     bool running = true;
-    SDL_Event event;
+    bool paused  = false;
+    int  speed   = 1;       // 1x, 2x, 4x
+    bool drawGrid = true;
+    bool drawDebug = true;
+    SimTick currentTick = 0;
+    Uint32  lastFrameMs = SDL_GetTicks();
+    int     accumulator = 0;
 
+    // ── 메인 루프 ───────────────────────────────────────
     while (running) {
-        // Handle events
+        Uint32 nowMs = SDL_GetTicks();
+        int realDeltaMs = static_cast<int>(nowMs - lastFrameMs);
+        lastFrameMs = nowMs;
+
+        // ── 1. handleInput ──────────────────────────────
+        std::vector<GameCommand> commands;
+        SDL_Event event;
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
+            inputMapper.processEvent(event, commands);
+        }
+        inputMapper.processHeldKeys(commands);
+
+        // ── 커맨드 처리 (카메라/시스템) ─────────────────
+        for (const auto& cmd : commands) {
+            switch (cmd.type) {
+            case CommandType::Quit:
                 running = false;
-            }
-            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-                running = false;
+                break;
+            case CommandType::TogglePause:
+                paused = !paused;
+                spdlog::info("Pause: {}", paused ? "ON" : "OFF");
+                break;
+            case CommandType::SetSpeed:
+                speed = cmd.setSpeed.speedMultiplier;
+                spdlog::info("Speed: {}x", speed);
+                break;
+            case CommandType::CameraPan:
+                camera.pan(cmd.cameraPan.deltaX, cmd.cameraPan.deltaY);
+                break;
+            case CommandType::CameraZoom:
+                camera.zoom(cmd.cameraZoom.zoomDelta);
+                break;
+            case CommandType::CameraReset:
+                camera.reset();
+                break;
+            case CommandType::ToggleDebugOverlay:
+                drawDebug = !drawDebug;
+                drawGrid  = drawDebug;
+                break;
+            default:
+                break;
             }
         }
 
-        // Clear screen — dark background (#1A1A2E)
-        SDL_SetRenderDrawColor(renderer, 26, 26, 46, 255);
-        SDL_RenderClear(renderer);
+        // ── 2. updateSim ────────────────────────────────
+        if (!paused) {
+            accumulator += realDeltaMs * speed;
+            int ticksThisFrame = 0;
 
-        SDL_RenderPresent(renderer);
+            while (accumulator >= TICK_MS && ticksThisFrame < MAX_TICKS_PER_FRAME) {
+                accumulator -= TICK_MS;
+                ticksThisFrame++;
+
+                eventBus.flush();
+
+                GameTime time = GameTime::fromTick(currentTick);
+                currentTick++;
+
+                // Domain 시스템 업데이트
+                agents.update(registry, time);
+                transport.update(time);
+            }
+
+            // spiral-of-death 방지
+            if (accumulator > TICK_MS * MAX_TICKS_PER_FRAME) {
+                accumulator = 0;
+            }
+        }
+
+        // ── 3. render ───────────────────────────────────
+        collector.setDrawGrid(drawGrid);
+        collector.setDrawDebugInfo(drawDebug);
+        RenderFrame frame = collector.collect();
+        sdlRenderer.render(frame, camera);
     }
 
     spdlog::info("Tower Tycoon shutting down...");
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    sdlRenderer.shutdown();
     SDL_Quit();
-
     return 0;
 }
