@@ -4,6 +4,7 @@ add_executable(TowerTycoonTests
     test_ConfigManager.cpp
     test_GridSystem.cpp
     test_AgentSystem.cpp
+    test_TransportSystem.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -21,6 +22,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GridSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

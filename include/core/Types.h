@@ -96,6 +96,17 @@ enum class ElevatorDirection : uint8_t {
     Down
 };
 
+// Elevator FSM 상태 (authoritative)
+// Idle → MovingUp/MovingDown → DoorOpening → Boarding → DoorClosing → (Idle or Moving)
+enum class ElevatorState : uint8_t {
+    Idle = 0,
+    MovingUp,
+    MovingDown,
+    DoorOpening,
+    Boarding,
+    DoorClosing
+};
+
 enum class StarRating : uint8_t {
     Star0 = 0,
     Star1,

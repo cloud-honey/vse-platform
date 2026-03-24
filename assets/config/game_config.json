@@ -14,7 +14,8 @@
     "elevator": {
         "maxShafts": 4,
         "speedTilesPerTick": 1,
-        "capacity": 8
+        "capacity": 8,
+        "doorOpenTicks": 3
     },
     "tenant": {
         "office": {
