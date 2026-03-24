@@ -61,6 +61,7 @@ target_compile_definitions(project_includes INTERFACE
 add_executable(TowerTycoon
     src/main.cpp
     src/domain/GridSystem.cpp
+    src/domain/AgentSystem.cpp
     src/core/EventBus.cpp
     src/core/ConfigManager.cpp
 )

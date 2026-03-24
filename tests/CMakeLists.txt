@@ -1,10 +1,9 @@
 add_executable(TowerTycoonTests
     PlaceholderTest.cpp
-    # test_SimClock.cpp
-    # test_ConfigManager.cpp
+    test_SimClock.cpp
+    test_ConfigManager.cpp
     test_GridSystem.cpp
-    # Tests will be added as tasks are implemented
-    # Example: GridSystemTests.cpp
+    test_AgentSystem.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -15,12 +14,13 @@ target_link_libraries(TowerTycoonTests PRIVATE
     nlohmann_json::nlohmann_json
 )
 
-# SimClock, EventBus, ConfigManager, GridSystem 구현 파일 링크
+# 구현 파일 링크
 target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/SimClock.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/EventBus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GridSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

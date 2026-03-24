@@ -1,0 +1,62 @@
+#pragma once
+#include "core/IAgentSystem.h"
+#include "core/IGridSystem.h"
+#include "core/EventBus.h"
+#include <unordered_set>
+
+namespace vse {
+
+/**
+ * AgentSystem — Phase 1 NPC 에이전트 구현체.
+ *
+ * Phase 1 행동 모델:
+ * - 에이전트는 같은 층 내 수평 이동만 수행 (엘리베이터 없음)
+ * - 스케줄 기반 상태 전환: Idle ↔ Working ↔ AtLunch
+ * - update()는 GameTime.hour 기준으로 스케줄 체크
+ * - satisfaction은 현재 고정 100 (Phase 2에서 조건부 감소)
+ *
+ * 의존성:
+ * - IGridSystem: 목적지 위치 조회, 경로 검증
+ * - EventBus: 상태 변경 이벤트 발행
+ */
+class AgentSystem : public IAgentSystem {
+public:
+    AgentSystem(IGridSystem& grid, EventBus& bus);
+
+    Result<EntityId> spawnAgent(entt::registry& reg,
+                                EntityId homeTenantId,
+                                EntityId workplaceId,
+                                std::optional<TileCoord> spawnPos = std::nullopt) override;
+
+    void despawnAgent(entt::registry& reg, EntityId id) override;
+
+    int activeAgentCount() const override;
+
+    void update(entt::registry& reg, const GameTime& time) override;
+
+    std::optional<AgentState> getState(entt::registry& reg, EntityId id) const override;
+
+    std::vector<EntityId> getAgentsOnFloor(entt::registry& reg, int floor) const override;
+
+    std::vector<EntityId> getAgentsInState(entt::registry& reg, AgentState state) const override;
+
+    float getAverageSatisfaction(entt::registry& reg) const override;
+
+private:
+    IGridSystem& grid_;
+    EventBus&    eventBus_;
+
+    // 추적 중인 에이전트 ID 집합 (activeAgentCount용)
+    std::unordered_set<uint32_t> activeAgents_;
+
+    // 스케줄 체크 — 시간 기반 상태 전환
+    void processSchedule(entt::registry& reg, EntityId id,
+                         AgentComponent& agent,
+                         const AgentScheduleComponent& schedule,
+                         const GameTime& time);
+
+    // 목적지 타일 조회 (anchor 위치)
+    std::optional<TileCoord> resolveDestination(EntityId tenantEntityId) const;
+};
+
+} // namespace vse
