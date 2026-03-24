@@ -217,17 +217,20 @@
     {
       "date": "2026-03-24",
       "time": "20:35",
-      "description": "TASK-01-006 GPT-5.4 리뷰 반영 — EntityId entt 전환, pickBestCar 다중배차, ElevatorArrived 생성시 미발행. 87/87 테스트."
+      "title": "TASK-01-006 GPT-5.4 리뷰 반영",
+      "detail": "EntityId entt 전환, pickBestCar 다중배차, ElevatorArrived 생성시 미발행. 87/87 테스트."
     },
     {
       "date": "2026-03-24",
       "time": "21:25",
-      "description": "TASK-01-007 SDL2 윈도우 + 타일 그리드 렌더링 완료 — IRenderCommand, InputTypes, Camera, SDLRenderer, InputMapper, RenderFrameCollector, 메인 루프. 107/107 테스트."
+      "title": "TASK-01-007 SDL2 윈도우 + 타일 그리드 렌더링 완료",
+      "detail": "IRenderCommand, InputTypes, Camera, SDLRenderer, InputMapper, RenderFrameCollector, 메인 루프. 107/107 테스트."
     },
     {
       "date": "2026-03-24",
       "time": "21:50",
-      "description": "TASK-01-007 GPT-5.4 리뷰 반영 — Config 외부화(tileSizePx,zoom), 도메인 커맨드 연결(BuildFloor 등), 테스트 보강. 121/121 테스트."
+      "title": "TASK-01-007 GPT-5.4 리뷰 반영",
+      "detail": "Config 외부화(tileSizePx,zoom), 도메인 커맨드 연결(BuildFloor 등), 테스트 보강. 121/121 테스트."
     }
   ],
   "references": [
