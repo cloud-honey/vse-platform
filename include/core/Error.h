@@ -11,7 +11,8 @@ enum class ErrorCode {
     JsonParseError,
     InvalidArgument,
     OutOfRange,
-    SystemError
+    SystemError,
+    FloorNotBuilt
 };
 
 template<typename T>
