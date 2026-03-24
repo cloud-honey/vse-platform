@@ -60,6 +60,9 @@ target_compile_definitions(project_includes INTERFACE
 # ──────────────────────────────────────────────
 add_executable(TowerTycoon
     src/main.cpp
+    src/domain/GridSystem.cpp
+    src/core/EventBus.cpp
+    src/core/ConfigManager.cpp
 )
 
 target_link_libraries(TowerTycoon PRIVATE
