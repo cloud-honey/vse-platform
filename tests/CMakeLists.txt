@@ -1,5 +1,7 @@
 add_executable(TowerTycoonTests
     PlaceholderTest.cpp
+    test_SimClock.cpp
+    test_ConfigManager.cpp
     # Tests will be added as tasks are implemented
     # Example: GridSystemTests.cpp
 )
@@ -8,12 +10,26 @@ target_link_libraries(TowerTycoonTests PRIVATE
     Catch2::Catch2WithMain
     project_includes
     spdlog::spdlog
+    EnTT::EnTT
+    nlohmann_json::nlohmann_json
+)
+
+# SimClock, EventBus, ConfigManager 구현 파일 링크
+target_sources(TowerTycoonTests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/SimClock.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/EventBus.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE
     -Wall
     -Wextra
     -fno-exceptions
+)
+
+# 프로젝트 루트 경로를 매크로로 전달 (테스트에서 assets 파일 경로 사용)
+target_compile_definitions(TowerTycoonTests PRIVATE
+    VSE_PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
 )
 
 include(CTest)
