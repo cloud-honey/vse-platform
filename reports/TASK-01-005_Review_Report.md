@@ -224,3 +224,37 @@ std::unordered_set<uint32_t> activeAgents_;
 ---
 
 *이 보고서는 외부 AI 검증·검토 요청용입니다. 8번 미결 사항 위주로 의견 주시면 됩니다.*
+
+---
+
+## 10. GPT-5.4 Thinking 검토 결과 및 수정 사항 (2026-03-24)
+
+**검토 모델**: GPT-5.4 Thinking  
+**판정**: 조건부 승인 → 수정 완료 후 확정 승인
+
+### 핵심 지적 및 조치
+
+| 지적 | 조치 | 커밋 |
+|------|------|------|
+| `AgentComponent.workplace`가 `TenantType`이어서 같은 타입 테넌트 여러 개일 때 어느 직장인지 특정 불가 | `workplaceTenant EntityId`로 변경 — 실제 목적지 테넌트 엔티티 저장 | 055c561 |
+| `spawnAgent()` → `AgentStateChanged` 발행 — 생성 사건과 상태 사건이 혼용 | `AgentSpawned`로 교체 | 055c561 |
+| `despawnAgent()` — 이벤트 없음 | `AgentDespawned` 추가 (destroy 전 발행) | 055c561 |
+
+### 확인 사항 (변경 불필요)
+- `spawnAgent(reg, homeTenantId, workplaceId, spawnPos)` 시그니처 — VSE_Design_Spec.md §5.5와 완전 일치
+- `update(reg, time)` 고정 틱 방식 — 설계 문서 일치
+- `getAverageSatisfaction()` Layer 0 공개 — StarRatingSystem 연동 예정, 유지
+
+### 미결 사항 처리 방향
+
+| # | 항목 | 결론 |
+|---|------|------|
+| 1 | spawnAgent homeTenant 탐색 비용 | Phase 1 유지 (600타일, NPC 50명 이하) |
+| 2 | update() minute 정밀도 | TransportSystem 연동 전 세분화 |
+| 3 | AgentPathComponent 미사용 | Phase 2에서 경로 탐색 구현 시 확장 |
+| 4 | getAverageSatisfaction() 순회 | 캐싱 불필요 (NPC 50명 규모) |
+| 5 | ElevatorPassengerComponent 미사용 | TASK-01-006 연동 시 재검토 |
+
+### 최종 테스트 현황
+- AgentSystem: 15/15 (workplaceTenant 저장 확인 테스트 포함)
+- 전체 누적: **66/66**
