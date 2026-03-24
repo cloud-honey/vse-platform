@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T13:10:00",
+  "updated_at": "2026-03-24T13:45:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -12,7 +12,7 @@
       "layer": "인프라",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -23,7 +23,7 @@
       "layer": "Layer 0",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -34,7 +34,7 @@
       "layer": "Layer 0",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -45,7 +45,7 @@
       "layer": "Layer 0+1",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -56,7 +56,7 @@
       "layer": "Layer 0",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -67,7 +67,7 @@
       "layer": "Layer 0+1",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -78,7 +78,7 @@
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": "TASK-01-001,004 완료 후 시작"
     },
@@ -89,7 +89,7 @@
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": "TASK-01-006,007 완료 후 시작"
     },
@@ -100,7 +100,7 @@
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": ""
     },
@@ -111,7 +111,7 @@
       "layer": "전체",
       "status": "pending",
       "qa_status": "pending",
-      "design_check": "pending",
+      "design_check": "done",
       "confirmed_by_human": false,
       "notes": "모든 태스크 완료 후"
     }
