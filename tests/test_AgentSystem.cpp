@@ -96,6 +96,7 @@ TEST_CASE("AgentSystem - spawnAgent 컴포넌트 초기값 확인", "[AgentSyste
     REQUIRE(agent.state == AgentState::Idle);
     REQUIRE(agent.satisfaction == 100.0f);
     REQUIRE(agent.homeTenant == f.homeTenantId);
+    REQUIRE(agent.workplaceTenant == f.workTenantId);  // 목적지 EntityId 저장 확인
 
     const auto& sched = f.reg.get<AgentScheduleComponent>(id);
     REQUIRE(sched.workStartHour == 9);

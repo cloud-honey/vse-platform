@@ -22,15 +22,21 @@ struct PositionComponent {
 
 /**
  * AgentComponent — 에이전트의 상태, 직장/거주지, 만족도.
+ *
+ * workplaceTenant: 실제 목적지 테넌트 EntityId. INVALID_ENTITY = 미배정.
+ *   - TenantType이 아닌 EntityId로 관리 — 같은 타입 테넌트가 여러 개일 때
+ *     어느 테넌트로 출근하는지 특정 가능.
+ *   - TenantType이 필요하면 GridSystem에서 해당 EntityId 타일의 tenantType 조회.
+ *
  * satisfaction: 0~100, 100이 최대 만족.
- * moveSpeed: 초당 타일 이동 속도 (기본 1.0).
+ * moveSpeed: 초당 타일 이동 속도 (기본값 1.0, Phase 2에서 config 연동).
  */
 struct AgentComponent {
-    AgentState state      = AgentState::Idle;
-    TenantType workplace  = TenantType::COUNT;   // COUNT = 미배정
-    EntityId   homeTenant = INVALID_ENTITY;
-    float      satisfaction = 100.0f;
-    float      moveSpeed    = 1.0f;              // tiles/sec
+    AgentState state            = AgentState::Idle;
+    EntityId   homeTenant       = INVALID_ENTITY;   // 거주지 테넌트
+    EntityId   workplaceTenant  = INVALID_ENTITY;   // 직장 테넌트 (목적지 특정용)
+    float      satisfaction     = 100.0f;
+    float      moveSpeed        = 1.0f;             // tiles/sec
 };
 
 /**

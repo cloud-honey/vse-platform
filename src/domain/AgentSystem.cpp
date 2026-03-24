@@ -55,11 +55,11 @@ Result<EntityId> AgentSystem::spawnAgent(entt::registry& reg,
 
     // 컴포넌트 부착
     auto& agentComp = reg.emplace<AgentComponent>(entity);
-    agentComp.state      = AgentState::Idle;
-    agentComp.workplace  = TenantType::Office;  // Phase 1: 기본값
-    agentComp.homeTenant = homeTenantId;
-    agentComp.satisfaction = 100.0f;
-    agentComp.moveSpeed    = 1.0f;
+    agentComp.state           = AgentState::Idle;
+    agentComp.homeTenant      = homeTenantId;
+    agentComp.workplaceTenant = workplaceId;    // 실제 목적지 EntityId 저장
+    agentComp.satisfaction    = 100.0f;
+    agentComp.moveSpeed       = 1.0f;
 
     auto& posComp = reg.emplace<PositionComponent>(entity);
     posComp.tile   = pos;
@@ -82,9 +82,9 @@ Result<EntityId> AgentSystem::spawnAgent(entt::registry& reg,
     spdlog::debug("AgentSystem::spawnAgent: entity {:d} spawned at ({}, {})",
                   static_cast<uint32_t>(entity), pos.x, pos.floor);
 
-    // 이벤트 발행
+    // 이벤트 발행 — AgentSpawned (생성 사건)
     Event ev;
-    ev.type   = EventType::AgentStateChanged;
+    ev.type   = EventType::AgentSpawned;
     ev.source = entity;
     eventBus_.publish(ev);
 
@@ -97,6 +97,12 @@ void AgentSystem::despawnAgent(entt::registry& reg, EntityId id)
         spdlog::warn("AgentSystem::despawnAgent: invalid entity");
         return;
     }
+
+    // 이벤트 발행 — AgentDespawned (제거 사건, destroy 전에 발행)
+    Event despawnEv;
+    despawnEv.type   = EventType::AgentDespawned;
+    despawnEv.source = id;
+    eventBus_.publish(despawnEv);
 
     activeAgents_.erase(static_cast<uint32_t>(id));
     reg.destroy(id);
