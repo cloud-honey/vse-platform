@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T18:04:00",
+  "updated_at": "2026-03-24T18:30:00",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -189,6 +189,12 @@
       "time": "18:04",
       "title": "TASK-01-003 ConfigManager 구현 완료",
       "detail": "붐2 구현 + 붐 직접 수정(경로 매크로). dot notation, typed getters, 26/26 테스트 통과. 커밋 c9bf3a6"
+    },
+    {
+      "date": "2026-03-24",
+      "time": "18:30",
+      "title": "TASK-01-003 검토 반영 완료",
+      "detail": "3개 AI 검토 반영: isLoaded() 추가, getInt float 경고 로그, 헤더 주석 보강. 27/27 통과. 커밋 0bd8006"
     }
   ],
   "references": [
