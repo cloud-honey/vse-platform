@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T07:21:42",
+  "updated_at": "2026-03-25T08:42:00",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "in_progress",
@@ -65,11 +65,11 @@
       "title": "ISaveLoad + SaveLoad (MessagePack 직렬화)",
       "assignee": "붐",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "Stable EntityId 전략 확정 후 진행. EnTT snapshot + non-ECS 커스텀 직렬화."
+      "notes": "ISaveLoad + SaveLoadSystem (MessagePack). Manual serialization, 2-pass entity remap, non-ECS export/import. 200/200 통과. 커밋 794e058"
     },
     {
       "id": "TASK-02-007",
@@ -286,6 +286,12 @@
       "time": "17:19",
       "title": "TASK-02-005 3모델 교차 검증 완료 — 전원 Pass",
       "detail": "DeepSeek: Pass, Gemini: Pass (P2→실제버그 수정), GPT-5.4: Pass (보고서 Deviations 정리). 최종 커밋 c5ff00c. TASK-02-005 완전 종료."
+    },
+    {
+      "date": "2026-03-25",
+      "time": "17:42",
+      "title": "TASK-02-006 SaveLoad 완료",
+      "detail": "Opus 직접 구현. ISaveLoad + SaveLoadSystem (MessagePack). nlohmann/json 내장 변환 사용. 13개 신규 테스트. 200/200 통과. 커밋 794e058"
     }
   ],
   "references": [
