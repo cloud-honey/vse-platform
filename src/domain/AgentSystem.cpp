@@ -249,7 +249,12 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
                 // targetFloor가 이미 홈 층이면 그냥 계속 진행
                 if (passengerComp.targetFloor != homeFloor && homeFloor >= 0) {
                     passengerComp.targetFloor = homeFloor;
-                    spdlog::debug("AgentSystem: entity {:d} work end while InElevator, re-route to home floor {}",
+                    // 엘리베이터 carCalls에도 home floor 추가 (hall call 재발행으로 LOOK 알고리즘에 반영)
+                    ElevatorDirection homeDir = (homeFloor < reg.get<PositionComponent>(id).tile.floor)
+                                                ? ElevatorDirection::Down
+                                                : ElevatorDirection::Up;
+                    transport_->callElevator(0, homeFloor, homeDir);
+                    spdlog::debug("AgentSystem: entity {:d} work end while InElevator, re-route to home floor {} + hall call",
                                   static_cast<uint32_t>(id), homeFloor);
                     // 재설정한 틱에서는 즉시 하차 체크 금지 (같은 틱에 exit 방지)
                     return;
