@@ -41,6 +41,10 @@ Unit Test Required: YES
 Report back when: [완료 조건]
 ```
 
+> **⚠️ 보고서 작성 규칙**: 구현 완료 후 반드시 를 **영어**로 작성할 것.
+> 양식:  또는  참조.
+> 구현자 모델명을  필드에 정확히 기입하고, Cross-Validation 표는 pending으로 남길 것.
+
 ---
 
 ## 태스크 분해 원칙
