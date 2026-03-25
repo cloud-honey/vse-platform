@@ -409,4 +409,20 @@ void GridSystem::importState(const nlohmann::json& j) {
     spdlog::debug("GridSystem::importState: restored {} floors", floors_.size());
 }
 
+void GridSystem::remapEntityIds(const std::unordered_map<uint32_t, EntityId>& remap) {
+    if (remap.empty()) return;
+    int remapped = 0;
+    for (auto& [floorNum, floorData] : floors_) {
+        for (auto& tile : floorData.tiles) {
+            if (tile.tenantEntity == INVALID_ENTITY) continue;
+            auto it = remap.find(static_cast<uint32_t>(tile.tenantEntity));
+            if (it != remap.end()) {
+                tile.tenantEntity = it->second;
+                ++remapped;
+            }
+        }
+    }
+    spdlog::debug("GridSystem::remapEntityIds: remapped {} tile references", remapped);
+}
+
 } // namespace vse

@@ -31,6 +31,8 @@ public:
     nlohmann::json exportState() const;
     /** Import floor/tile state from JSON. Clears existing floors first. */
     void importState(const nlohmann::json& j);
+    /** Remap tenantEntity IDs in all tiles using oldId→newId table. */
+    void remapEntityIds(const std::unordered_map<uint32_t, EntityId>& remap);
 
 private:
     EventBus& eventBus_;

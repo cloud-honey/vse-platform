@@ -511,4 +511,17 @@ void TransportSystem::importState(const nlohmann::json& j) {
     spdlog::debug("TransportSystem::importState: restored {} elevator cars", cars_.size());
 }
 
+void TransportSystem::remapPassengerIds(const std::unordered_map<uint32_t, EntityId>& remap) {
+    if (remap.empty()) return;
+    for (auto& [key, car] : cars_) {
+        for (auto& passId : car.passengers) {
+            auto it = remap.find(static_cast<uint32_t>(passId));
+            if (it != remap.end()) {
+                passId = it->second;
+            }
+        }
+    }
+    spdlog::debug("TransportSystem::remapPassengerIds: completed");
+}
+
 } // namespace vse

@@ -77,7 +77,8 @@ private:
     nlohmann::json serializeEntities() const;
 
     // ── Deserialization helpers ─────────────────────────────────────────────
-    void deserializeEntities(const nlohmann::json& j);
+    // Returns oldId → newId remap table for post-load fixups
+    std::unordered_map<uint32_t, EntityId> deserializeEntities(const nlohmann::json& j);
 };
 
 } // namespace vse

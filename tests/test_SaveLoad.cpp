@@ -395,3 +395,52 @@ TEST_CASE("SaveLoad - version mismatch rejects load", "[SaveLoad]") {
     auto result = f.saveLoad.load(fakePath);
     REQUIRE_FALSE(result.ok());
 }
+
+// ── Test 14: Elevator passenger EntityId remapped after load ────────────────
+
+TEST_CASE("SaveLoad - elevator passenger EntityId remapped after load", "[SaveLoad]") {
+    SaveLoadFixture f;
+
+    // Spawn agent, transition to WaitingElevator, board
+    auto spawnResult = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(spawnResult.ok());
+    EntityId agentId = spawnResult.value;
+
+    // 9am → WaitingElevator
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::WaitingElevator);
+
+    // Drive elevator to floor 0 Boarding, then board agent
+    f.transport.update(GameTime{0, 9, 0}); // DoorOpening (already at floor 0)
+    f.transport.update(GameTime{0, 9, 0}); // Boarding
+    f.agents.update(f.reg, GameTime{0, 9, 0}); // Board
+    REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::InElevator);
+
+    // Save with agent on elevator
+    f.saveLoad.save(f.testSaveFile);
+    f.saveLoad.load(f.testSaveFile);
+
+    // Find the restored agent
+    auto agentView = f.reg.view<AgentComponent>();
+    EntityId restoredAgent = INVALID_ENTITY;
+    for (auto e : agentView) {
+        restoredAgent = e;
+        break;
+    }
+    REQUIRE(restoredAgent != INVALID_ENTITY);
+
+    // Verify transport has the correct (remapped) passenger ID
+    auto allElevs = f.transport.getAllElevators();
+    REQUIRE(allElevs.size() == 1);
+    auto snap = f.transport.getElevatorState(allElevs[0]);
+    REQUIRE(snap.has_value());
+    // Passenger list should contain the remapped agent entity
+    bool foundPassenger = false;
+    for (auto p : snap->passengers) {
+        if (p == restoredAgent) {
+            foundPassenger = true;
+            break;
+        }
+    }
+    REQUIRE(foundPassenger);
+}

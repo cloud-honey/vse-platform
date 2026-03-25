@@ -104,6 +104,8 @@ public:
     // ── SaveLoad support ───────────────────────────────────────────────────
     nlohmann::json exportState() const;
     void importState(const nlohmann::json& j);
+    /** Remap passenger EntityIds in all elevator cars using oldId→newId table. */
+    void remapPassengerIds(const std::unordered_map<uint32_t, EntityId>& remap);
 };
 
 } // namespace vse

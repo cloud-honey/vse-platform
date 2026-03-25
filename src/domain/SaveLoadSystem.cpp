@@ -92,10 +92,14 @@ Result<bool> SaveLoadSystem::load(const std::string& filepath) {
         grid_.importState(root["grid"]);
     }
 
-    // 4-7. Restore ECS entities
+    // 4-7. Restore ECS entities (returns remap table for cross-ref fixups)
+    std::unordered_map<uint32_t, EntityId> remap;
     if (root.contains("entities")) {
-        deserializeEntities(root["entities"]);
+        remap = deserializeEntities(root["entities"]);
     }
+
+    // 7.5. Remap Grid tenantEntity references (P0 fix)
+    grid_.remapEntityIds(remap);
 
     // 8. Restore Economy
     if (root.contains("economy")) {
@@ -107,9 +111,10 @@ Result<bool> SaveLoadSystem::load(const std::string& filepath) {
         starRating_.importState(reg_, root["starrating"]);
     }
 
-    // 10. Restore Transport
+    // 10. Restore Transport (with entity remap for passengers)
     if (root.contains("transport")) {
         transport_.importState(root["transport"]);
+        transport_.remapPassengerIds(remap);
     }
 
     // 11. Restore SimClock
@@ -293,7 +298,7 @@ json SaveLoadSystem::serializeEntities() const {
 
 // ── Deserialize entities ────────────────────────────────────────────────────
 
-void SaveLoadSystem::deserializeEntities(const json& entities) {
+std::unordered_map<uint32_t, EntityId> SaveLoadSystem::deserializeEntities(const json& entities) {
     std::unordered_map<uint32_t, EntityId> remap;
 
     // Pass 1: Create entities + attach components (raw old IDs)
@@ -381,6 +386,8 @@ void SaveLoadSystem::deserializeEntities(const json& entities) {
             agent.workplaceTenant = workIt->second;
         }
     }
+
+    return remap;
 }
 
 } // namespace vse
