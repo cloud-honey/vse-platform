@@ -1,9 +1,9 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-25T10:42:49",
+  "updated_at": "2026-03-25T12:32:30",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
-  "overall_status": "in_progress",
+  "overall_status": "integration_done",
   "tasks": [
     {
       "id": "TASK-01-001",
@@ -98,22 +98,22 @@
       "title": "Dear ImGui 디버그 패널 (시간, NPC 상태)",
       "assignee": "Claude Code",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": ""
+      "notes": "DebugPanel 별도 파일 분리(Design Spec), ImGui NewFrame 매 프레임 호출, gameDay 0-indexed 통일, FirstUseEver 드래그 허용. 142/142 테스트."
     },
     {
       "id": "TASK-01-010",
       "title": "통합 + 프로토타입 동작 확인",
       "assignee": "붐 + QA",
       "layer": "전체",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": "모든 태스크 완료 후"
+      "notes": "main.cpp 통합 완료: AgentSystem 렌더 연결, DebugInfo 채우기(Bootstrapper), F3 토글 연결, NPC 5명 프로토타입 씬. 빌드 성공 142/142."
     }
   ],
   "escalations": [],
@@ -237,6 +237,12 @@
       "time": "10:50",
       "title": "TASK-01-008 NPC 스프라이트 렌더링 완료",
       "detail": "RenderAgent 커맨드 추가, RenderFrameCollector+AgentSystem 연결(setAgentSource), SDLRenderer drawAgents(16x32px 컬러박스). 132/132 테스트 통과. 커밋 6808959"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "12:30",
+      "title": "TASK-01-009~010 통합 완료",
+      "detail": "DebugPanel 분리, gameDay 0-indexed, AgentSystem 렌더 연결, DebugInfo Bootstrapper 주입, F3 토글, NPC 5명 프로토타입 씬. Sprint 1 전체 142/142 통과."
     }
   ],
   "references": [

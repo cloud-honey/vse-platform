@@ -11,6 +11,7 @@
 #include "renderer/InputMapper.h"
 #include "renderer/RenderFrameCollector.h"
 #include "core/InputTypes.h"
+#include <entt/entt.hpp>
 
 // [PHASE-2] IIoTAdapter: BACnet/IP 연동 예정
 // [PHASE-3] INetworkAdapter: 권위 서버 모델 예정
@@ -54,6 +55,26 @@ int main(int /*argc*/, char* /*argv*/[])
     transport.createElevator(5, 0, 4, 8);
     transport.createElevator(5, 0, 2, 4);
 
+    // 테넌트 + NPC 배치 (프로토타입 동작 확인용)
+    EntityId homeId1 = registry.create();
+    EntityId homeId2 = registry.create();
+    EntityId homeId3 = registry.create();
+    EntityId workId1 = registry.create();
+    EntityId workId2 = registry.create();
+
+    grid.placeTenant({0, 0},  TenantType::Residential, 2, homeId1);
+    grid.placeTenant({3, 0},  TenantType::Residential, 2, homeId2);
+    grid.placeTenant({6, 0},  TenantType::Residential, 2, homeId3);
+    grid.placeTenant({0, 2},  TenantType::Office,      3, workId1);
+    grid.placeTenant({8, 2},  TenantType::Office,      3, workId2);
+
+    // NPC 5명 스폰
+    agents.spawnAgent(registry, homeId1, workId1);
+    agents.spawnAgent(registry, homeId2, workId1);
+    agents.spawnAgent(registry, homeId3, workId2);
+    agents.spawnAgent(registry, homeId1, workId2);
+    agents.spawnAgent(registry, homeId2, workId2);
+
     // ── Layer 3 초기화 (Config 기반) ────────────────────
     Camera camera(windowW, windowH, tileSizePx, zoomMin, zoomMax);
     camera.centerOn(
@@ -64,6 +85,9 @@ int main(int /*argc*/, char* /*argv*/[])
     InputMapper inputMapper;
     inputMapper.setPanSpeed(panSpeed);
     RenderFrameCollector collector(grid, transport, tileSizePx);
+
+    // ── AgentSystem 렌더 연결 (TASK-01-008) ────────────
+    collector.setAgentSource(&agents, &registry);
 
     // ── 게임 상태 ───────────────────────────────────────
     bool running  = true;
@@ -115,6 +139,7 @@ int main(int /*argc*/, char* /*argv*/[])
             case CommandType::ToggleDebugOverlay:
                 drawDebug = !drawDebug;
                 drawGrid  = drawDebug;
+                sdlRenderer.debugPanel().setVisible(drawDebug);  // F3 토글 연결
                 break;
 
             // ── 도메인 커맨드 ────────────────────────
@@ -174,6 +199,31 @@ int main(int /*argc*/, char* /*argv*/[])
         collector.setDrawGrid(drawGrid);
         collector.setDrawDebugInfo(drawDebug);
         RenderFrame frame = collector.collect();
+
+        // ── DebugInfo 채우기 (TASK-01-009 통합) ─────────
+        // Bootstrapper가 각 시스템에서 데이터 수집 후 주입
+        {
+            GameTime t = GameTime::fromTick(currentTick);
+            float fps  = (realDeltaMs > 0) ? 1000.0f / static_cast<float>(realDeltaMs) : 0.0f;
+
+            auto& d            = frame.debug;
+            d.gameTick         = static_cast<int>(currentTick);
+            d.gameDay          = t.day;     // 0-indexed (UI 표시 시 +1 — DebugPanel.cpp)
+            d.gameHour         = t.hour;
+            d.gameMinute       = t.minute;
+            d.simSpeed         = static_cast<float>(speed);
+            d.isPaused         = paused;
+            d.fps              = fps;
+            d.elevatorCount    = static_cast<int>(transport.getAllElevators().size());
+            d.npcTotal         = agents.activeAgentCount();
+            d.avgSatisfaction  = agents.getAverageSatisfaction(registry);
+
+            // 상태별 NPC 카운트
+            d.npcIdle    = static_cast<int>(agents.getAgentsInState(registry, AgentState::Idle).size());
+            d.npcWorking = static_cast<int>(agents.getAgentsInState(registry, AgentState::Working).size());
+            d.npcResting = static_cast<int>(agents.getAgentsInState(registry, AgentState::Resting).size());
+        }
+
         sdlRenderer.render(frame, camera);
     }
 
