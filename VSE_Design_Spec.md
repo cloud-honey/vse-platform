@@ -1,5 +1,5 @@
 # VSE Design Specification — Phase 1
-> Version: 1.4 | Author: 붐 (PM) | Date: 2026-03-24
+> Version: 1.5 | Author: 붐 (PM) | Date: 2026-03-26
 > Source of truth: `CLAUDE.md` v1.3 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
@@ -316,6 +316,15 @@ enum class EventType : uint16_t {
     GameSaved = 900,
     GameLoaded,
     ConfigReloaded,
+};
+
+// ── Event Payloads ──────────────────────────
+// Shared payload structs used with EventBus.
+// TASK-02-009: StarRatingChangedPayload moved from StarRatingSystem.h → Types.h
+//              (reduces coupling: renderers/listeners no longer need to include StarRatingSystem.h)
+struct StarRatingChangedPayload {
+    int oldRating;   // Previous star rating (1-5)
+    int newRating;   // New star rating (1-5)
 };
 
 // ── Constants ───────────────────────────────
@@ -1010,12 +1019,12 @@ public:
 namespace vse {
 
 struct SaveMetadata {
-    uint32_t version = 1;       // Save format version
+    uint32_t    version = 1;       // Save format version
     std::string buildingName;
-    GameTime gameTime;
-    int starRating;
-    int balance;
-    uint64_t playtimeSeconds;
+    GameTime    gameTime;
+    int         starRating = 1;
+    int64_t     balance    = 0;    // Cents (TASK-02-003: int → int64_t)
+    uint64_t    playtimeSeconds = 0;
 };
 
 class ISaveLoad {
@@ -1274,74 +1283,103 @@ struct RenderFrame {
 
 ### 5.15 Bootstrapper
 
-> **P1-9: StarRatingSystem now included in forward declarations and owned members.**
+> **TASK-02-001 업데이트 (2026-03-25):**
+> - API: `initialize(configPath)` → `init()` / `run()` / `shutdown()` (SDL 포함 풀 초기화)
+> - 헤드리스 테스트용 `initDomainOnly(configPath)` 추가
+> - 시스템 소유 방식: `std::unique_ptr<I*>` → 직접 멤버 (`ConfigManager config_`, `EventBus eventBus_`, `SimClock simClock_` 등)
+> - `SimClock`은 직접 멤버로 값 소유 (`simClock_{eventBus_}`로 초기화) — 시간 진행의 단일 소유자
+> - `#ifdef VSE_TESTING` 가드: 테스트 접근자 프로덕션 빌드에서 제거
+> - `setupInitialScene()` 헬퍼 추출: `init()` / `initDomainOnly()` 공용 씬 설정 중복 제거
+> - `processCommands()` 주석: frame당 1회 drain, tick 루프 밖 호출 = "첫 tick drain" 계약과 동일
 
 ```cpp
-// include/core/Bootstrapper.h
+// include/core/Bootstrapper.h — TASK-02-001 실제 구현 반영
 #pragma once
+#include "core/EventBus.h"
+#include "core/ConfigManager.h"
+#include "core/SimClock.h"
+#include "domain/GridSystem.h"
+#include "domain/AgentSystem.h"
+#include "domain/TransportSystem.h"
+#include "renderer/SDLRenderer.h"
+#include "renderer/Camera.h"
+#include "renderer/InputMapper.h"
+#include "renderer/RenderFrameCollector.h"
+#include "core/InputTypes.h"
+#include <entt/entt.hpp>
 #include <memory>
-#include <string>
+#include <vector>
 
 namespace vse {
 
-class SimClock;
-class EventBus;
-class ConfigManager;
-class ContentRegistry;
-class LocaleManager;
-class IGridSystem;
-class IAgentSystem;
-class ITransportSystem;
-class IEconomyEngine;
-class ISaveLoad;
-class StarRatingSystem;    // Added: was missing in v1.0
-
-// Bootstrapper: **composition root** that owns all systems and manages their lifecycle.
-// It knows concrete types (GridSystem, AgentSystem, etc.) because that is the composition
-// root's job. Long-term: transition to interface-based assembly (factory/DI) for testability.
 class Bootstrapper {
 public:
-    Bootstrapper();
-    ~Bootstrapper();
+    Bootstrapper() = default;
 
-    bool initialize(const std::string& configPath);
-    int run();          // Main loop (blocking). Returns exit code.
-    void shutdown();    // Reverse init order.
+    bool init();           // 모든 시스템 초기화 (SDL 포함). false 시 main() 즉시 종료.
+    void run();            // 메인 루프 (SDL 윈도우 폐쇄 또는 Quit 커맨드까지)
+    void shutdown();       // 정리 (SDL 종료)
+
+    // SDL 없이 Domain만 조립 (headless 단위 테스트용)
+    // configPath: "assets/"로 시작하면 VSE_PROJECT_ROOT 기준 절대경로로 변환
+    bool initDomainOnly(const std::string& configPath = "assets/config/game_config.json");
+
+#ifdef VSE_TESTING
+    // 테스트 전용 접근자 (VSE_TESTING 빌드에서만 노출, 프로덕션 빌드 심볼 생성 안 됨)
+    bool testGetPaused()  const { return simClock_.isPaused(); }
+    int  testGetSpeed()   const { return simClock_.speed(); }
+    bool testGetRunning() const { return running_; }
+    void testProcessCommands(const std::vector<GameCommand>& cmds) {
+        processCommands(cmds, running_);
+    }
+#endif
 
 private:
-    // Owned systems (declaration order = init order)
-    std::unique_ptr<EventBus> eventBus_;
-    std::unique_ptr<ConfigManager> config_;
-    std::unique_ptr<ContentRegistry> content_;
-    std::unique_ptr<LocaleManager> locale_;
-    std::unique_ptr<SimClock> simClock_;
-    std::unique_ptr<IGridSystem> gridSystem_;
-    std::unique_ptr<ITransportSystem> transportSystem_;
-    std::unique_ptr<IAgentSystem> agentSystem_;
-    std::unique_ptr<IEconomyEngine> economyEngine_;
-    std::unique_ptr<StarRatingSystem> starRating_;  // Added
-    std::unique_ptr<ISaveLoad> saveLoad_;
+    // frame당 1회 drain. tick 루프 밖에서 호출 = "첫 tick drain" 계약 동일하게 충족.
+    void processCommands(const std::vector<GameCommand>& cmds, bool& running);
+    void fillDebugInfo(RenderFrame& frame, int realDeltaMs);
+    void setupInitialScene();  // init() / initDomainOnly() 공용 — 프로토타입 씬 구성
 
-    // entt::registry registry_;   // In cpp
-    // SDLRenderer renderer_;      // In cpp
-    // InputMapper inputMapper_;   // In cpp
+    // 실행 상태
+    bool running_     = false;
+    int  accumulator_ = 0;     // Bootstrapper 소유 (SimClock에 없음)
 
-    // GameCommand queue (populated by InputMapper, consumed by domain)
-    // std::vector<GameCommand> commandQueue_;  // In cpp
+    // Core Runtime (선언 순서 = 초기화 순서)
+    ConfigManager config_;
+    EventBus      eventBus_;
+    SimClock      simClock_{eventBus_};  // 시간 진행 단일 소유자
+    entt::registry registry_;
 
-    // Tick loop state — Bootstrapper owns the accumulator, not SimClock
-    double accumulator_ = 0.0;
-    static constexpr int MAX_TICKS_PER_FRAME = 8;  // spiral-of-death guard
+    // Domain (Layer 1)
+    std::unique_ptr<GridSystem>      grid_;
+    std::unique_ptr<AgentSystem>     agents_;
+    std::unique_ptr<TransportSystem> transport_;
 
-    void updateSim(double deltaMsReal);
-    void render();
-    void handleInput();     // SDL_PollEvent → InputMapper → commandQueue_
-    void processCommands(); // drain commandQueue_ → domain system calls → clear queue
-    bool running_ = false;
+    // Renderer (Layer 3)
+    SDLRenderer   sdlRenderer_;
+    Camera        camera_;
+    InputMapper   inputMapper_;
+    std::unique_ptr<RenderFrameCollector> collector_;
+
+    // 설정 캐시 (init() 시 ConfigManager에서 읽음)
+    int   windowW_    = 0;
+    int   windowH_    = 0;
+    int   tileSizePx_ = 0;
+    int   tickMs_     = 100;
+    float zoomMin_    = 0.25f;
+    float zoomMax_    = 4.0f;
+    float panSpeed_   = 8.0f;
+
+    bool drawGrid_  = true;
+    bool drawDebug_ = true;
 };
 
 } // namespace vse
 ```
+
+**주요 설계 결정:**
+- `EconomyEngine`, `StarRatingSystem`, `SaveLoadSystem`, `ContentRegistry`는 `include/domain/` 또는 `src/domain/`에 구현체 존재. `Bootstrapper`가 직접 `unique_ptr`로 소유 (Phase 1에서는 아직 `Bootstrapper` 멤버 미포함 — Sprint 3에서 통합 예정).
+- `MAX_TICKS_PER_FRAME = 8` spiral-of-death guard: `Bootstrapper::run()` 내 accumulator 루프에서 적용.
 
 ---
 
@@ -1818,6 +1856,7 @@ public:
 | 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
 | 2026-03-24 | 1.3 | Self-review 9 fixes: **[Critical]** (C-1) speed multiplier now `accumulator += dt * speed` instead of tick cap, (C-2) accumulator ownership moved from SimClock to Bootstrapper — SimClock is pure tick counter; **[Important]** (I-1) Core API header rule clarified (I*.h = pure virtual, others = runtime declarations), (I-2) processCommands() drain-once-per-frame rule, (I-3) system update() signatures unified to `(registry&, GameTime&)` — no dt param, (I-4) SaveLoad: non-ECS state (Grid floors_, Economy balance) requires custom serialization alongside EnTT snapshot; **[Minor]** PixelPos config ref, GameCommandIssued = post-process notification, TileCoord std::hash added. |
 | 2026-03-24 | 1.4 | External review (DeepSeek R1 + GPT-5.4): (3.2) SaveLoad entity cross-reference safety — removed "automatically safe" assertion, added round-trip test requirements, clarified restore sequence (ECS first → non-ECS → derived caches); (3.3) spawnAgent() redesigned to `(reg, homeTenantId, workplaceId, optional spawnPos)` — EntityId-based; (3.4) TransportSystem internal separation guide added (ElevatorCarFSM + LookScheduler); (3.5) PixelPos x conversion formula added; (3.6) CLAUDE.md version synced to v1.3. |
+| 2026-03-26 | 1.5 | Sprint 2 구현 반영 동기화: **(1) Bootstrapper §5.15** — API 시그니처 실제 구현으로 전면 교체 (`initialize` → `init/run/shutdown/initDomainOnly`, `unique_ptr<I*>` 소유 → 직접 멤버, `#ifdef VSE_TESTING` 접근자 가드, `setupInitialScene()` 공용 헬퍼, `accumulator_` Bootstrapper 소유 명시); **(2) ISaveLoad §5.8** — `SaveMetadata.balance` `int` → `int64_t` (TASK-02-003 Cents 단위 통일); **(3) Types.h §2** — `StarRatingChangedPayload` struct 추가 (TASK-02-009: StarRatingSystem.h에서 이동, 레이어 결합 감소); **(4) SaveLoad 직렬화 전략** — EnTT snapshot → 수동 JSON + MessagePack 2-pass remap으로 확정 반영 (이미 §5.8에 있었으나 이유 보강); **(5) SimClock §5.1** — 주석/설계 메모 실제 구현과 일치 확인 (변경 없음). |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*
