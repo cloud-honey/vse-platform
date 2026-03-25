@@ -16,6 +16,7 @@ add_executable(TowerTycoonTests
     test_Bootstrapper.cpp
     test_Integration.cpp
     test_SaveLoad.cpp
+    test_ContentRegistry.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -36,6 +37,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/EventBus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/Bootstrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ContentRegistry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GridSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp

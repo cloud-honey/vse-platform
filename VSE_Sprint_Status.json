@@ -76,7 +76,7 @@
       "title": "ContentRegistry + 핫 리로드 (balance.json)",
       "assignee": "붐2",
       "layer": "Layer 0",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
