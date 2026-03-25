@@ -1058,12 +1058,11 @@ public:
 ```
 
 **Entity Persistence (authoritative):**
-- Phase 1: **EnTT snapshot** (`entt::snapshot` / `entt::snapshot_loader`) for entity + component data
-- EnTT handles entity ID remapping internally during load — no separate stable ID layer needed
-- Entity cross-references (e.g., `ElevatorComponent::passengers`, `AgentComponent::homeTenant`, `AgentComponent::workplace`) are remapped by EnTT **only if all referenced entities exist within the same snapshot**. Do not assume automatic safety — SaveLoad tests must explicitly verify these references survive a round-trip.
-- **Non-ECS state requires custom serialization:** GridSystem internal state (`floors_`, tile occupancy), Economy state (balance, income/expense records), StarRating state — these live outside the registry and must be serialized/deserialized separately by each system
-- **Restore sequence:** (1) MessagePack → verify metadata, (2) `entt::snapshot_loader` restores all entities + components in one pass (Tenant, Elevator, Agent created together), (3) restore non-ECS system state (Grid floors_, Economy balance), (4) recalculate derived caches from restored ECS data (agent paths, interpolated positions, system internal indexes). Steps 3-4 must run **after** ECS restore completes.
-- Save pipeline: SaveMetadata + system custom data + `entt::snapshot` → MessagePack with version header
+- Phase 1: **Manual JSON serialization** with two-pass EntityId remap table. Originally planned as `entt::snapshot` / `entt::snapshot_loader`, but changed to manual approach because: (a) only 5 ECS component types in Phase 1, (b) `entt::snapshot` requires a custom archive adapter for MessagePack output — added complexity without benefit at this scale, (c) manual approach gives full control over cross-reference remapping (Grid tenantEntity, Transport passengers). Phase 2+ may switch to `entt::snapshot` if component count grows significantly.
+- Entity cross-references (e.g., `ElevatorCar::passengers`, `AgentComponent::homeTenant`, `AgentComponent::workplaceTenant`, `Grid TileData::tenantEntity`) are remapped via a `unordered_map<uint32_t, EntityId>` remap table built during entity restoration. SaveLoad tests explicitly verify these references survive a round-trip.
+- **Non-ECS state requires custom serialization:** GridSystem internal state (`floors_`, tile occupancy), Economy state (balance, income/expense records), StarRating state — these live outside the registry and must be serialized/deserialized separately by each system via `exportState()`/`importState()` methods.
+- **Restore sequence:** (1) Read & verify SaveMetadata (version check), (2) Clear registry + agent tracking, (3) Restore Grid (floors + tiles), (4) Restore ECS entities (two-pass: create + remap), (5) Remap Grid tenantEntity references, (6) Restore Economy, (7) Restore StarRating, (8) Restore Transport + remap passenger IDs, (9) Restore SimClock (silent), (10) Recalculate derived caches.
+- Save pipeline: SaveMetadata + system state + entity data → JSON → `nlohmann::json::to_msgpack()` → binary file
 - **SaveLoad test requirements (Phase 1):** passenger EntityId round-trip, homeTenant/workplace reference validity, Grid tile occupancy consistency after load, Economy balance equality
 - Phase 2: save format migration + optional stable ID for modding support
 
