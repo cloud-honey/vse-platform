@@ -27,7 +27,8 @@ public:
                          int tileSizePx = 32);
 
     // AgentSystem 연결 (선택) — collect() 시 에이전트 수집
-    void setAgentSource(const IAgentSystem* agentSys, entt::registry* reg) {
+    // registry는 const 포인터 — 읽기 전용 접근만 허용 (entt const view 사용)
+    void setAgentSource(const IAgentSystem* agentSys, const entt::registry* reg) {
         agentSys_ = agentSys;
         registry_ = reg;
     }
@@ -43,7 +44,7 @@ private:
     const IGridSystem&          grid_;
     const ITransportSystem&     transport_;
     const IAgentSystem*         agentSys_ = nullptr;
-    entt::registry*             registry_ = nullptr;
+    const entt::registry*       registry_ = nullptr;  // const — 읽기 전용
     int  tileSizePx_    = 32;
     bool drawGrid_      = true;
     bool drawDebugInfo_ = true;

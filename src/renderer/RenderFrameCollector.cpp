@@ -1,4 +1,5 @@
 #include "renderer/RenderFrameCollector.h"
+#include <algorithm>
 
 namespace vse {
 
@@ -105,20 +106,29 @@ RenderFrame RenderFrameCollector::collect() const
     }
 
     // ── 에이전트 수집 (TASK-01-008) ──────────────────────
-    // PositionComponent.pixel + AgentComponent.state → RenderAgent
+    // PositionComponent.pixel(발바닥 월드좌표) + AgentComponent.state → RenderAgentCmd
+    // const view 사용 — 컴포넌트 수정 불가 (Gemini 검토 반영)
     if (agentSys_ != nullptr && registry_ != nullptr) {
-        auto view = registry_->view<PositionComponent, AgentComponent>();
+        auto view = registry_->view<const PositionComponent, const AgentComponent>();
+        frame.agents.reserve(view.size_hint());  // 매 프레임 재할당 방지 (Gemini 검토 반영)
         for (auto entity : view) {
-            const auto& pos   = view.get<PositionComponent>(entity);
-            const auto& agent = view.get<AgentComponent>(entity);
+            const auto& pos   = view.get<const PositionComponent>(entity);
+            const auto& agent = view.get<const AgentComponent>(entity);
 
-            RenderAgent ra;
-            ra.id     = entity;
-            ra.pixel  = pos.pixel;
-            ra.facing = pos.facing;
-            ra.state  = agent.state;
+            RenderAgentCmd ra;
+            ra.id          = entity;
+            ra.pos         = pos.pixel;   // pixel = 발바닥 월드 픽셀 (PixelPos 계약)
+            ra.facing      = pos.facing;
+            ra.state       = agent.state;
+            ra.spriteFrame = 0;           // Phase 1 고정
             frame.agents.push_back(ra);
         }
+        // Y-sort: pos.y 오름차순 정렬 → 낮은 층(y 작음) 먼저 그려서 높은 층이 앞에 보임
+        // (Gemini 검토 반영 — 탑뷰 Y-sorting)
+        std::sort(frame.agents.begin(), frame.agents.end(),
+                  [](const RenderAgentCmd& a, const RenderAgentCmd& b) {
+                      return a.pos.y < b.pos.y;
+                  });
     }
 
     return frame;

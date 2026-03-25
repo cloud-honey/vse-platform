@@ -190,26 +190,36 @@ void SDLRenderer::drawElevators(const RenderFrame& frame, const Camera& camera)
 
 void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
 {
-    // NPC 스프라이트: 16×32px 컬러 박스 (Phase 1)
+    // NPC Phase 1 렌더링: 16×32px 전체 실루엣 컬러 박스
+    // 규격 준수 (GPT-5.4 검토 반영): 머리 포함 전체 외곽을 16×32 안에 수용
+    //
+    // 좌표 계약:
+    //   agent.pos = NPC 발바닥 월드 픽셀 (좌하단 원점, Y↑)
+    //   sy = worldToScreenY(pos.y) → 발바닥의 화면 y
+    //   drawY = sy - npcH → 스프라이트 상단 화면 y (SDL2 좌상단 원점 기준)
+    //
     // 상태별 색상: Idle=회색, Working=파랑, Resting=주황
-    // pixel은 PositionComponent.pixel — 좌하단 기준 월드 픽셀 좌표
+    // agents는 Y-sort(pos.y 오름차순) 완료 상태로 전달됨
 
     float zoom = camera.zoomLevel();
     int ts = frame.tileSize;
 
-    // NPC 크기: 타일의 절반 너비, 한 층 높이 (16×32)
+    // NPC 전체 크기: 16×32px (tileSize 기준 — 타일 절반 너비, 한 층 높이)
     float npcW = (ts * 0.5f) * zoom;
     float npcH = ts * zoom;
 
+    // 머리 크기: 전체 높이의 상위 30% (npcH * 0.3), 16×32 규격 안에 포함
+    float headH    = npcH * 0.30f;
+    float bodyH    = npcH - headH;           // 몸통 = 나머지 70%
+    float headW    = npcW * 0.75f;           // 머리 너비 (약간 좁게)
+
     for (const auto& agent : frame.agents) {
-        // pixel.x, pixel.y → 화면 좌표
-        float sx = camera.worldToScreenX(static_cast<float>(agent.pixel.x));
-        float sy = camera.worldToScreenY(static_cast<float>(agent.pixel.y));
+        // pos(발바닥 월드 픽셀) → 화면 좌표
+        float sx    = camera.worldToScreenX(agent.pos.x);
+        float sy    = camera.worldToScreenY(agent.pos.y);  // 발바닥 화면 y
+        float drawY = sy - npcH;                            // 스프라이트 상단 (16×32 영역 시작)
 
-        // sy는 NPC 발 위치 (하단 기준) → 상단으로 npcH만큼 올림
-        float drawY = sy - npcH;
-
-        // 화면 밖 컬링
+        // 화면 밖 컬링 (전체 외곽 기준)
         if (sx + npcW < 0 || sx > camera.viewportW()) continue;
         if (drawY + npcH < 0 || drawY > camera.viewportH()) continue;
 
@@ -217,7 +227,7 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
         uint8_t r, g, b;
         switch (agent.state) {
         case AgentState::Working:
-            r = 79; g = 142; b = 247;   // 파랑
+            r = 79;  g = 142; b = 247;  // 파랑
             break;
         case AgentState::Resting:
             r = 255; g = 165; b = 0;    // 주황
@@ -228,26 +238,27 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
             break;
         }
 
-        // 몸통
-        SDL_SetRenderDrawColor(renderer_, r, g, b, 230);
-        SDL_FRect body = {sx, drawY, npcW, npcH};
-        SDL_RenderFillRectF(renderer_, &body);
-
-        // 머리 (상단 1/4 크기, 밝게)
-        float headSize = npcW * 0.8f;
-        float headX = sx + (npcW - headSize) * 0.5f;
-        float headY = drawY - headSize;
+        // ── 머리 (상단 30%) ─────────────────────────────
+        // 16×32 박스 안에 배치 — 규격 위반 없음
+        float headX = sx + (npcW - headW) * 0.5f;
         SDL_SetRenderDrawColor(renderer_,
-            static_cast<uint8_t>(std::min(255, r + 60)),
-            static_cast<uint8_t>(std::min(255, g + 40)),
-            static_cast<uint8_t>(std::min(255, b + 30)),
+            static_cast<uint8_t>(std::min(255, static_cast<int>(r) + 50)),
+            static_cast<uint8_t>(std::min(255, static_cast<int>(g) + 35)),
+            static_cast<uint8_t>(std::min(255, static_cast<int>(b) + 25)),
             230);
-        SDL_FRect head = {headX, headY, headSize, headSize};
+        SDL_FRect head = {headX, drawY, headW, headH};
         SDL_RenderFillRectF(renderer_, &head);
 
-        // 방향 표시 (좌우 화살표 느낌 — 테두리로 강조)
-        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 80);
-        SDL_RenderDrawRectF(renderer_, &body);
+        // ── 몸통 (하단 70%) ─────────────────────────────
+        float bodyY = drawY + headH;
+        SDL_SetRenderDrawColor(renderer_, r, g, b, 230);
+        SDL_FRect body = {sx, bodyY, npcW, bodyH};
+        SDL_RenderFillRectF(renderer_, &body);
+
+        // ── 전체 외곽 테두리 (16×32 경계 확인용) ────────
+        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 60);
+        SDL_FRect outline = {sx, drawY, npcW, npcH};
+        SDL_RenderDrawRectF(renderer_, &outline);
     }
 }
 

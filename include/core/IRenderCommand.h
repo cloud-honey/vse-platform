@@ -55,21 +55,22 @@ struct RenderElevator {
 };
 
 /**
- * RenderAgent — NPC 에이전트 1명의 렌더링 정보.
+ * RenderAgentCmd — NPC 에이전트 1명의 렌더링 커맨드.
  *
- * Phase 1: 16×32px 컬러 박스. Phase 2: 스프라이트 시트 + 애니메이션.
+ * Design Spec RenderAgentCmd 정의와 일치.
  *
- * pixel: 보간 픽셀 위치 (PositionComponent.pixel).
- *        렌더러가 카메라 변환 후 화면에 그린다.
- * facing: 방향 (Left/Right) — 스프라이트 플립 결정.
- * state: 행동 상태 (Idle/Working/Resting) — 색상 결정.
- *        Idle=회색, Working=파랑, Resting=주황.
+ * pos: NPC 발바닥 월드 픽셀 위치 (PixelPos — 월드 좌하단 기준, Y↑).
+ *      SDLRenderer가 Camera::worldToScreenY() 후 보정(drawY = sy - npcH)해 그림.
+ * facing: 방향 (Left/Right) — Phase 2 스프라이트 플립 결정.
+ * state: 행동 상태 — Phase 1 색상 결정 (Idle=회색, Working=파랑, Resting=주황).
+ * spriteFrame: Phase 1에서는 항상 0. Phase 2 애니메이션 확장용 슬롯.
  */
-struct RenderAgent {
-    EntityId    id      = INVALID_ENTITY;
-    PixelPos    pixel;              // 절대 픽셀 위치 (좌하단 기준 월드 좌표)
-    Direction   facing  = Direction::Right;
-    AgentState  state   = AgentState::Idle;
+struct RenderAgentCmd {
+    EntityId    id          = INVALID_ENTITY;
+    PixelPos    pos;                            // NPC 발바닥 월드 픽셀 (좌하단 원점, Y↑)
+    Direction   facing      = Direction::Right;
+    AgentState  state       = AgentState::Idle;
+    int         spriteFrame = 0;                // Phase 1: 0 고정. Phase 2: 애니메이션 프레임
 };
 
 /**
@@ -102,10 +103,10 @@ struct RenderFrame {
     int   tileSize     = 32;
 
     // 렌더 커맨드 목록
-    std::vector<RenderTile>     tiles;
-    std::vector<RenderElevator> elevators;
-    std::vector<RenderAgent>    agents;
-    std::vector<RenderText>     texts;
+    std::vector<RenderTile>         tiles;
+    std::vector<RenderElevator>     elevators;
+    std::vector<RenderAgentCmd>     agents;     // Y-sorted by pos.y ascending before render
+    std::vector<RenderText>         texts;
 
     // 디버그 플래그
     bool drawGrid      = true;   // 그리드 선 표시

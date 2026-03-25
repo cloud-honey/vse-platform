@@ -13,10 +13,16 @@ namespace vse {
  * PositionComponent — 에이전트의 타일 위치 및 픽셀 보간 위치.
  * 렌더러가 픽셀 위치를 읽어 부드러운 이동 표현.
  * AgentSystem이 update() 시 tile → pixel 보간 갱신.
+ *
+ * pixel 기준점 계약:
+ *   pixel = { tile.x * tileSize, tile.floor * tileSize }
+ *   → 월드 좌하단 기준, Y축 위로 증가 (PixelPos 좌표계와 동일)
+ *   → NPC 발바닥(foot) 위치를 나타냄
+ *   → SDLRenderer는 drawY = worldToScreenY(pixel.y) - npcH 로 보정해 상단에서 그림
  */
 struct PositionComponent {
     TileCoord tile;
-    PixelPos  pixel;                         // 렌더러용 보간 위치
+    PixelPos  pixel;       // NPC 발바닥(foot) 월드 픽셀 위치 (좌하단 원점, Y↑)
     Direction facing = Direction::Right;
 };
 

@@ -28,10 +28,12 @@ struct std::hash<vse::TileCoord> {
 
 namespace vse { // reopen
 
-// Pixel position (render space). Origin: top-left (SDL2 convention).
-// Conversion:
+// Pixel position — **world-space coordinates** (bottom-left origin, Y increases upward).
+// Same coordinate system as tile grid:
 //   pixelX = tile.x * config.tileSize
-//   pixelY = (config.maxFloors - 1 - tile.floor) * config.tileSize
+//   pixelY = tile.floor * config.tileSize   (NOT render space)
+// Camera::worldToScreenX/Y() converts to SDL2 screen space.
+// PositionComponent.pixel uses this convention (foot position = bottom of sprite).
 struct PixelPos {
     float x;
     float y;
