@@ -451,7 +451,24 @@ function render(d){
   /* Header */
   document.getElementById('sprintNum').textContent='S'+String(d.sprint).padStart(2,'0');
   document.getElementById('sprintGoal').textContent=d.sprint_goal;
-  document.getElementById('overallStatus').textContent=(d.overall_status||'').toUpperCase();
+  const osEl=document.getElementById('overallStatus');
+  const osMap={
+    'in_progress':'🟢 IN PROGRESS',
+    'planning':'🔵 PLANNING',
+    'completed':'✅ COMPLETED',
+    'blocked':'🔴 BLOCKED',
+    'paused':'⏸ PAUSED'
+  };
+  const osStyle={
+    'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);',
+    'planning':'color:#a78bfa;background:rgba(167,139,250,.12);',
+    'completed':'color:#34d399;background:rgba(52,211,153,.12);',
+    'blocked':'color:#f87171;background:rgba(248,113,113,.12);',
+    'paused':'color:#fbbf24;background:rgba(251,191,36,.12);'
+  };
+  const osKey=(d.overall_status||'').toLowerCase();
+  osEl.textContent=osMap[osKey]||(d.overall_status||'—').toUpperCase();
+  osEl.style.cssText=(osStyle[osKey]||'')+'border-radius:6px;padding:3px 8px;';
   const dt=new Date(d.updated_at);
   const fmt=dt.toLocaleDateString('ko-KR')+' '+dt.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('updatedTime').textContent=fmt;
