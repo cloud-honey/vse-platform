@@ -185,6 +185,17 @@ void TransportSystem::tickCar(ElevatorCar& car, const GameTime& /*time*/)
     switch (car.state) {
 
     case ElevatorState::Idle: {
+        // 같은 층 홀 콜이 있으면 바로 문 열기 (lookNextTarget은 currentFloor 제외)
+        bool sameFloorCall = false;
+        for (auto& hc : car.hallCalls) {
+            if (hc.floor == car.currentFloor) { sameFloorCall = true; break; }
+        }
+        if (sameFloorCall) {
+            car.state     = ElevatorState::DoorOpening;
+            car.doorTicks = doorOpenTicks_;
+            break;
+        }
+
         int next = lookNextTarget(car);
         if (next == -1) break;  // 할 일 없음
 

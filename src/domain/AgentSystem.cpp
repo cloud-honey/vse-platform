@@ -7,6 +7,13 @@ namespace vse {
 AgentSystem::AgentSystem(IGridSystem& grid, EventBus& bus)
     : grid_(grid)
     , eventBus_(bus)
+    , transport_(nullptr)
+{}
+
+AgentSystem::AgentSystem(IGridSystem& grid, EventBus& bus, ITransportSystem& transport)
+    : grid_(grid)
+    , eventBus_(bus)
+    , transport_(&transport)
 {}
 
 Result<EntityId> AgentSystem::spawnAgent(entt::registry& reg,
@@ -124,7 +131,13 @@ void AgentSystem::update(entt::registry& reg, const GameTime& time)
         auto& agent    = view.get<AgentComponent>(entity);
         auto& schedule = view.get<AgentScheduleComponent>(entity);
 
-        processSchedule(reg, entity, agent, schedule, time);
+        // 엘리베이터 대기/탑승 상태 처리 (transport_ 있을 때만)
+        if (transport_ && (agent.state == AgentState::WaitingElevator ||
+                           agent.state == AgentState::InElevator)) {
+            processElevator(reg, entity, agent, schedule, time);
+        } else {
+            processSchedule(reg, entity, agent, schedule, time);
+        }
     }
 }
 
@@ -134,28 +147,73 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
                                    const GameTime& time)
 {
     AgentState prevState = agent.state;
+    AgentState nextState = agent.state;
+    EntityId   destTenant = INVALID_ENTITY;
 
     if (time.hour >= schedule.workStartHour && time.hour < schedule.lunchHour) {
         // 출근 시간 → Working
         if (agent.state == AgentState::Idle) {
-            agent.state = AgentState::Working;
+            nextState  = AgentState::Working;
+            destTenant = agent.workplaceTenant;
         }
     } else if (time.hour == schedule.lunchHour) {
         // 점심 시간 → Resting
         if (agent.state == AgentState::Working) {
-            agent.state = AgentState::Resting;
+            nextState = AgentState::Resting;
         }
     } else if (time.hour > schedule.lunchHour && time.hour < schedule.workEndHour) {
         // 오후 근무 → Working
         if (agent.state == AgentState::Resting) {
-            agent.state = AgentState::Working;
+            nextState  = AgentState::Working;
+            destTenant = agent.workplaceTenant;
         }
     } else if (time.hour >= schedule.workEndHour) {
         // 퇴근 → Idle
         if (agent.state == AgentState::Working || agent.state == AgentState::Resting) {
-            agent.state = AgentState::Idle;
+            nextState  = AgentState::Idle;
+            destTenant = agent.homeTenant;
         }
     }
+
+    // 상태 변경이 있고 목적지가 있을 경우 엘리베이터 필요 여부 확인
+    if (nextState != agent.state && destTenant != INVALID_ENTITY && transport_ != nullptr) {
+        auto dest = resolveDestination(destTenant);
+        if (dest.has_value()) {
+            const auto& pos = reg.get<PositionComponent>(id);
+            int currentFloor = pos.tile.floor;
+            int targetFloor  = dest->floor;
+
+            if (targetFloor != currentFloor) {
+                // 다층 이동 — 엘리베이터 호출
+                agent.state = AgentState::WaitingElevator;
+
+                auto& passengerComp = reg.emplace_or_replace<ElevatorPassengerComponent>(id);
+                passengerComp.targetFloor = targetFloor;
+                passengerComp.waiting     = true;
+
+                // 방향 결정
+                ElevatorDirection dir = (targetFloor > currentFloor)
+                                        ? ElevatorDirection::Up
+                                        : ElevatorDirection::Down;
+
+                transport_->callElevator(0, currentFloor, dir);
+
+                spdlog::debug("AgentSystem: entity {:d} → WaitingElevator floor {} → {}",
+                              static_cast<uint32_t>(id), currentFloor, targetFloor);
+
+                // 상태 변경 이벤트
+                Event ev;
+                ev.type    = EventType::AgentStateChanged;
+                ev.source  = id;
+                ev.payload = static_cast<int>(AgentState::WaitingElevator);
+                eventBus_.publish(ev);
+                return;
+            }
+        }
+    }
+
+    // 같은 층 이동 또는 엘리베이터 불필요 — 기존 동작
+    agent.state = nextState;
 
     // 상태 변경 이벤트
     if (agent.state != prevState) {
@@ -169,6 +227,139 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
                       static_cast<uint32_t>(id),
                       static_cast<int>(prevState),
                       static_cast<int>(agent.state));
+    }
+}
+
+void AgentSystem::processElevator(entt::registry& reg, EntityId id,
+                                   AgentComponent& agent,
+                                   const AgentScheduleComponent& schedule,
+                                   const GameTime& time)
+{
+    // 퇴근 시간 초과 시 엘리베이터 중도 포기 → Idle
+    if (time.hour >= schedule.workEndHour) {
+        if (reg.all_of<ElevatorPassengerComponent>(id)) {
+            // 탑승 중이면 하차 처리
+            auto& passengerComp = reg.get<ElevatorPassengerComponent>(id);
+            if (!passengerComp.waiting) {
+                // 탑승 중인 경우 하차 시도 (현재 층에 그냥 내리기)
+                auto elevators = transport_->getAllElevators();
+                for (auto elevId : elevators) {
+                    auto snap = transport_->getElevatorState(elevId);
+                    if (!snap.has_value()) continue;
+                    // 이 에이전트가 탑승한 엘리베이터인지 확인
+                    for (auto p : snap->passengers) {
+                        if (p == id) {
+                            transport_->exitPassenger(elevId, id);
+                            break;
+                        }
+                    }
+                }
+            }
+            reg.remove<ElevatorPassengerComponent>(id);
+        }
+
+        agent.state = AgentState::Idle;
+
+        Event ev;
+        ev.type    = EventType::AgentStateChanged;
+        ev.source  = id;
+        ev.payload = static_cast<int>(AgentState::Idle);
+        eventBus_.publish(ev);
+
+        spdlog::debug("AgentSystem: entity {:d} work end during elevator, forced Idle",
+                      static_cast<uint32_t>(id));
+        return;
+    }
+
+    if (!reg.all_of<ElevatorPassengerComponent>(id)) {
+        // 컴포넌트가 없으면 스케줄로 복귀
+        processSchedule(reg, id, agent, schedule, time);
+        return;
+    }
+
+    auto& passengerComp = reg.get<ElevatorPassengerComponent>(id);
+    const auto& pos = reg.get<PositionComponent>(id);
+
+    if (passengerComp.waiting) {
+        // 대기 중 — 현재 층에 Boarding 상태의 엘리베이터가 있는지 확인
+        int currentFloor = pos.tile.floor;
+        auto elevatorsAtFloor = transport_->getElevatorsAtFloor(currentFloor);
+
+        for (auto elevId : elevatorsAtFloor) {
+            auto snap = transport_->getElevatorState(elevId);
+            if (!snap.has_value()) continue;
+            if (snap->state == ElevatorState::Boarding &&
+                snap->currentFloor == currentFloor) {
+                // 탑승 시도
+                auto boardResult = transport_->boardPassenger(
+                    elevId, id, passengerComp.targetFloor);
+                if (boardResult.ok()) {
+                    passengerComp.waiting = false;
+                    agent.state = AgentState::InElevator;
+
+                    Event ev;
+                    ev.type    = EventType::AgentStateChanged;
+                    ev.source  = id;
+                    ev.payload = static_cast<int>(AgentState::InElevator);
+                    eventBus_.publish(ev);
+
+                    spdlog::debug("AgentSystem: entity {:d} boarded elevator {:d}",
+                                  static_cast<uint32_t>(id),
+                                  static_cast<uint32_t>(elevId));
+                }
+                break;  // 한 엘리베이터만 시도
+            }
+        }
+    } else {
+        // 탑승 중 — 목적 층 도착 여부 확인
+        int targetFloor = passengerComp.targetFloor;
+        auto allElevators = transport_->getAllElevators();
+
+        for (auto elevId : allElevators) {
+            auto snap = transport_->getElevatorState(elevId);
+            if (!snap.has_value()) continue;
+
+            // 이 에이전트가 이 엘리베이터에 탑승 중인지 확인
+            bool onThisElevator = false;
+            for (auto p : snap->passengers) {
+                if (p == id) { onThisElevator = true; break; }
+            }
+            if (!onThisElevator) continue;
+
+            // 목적 층 도착 + 탑승/하차 가능 상태 확인
+            if (snap->currentFloor == targetFloor &&
+                (snap->state == ElevatorState::DoorOpening ||
+                 snap->state == ElevatorState::Boarding)) {
+                // 하차
+                transport_->exitPassenger(elevId, id);
+
+                // 위치 업데이트
+                auto& posComp = reg.get<PositionComponent>(id);
+                posComp.tile.floor = targetFloor;
+                posComp.pixel.y    = static_cast<float>(targetFloor * 32);
+
+                // 컴포넌트 제거
+                reg.remove<ElevatorPassengerComponent>(id);
+
+                // 상태 전환 — 직장 or 집 도착
+                AgentState newState = AgentState::Working;
+                // 퇴근 시간 이후이면 Idle
+                if (time.hour >= schedule.workEndHour) {
+                    newState = AgentState::Idle;
+                }
+                agent.state = newState;
+
+                Event ev;
+                ev.type    = EventType::AgentStateChanged;
+                ev.source  = id;
+                ev.payload = static_cast<int>(newState);
+                eventBus_.publish(ev);
+
+                spdlog::debug("AgentSystem: entity {:d} exited elevator at floor {}",
+                              static_cast<uint32_t>(id), targetFloor);
+                return;
+            }
+        }
     }
 }
 

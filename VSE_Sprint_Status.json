@@ -52,13 +52,13 @@
     {
       "id": "TASK-02-005",
       "title": "NPC 경로 탐색 + 엘리베이터 탑승 (다른 층 이동)",
-      "assignee": "붐",
+      "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "AgentPathComponent 활용, TransportSystem 연동. 현재 같은 층만 이동 → 다층 이동."
+      "notes": "AgentSystem 엘리베이터 연동. WaitingElevator→InElevator→Working 다층 이동. 10개 신규 테스트. 184/184 통과. TransportSystem Idle 동층 호출 버그 수정."
     },
     {
       "id": "TASK-02-006",

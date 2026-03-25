@@ -1,6 +1,7 @@
 #pragma once
 #include "core/IAgentSystem.h"
 #include "core/IGridSystem.h"
+#include "core/ITransportSystem.h"
 #include "core/EventBus.h"
 #include <unordered_set>
 
@@ -18,10 +19,16 @@ namespace vse {
  * 의존성:
  * - IGridSystem: 목적지 위치 조회, 경로 검증
  * - EventBus: 상태 변경 이벤트 발행
+ * - ITransportSystem (optional): 엘리베이터 다층 이동 지원
+ *   nullptr이면 같은 층 이동만 수행 (하위 호환성 유지)
  */
 class AgentSystem : public IAgentSystem {
 public:
+    // 기존 생성자 — transport 없음 (같은 층 이동 전용, 기존 테스트 호환)
     AgentSystem(IGridSystem& grid, EventBus& bus);
+
+    // 엘리베이터 지원 생성자 — transport 있음
+    AgentSystem(IGridSystem& grid, EventBus& bus, ITransportSystem& transport);
 
     Result<EntityId> spawnAgent(entt::registry& reg,
                                 EntityId homeTenantId,
@@ -43,14 +50,21 @@ public:
     float getAverageSatisfaction(entt::registry& reg) const override;
 
 private:
-    IGridSystem& grid_;
-    EventBus&    eventBus_;
+    IGridSystem&      grid_;
+    EventBus&         eventBus_;
+    ITransportSystem* transport_;   // optional — nullptr = 같은 층 이동 전용
 
     // 추적 중인 에이전트 ID 집합 (activeAgentCount용)
     std::unordered_set<uint32_t> activeAgents_;
 
     // 스케줄 체크 — 시간 기반 상태 전환
     void processSchedule(entt::registry& reg, EntityId id,
+                         AgentComponent& agent,
+                         const AgentScheduleComponent& schedule,
+                         const GameTime& time);
+
+    // 엘리베이터 대기/탑승/하차 처리
+    void processElevator(entt::registry& reg, EntityId id,
                          AgentComponent& agent,
                          const AgentScheduleComponent& schedule,
                          const GameTime& time);

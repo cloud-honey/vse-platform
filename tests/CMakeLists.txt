@@ -4,6 +4,7 @@ add_executable(TowerTycoonTests
     test_ConfigManager.cpp
     test_GridSystem.cpp
     test_AgentSystem.cpp
+    test_AgentElevator.cpp
     test_TransportSystem.cpp
     test_EconomyEngine.cpp
     test_StarRatingSystem.cpp
