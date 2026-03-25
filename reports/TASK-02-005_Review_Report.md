@@ -130,7 +130,7 @@ void processElevator(entt::registry& reg, EntityId id,
 | Model | Verdict | Key Issues |
 |---|---|---|
 | DeepSeek V3 | Conditional Pass → **Pass (Post-Fix)** | P2: 귀가 경로 미구현(→수정완료), shaftX=0 하드코딩, 점심 층간 이동 미구현 |
-| Gemini 3 Flash | Conditional Pass | P1: 귀가 경로 미완(→수정완료), phantom agent(→수정완료); P2: shaftX=0, waiting bool 중복 |
+| Gemini 3 Flash | Conditional Pass → **Pass (Post-Fix 2)** | P1: 귀가 경로 미완(→수정완료), phantom agent(→수정완료); P2: shaftX=0, waiting bool 중복; P2 re-route hall call 누락 → 실제 버그로 판명(→수정완료, 커밋 4cb28f8) |
 | GPT-5.4 Thinking | Conditional Pass | P1: 하차 후 Moving 단계 생략(Phase 1 단순화로 문서화), FSM 소유권 AgentSystem 폴링 방식(현재 구조 유지), 귀가 경로 미완(→수정완료), 생성자 설계 계약 서술 불일치(보고서 정확도 이슈); P2: InElevator 스펙 인용 오류(보고서 수정완료) |
 
 ---
