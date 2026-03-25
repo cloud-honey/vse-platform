@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T04:59:12",
+  "updated_at": "2026-03-25T05:39:50",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "in_progress",
@@ -21,11 +21,11 @@
       "title": "통합 테스트 3종 추가 (엘리베이터 시나리오, NPC 일일 사이클)",
       "assignee": "붐",
       "layer": "테스트",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "시스템 간 협력 검증. Sprint 1 교차 검증 공통 지적사항."
+      "notes": "통합 테스트 3종 완료 (엘리베이터, NPC 일과, SimClock+EventBus). 150/150 통과. 커밋 4283d50"
     },
     {
       "id": "TASK-02-003",
@@ -244,6 +244,12 @@
       "time": "13:54",
       "title": "TASK-02-001 Bootstrapper 분리 완료",
       "detail": "main.cpp → Bootstrapper 클래스. initDomainOnly() headless 테스트, SDLRenderer guard 추가. 147/147 테스트. 커밋 2f582a2"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "14:38",
+      "title": "TASK-02-002 통합 테스트 3종 완료",
+      "detail": "붐2(DeepSeek V3) 구현. 엘리베이터 도착/NPC 일과/SimClock+EventBus 검증. 150/150 통과. 커밋 4283d50"
     }
   ],
   "references": [
