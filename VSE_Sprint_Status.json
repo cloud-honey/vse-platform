@@ -1,6 +1,6 @@
 {
   "sprint": 1,
-  "updated_at": "2026-03-24T20:15:00",
+  "updated_at": "2026-03-25T10:42:49",
   "phase": "Phase 1",
   "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
   "overall_status": "in_progress",
@@ -87,11 +87,11 @@
       "title": "NPC 스프라이트 렌더링 + 이동 표시",
       "assignee": "Claude Code",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
+      "status": "done",
+      "qa_status": "done",
       "design_check": "done",
       "confirmed_by_human": false,
-      "notes": "TASK-01-006,007 완료 후 시작"
+      "notes": "RenderAgent 구조체 추가, RenderFrameCollector setAgentSource(), SDLRenderer drawAgents() 16x32px 컬러박스, 상태별 색상(Idle=회색/Working=파랑/Resting=주황). 132/132 테스트. 커밋 6808959"
     },
     {
       "id": "TASK-01-009",
@@ -231,6 +231,12 @@
       "time": "21:50",
       "title": "TASK-01-007 GPT-5.4 리뷰 반영",
       "detail": "Config 외부화(tileSizePx,zoom), 도메인 커맨드 연결(BuildFloor 등), 테스트 보강. 121/121 테스트."
+    },
+    {
+      "date": "2026-03-25",
+      "time": "10:50",
+      "title": "TASK-01-008 NPC 스프라이트 렌더링 완료",
+      "detail": "RenderAgent 커맨드 추가, RenderFrameCollector+AgentSystem 연결(setAgentSource), SDLRenderer drawAgents(16x32px 컬러박스). 132/132 테스트 통과. 커밋 6808959"
     }
   ],
   "references": [
