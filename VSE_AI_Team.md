@@ -358,6 +358,11 @@ v0.1.0          — Steam 출시 전 빌드
 
 파일명: `reports/TASK-XX-XXX_Review_Report.md`
 
+### v2.2 양식 (구버전 — 하위 호환용으로 보존)
+
+<details>
+<summary>v2.2 template (deprecated)</summary>
+
 ```markdown
 # VSE Platform — TASK-XX-XXX Review Report
 
@@ -367,55 +372,92 @@ v0.1.0          — Steam 출시 전 빌드
 > Layer: [Core Runtime / Layer 1 / Layer 3 / etc.]
 > Purpose: Cross-validation by external AI models
 
----
-
 ## 1. Summary
-
 | Item | Detail |
 |---|---|
-| Task | TASK-XX-XXX: [title] |
-| Layer | [layer] |
-| Completed | YYYY-MM-DD |
+| Task | ... |
 | Commit | [hash] |
 | Tests | [N new] + [M existing] = **total/total passed** |
 
 ## 2. Files Created / Modified
-
-| File | Type | Role |
-|---|---|---|
-| `path/to/file.h` | New | [role] |
-| `path/to/file.cpp` | New | [role] |
-| `path/to/file.cpp` | Modified | [what changed] |
+...
 
 ## 3. Interface / Key Design
-
-[Public API, key structs, main loop structure, etc. — enough for reviewers to verify design compliance]
+...
 
 ## 4. CLAUDE.md Compliance Checklist
-
-```
-[ ] No layer boundary violations
-[ ] No hardcoded values (all via ConfigManager/JSON)
-[ ] Naming conventions followed (CLAUDE.md)
-[ ] Memory ownership conventions followed (unique_ptr first)
-[ ] Error handling policy followed (no exceptions)
-[ ] Within Phase 1 scope
-[ ] Unit tests included
-[ ] Implementation matches CLAUDE.md
-```
+...
 
 ## 5. Troubleshooting Record
-
-[Problems encountered, root cause, fix applied]
+...
 
 ## 6. Open Items
+...
+```
+</details>
 
-[Unresolved issues, future improvement candidates with priority P0/P1/P2]
+### v2.3 양식 (현행) ← 이 양식을 사용할 것
+
+**원칙:**
+- 통과된 항목은 기술 불필요 — **문제·이탈·미결 사항만** 기록
+- 교차 검증 섹션에 **실제 검증 모델명** 명시
+- 체크리스트는 실패한 항목만 표시 (`[ ]`), 통과는 생략
+
+```markdown
+# VSE Platform — TASK-XX-XXX Review Report
+
+> Author: [구현 모델명 — DeepSeek V3 / Claude Sonnet 4.6 / etc.]
+> Date: YYYY-MM-DD
+> Task: TASK-XX-XXX [task title]
+> Layer: [layer]
+> Tests: [N new] + [M existing] = **total/total passed**
+> Commit: [hash]
+
+---
+
+## Files
+
+| File | Type |
+|---|---|
+| `path/to/file.h` | New |
+| `path/to/file.cpp` | New / Modified |
+
+---
+
+## Deviations from Spec
+
+[Only list items that differ from CLAUDE.md / VSE_Design_Spec.md, and why.
+If fully compliant, write: "None — fully compliant with spec."]
+
+---
+
+## Troubleshooting
+
+[Only if problems occurred. Format: Problem → Root Cause → Fix applied.
+If none, write: "None."]
+
+---
+
+## Open Items
+
+[Unresolved issues or future improvements. Format: P0/P1/P2 + description.
+If none, write: "None."]
+
+---
+
+## Cross-Validation
+
+| Model | Verdict | Key Issues |
+|---|---|---|
+| [GPT-5.4 Thinking] | [Pass / Conditional Pass / Fail] | [summary of issues only — omit passed items] |
+| [Gemini 3 Flash] | [Pass / Conditional Pass / Fail] | [summary] |
+| [DeepSeek V3] | [Pass / Conditional Pass / Fail] | [summary] |
 ```
 
 **주의:**
-- `@author`에는 반드시 실제 구현 모델명 기입 (붐2가 구현했으면 `DeepSeek V3`, 붐이 구현했으면 `Claude Sonnet 4.6`)
-- 붐이 대신 작성하더라도 실제 구현자 명시
+- `Author`에는 반드시 실제 구현 모델명 기입 (붐2가 구현했으면 `DeepSeek V3`)
+- Cross-Validation 섹션은 검증 완료 후 붐이 채워 넣음
+- 통과된 내용은 언급 금지 — 리뷰어가 집중해야 할 문제만 기록
 
 ---
 
@@ -497,3 +539,4 @@ TileCoordinate worldToTile(int worldX, int worldY);
 | 2026-03 | 2.0 | 언어 규칙, 태스크 분해, 단계별 컨펌, 설계 정합성 검증, 에스컬레이션, 대시보드 연동 추가. |
 | 2026-03 | 2.1 | 토큰 중단 복구, git 버전 관리, 코드 주석 규칙, 인수인계 체크리스트 추가. |
 | 2026-03-25 | 2.2 | 태스크 완료 보고서 양식 추가 (영어 작성 필수, @author 실제 구현 모델명 명시). |
+| 2026-03-25 | 2.3 | 보고서 양식 개선: 문제 사항만 기록, 교차 검증 섹션에 검증 모델명 명시, 통과 항목 생략. |
