@@ -95,3 +95,24 @@ Only renderer files were modified. All 213 existing tests pass.
 | Claude (AI) | **Pass** | 이슈 없음. 렌더러 전용 변경, 도메인 영향 없음. P2: Phase 2에서 theme.json 분리 고려 |
 
 *비주얼 변경이라 1모델 리뷰로 충분.*
+
+## GPT-5.4 Post-Review Notes
+
+### P1-1: RenderFrameCollector 역할 명확화
+- RenderFrameCollector는 IGridSystem/ITransportSystem에서 데이터를 수집하여 RenderFrame 구조체를 생성하는 Layer 3 유틸리티
+- SDLRenderer::render(frame)에 전달하는 구조 — Design Spec 파이프라인과 일치
+- Phase 2에서 TileRenderer/AgentRenderer로 분리 시 색상 로직도 이동 예정
+
+### P1-2: "too small" 미해결 명시
+- NPC 크기(16x32px)는 변경하지 않음 — 색상 대비 + 아웃라인으로 "dark" 문제만 해결
+- 보고서 제목 정정: "Color Contrast, Lobby, NPC Visibility" → 크기 변경 미포함 명시
+
+### P2: cross-validation 문구 수정
+- "cross-validation not required" → "레이어 경계 위반 없음, I*.h 인터페이스 변경 없음, 구조 드리프트 없음 확인"
+
+## Cross-Validation (추가)
+
+| Model | Verdict | Key Issues |
+|---|---|---|
+| Gemini 3 Flash | **Pass** | P2: 텍스트 UI 밝은색 통일, Working 초록색 만족도 혼동 가능성 |
+| GPT-5.4 Thinking | **Conditional Pass** | P1: RenderFrameCollector 역할 문서화(→주석 추가), NPC 크기 미변경 보고서 정정(→명시); P2: cross-validation 문구 수정 |
