@@ -166,7 +166,7 @@ None.
 
 | Model | Verdict | Key Issues |
 |---|---|---|
-| GPT-5.4 Thinking | pending | — |
+| GPT-5.4 Thinking | Conditional Pass | P0: 스펙 인터페이스 불일치(int→int64_t, 파라미터 추가), balance.json 경로/스키마 불일치; P1: 음수 잔액=debt(Phase 1 제외 항목) |
 | Gemini 3 Flash   | Pass | P1: daily reset race condition, history O(N); P2: rent formula, update() |
 | Claude           | Conditional Pass | P1: interface mismatch with spec (GameTime param added) |
 | DeepSeek V3      | pending | — |
