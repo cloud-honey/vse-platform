@@ -207,3 +207,45 @@ target_compile_definitions(TowerTycoon PRIVATE
 - **붐2 지시는 영어로 해야 함** — 이번 한국어 지시로 인해 결과물 품질 저하 발생 (마스터 지적으로 확인)
 - VSE_AI_Team.md에 이미 명시된 규칙이었으나 붐이 미숙지
 - AGENTS.md 절대 규칙에 "비Claude 계열은 영어 지시" 영구 추가 완료
+
+---
+
+## 11. GPT-5.4 Thinking 교차 검증 결과 (2026-03-25)
+
+**최종 판정: 조건부 합격**
+> "main.cpp 리팩토링 1차 성공. 설계 정합성 완전 확보 판정은 보류."
+
+### P0 — 즉시 수정 필요
+
+**P0-1. SimClock 책임 경계 문제 (가장 중요)**
+- Bootstrapper가 `currentTick_`, `speed_`, `paused_`, `accumulator_`를 직접 소유
+- `SimClock`이 이미 존재하며 `currentTick()`, `speed()`, `isPaused()`, `advanceTick()`, `setSpeed()`, `pause()/resume()`, `restoreState()` 제공
+- **현재 구조 = SimClock 우회 — 시간 진행의 단일 소유자 없음**
+- 저장/불러오기(TASK-02-006) 시 시간 상태 복원 주체 애매해짐
+- **수정 방향**: Bootstrapper에서 `speed_/paused_/currentTick_` 제거 → SimClock을 단일 소유자로 확정. Bootstrapper는 `simClock_.advanceTick()` 호출 + orchestration만 담당
+
+**P0-2. processCommands() 호출 계약 불명확**
+- 보고서에서 "run()의 커맨드 처리와 tick 루프 내 processCommands가 분리"라는 표현이 혼동 유발
+- frame 기준 1회인지, tick loop 첫 step 1회인지 문서/주석에서 명확히 확정 필요
+
+### P1 — 다음 관련 태스크 전에 처리
+
+**P1-1. 테스트 전용 public API 가드 처리**
+- `testGet*()` / `testProcessCommands()` 프로덕션 API에 그대로 노출됨
+- `#ifdef VSE_TESTING` 가드 또는 friend class로 축소
+
+**P1-2. setupInitialScene() 추출**
+- `init()` / `initDomainOnly()` 초기 씬 코드 중복 → 별도 헬퍼로 추출
+
+**P1-3. partial init / double shutdown 테스트 추가**
+- shutdown null guard는 크래시 방지 패치 수준. lifecycle 플래그(`initialized_` 등) 또는 명시적 테스트로 안정성 확보
+
+### P2
+
+**P2-1. VSE_PROJECT_ROOT 의존 개선**
+- 경로 해석 책임을 코어 런타임에서 분리하는 장기 방향 검토
+
+---
+
+**붐 판단:**
+GPT P0-1 지적이 핵심 — SimClock 통합이 TASK-02-001의 가장 큰 미완성 항목. TASK-02-002 이전에 별도 수정 태스크로 처리하거나, TASK-02-002 통합 테스트 작성 전에 SimClock 연결 먼저 정리하는 것이 합리적.
