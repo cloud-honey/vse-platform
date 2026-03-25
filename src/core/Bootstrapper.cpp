@@ -1,3 +1,16 @@
+/**
+ * @file Bootstrapper.cpp
+ * @layer Core Runtime (src/core/)
+ * @task TASK-02-001
+ * @author 붐 (Claude Sonnet 4.6)
+ * @reviewed GPT-5.4 Thinking, Gemini 3 Flash, Claude (pass, 2026-03-25)
+ *
+ * @brief Bootstrapper 구현.
+ *        init() — 시스템 조립 + SDL 초기화
+ *        run()  — fixed-tick 메인 루프 (CLAUDE.md §메인 루프 규칙 준수)
+ *        shutdown() — 정리
+ *        initDomainOnly() — headless 테스트용 Domain 전용 초기화
+ */
 #include "core/Bootstrapper.h"
 #include <spdlog/spdlog.h>
 #include <SDL.h>

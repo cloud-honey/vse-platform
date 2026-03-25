@@ -1,4 +1,21 @@
 #pragma once
+/**
+ * @file Bootstrapper.h
+ * @layer Core Runtime (src/core/)
+ * @task TASK-02-001
+ * @author 붐 (Claude Sonnet 4.6)
+ * @reviewed GPT-5.4 Thinking, Gemini 3 Flash, Claude (pass, 2026-03-25)
+ *
+ * @brief Composition Root — 모든 시스템 소유 및 초기화 순서 관리.
+ *        main()은 init() → run() → shutdown() 3줄만 호출.
+ *
+ * @note 시간 진행의 단일 소유자: simClock_
+ *       배속/pause 상태는 simClock_에 위임.
+ *       accumulator 기반 배속 루프 횟수 계산은 Bootstrapper 담당.
+ *
+ * @see CLAUDE.md §메인 루프 규칙
+ * @see VSE_Design_Spec.md §Bootstrapper
+ */
 
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
