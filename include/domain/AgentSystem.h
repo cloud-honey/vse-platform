@@ -49,6 +49,12 @@ public:
 
     float getAverageSatisfaction(entt::registry& reg) const override;
 
+    // ── SaveLoad support ───────────────────────────────────────────────────
+    /** Register a restored agent in the activeAgents_ tracking set. */
+    void registerRestoredAgent(EntityId id);
+    /** Clear activeAgents_ tracking (called before load). */
+    void clearTracking();
+
 private:
     IGridSystem&      grid_;
     EventBus&         eventBus_;

@@ -21,6 +21,7 @@
 #pragma once
 #include "core/IEconomyEngine.h"
 #include "core/IGridSystem.h"
+#include <nlohmann/json.hpp>
 #include <vector>
 #include <cstdint>
 #include <string>
@@ -80,6 +81,11 @@ private:
     
     void addIncomeRecord(const IncomeRecord& record);
     void addExpenseRecord(const ExpenseRecord& record);
+
+public:
+    // ── SaveLoad support ───────────────────────────────────────────────────
+    nlohmann::json exportState() const;
+    void importState(const nlohmann::json& j);
 };
 
 } // namespace vse

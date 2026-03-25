@@ -15,6 +15,7 @@ add_executable(TowerTycoonTests
     test_DebugInfo.cpp
     test_Bootstrapper.cpp
     test_Integration.cpp
+    test_SaveLoad.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -40,6 +41,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/EconomyEngine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/StarRatingSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/SaveLoadSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/Camera.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/RenderFrameCollector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SDLRenderer.cpp

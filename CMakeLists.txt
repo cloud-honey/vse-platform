@@ -66,6 +66,7 @@ add_executable(TowerTycoon
     src/domain/TransportSystem.cpp
     src/domain/EconomyEngine.cpp
     src/domain/StarRatingSystem.cpp
+    src/domain/SaveLoadSystem.cpp
     src/core/EventBus.cpp
     src/core/SimClock.cpp
     src/core/ConfigManager.cpp

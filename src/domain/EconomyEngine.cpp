@@ -214,4 +214,81 @@ void EconomyEngine::addExpenseRecord(const ExpenseRecord& record) {
     }
 }
 
+// ── SaveLoad export/import ───────────────────────────────────────────────────
+
+nlohmann::json EconomyEngine::exportState() const {
+    using json = nlohmann::json;
+    json j;
+    j["balance"]      = balance_;
+    j["dailyIncome"]  = dailyIncome_;
+    j["dailyExpense"] = dailyExpense_;
+    j["lastRentDay"]  = lastRentDay_;
+    j["lastMaintenanceDay"] = lastMaintenanceDay_;
+
+    json incArr = json::array();
+    for (const auto& r : incomeHistory_) {
+        incArr.push_back({
+            {"tenantEntity", static_cast<uint32_t>(r.tenantEntity)},
+            {"type",         static_cast<int>(r.type)},
+            {"amount",       r.amount},
+            {"day",          r.timestamp.day},
+            {"hour",         r.timestamp.hour},
+            {"minute",       r.timestamp.minute}
+        });
+    }
+    j["incomeHistory"] = incArr;
+
+    json expArr = json::array();
+    for (const auto& r : expenseHistory_) {
+        expArr.push_back({
+            {"category", r.category},
+            {"amount",   r.amount},
+            {"day",      r.timestamp.day},
+            {"hour",     r.timestamp.hour},
+            {"minute",   r.timestamp.minute}
+        });
+    }
+    j["expenseHistory"] = expArr;
+
+    return j;
+}
+
+void EconomyEngine::importState(const nlohmann::json& j) {
+    balance_            = j.value("balance", int64_t(0));
+    dailyIncome_        = j.value("dailyIncome", int64_t(0));
+    dailyExpense_       = j.value("dailyExpense", int64_t(0));
+    lastRentDay_        = j.value("lastRentDay", -1);
+    lastMaintenanceDay_ = j.value("lastMaintenanceDay", -1);
+
+    incomeHistory_.clear();
+    if (j.contains("incomeHistory")) {
+        for (const auto& r : j["incomeHistory"]) {
+            IncomeRecord rec;
+            rec.tenantEntity   = static_cast<EntityId>(r.value("tenantEntity", uint32_t(0)));
+            rec.type           = static_cast<TenantType>(r.value("type", 0));
+            rec.amount         = r.value("amount", int64_t(0));
+            rec.timestamp.day    = r.value("day", 0);
+            rec.timestamp.hour   = r.value("hour", 0);
+            rec.timestamp.minute = r.value("minute", 0);
+            incomeHistory_.push_back(rec);
+        }
+    }
+
+    expenseHistory_.clear();
+    if (j.contains("expenseHistory")) {
+        for (const auto& r : j["expenseHistory"]) {
+            ExpenseRecord rec;
+            rec.category         = r.value("category", std::string(""));
+            rec.amount           = r.value("amount", int64_t(0));
+            rec.timestamp.day    = r.value("day", 0);
+            rec.timestamp.hour   = r.value("hour", 0);
+            rec.timestamp.minute = r.value("minute", 0);
+            expenseHistory_.push_back(rec);
+        }
+    }
+
+    spdlog::debug("EconomyEngine::importState: balance={}, income records={}, expense records={}",
+                  balance_, incomeHistory_.size(), expenseHistory_.size());
+}
+
 } // namespace vse

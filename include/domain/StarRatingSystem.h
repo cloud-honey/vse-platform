@@ -18,6 +18,7 @@
 #include "core/EventBus.h"
 #include "core/IAgentSystem.h"
 #include "core/Types.h"
+#include <nlohmann/json.hpp>
 #include <entt/entt.hpp>
 #include <array>
 
@@ -76,6 +77,11 @@ private:
 
     // Compute new rating from satisfaction + population
     StarRating computeRating(float avgSatisfaction, int population) const;
+
+public:
+    // ── SaveLoad support ───────────────────────────────────────────────────
+    nlohmann::json exportState(const entt::registry& reg) const;
+    void importState(entt::registry& reg, const nlohmann::json& j);
 };
 
 } // namespace vse

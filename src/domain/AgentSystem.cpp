@@ -437,6 +437,14 @@ float AgentSystem::getAverageSatisfaction(entt::registry& reg) const
     return total / static_cast<float>(count);
 }
 
+void AgentSystem::registerRestoredAgent(EntityId id) {
+    activeAgents_.insert(static_cast<uint32_t>(id));
+}
+
+void AgentSystem::clearTracking() {
+    activeAgents_.clear();
+}
+
 std::optional<TileCoord> AgentSystem::resolveDestination(EntityId tenantEntityId) const
 {
     // GridSystem에서 해당 tenantEntity의 anchor 위치 조회

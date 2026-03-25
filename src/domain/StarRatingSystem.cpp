@@ -132,4 +132,45 @@ StarRating StarRatingSystem::computeRating(float avgSatisfaction, int population
     return StarRating::Star1;
 }
 
+// ── SaveLoad export/import ───────────────────────────────────────────────────
+
+nlohmann::json StarRatingSystem::exportState(const entt::registry& reg) const {
+    using json = nlohmann::json;
+    json j;
+    
+    auto view = reg.view<StarRatingComponent>();
+    for (auto entity : view) {
+        const auto& sr = view.get<StarRatingComponent>(entity);
+        j["currentRating"]   = static_cast<int>(sr.currentRating);
+        j["avgSatisfaction"] = sr.avgSatisfaction;
+        j["totalPopulation"] = sr.totalPopulation;
+        break; // singleton
+    }
+    return j;
+}
+
+void StarRatingSystem::importState(entt::registry& reg, const nlohmann::json& j) {
+    // Note: the StarRatingComponent entity is created by deserializeEntities()
+    // This just updates it in case values differ from saved state
+    auto view = reg.view<StarRatingComponent>();
+    for (auto entity : view) {
+        auto& sr = view.get<StarRatingComponent>(entity);
+        sr.currentRating   = static_cast<StarRating>(j.value("currentRating", 1));
+        sr.avgSatisfaction = j.value("avgSatisfaction", 50.0f);
+        sr.totalPopulation = j.value("totalPopulation", 0);
+        return;
+    }
+    
+    // If no entity found (shouldn't happen), create one
+    initRegistry(reg);
+    auto view2 = reg.view<StarRatingComponent>();
+    for (auto entity : view2) {
+        auto& sr = view2.get<StarRatingComponent>(entity);
+        sr.currentRating   = static_cast<StarRating>(j.value("currentRating", 1));
+        sr.avgSatisfaction = j.value("avgSatisfaction", 50.0f);
+        sr.totalPopulation = j.value("totalPopulation", 0);
+        return;
+    }
+}
+
 } // namespace vse

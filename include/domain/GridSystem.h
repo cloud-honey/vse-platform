@@ -2,6 +2,7 @@
 #include "core/IGridSystem.h"
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
+#include <nlohmann/json.hpp>
 #include <unordered_map>
 
 namespace vse {
@@ -24,6 +25,12 @@ public:
     Result<bool> placeElevatorShaft(int x, int bottomFloor, int topFloor) override;
     bool isElevatorShaft(TileCoord pos) const override;
     std::optional<TileCoord> findNearestEmpty(TileCoord from, int searchRadius) const override;
+
+    // ── SaveLoad support ───────────────────────────────────────────────────
+    /** Export all floor/tile state to JSON (for MessagePack serialization) */
+    nlohmann::json exportState() const;
+    /** Import floor/tile state from JSON. Clears existing floors first. */
+    void importState(const nlohmann::json& j);
 
 private:
     EventBus& eventBus_;

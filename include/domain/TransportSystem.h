@@ -3,6 +3,7 @@
 #include "core/IGridSystem.h"
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
+#include <nlohmann/json.hpp>
 #include <entt/entt.hpp>
 #include <unordered_map>
 #include <vector>
@@ -98,6 +99,11 @@ private:
     // 같은 shaftX의 car 목록에서 콜에 응답할 최적 car 선택
     // 반환: cars_ key (uint32_t), 없으면 UINT32_MAX
     uint32_t pickBestCar(int shaftX, int floor, ElevatorDirection dir) const;
+
+public:
+    // ── SaveLoad support ───────────────────────────────────────────────────
+    nlohmann::json exportState() const;
+    void importState(const nlohmann::json& j);
 };
 
 } // namespace vse

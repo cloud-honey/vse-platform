@@ -3,6 +3,7 @@
 #include "core/ConfigManager.h"
 #include <algorithm>
 #include <cmath>
+#include <spdlog/spdlog.h>
 
 namespace vse {
 
@@ -341,6 +342,71 @@ std::optional<TileCoord> GridSystem::findAnchor(TileCoord anyTile) const {
 
 size_t GridSystem::tileIndex(int x) const {
     return static_cast<size_t>(x);
+}
+
+// ── SaveLoad export/import ───────────────────────────────────────────────────
+
+nlohmann::json GridSystem::exportState() const {
+    using json = nlohmann::json;
+    json j;
+    j["maxFloors"]  = maxFloors_;
+    j["floorWidth"] = floorWidth_;
+
+    json floorsArr = json::array();
+    for (const auto& [floorNum, floorData] : floors_) {
+        if (!floorData.built) continue;
+        json fj;
+        fj["floor"] = floorNum;
+        json tilesArr = json::array();
+        for (int x = 0; x < floorWidth_; ++x) {
+            const auto& tile = floorData.tiles[x];
+            // Only serialize non-empty tiles to save space
+            if (tile.tenantType == TenantType::COUNT && !tile.isElevatorShaft && !tile.isLobby) continue;
+            json tj;
+            tj["x"]               = x;
+            tj["tenantType"]      = static_cast<int>(tile.tenantType);
+            tj["tenantEntity"]    = static_cast<uint32_t>(tile.tenantEntity);
+            tj["isAnchor"]        = tile.isAnchor;
+            tj["tileWidth"]       = tile.tileWidth;
+            tj["isElevatorShaft"] = tile.isElevatorShaft;
+            tj["isLobby"]         = tile.isLobby;
+            tilesArr.push_back(tj);
+        }
+        fj["tiles"] = tilesArr;
+        floorsArr.push_back(fj);
+    }
+    j["floors"] = floorsArr;
+    return j;
+}
+
+void GridSystem::importState(const nlohmann::json& j) {
+    floors_.clear();
+    maxFloors_  = j.value("maxFloors", maxFloors_);
+    floorWidth_ = j.value("floorWidth", floorWidth_);
+
+    if (!j.contains("floors")) return;
+    for (const auto& fj : j["floors"]) {
+        int floorNum = fj.value("floor", 0);
+        FloorData fd;
+        fd.tiles.resize(floorWidth_);
+        fd.built = true;
+
+        if (fj.contains("tiles")) {
+            for (const auto& tj : fj["tiles"]) {
+                int x = tj.value("x", 0);
+                if (x < 0 || x >= floorWidth_) continue;
+                auto& tile = fd.tiles[x];
+                tile.tenantType      = static_cast<TenantType>(tj.value("tenantType", static_cast<int>(TenantType::COUNT)));
+                tile.tenantEntity    = static_cast<EntityId>(tj.value("tenantEntity", uint32_t(0)));
+                tile.isAnchor        = tj.value("isAnchor", false);
+                tile.tileWidth       = tj.value("tileWidth", 0);
+                tile.isElevatorShaft = tj.value("isElevatorShaft", false);
+                tile.isLobby         = tj.value("isLobby", false);
+            }
+        }
+        floors_[floorNum] = fd;
+    }
+    spdlog::debug("GridSystem::importState: restored {} floors", floors_.size());
 }
 
 } // namespace vse

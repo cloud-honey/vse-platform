@@ -405,4 +405,110 @@ void TransportSystem::publishEvent(EventType type, EntityId source)
     eventBus_.publish(ev);
 }
 
+// ── SaveLoad export/import ───────────────────────────────────────────────────
+
+nlohmann::json TransportSystem::exportState() const {
+    using json = nlohmann::json;
+    json j;
+    json carsArr = json::array();
+    for (const auto& [key, car] : cars_) {
+        json cj;
+        cj["id"]           = static_cast<uint32_t>(car.id);
+        cj["shaftX"]       = car.shaftX;
+        cj["bottomFloor"]  = car.bottomFloor;
+        cj["topFloor"]     = car.topFloor;
+        cj["capacity"]     = car.capacity;
+        cj["currentFloor"] = car.currentFloor;
+        cj["floatFloor"]   = car.floatFloor;
+        cj["state"]        = static_cast<int>(car.state);
+        cj["direction"]    = static_cast<int>(car.direction);
+        cj["doorTicks"]    = car.doorTicks;
+        cj["nextTarget"]   = car.nextTarget;
+
+        json passArr = json::array();
+        for (auto p : car.passengers) {
+            passArr.push_back(static_cast<uint32_t>(p));
+        }
+        cj["passengers"] = passArr;
+
+        json carCallsArr = json::array();
+        for (int f : car.carCalls) {
+            carCallsArr.push_back(f);
+        }
+        cj["carCalls"] = carCallsArr;
+
+        json hallCallsArr = json::array();
+        for (const auto& hc : car.hallCalls) {
+            hallCallsArr.push_back({
+                {"floor", hc.floor},
+                {"direction", static_cast<int>(hc.direction)}
+            });
+        }
+        cj["hallCalls"] = hallCallsArr;
+
+        carsArr.push_back(cj);
+    }
+    j["cars"] = carsArr;
+
+    json waitArr = json::object();
+    for (const auto& [floor, count] : waitingCount_) {
+        waitArr[std::to_string(floor)] = count;
+    }
+    j["waitingCount"] = waitArr;
+
+    return j;
+}
+
+void TransportSystem::importState(const nlohmann::json& j) {
+    cars_.clear();
+    waitingCount_.clear();
+
+    if (j.contains("cars")) {
+        for (const auto& cj : j["cars"]) {
+            ElevatorCar car;
+            // Create entity in internal registry to get a valid EntityId
+            car.id           = registry_.create();
+            car.shaftX       = cj.value("shaftX", 0);
+            car.bottomFloor  = cj.value("bottomFloor", 0);
+            car.topFloor     = cj.value("topFloor", 0);
+            car.capacity     = cj.value("capacity", 8);
+            car.currentFloor = cj.value("currentFloor", 0);
+            car.floatFloor   = cj.value("floatFloor", 0.0f);
+            car.state        = static_cast<ElevatorState>(cj.value("state", 0));
+            car.direction    = static_cast<ElevatorDirection>(cj.value("direction", 0));
+            car.doorTicks    = cj.value("doorTicks", 0);
+            car.nextTarget   = cj.value("nextTarget", -1);
+
+            if (cj.contains("passengers")) {
+                for (const auto& p : cj["passengers"]) {
+                    car.passengers.push_back(static_cast<EntityId>(p.get<uint32_t>()));
+                }
+            }
+            if (cj.contains("carCalls")) {
+                for (const auto& f : cj["carCalls"]) {
+                    car.carCalls.insert(f.get<int>());
+                }
+            }
+            if (cj.contains("hallCalls")) {
+                for (const auto& hc : cj["hallCalls"]) {
+                    HallCall call;
+                    call.floor     = hc.value("floor", 0);
+                    call.direction = static_cast<ElevatorDirection>(hc.value("direction", 0));
+                    car.hallCalls.insert(call);
+                }
+            }
+
+            cars_[static_cast<uint32_t>(car.id)] = car;
+        }
+    }
+
+    if (j.contains("waitingCount")) {
+        for (auto& [key, val] : j["waitingCount"].items()) {
+            waitingCount_[std::stoi(key)] = val.get<int>();
+        }
+    }
+
+    spdlog::debug("TransportSystem::importState: restored {} elevator cars", cars_.size());
+}
+
 } // namespace vse
