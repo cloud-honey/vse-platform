@@ -1,17 +1,18 @@
 CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /home/sykim/.openclaw/workspace/vse-platform/src/main.cpp \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_main.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_platform.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/begin_code.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/close_code.h \
- /usr/share/mingw-w64/include/winsdkver.h \
- /usr/share/mingw-w64/include/winapifamily.h \
- /usr/share/mingw-w64/include/sdkddkver.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stddef.h \
- /usr/share/mingw-w64/include/stddef.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/spdlog.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/common.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/null_mutex.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/atomic \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/atomic_base.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/c++config.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/pstl/pstl_config.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/new \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/exception.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdint.h \
+ /usr/share/mingw-w64/include/stdint.h \
  /usr/share/mingw-w64/include/crtdefs.h \
  /usr/share/mingw-w64/include/corecrt.h \
  /usr/share/mingw-w64/include/_mingw.h \
@@ -19,183 +20,8 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /usr/share/mingw-w64/include/_mingw_secapi.h \
  /usr/share/mingw-w64/include/vadefs.h \
  /usr/share/mingw-w64/include/sdks/_mingw_ddk.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdarg.h \
- /usr/share/mingw-w64/include/stdarg.h \
- /usr/share/mingw-w64/include/_mingw_stdarg.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdint.h \
- /usr/share/mingw-w64/include/stdint.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_endian.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_thread.h \
- /usr/share/mingw-w64/include/process.h \
- /usr/share/mingw-w64/include/corecrt_startup.h \
- /usr/share/mingw-w64/include/sys/types.h \
- /usr/share/mingw-w64/include/_mingw_off_t.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_clipboard.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_cpuinfo.h \
- /usr/share/mingw-w64/include/intrin.h \
- /usr/share/mingw-w64/include/setjmp.h \
- /usr/share/mingw-w64/include/psdk_inc/intrin-impl.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/stdlib.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/cstdlib \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/c++config.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/pstl/pstl_config.h \
- /usr/share/mingw-w64/include/stdlib.h \
- /usr/share/mingw-w64/include/corecrt_wstdlib.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/limits.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/syslimits.h \
- /usr/share/mingw-w64/include/limits.h \
- /usr/share/mingw-w64/include/sec_api/stdlib_s.h \
- /usr/share/mingw-w64/include/malloc.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mm_malloc.h \
- /usr/share/mingw-w64/include/errno.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/std_abs.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/x86intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/x86gprintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/ia32intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/adxintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/bmiintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/bmi2intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cetintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cldemoteintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clflushoptintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clwbintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clzerointrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cmpccxaddintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/enqcmdintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fxsrintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/lzcntintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/lwpintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/movdirintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mwaitintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mwaitxintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pconfigintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/popcntintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pkuintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/prfchiintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/raointintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/rdseedintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/rtmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/serializeintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/sgxintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tbmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tsxldtrkintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/uintrintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/waitpkgintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/wbnoinvdintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsaveintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsavecintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsaveoptintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsavesintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xtestintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/hresetintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/immintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/emmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pmmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tmmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/smmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/wmmintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxvnniintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxifmaintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxvnniint8intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx2intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512erintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512pfintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512cdintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bwintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512dqintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vlbwintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vldqintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512ifmaintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512ifmavlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmiintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmivlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx5124fmapsintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx5124vnniwintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vpopcntdqintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmi2intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmi2vlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vnniintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vnnivlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vpopcntdqvlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bitalgintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vp2intersectintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vp2intersectvlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fp16intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fp16vlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/shaintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fmaintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/f16cintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/gfniintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/vaesintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/vpclmulqdqintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bf16vlintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bf16intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxneconvertintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxtileintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxint8intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxbf16intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxcomplexintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/prfchwintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/keylockerintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxfp16intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mm3dnow.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fma4intrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/ammintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xopintrin.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cpuid.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_events.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_video.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_pixels.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_rect.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_surface.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_blendmode.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_keyboard.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_keycode.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_scancode.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_mouse.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_joystick.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_guid.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_gamecontroller.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_quit.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_gesture.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_touch.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_haptic.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_hidapi.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_hints.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_loadso.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_log.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_metal.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_power.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_render.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_shape.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_system.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_timer.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_version.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_locale.h \
- /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_misc.h \
- /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/spdlog.h \
- /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/common.h \
- /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/null_mutex.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/atomic \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/atomic_base.h \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/new \
- /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/exception.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stddef.h \
+ /usr/share/mingw-w64/include/stddef.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/atomic_lockfree_defines.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/move.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/type_traits \
@@ -224,6 +50,7 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/cstdio \
  /usr/share/mingw-w64/include/stdio.h \
  /usr/share/mingw-w64/include/corecrt_stdio_config.h \
+ /usr/share/mingw-w64/include/_mingw_off_t.h \
  /usr/share/mingw-w64/include/swprintf.inl \
  /usr/share/mingw-w64/include/sec_api/stdio_s.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/exception \
@@ -284,6 +111,18 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/stl_heap.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/uniform_int_dist.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/stl_tempbuf.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/cstdlib \
+ /usr/share/mingw-w64/include/stdlib.h \
+ /usr/share/mingw-w64/include/corecrt_wstdlib.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/limits.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/syslimits.h \
+ /usr/share/mingw-w64/include/limits.h \
+ /usr/share/mingw-w64/include/sec_api/stdlib_s.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/stdlib.h \
+ /usr/share/mingw-w64/include/malloc.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mm_malloc.h \
+ /usr/share/mingw-w64/include/errno.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/std_abs.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/memory \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/stl_raw_storage_iter.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/align.h \
@@ -302,6 +141,9 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/gthr.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
  /usr/share/mingw-w64/include/pthread.h \
+ /usr/share/mingw-w64/include/sys/types.h \
+ /usr/share/mingw-w64/include/process.h \
+ /usr/share/mingw-w64/include/corecrt_startup.h \
  /usr/share/mingw-w64/include/signal.h \
  /usr/share/mingw-w64/include/pthread_signal.h \
  /usr/share/mingw-w64/include/pthread_compat.h \
@@ -380,6 +222,7 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/log_msg_buffer.h \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/log_msg.h \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/version.h \
+ /home/sykim/.openclaw/workspace/vse-platform/include/core/Bootstrapper.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/EventBus.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/Types.h \
  /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/optional \
@@ -660,16 +503,175 @@ CMakeFiles/TowerTycoon.dir/src/main.cpp.obj: \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/ordered_map.hpp \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/detail/macro_unscope.hpp \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+ /home/sykim/.openclaw/workspace/vse-platform/include/core/SimClock.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/domain/GridSystem.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/IGridSystem.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/domain/AgentSystem.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/IAgentSystem.h \
- /home/sykim/.openclaw/workspace/vse-platform/include/domain/TransportSystem.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/ITransportSystem.h \
+ /home/sykim/.openclaw/workspace/vse-platform/include/domain/TransportSystem.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/renderer/SDLRenderer.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/IRenderCommand.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/renderer/Camera.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/renderer/DebugPanel.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/renderer/InputMapper.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/core/InputTypes.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_main.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_stdinc.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_config.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_platform.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/begin_code.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/close_code.h \
+ /usr/share/mingw-w64/include/winsdkver.h \
+ /usr/share/mingw-w64/include/winapifamily.h \
+ /usr/share/mingw-w64/include/sdkddkver.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdarg.h \
+ /usr/share/mingw-w64/include/stdarg.h \
+ /usr/share/mingw-w64/include/_mingw_stdarg.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_assert.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_atomic.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_audio.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_error.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_endian.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_mutex.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_thread.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_rwops.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_clipboard.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_cpuinfo.h \
+ /usr/share/mingw-w64/include/intrin.h \
+ /usr/share/mingw-w64/include/setjmp.h \
+ /usr/share/mingw-w64/include/psdk_inc/intrin-impl.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/x86intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/x86gprintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/ia32intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/adxintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/bmiintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/bmi2intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cetintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cldemoteintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clflushoptintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clwbintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/clzerointrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cmpccxaddintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/enqcmdintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fxsrintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/lzcntintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/lwpintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/movdirintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mwaitintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mwaitxintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pconfigintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/popcntintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pkuintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/prfchiintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/raointintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/rdseedintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/rtmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/serializeintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/sgxintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tbmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tsxldtrkintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/uintrintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/waitpkgintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/wbnoinvdintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsaveintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsavecintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsaveoptintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xsavesintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xtestintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/hresetintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/immintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/pmmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/tmmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/smmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/wmmintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxvnniintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxifmaintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxvnniint8intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx2intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512erintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512pfintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512cdintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bwintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512dqintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vlbwintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vldqintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512ifmaintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512ifmavlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmiintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmivlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx5124fmapsintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx5124vnniwintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vpopcntdqintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmi2intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vbmi2vlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vnniintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vnnivlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vpopcntdqvlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bitalgintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vp2intersectintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512vp2intersectvlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fp16intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512fp16vlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/shaintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fmaintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/f16cintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/gfniintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/vaesintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/vpclmulqdqintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bf16vlintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avx512bf16intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/avxneconvertintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxtileintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxint8intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxbf16intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxcomplexintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/prfchwintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/keylockerintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/amxfp16intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mm3dnow.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/fma4intrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/ammintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/xopintrin.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/cpuid.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_events.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_video.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_pixels.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_rect.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_surface.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_blendmode.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_keyboard.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_keycode.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_scancode.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_mouse.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_joystick.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_guid.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_gamecontroller.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_sensor.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_quit.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_gesture.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_touch.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_filesystem.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_haptic.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_hidapi.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_hints.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_loadso.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_log.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_messagebox.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_metal.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_power.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_render.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_shape.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_system.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_timer.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_version.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_locale.h \
+ /tmp/sdl2-win/SDL2-2.30.3/x86_64-w64-mingw32/include/SDL2/SDL_misc.h \
  /home/sykim/.openclaw/workspace/vse-platform/include/renderer/RenderFrameCollector.h

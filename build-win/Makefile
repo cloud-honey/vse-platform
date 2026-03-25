@@ -781,6 +781,30 @@ _deps/imgui-src/imgui_widgets.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui.dir/build.make CMakeFiles/imgui.dir/_deps/imgui-src/imgui_widgets.cpp.s
 .PHONY : _deps/imgui-src/imgui_widgets.cpp.s
 
+src/core/Bootstrapper.obj: src/core/Bootstrapper.cpp.obj
+.PHONY : src/core/Bootstrapper.obj
+
+# target to build an object file
+src/core/Bootstrapper.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/Bootstrapper.cpp.obj
+.PHONY : src/core/Bootstrapper.cpp.obj
+
+src/core/Bootstrapper.i: src/core/Bootstrapper.cpp.i
+.PHONY : src/core/Bootstrapper.i
+
+# target to preprocess a source file
+src/core/Bootstrapper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/Bootstrapper.cpp.i
+.PHONY : src/core/Bootstrapper.cpp.i
+
+src/core/Bootstrapper.s: src/core/Bootstrapper.cpp.s
+.PHONY : src/core/Bootstrapper.s
+
+# target to generate assembly for a file
+src/core/Bootstrapper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/Bootstrapper.cpp.s
+.PHONY : src/core/Bootstrapper.cpp.s
+
 src/core/ConfigManager.obj: src/core/ConfigManager.cpp.obj
 .PHONY : src/core/ConfigManager.obj
 
@@ -804,6 +828,30 @@ src/core/ConfigManager.s: src/core/ConfigManager.cpp.s
 src/core/ConfigManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/ConfigManager.cpp.s
 .PHONY : src/core/ConfigManager.cpp.s
+
+src/core/ContentRegistry.obj: src/core/ContentRegistry.cpp.obj
+.PHONY : src/core/ContentRegistry.obj
+
+# target to build an object file
+src/core/ContentRegistry.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/ContentRegistry.cpp.obj
+.PHONY : src/core/ContentRegistry.cpp.obj
+
+src/core/ContentRegistry.i: src/core/ContentRegistry.cpp.i
+.PHONY : src/core/ContentRegistry.i
+
+# target to preprocess a source file
+src/core/ContentRegistry.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/ContentRegistry.cpp.i
+.PHONY : src/core/ContentRegistry.cpp.i
+
+src/core/ContentRegistry.s: src/core/ContentRegistry.cpp.s
+.PHONY : src/core/ContentRegistry.s
+
+# target to generate assembly for a file
+src/core/ContentRegistry.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/ContentRegistry.cpp.s
+.PHONY : src/core/ContentRegistry.cpp.s
 
 src/core/EventBus.obj: src/core/EventBus.cpp.obj
 .PHONY : src/core/EventBus.obj
@@ -829,6 +877,30 @@ src/core/EventBus.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.s
 .PHONY : src/core/EventBus.cpp.s
 
+src/core/SimClock.obj: src/core/SimClock.cpp.obj
+.PHONY : src/core/SimClock.obj
+
+# target to build an object file
+src/core/SimClock.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/SimClock.cpp.obj
+.PHONY : src/core/SimClock.cpp.obj
+
+src/core/SimClock.i: src/core/SimClock.cpp.i
+.PHONY : src/core/SimClock.i
+
+# target to preprocess a source file
+src/core/SimClock.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/SimClock.cpp.i
+.PHONY : src/core/SimClock.cpp.i
+
+src/core/SimClock.s: src/core/SimClock.cpp.s
+.PHONY : src/core/SimClock.s
+
+# target to generate assembly for a file
+src/core/SimClock.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/SimClock.cpp.s
+.PHONY : src/core/SimClock.cpp.s
+
 src/domain/AgentSystem.obj: src/domain/AgentSystem.cpp.obj
 .PHONY : src/domain/AgentSystem.obj
 
@@ -853,6 +925,30 @@ src/domain/AgentSystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/AgentSystem.cpp.s
 .PHONY : src/domain/AgentSystem.cpp.s
 
+src/domain/EconomyEngine.obj: src/domain/EconomyEngine.cpp.obj
+.PHONY : src/domain/EconomyEngine.obj
+
+# target to build an object file
+src/domain/EconomyEngine.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.obj
+.PHONY : src/domain/EconomyEngine.cpp.obj
+
+src/domain/EconomyEngine.i: src/domain/EconomyEngine.cpp.i
+.PHONY : src/domain/EconomyEngine.i
+
+# target to preprocess a source file
+src/domain/EconomyEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.i
+.PHONY : src/domain/EconomyEngine.cpp.i
+
+src/domain/EconomyEngine.s: src/domain/EconomyEngine.cpp.s
+.PHONY : src/domain/EconomyEngine.s
+
+# target to generate assembly for a file
+src/domain/EconomyEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.s
+.PHONY : src/domain/EconomyEngine.cpp.s
+
 src/domain/GridSystem.obj: src/domain/GridSystem.cpp.obj
 .PHONY : src/domain/GridSystem.obj
 
@@ -876,6 +972,54 @@ src/domain/GridSystem.s: src/domain/GridSystem.cpp.s
 src/domain/GridSystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.s
 .PHONY : src/domain/GridSystem.cpp.s
+
+src/domain/SaveLoadSystem.obj: src/domain/SaveLoadSystem.cpp.obj
+.PHONY : src/domain/SaveLoadSystem.obj
+
+# target to build an object file
+src/domain/SaveLoadSystem.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.obj
+.PHONY : src/domain/SaveLoadSystem.cpp.obj
+
+src/domain/SaveLoadSystem.i: src/domain/SaveLoadSystem.cpp.i
+.PHONY : src/domain/SaveLoadSystem.i
+
+# target to preprocess a source file
+src/domain/SaveLoadSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.i
+.PHONY : src/domain/SaveLoadSystem.cpp.i
+
+src/domain/SaveLoadSystem.s: src/domain/SaveLoadSystem.cpp.s
+.PHONY : src/domain/SaveLoadSystem.s
+
+# target to generate assembly for a file
+src/domain/SaveLoadSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.s
+.PHONY : src/domain/SaveLoadSystem.cpp.s
+
+src/domain/StarRatingSystem.obj: src/domain/StarRatingSystem.cpp.obj
+.PHONY : src/domain/StarRatingSystem.obj
+
+# target to build an object file
+src/domain/StarRatingSystem.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.obj
+.PHONY : src/domain/StarRatingSystem.cpp.obj
+
+src/domain/StarRatingSystem.i: src/domain/StarRatingSystem.cpp.i
+.PHONY : src/domain/StarRatingSystem.i
+
+# target to preprocess a source file
+src/domain/StarRatingSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.i
+.PHONY : src/domain/StarRatingSystem.cpp.i
+
+src/domain/StarRatingSystem.s: src/domain/StarRatingSystem.cpp.s
+.PHONY : src/domain/StarRatingSystem.s
+
+# target to generate assembly for a file
+src/domain/StarRatingSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.s
+.PHONY : src/domain/StarRatingSystem.cpp.s
 
 src/domain/TransportSystem.obj: src/domain/TransportSystem.cpp.obj
 .PHONY : src/domain/TransportSystem.obj
@@ -1113,18 +1257,36 @@ help:
 	@echo "... _deps/imgui-src/imgui_widgets.obj"
 	@echo "... _deps/imgui-src/imgui_widgets.i"
 	@echo "... _deps/imgui-src/imgui_widgets.s"
+	@echo "... src/core/Bootstrapper.obj"
+	@echo "... src/core/Bootstrapper.i"
+	@echo "... src/core/Bootstrapper.s"
 	@echo "... src/core/ConfigManager.obj"
 	@echo "... src/core/ConfigManager.i"
 	@echo "... src/core/ConfigManager.s"
+	@echo "... src/core/ContentRegistry.obj"
+	@echo "... src/core/ContentRegistry.i"
+	@echo "... src/core/ContentRegistry.s"
 	@echo "... src/core/EventBus.obj"
 	@echo "... src/core/EventBus.i"
 	@echo "... src/core/EventBus.s"
+	@echo "... src/core/SimClock.obj"
+	@echo "... src/core/SimClock.i"
+	@echo "... src/core/SimClock.s"
 	@echo "... src/domain/AgentSystem.obj"
 	@echo "... src/domain/AgentSystem.i"
 	@echo "... src/domain/AgentSystem.s"
+	@echo "... src/domain/EconomyEngine.obj"
+	@echo "... src/domain/EconomyEngine.i"
+	@echo "... src/domain/EconomyEngine.s"
 	@echo "... src/domain/GridSystem.obj"
 	@echo "... src/domain/GridSystem.i"
 	@echo "... src/domain/GridSystem.s"
+	@echo "... src/domain/SaveLoadSystem.obj"
+	@echo "... src/domain/SaveLoadSystem.i"
+	@echo "... src/domain/SaveLoadSystem.s"
+	@echo "... src/domain/StarRatingSystem.obj"
+	@echo "... src/domain/StarRatingSystem.i"
+	@echo "... src/domain/StarRatingSystem.s"
 	@echo "... src/domain/TransportSystem.obj"
 	@echo "... src/domain/TransportSystem.i"
 	@echo "... src/domain/TransportSystem.s"

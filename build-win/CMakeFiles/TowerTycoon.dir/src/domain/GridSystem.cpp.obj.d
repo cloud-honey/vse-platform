@@ -477,4 +477,30 @@ CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj: \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/detail/conversions/to_chars.hpp \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/ordered_map.hpp \
  /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/detail/macro_unscope.hpp \
- /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/nlohmann_json-src/include/nlohmann/thirdparty/hedley/hedley_undef.hpp \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/spdlog.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/common.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/null_mutex.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/atomic \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/tweakme.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/chrono \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/fmt/fmt.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/fmt/bundled/core.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/fmt/bundled/format.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/fmt/bundled/core.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/registry.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/periodic_worker.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/condition_variable \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/std_mutex.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/unique_lock.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/mutex \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/thread \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/std_thread.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/bits/this_thread_sleep.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/synchronous_factory.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/logger.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/backtracer.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/circular_q.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/log_msg_buffer.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/details/log_msg.h \
+ /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/include/spdlog/version.h

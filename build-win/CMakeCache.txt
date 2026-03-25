@@ -470,7 +470,7 @@ CMAKE_STRIP:FILEPATH=/usr/bin/x86_64-w64-mingw32-strip
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
 //No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/tmp/mingw-toolchain.cmake
+CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=../cmake/mingw-toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -792,6 +792,9 @@ TowerTycoon_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 TowerTycoon_SOURCE_DIR:STATIC=/home/sykim/.openclaw/workspace/vse-platform
+
+//No help, variable specified on the command line.
+VSE_PROJECT_ROOT:UNINITIALIZED=/home/sykim/.openclaw/workspace/vse-platform
 
 //Value Computed by CMake
 msgpack-cxx_BINARY_DIR:STATIC=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/msgpack-build

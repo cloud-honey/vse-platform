@@ -307,6 +307,30 @@
       "time": "19:39",
       "title": "TASK-02-009 통합 확인 완료 — Sprint 2 완료!",
       "detail": "누적 액션 8개 처리 (const_cast, StarRatingChangedPayload, epsilon, API 결정). 통합 테스트 2개 추가 (NPC 타이밍 정밀, 경제+별점). Windows 빌드 완료 (27MB). 215/215 통과."
+    },
+    {
+      "date": "2026-03-25",
+      "time": "18:24",
+      "title": "TASK-02-007 ContentRegistry 핫 리로드 완료",
+      "detail": "붐2(DeepSeek V3) 구현. balance.json mtime 기반 핫 리로드, 12개 테스트. 213/213 통과. 커밋 5785367"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "18:36",
+      "title": "TASK-02-008 비주얼 개선 완료",
+      "detail": "붐2 구현. 다크 배경, 밝은 타일 색상, NPC 상태별 색상 + 아웃라인. 213/213 통과. 커밋 9d94865"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:39",
+      "title": "TASK-02-009 통합 확인 + Sprint 2 완료!",
+      "detail": "Opus 직접. 누적 액션 8개 처리 (const_cast, payload 이동, epsilon). 통합 테스트 2개 추가. Windows 빌드. 215/215 통과. 커밋 97e879c"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "19:52",
+      "title": "Sprint 3 계획 확정",
+      "detail": "9태스크 정의. 난이도 ⭐⭐~⭐⭐⭐⭐. 대시보드 Sprint 탭 전환 (S2✅, S3🔥). 난이도 표시 추가."
     }
   ],
   "references": [

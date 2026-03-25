@@ -8,10 +8,16 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/sykim/.openclaw/workspace/vse-platform/src/core/Bootstrapper.cpp" "CMakeFiles/TowerTycoon.dir/src/core/Bootstrapper.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/core/Bootstrapper.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/core/ConfigManager.cpp" "CMakeFiles/TowerTycoon.dir/src/core/ConfigManager.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/core/ConfigManager.cpp.obj.d"
+  "/home/sykim/.openclaw/workspace/vse-platform/src/core/ContentRegistry.cpp" "CMakeFiles/TowerTycoon.dir/src/core/ContentRegistry.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/core/ContentRegistry.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/core/EventBus.cpp" "CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.obj.d"
+  "/home/sykim/.openclaw/workspace/vse-platform/src/core/SimClock.cpp" "CMakeFiles/TowerTycoon.dir/src/core/SimClock.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/core/SimClock.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/domain/AgentSystem.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/AgentSystem.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/AgentSystem.cpp.obj.d"
+  "/home/sykim/.openclaw/workspace/vse-platform/src/domain/EconomyEngine.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj.d"
+  "/home/sykim/.openclaw/workspace/vse-platform/src/domain/SaveLoadSystem.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.obj.d"
+  "/home/sykim/.openclaw/workspace/vse-platform/src/domain/StarRatingSystem.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/domain/TransportSystem.cpp" "CMakeFiles/TowerTycoon.dir/src/domain/TransportSystem.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/domain/TransportSystem.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/main.cpp" "CMakeFiles/TowerTycoon.dir/src/main.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/main.cpp.obj.d"
   "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp" "CMakeFiles/TowerTycoon.dir/src/renderer/Camera.cpp.obj" "gcc" "CMakeFiles/TowerTycoon.dir/src/renderer/Camera.cpp.obj.d"
