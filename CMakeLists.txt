@@ -65,6 +65,7 @@ add_executable(TowerTycoon
     src/domain/AgentSystem.cpp
     src/domain/TransportSystem.cpp
     src/core/EventBus.cpp
+    src/core/SimClock.cpp
     src/core/ConfigManager.cpp
     src/renderer/Camera.cpp
     src/renderer/SDLRenderer.cpp

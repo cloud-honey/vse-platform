@@ -1,20 +1,26 @@
+/**
+ * @file test_Bootstrapper.cpp
+ * @layer Core Runtime 테스트
+ * @task TASK-02-001 (수정: SimClock 통합, VSE_TESTING 가드 적용)
+ *
+ * headless 단위 테스트 — SDL 윈도우 없이 Domain만 초기화.
+ * initDomainOnly() + testGet*() / testProcessCommands() 사용.
+ *
+ * VSE_TESTING 매크로가 정의된 빌드에서만 테스트 전용 접근자 노출됨.
+ */
+#define VSE_TESTING  // 테스트 전용 접근자 활성화
 #include <catch2/catch_test_macros.hpp>
 #include "core/Bootstrapper.h"
 #include "core/InputTypes.h"
 
 using namespace vse;
 
-/**
- * Bootstrapper 테스트 (headless — SDL 윈도우 없이 Domain만)
- *
- * initDomainOnly()로 SDL 없이 Domain 시스템만 조립.
- * testGet*() / testProcessCommands() 헬퍼로 내부 상태 확인.
- */
-
 TEST_CASE("Bootstrapper - Domain 초기화", "[bootstrapper]") {
     Bootstrapper b;
     REQUIRE(b.initDomainOnly("assets/config/game_config.json") == true);
     REQUIRE(b.testGetRunning() == true);
+    REQUIRE(b.testGetPaused() == false);
+    REQUIRE(b.testGetSpeed() == 1);
 }
 
 TEST_CASE("Bootstrapper - TogglePause 커맨드", "[bootstrapper]") {
@@ -62,6 +68,6 @@ TEST_CASE("Bootstrapper - BuildFloor 커맨드 crash 없음", "[bootstrapper]") 
     cmd.buildFloor.floor = 10;
 
     std::vector<GameCommand> cmds = { cmd };
-    b.testProcessCommands(cmds);  // crash 없이 완료
-    REQUIRE(b.testGetRunning() == true);
+    b.testProcessCommands(cmds);
+    REQUIRE(b.testGetRunning() == true);  // crash 없이 완료
 }
