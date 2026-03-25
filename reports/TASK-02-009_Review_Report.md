@@ -149,3 +149,4 @@ if (avgSatisfaction >= config_.satisfactionThresholds[i] - kEpsilon) {
 |---|---|---|
 | DeepSeek V3 | **Pass** | 이슈 없음. 8개 누적 액션 전부 적절히 처리, const_cast 완전 제거 확인, 215/215 테스트 통과. Sprint 2 최종 승인. |
 | Gemini 3 Flash | **Final Pass 🎉** | 최종 승인. "살아있는 시뮬레이션 엔진으로 진화." NPC 정밀 타이밍 = 회귀 테스트 기반, 경제+별점 = Core Gameplay Loop 최초 자동화 검증. 보류 항목 Sprint 3 이관 적절. |
+| GPT-5.4 Thinking | **Conditional Pass** | P1: IAgentSystem const 수정 Design Spec 미반영(→문서 정렬 필요), 교차 검증 생략 근거 약함(→실제로 3모델 검증 받음), Windows 빌드 Phase 1 플랫폼 범위 불일치(→실험용 빌드로 재분류); P2: kEpsilon 코드 상수 문서화 필요 |
