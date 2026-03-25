@@ -215,14 +215,16 @@ TEST_CASE("SaveLoad - Agent components preserved (state, satisfaction, position)
     // Modify agent state
     auto& agent = f.reg.get<AgentComponent>(agentId);
     agent.satisfaction = 75.5f;
-    agent.state = AgentState::Working;
+    agent.stress       = 42.0f;   // TASK-03-002: set non-default stress
+    agent.state        = AgentState::Working;
 
     auto& pos = f.reg.get<PositionComponent>(agentId);
     pos.tile = {5, 2};
     pos.pixel = {160.0f, 64.0f};
 
-    float savedSat = agent.satisfaction;
-    int savedState = static_cast<int>(agent.state);
+    float savedSat   = agent.satisfaction;
+    float savedStress = agent.stress;
+    int   savedState  = static_cast<int>(agent.state);
 
     f.saveLoad.save(f.testSaveFile);
     f.saveLoad.load(f.testSaveFile);
@@ -237,6 +239,7 @@ TEST_CASE("SaveLoad - Agent components preserved (state, satisfaction, position)
         auto& p = agentView.get<PositionComponent>(e);
         if (static_cast<int>(a.state) == savedState) {
             REQUIRE_THAT(a.satisfaction, Catch::Matchers::WithinAbs(savedSat, 0.01));
+            REQUIRE_THAT(a.stress,       Catch::Matchers::WithinAbs(savedStress, 0.01));  // TASK-03-002
             REQUIRE(p.tile.x == 5);
             REQUIRE(p.tile.floor == 2);
             REQUIRE_THAT(p.pixel.x, Catch::Matchers::WithinAbs(160.0f, 0.01));

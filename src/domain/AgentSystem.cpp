@@ -2,20 +2,16 @@
 #include <spdlog/spdlog.h>
 #include <algorithm>
 
-// TODO: Replace with ContentRegistry access when available
+// TODO(TASK-03-009): Replace with ContentRegistry access when available
+// Values mirror balance.json npc.* fields
 namespace {
-    // Fallback constants from balance.json
-    constexpr float SATISFACTION_GAIN_WORK = 0.5f;
-    constexpr float SATISFACTION_LOSS_WAIT = -2.0f;
-    constexpr float SATISFACTION_LOSS_NO_ELEVATOR = -5.0f;
-    constexpr float LEAVE_THRESHOLD = 20.0f;
-    constexpr float STRESS_INCREASE_WAIT = 1.0f;
-    constexpr float STRESS_DECREASE_IDLE = 0.5f;
-    
-    // Tenant-specific satisfaction decay rates
-    constexpr float SATISFACTION_DECAY_OFFICE = 0.1f;
-    constexpr float SATISFACTION_DECAY_RESIDENTIAL = 0.05f;
-    constexpr float SATISFACTION_DECAY_COMMERCIAL = 0.15f;
+    constexpr float SATISFACTION_GAIN_WORK    =  0.5f;   // npc.satisfactionGainWork
+    constexpr float SATISFACTION_LOSS_WAIT    = -2.0f;   // npc.satisfactionLossWait
+    // SATISFACTION_LOSS_NO_ELEVATOR (-5.0) deferred to Phase 2 elevator frustration
+    constexpr float LEAVE_THRESHOLD           = 20.0f;   // npc.leaveThreshold
+    constexpr float STRESS_INCREASE_WAIT      =  1.0f;
+    constexpr float STRESS_DECREASE_IDLE      =  0.5f;
+    // Tenant-specific decay rates (satisfactionDecayRate) deferred to TASK-03-003 (tenant impl)
 }
 
 namespace vse {
@@ -498,6 +494,9 @@ void AgentSystem::updateSatisfactionAndStress(entt::registry& reg, EntityId id,
                                               AgentComponent& agent,
                                               const AgentScheduleComponent& schedule)
 {
+    // Capture pre-change value for event emission
+    const float prevSatisfaction = agent.satisfaction;
+
     // Apply satisfaction changes based on state
     switch (agent.state) {
         case AgentState::WaitingElevator:
@@ -527,8 +526,17 @@ void AgentSystem::updateSatisfactionAndStress(entt::registry& reg, EntityId id,
     
     // Clamp satisfaction and stress to [0, 100]
     agent.satisfaction = std::clamp(agent.satisfaction, 0.0f, 100.0f);
-    agent.stress = std::clamp(agent.stress, 0.0f, 100.0f);
-    
+    agent.stress       = std::clamp(agent.stress,       0.0f, 100.0f);
+
+    // Emit AgentSatisfactionChanged when satisfaction changed after clamp (deferred)
+    if (agent.satisfaction != prevSatisfaction) {
+        Event ev;
+        ev.type    = EventType::AgentSatisfactionChanged;
+        ev.source  = id;
+        ev.payload = static_cast<int>(agent.satisfaction);  // 0-100
+        eventBus_.publish(ev);
+    }
+
     // Check leave threshold
     if (agent.satisfaction < LEAVE_THRESHOLD && agent.state != AgentState::Leaving) {
         // Transition to Leaving state
