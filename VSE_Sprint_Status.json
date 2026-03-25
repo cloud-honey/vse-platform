@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T07:07:30",
+  "updated_at": "2026-03-25T07:11:27",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "in_progress",
@@ -43,11 +43,11 @@
       "title": "StarRatingSystem (별점 1~5)",
       "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "in_progress",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "붐2(DeepSeek V3) 작업 중 — StarRatingSystem 구현"
+      "notes": "StarRatingSystem 구현. 별점 1~5, NPC 만족도 기반. 174/174 통과. 커밋 168f047"
     },
     {
       "id": "TASK-02-005",
@@ -256,6 +256,12 @@
       "time": "15:11",
       "title": "TASK-02-003 EconomyEngine 완료",
       "detail": "붐2(DeepSeek V3) 구현. int64_t Cents 단위, balance.json 연동, 20개 테스트. 170/170 통과. 커밋 4a914f7"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "16:10",
+      "title": "TASK-02-004 StarRatingSystem 완료",
+      "detail": "붐2(DeepSeek V3) 구현. 별점 1~5, NPC 만족도+인구 기반. StarRatingChanged 이벤트. 174/174 통과. 커밋 168f047"
     }
   ],
   "references": [
