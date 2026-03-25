@@ -352,6 +352,73 @@ v0.1.0          — Steam 출시 전 빌드
 
 ---
 
+## 태스크 완료 보고서 양식 (필수)
+
+완료 보고서는 반드시 **영어**로 작성한다. 교차 검증 모델(GPT/Gemini/DeepSeek 등)이 직접 읽고 리뷰하기 위함이다.
+
+파일명: `reports/TASK-XX-XXX_Review_Report.md`
+
+```markdown
+# VSE Platform — TASK-XX-XXX Review Report
+
+> Author: [실제 구현 모델명 — 예: DeepSeek V3, Claude Sonnet 4.6]
+> Date: YYYY-MM-DD
+> Task: TASK-XX-XXX [task title]
+> Layer: [Core Runtime / Layer 1 / Layer 3 / etc.]
+> Purpose: Cross-validation by external AI models
+
+---
+
+## 1. Summary
+
+| Item | Detail |
+|---|---|
+| Task | TASK-XX-XXX: [title] |
+| Layer | [layer] |
+| Completed | YYYY-MM-DD |
+| Commit | [hash] |
+| Tests | [N new] + [M existing] = **total/total passed** |
+
+## 2. Files Created / Modified
+
+| File | Type | Role |
+|---|---|---|
+| `path/to/file.h` | New | [role] |
+| `path/to/file.cpp` | New | [role] |
+| `path/to/file.cpp` | Modified | [what changed] |
+
+## 3. Interface / Key Design
+
+[Public API, key structs, main loop structure, etc. — enough for reviewers to verify design compliance]
+
+## 4. CLAUDE.md Compliance Checklist
+
+```
+[ ] No layer boundary violations
+[ ] No hardcoded values (all via ConfigManager/JSON)
+[ ] Naming conventions followed (CLAUDE.md)
+[ ] Memory ownership conventions followed (unique_ptr first)
+[ ] Error handling policy followed (no exceptions)
+[ ] Within Phase 1 scope
+[ ] Unit tests included
+[ ] Implementation matches CLAUDE.md
+```
+
+## 5. Troubleshooting Record
+
+[Problems encountered, root cause, fix applied]
+
+## 6. Open Items
+
+[Unresolved issues, future improvement candidates with priority P0/P1/P2]
+```
+
+**주의:**
+- `@author`에는 반드시 실제 구현 모델명 기입 (붐2가 구현했으면 `DeepSeek V3`, 붐이 구현했으면 `Claude Sonnet 4.6`)
+- 붐이 대신 작성하더라도 실제 구현자 명시
+
+---
+
 ## 코드 주석 규칙 (전 모델 필수)
 
 ### 원칙
@@ -429,3 +496,4 @@ TileCoordinate worldToTile(int worldX, int worldY);
 | 2026-03 | 1.0 | 최초 작성. |
 | 2026-03 | 2.0 | 언어 규칙, 태스크 분해, 단계별 컨펌, 설계 정합성 검증, 에스컬레이션, 대시보드 연동 추가. |
 | 2026-03 | 2.1 | 토큰 중단 복구, git 버전 관리, 코드 주석 규칙, 인수인계 체크리스트 추가. |
+| 2026-03-25 | 2.2 | 태스크 완료 보고서 양식 추가 (영어 작성 필수, @author 실제 구현 모델명 명시). |
