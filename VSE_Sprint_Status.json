@@ -1,119 +1,108 @@
 {
-  "sprint": 1,
-  "updated_at": "2026-03-25T12:32:30",
+  "sprint": 2,
+  "updated_at": "2026-03-25T13:21:52",
   "phase": "Phase 1",
-  "sprint_goal": "타일 그리드 + NPC 이동 프로토타입 (2주 목표)",
-  "overall_status": "integration_done",
+  "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
+  "overall_status": "planning",
   "tasks": [
     {
-      "id": "TASK-01-001",
-      "title": "CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성",
-      "assignee": "DeepSeek",
+      "id": "TASK-02-001",
+      "title": "Bootstrapper 클래스 분리 (main.cpp 리팩토링)",
+      "assignee": "붐",
       "layer": "인프라",
-      "status": "done",
-      "qa_status": "pass",
-      "design_check": "done",
-      "confirmed_by_human": true,
-      "notes": "CMake structure, CI, placeholder test. Linux 빌드 추가(find_package). Commits: a179345, c204e67. ctest 1/1 ✅"
-    },
-    {
-      "id": "TASK-01-002",
-      "title": "SimClock 구현 (100ms tick, 렌더링 분리)",
-      "assignee": "DeepSeek",
-      "layer": "Layer 0",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "3개 AI 검토 반영. speed→Bootstrapper, restoreState silent, 14/14 테스트"
-    },
-    {
-      "id": "TASK-01-003",
-      "title": "ConfigManager + JSON 로딩",
-      "assignee": "DeepSeek",
-      "layer": "Layer 0",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "dot notation, typed getters, VSE_PROJECT_ROOT 매크로로 경로 해결"
-    },
-    {
-      "id": "TASK-01-004",
-      "title": "IGridSystem 인터페이스 + RealEstate 구현 (30층, 좌하단 원점)",
-      "assignee": "DeepSeek",
-      "layer": "Layer 0+1",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "IGridSystem 인터페이스 + GridSystem 구현. dot notation config, 엘리베이터 샤프트, 멀티타일 테넌트, anchor 자동 탐색"
-    },
-    {
-      "id": "TASK-01-005",
-      "title": "EventBus 구현 (단일 버스 + replicable 플래그)",
-      "assignee": "DeepSeek",
-      "layer": "Layer 0",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "IAgentSystem + AgentSystem. ECS 컴포넌트 5종(Position/Agent/Schedule/Path/ElevatorPassenger). 스케줄 기반 상태 전환(Idle↔Working↔Resting). GridSystem 연동."
-    },
-    {
-      "id": "TASK-01-006",
-      "title": "IAgentSystem + NPC 기본 이동 (ECS 컴포넌트)",
-      "assignee": "DeepSeek",
-      "layer": "Layer 0+1",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "ITransportSystem + TransportSystem. LOOK 알고리즘, ElevatorCarFSM, 홀콜 병합, 정원 초과 처리"
-    },
-    {
-      "id": "TASK-01-007",
-      "title": "SDL2 윈도우 + 타일 그리드 렌더링",
-      "assignee": "Claude Code",
-      "layer": "Layer 3",
-      "status": "done",
+      "status": "pending",
       "qa_status": "pending",
-      "design_check": "done",
+      "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "SDL2 윈도우 + 타일/엘리베이터 렌더링 + Camera + InputMapper + main loop. 107/107 테스트."
+      "notes": "초기화 순서 관리, 메인 루프 Bootstrapper 클래스로 이전. Sprint 2 첫 태스크."
     },
     {
-      "id": "TASK-01-008",
-      "title": "NPC 스프라이트 렌더링 + 이동 표시",
-      "assignee": "Claude Code",
+      "id": "TASK-02-002",
+      "title": "통합 테스트 3종 추가 (엘리베이터 시나리오, NPC 일일 사이클)",
+      "assignee": "붐",
+      "layer": "테스트",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "시스템 간 협력 검증. Sprint 1 교차 검증 공통 지적사항."
+    },
+    {
+      "id": "TASK-02-003",
+      "title": "IEconomyEngine + EconomyEngine (수입/지출)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "테넌트 임대료, 엘리베이터 유지비. int64_t Cents 단위. balance.json 연동."
+    },
+    {
+      "id": "TASK-02-004",
+      "title": "StarRatingSystem (별점 1~5)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "층수, NPC 만족도, 서비스 기준. AgentSystem + EconomyEngine 연동."
+    },
+    {
+      "id": "TASK-02-005",
+      "title": "NPC 경로 탐색 + 엘리베이터 탑승 (다른 층 이동)",
+      "assignee": "붐",
+      "layer": "Layer 1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "AgentPathComponent 활용, TransportSystem 연동. 현재 같은 층만 이동 → 다층 이동."
+    },
+    {
+      "id": "TASK-02-006",
+      "title": "ISaveLoad + SaveLoad (MessagePack 직렬화)",
+      "assignee": "붐",
+      "layer": "Layer 1",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "Stable EntityId 전략 확정 후 진행. EnTT snapshot + non-ECS 커스텀 직렬화."
+    },
+    {
+      "id": "TASK-02-007",
+      "title": "ContentRegistry + 핫 리로드 (balance.json)",
+      "assignee": "붐2",
+      "layer": "Layer 0",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "600 ticks마다 파일 변경 감지. 개발 편의성 향상."
+    },
+    {
+      "id": "TASK-02-008",
+      "title": "렌더링 비주얼 개선 (색상 대비, 로비 구분, NPC 크기)",
+      "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "RenderAgent 구조체 추가, RenderFrameCollector setAgentSource(), SDLRenderer drawAgents() 16x32px 컬러박스, 상태별 색상(Idle=회색/Working=파랑/Resting=주황). 132/132 테스트. 커밋 6808959"
+      "notes": "Sprint 1 Windows 실행 피드백 반영. 배경/건물 색상 대비, 로비 표시, NPC 가시성."
     },
     {
-      "id": "TASK-01-009",
-      "title": "Dear ImGui 디버그 패널 (시간, NPC 상태)",
-      "assignee": "Claude Code",
-      "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "done",
-      "design_check": "done",
-      "confirmed_by_human": false,
-      "notes": "DebugPanel 별도 파일 분리(Design Spec), ImGui NewFrame 매 프레임 호출, gameDay 0-indexed 통일, FirstUseEver 드래그 허용. 142/142 테스트."
-    },
-    {
-      "id": "TASK-01-010",
-      "title": "통합 + 프로토타입 동작 확인",
+      "id": "TASK-02-009",
+      "title": "통합 + Sprint 2 동작 확인",
       "assignee": "붐 + QA",
       "layer": "전체",
-      "status": "done",
+      "status": "pending",
       "qa_status": "pending",
-      "design_check": "done",
+      "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "main.cpp 통합 완료: AgentSystem 렌더 연결, DebugInfo 채우기(Bootstrapper), F3 토글 연결, NPC 5명 프로토타입 씬. 빌드 성공 142/142."
+      "notes": "경제 흐름, 저장/로드, 엘리베이터 이동 통합 확인."
     }
   ],
   "escalations": [],
@@ -243,6 +232,12 @@
       "time": "12:30",
       "title": "TASK-01-009~010 통합 완료",
       "detail": "DebugPanel 분리, gameDay 0-indexed, AgentSystem 렌더 연결, DebugInfo Bootstrapper 주입, F3 토글, NPC 5명 프로토타입 씬. Sprint 1 전체 142/142 통과."
+    },
+    {
+      "date": "2026-03-25",
+      "time": "13:21",
+      "title": "Sprint 2 계획 확정",
+      "detail": "Bootstrapper 분리, EconomyEngine, SaveLoad, StarRating, NPC 다층 이동, 비주얼 개선. 9개 태스크."
     }
   ],
   "references": [
@@ -312,5 +307,13 @@
     "에러핸들링: assert + error code, exception 금지",
     "운영구조: 붐=PM(설계/판단), DevTeam=자율실행, 파일기반 맥락유지",
     "프로젝트폴더: 단일 경로 /home/sykim/.openclaw/workspace/vse-platform/"
-  ]
+  ],
+  "sprint1_summary": {
+    "sprint": 1,
+    "status": "completed",
+    "completed_at": "2026-03-25",
+    "tests": "142/142",
+    "tasks_done": 10,
+    "highlight": "타일 그리드 + NPC 프로토타입 + ImGui 디버그 패널. Windows 실행 확인."
+  }
 }
