@@ -2,6 +2,22 @@
 #include <spdlog/spdlog.h>
 #include <algorithm>
 
+// TODO: Replace with ContentRegistry access when available
+namespace {
+    // Fallback constants from balance.json
+    constexpr float SATISFACTION_GAIN_WORK = 0.5f;
+    constexpr float SATISFACTION_LOSS_WAIT = -2.0f;
+    constexpr float SATISFACTION_LOSS_NO_ELEVATOR = -5.0f;
+    constexpr float LEAVE_THRESHOLD = 20.0f;
+    constexpr float STRESS_INCREASE_WAIT = 1.0f;
+    constexpr float STRESS_DECREASE_IDLE = 0.5f;
+    
+    // Tenant-specific satisfaction decay rates
+    constexpr float SATISFACTION_DECAY_OFFICE = 0.1f;
+    constexpr float SATISFACTION_DECAY_RESIDENTIAL = 0.05f;
+    constexpr float SATISFACTION_DECAY_COMMERCIAL = 0.15f;
+}
+
 namespace vse {
 
 AgentSystem::AgentSystem(IGridSystem& grid, EventBus& bus)
@@ -67,6 +83,7 @@ Result<EntityId> AgentSystem::spawnAgent(entt::registry& reg,
     agentComp.workplaceTenant = workplaceId;    // 실제 목적지 EntityId 저장
     agentComp.satisfaction    = 100.0f;
     agentComp.moveSpeed       = 1.0f;
+    agentComp.stress          = 0.0f;
 
     auto& posComp = reg.emplace<PositionComponent>(entity);
     posComp.tile   = pos;
@@ -125,11 +142,20 @@ int AgentSystem::activeAgentCount() const
 
 void AgentSystem::update(entt::registry& reg, const GameTime& time)
 {
+    // Collect agents to despawn (Leaving state from previous tick)
+    std::vector<EntityId> toDespawn;
+    
     // AgentComponent + AgentScheduleComponent 보유 엔티티만 순회
     auto view = reg.view<AgentComponent, AgentScheduleComponent, PositionComponent>();
     for (auto entity : view) {
         auto& agent    = view.get<AgentComponent>(entity);
         auto& schedule = view.get<AgentScheduleComponent>(entity);
+
+        // If agent is in Leaving state, mark for despawn
+        if (agent.state == AgentState::Leaving) {
+            toDespawn.push_back(entity);
+            continue;
+        }
 
         // 엘리베이터 대기/탑승 상태 처리 (transport_ 있을 때만)
         if (transport_ && (agent.state == AgentState::WaitingElevator ||
@@ -138,6 +164,14 @@ void AgentSystem::update(entt::registry& reg, const GameTime& time)
         } else {
             processSchedule(reg, entity, agent, schedule, time);
         }
+        
+        // Apply satisfaction decay and stress changes
+        updateSatisfactionAndStress(reg, entity, agent, schedule);
+    }
+    
+    // Despawn agents marked as Leaving
+    for (auto entity : toDespawn) {
+        despawnAgent(reg, entity);
     }
 }
 
@@ -458,6 +492,58 @@ std::optional<TileCoord> AgentSystem::resolveDestination(EntityId tenantEntityId
         }
     }
     return std::nullopt;
+}
+
+void AgentSystem::updateSatisfactionAndStress(entt::registry& reg, EntityId id,
+                                              AgentComponent& agent,
+                                              const AgentScheduleComponent& schedule)
+{
+    // Apply satisfaction changes based on state
+    switch (agent.state) {
+        case AgentState::WaitingElevator:
+            agent.satisfaction += SATISFACTION_LOSS_WAIT;
+            agent.stress += STRESS_INCREASE_WAIT;
+            break;
+            
+        case AgentState::Working:
+            agent.satisfaction += SATISFACTION_GAIN_WORK;
+            // Working state doesn't accumulate stress
+            break;
+            
+        case AgentState::Idle:
+        case AgentState::Resting:
+            // Stress recovery during idle/resting
+            agent.stress -= STRESS_DECREASE_IDLE;
+            break;
+            
+        case AgentState::Leaving:
+            // Agents in Leaving state will be despawned, no further updates
+            return;
+            
+        default:
+            // Other states don't affect satisfaction/stress
+            break;
+    }
+    
+    // Clamp satisfaction and stress to [0, 100]
+    agent.satisfaction = std::clamp(agent.satisfaction, 0.0f, 100.0f);
+    agent.stress = std::clamp(agent.stress, 0.0f, 100.0f);
+    
+    // Check leave threshold
+    if (agent.satisfaction < LEAVE_THRESHOLD && agent.state != AgentState::Leaving) {
+        // Transition to Leaving state
+        agent.state = AgentState::Leaving;
+        
+        // Emit AgentStateChanged event
+        Event ev;
+        ev.type   = EventType::AgentStateChanged;
+        ev.source = id;
+        ev.payload = static_cast<int>(AgentState::Leaving);
+        eventBus_.publish(ev);
+        
+        spdlog::debug("AgentSystem: entity {:d} satisfaction {} < {}, transitioning to Leaving",
+                      static_cast<uint32_t>(id), agent.satisfaction, LEAVE_THRESHOLD);
+    }
 }
 
 } // namespace vse

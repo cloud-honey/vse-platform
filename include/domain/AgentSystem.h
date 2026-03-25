@@ -75,6 +75,11 @@ private:
                          const AgentScheduleComponent& schedule,
                          const GameTime& time);
 
+    // 만족도/스트레스 갱신 및 이탈 체크
+    void updateSatisfactionAndStress(entt::registry& reg, EntityId id,
+                                     AgentComponent& agent,
+                                     const AgentScheduleComponent& schedule);
+
     // 목적지 타일 조회 (anchor 위치)
     std::optional<TileCoord> resolveDestination(EntityId tenantEntityId) const;
 };

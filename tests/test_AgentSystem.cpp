@@ -4,6 +4,7 @@
 #include "core/ConfigManager.h"
 #include <catch2/catch_test_macros.hpp>
 #include <entt/entt.hpp>
+#include <any>
 
 using namespace vse;
 
@@ -259,4 +260,359 @@ TEST_CASE("AgentSystem - 여러 에이전트 동시 관리", "[AgentSystem]") {
 
     auto working = f.agents.getAgentsInState(f.reg, AgentState::Working);
     REQUIRE(working.size() == 2);
+}
+
+// ============================================================================
+// TASK-03-002 Tests: Satisfaction & Stress System
+// ============================================================================
+
+TEST_CASE("AgentSystem - Satisfaction decreases while WaitingElevator", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state
+    agent.state = AgentState::WaitingElevator;
+    float initialSatisfaction = agent.satisfaction;
+    
+    // Run update for 5 ticks
+    for (int i = 0; i < 5; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Satisfaction should decrease by 2.0 per tick
+    REQUIRE(agent.satisfaction == initialSatisfaction + 5 * -2.0f);
+}
+
+TEST_CASE("AgentSystem - Stress increases while WaitingElevator", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state
+    agent.state = AgentState::WaitingElevator;
+    float initialStress = agent.stress;
+    
+    // Run update for 3 ticks
+    for (int i = 0; i < 3; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Stress should increase by 1.0 per tick
+    REQUIRE(agent.stress == initialStress + 3 * 1.0f);
+}
+
+TEST_CASE("AgentSystem - Satisfaction increases while Working", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Working state with low satisfaction
+    agent.state = AgentState::Working;
+    agent.satisfaction = 50.0f;
+    
+    // Run update for 4 ticks
+    for (int i = 0; i < 4; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Satisfaction should increase by 0.5 per tick
+    REQUIRE(agent.satisfaction == 50.0f + 4 * 0.5f);
+}
+
+TEST_CASE("AgentSystem - Satisfaction clamped at 100 while Working", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Working state with high satisfaction
+    agent.state = AgentState::Working;
+    agent.satisfaction = 99.0f;
+    
+    // Run update for 4 ticks
+    for (int i = 0; i < 4; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Satisfaction should be clamped at 100
+    REQUIRE(agent.satisfaction == 100.0f);
+}
+
+TEST_CASE("AgentSystem - Stress decreases while Idle/Resting", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Idle state with high stress
+    agent.state = AgentState::Idle;
+    agent.stress = 80.0f;
+    
+    // Run update for 4 ticks (use 8:00 AM so agent stays Idle)
+    for (int i = 0; i < 4; ++i) {
+        f.agents.update(f.reg, GameTime{0, 8, 0});
+    }
+    
+    // Stress should decrease by 0.5 per tick
+    REQUIRE(agent.stress == 80.0f - 4 * 0.5f);
+}
+
+TEST_CASE("AgentSystem - Stress clamped at 0 during recovery", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Idle state with low stress
+    agent.state = AgentState::Idle;
+    agent.stress = 1.0f;
+    
+    // Run update for 4 ticks (use 8:00 AM so agent stays Idle)
+    for (int i = 0; i < 4; ++i) {
+        f.agents.update(f.reg, GameTime{0, 8, 0});
+    }
+    
+    // Stress should be clamped at 0
+    REQUIRE(agent.stress == 0.0f);
+}
+
+TEST_CASE("AgentSystem - Satisfaction clamped at 0 during decay", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state with satisfaction just above threshold
+    agent.state = AgentState::WaitingElevator;
+    agent.satisfaction = 25.0f;  // Above 20.0 threshold
+    
+    // Run update for 4 ticks
+    for (int i = 0; i < 4; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Satisfaction should decrease but not go below 0
+    // 25.0 - 4 * 2.0 = 17.0, which is below threshold
+    // Agent should transition to Leaving when satisfaction drops below 20.0
+    REQUIRE(agent.satisfaction < 25.0f);  // Should have decreased
+    REQUIRE(agent.satisfaction >= 0.0f);  // Should not be negative
+}
+
+TEST_CASE("AgentSystem - Agent transitions to Leaving when satisfaction < leaveThreshold", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state with satisfaction below threshold
+    agent.state = AgentState::WaitingElevator;
+    agent.satisfaction = 15.0f;  // Below 20.0 threshold
+    
+    // Run update
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    
+    // Agent should transition to Leaving state
+    REQUIRE(agent.state == AgentState::Leaving);
+}
+
+TEST_CASE("AgentSystem - Leaving agent is despawned on subsequent tick", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Leaving state
+    agent.state = AgentState::Leaving;
+    
+    // Run update - agent should be despawned
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    
+    // Agent should no longer exist
+    REQUIRE_FALSE(f.reg.valid(agentId));
+    REQUIRE(f.agents.activeAgentCount() == 0);
+}
+
+TEST_CASE("AgentSystem - AgentStateChanged event emitted when agent enters Leaving state", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    
+    // Track events
+    std::vector<Event> capturedEvents;
+    f.bus.subscribe(EventType::AgentStateChanged, [&](const Event& ev) {
+        capturedEvents.push_back(ev);
+    });
+    
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state with satisfaction below threshold
+    agent.state = AgentState::WaitingElevator;
+    agent.satisfaction = 15.0f;
+    
+    // Clear any previous events
+    capturedEvents.clear();
+    
+    // Run update
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    
+    // Flush events to deliver them
+    f.bus.flush();
+    
+    // Check that AgentStateChanged event was emitted with Leaving state
+    bool foundLeavingEvent = false;
+    for (const auto& ev : capturedEvents) {
+        if (ev.type == EventType::AgentStateChanged && 
+            ev.source == agentId &&
+            ev.payload.has_value()) {
+            // Check if payload is int and equals Leaving state
+            if (ev.payload.type() == typeid(int)) {
+                int payloadValue = std::any_cast<int>(ev.payload);
+                if (payloadValue == static_cast<int>(AgentState::Leaving)) {
+                    foundLeavingEvent = true;
+                    break;
+                }
+            }
+        }
+    }
+    REQUIRE(foundLeavingEvent == true);
+}
+
+TEST_CASE("AgentSystem - Multiple agents: only dissatisfied one leaves", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    
+    // Create two agents
+    auto result1 = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    auto result2 = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result1.ok() == true);
+    REQUIRE(result2.ok() == true);
+    
+    EntityId agent1 = result1.value;
+    EntityId agent2 = result2.value;
+    auto& a1 = f.reg.get<AgentComponent>(agent1);
+    auto& a2 = f.reg.get<AgentComponent>(agent2);
+    
+    // Set agent1 to WaitingElevator with low satisfaction
+    a1.state = AgentState::WaitingElevator;
+    a1.satisfaction = 15.0f;
+    
+    // Set agent2 to Working with high satisfaction
+    a2.state = AgentState::Working;
+    a2.satisfaction = 80.0f;
+    
+    // Run update
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    
+    // Only agent1 should transition to Leaving
+    REQUIRE(a1.state == AgentState::Leaving);
+    REQUIRE(a2.state == AgentState::Working);
+    
+    // Run another update to despawn agent1
+    f.agents.update(f.reg, GameTime{0, 9, 0});
+    
+    // agent1 should be despawned, agent2 should still exist
+    REQUIRE_FALSE(f.reg.valid(agent1));
+    REQUIRE(f.reg.valid(agent2));
+    REQUIRE(f.agents.activeAgentCount() == 1);
+}
+
+TEST_CASE("AgentSystem - Agent in Working state does not accumulate stress", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to Working state
+    agent.state = AgentState::Working;
+    float initialStress = agent.stress;
+    
+    // Run update for 5 ticks
+    for (int i = 0; i < 5; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Stress should not change
+    REQUIRE(agent.stress == initialStress);
+}
+
+TEST_CASE("AgentSystem - Agent with full satisfaction (100) does not leave", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result.ok() == true);
+    
+    EntityId agentId = result.value;
+    auto& agent = f.reg.get<AgentComponent>(agentId);
+    
+    // Set agent to WaitingElevator state with full satisfaction
+    agent.state = AgentState::WaitingElevator;
+    agent.satisfaction = 100.0f;
+    
+    // Run update for 10 ticks
+    for (int i = 0; i < 10; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Agent should not transition to Leaving (satisfaction will decrease but stay above threshold)
+    REQUIRE(agent.state != AgentState::Leaving);
+    REQUIRE(agent.satisfaction > 20.0f);  // Should still be above threshold
+}
+
+TEST_CASE("AgentSystem - Average satisfaction reflects decay", "[AgentSystem][TASK-03-002]") {
+    Fixture f;
+    
+    // Create two agents
+    auto result1 = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    auto result2 = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
+    REQUIRE(result1.ok() == true);
+    REQUIRE(result2.ok() == true);
+    
+    EntityId agent1 = result1.value;
+    EntityId agent2 = result2.value;
+    auto& a1 = f.reg.get<AgentComponent>(agent1);
+    auto& a2 = f.reg.get<AgentComponent>(agent2);
+    
+    // Set both to WaitingElevator with different satisfaction levels
+    a1.state = AgentState::WaitingElevator;
+    a1.satisfaction = 50.0f;
+    
+    a2.state = AgentState::WaitingElevator;
+    a2.satisfaction = 70.0f;
+    
+    float initialAvg = f.agents.getAverageSatisfaction(f.reg);
+    REQUIRE(initialAvg == 60.0f);
+    
+    // Run update for 5 ticks
+    for (int i = 0; i < 5; ++i) {
+        f.agents.update(f.reg, GameTime{0, 9, 0});
+    }
+    
+    // Average should decrease
+    float finalAvg = f.agents.getAverageSatisfaction(f.reg);
+    REQUIRE(finalAvg < initialAvg);
+    REQUIRE(finalAvg == 60.0f + 5 * -2.0f);  // Both lose 2.0 per tick
 }

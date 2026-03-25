@@ -36,6 +36,7 @@ struct PositionComponent {
  *
  * satisfaction: 0~100, 100이 최대 만족.
  * moveSpeed: 초당 타일 이동 속도 (기본값 1.0, Phase 2에서 config 연동).
+ * stress: 0~100, 100이 최대 스트레스. 대기/엘리베이터 없음 상태에서 증가, 휴식에서 감소.
  */
 struct AgentComponent {
     AgentState state            = AgentState::Idle;
@@ -43,6 +44,7 @@ struct AgentComponent {
     EntityId   workplaceTenant  = INVALID_ENTITY;   // 직장 테넌트 (목적지 특정용)
     float      satisfaction     = 100.0f;
     float      moveSpeed        = 1.0f;             // tiles/sec
+    float      stress           = 0.0f;             // 0-100, increases on wait/no-elevator
 };
 
 /**
