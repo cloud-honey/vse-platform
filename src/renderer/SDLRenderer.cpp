@@ -3,6 +3,11 @@
 #include <spdlog/spdlog.h>
 #include <cmath>
 
+// Dear ImGui 헤더 (cpp 파일에만 include)
+#include "imgui.h"
+#include "imgui_impl_sdl2.h"
+#include "imgui_impl_sdlrenderer2.h"
+
 namespace vse {
 
 SDLRenderer::SDLRenderer() = default;
@@ -43,12 +48,27 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
     }
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+
+    // Dear ImGui 초기화
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.IniFilename = nullptr;
+    ImGui::StyleColorsDark();
+    ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
+    ImGui_ImplSDLRenderer2_Init(renderer_);
+
     spdlog::info("SDLRenderer::init OK ({}x{})", windowW, windowH);
     return true;
 }
 
 void SDLRenderer::shutdown()
 {
+    // Dear ImGui 종료
+    ImGui_ImplSDLRenderer2_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
+
     if (renderer_) { SDL_DestroyRenderer(renderer_); renderer_ = nullptr; }
     if (window_)   { SDL_DestroyWindow(window_);     window_   = nullptr; }
 }
@@ -80,6 +100,16 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
+
+    // 디버그 패널 (ImGui)
+    if (frame.drawDebugInfo) {
+        ImGui_ImplSDLRenderer2_NewFrame();
+        ImGui_ImplSDL2_NewFrame();
+        ImGui::NewFrame();
+        drawDebugPanel(frame);
+        ImGui::Render();
+        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
+    }
 
     SDL_RenderPresent(renderer_);
 }
@@ -268,6 +298,28 @@ void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera
     // 실제 텍스트는 Dear ImGui 오버레이로 처리 예정
     (void)frame;
     (void)camera;
+}
+
+void SDLRenderer::drawDebugPanel(const RenderFrame& frame)
+{
+    const auto& d = frame.debug;
+    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(220, 180), ImGuiCond_Always);
+    ImGui::Begin("VSE Debug", nullptr,
+        ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings);
+
+    ImGui::Text("Day %d  %02d:%02d", d.gameDay, d.gameHour, d.gameMinute);
+    ImGui::Text("Tick: %d", d.gameTick);
+    ImGui::Text("Speed: %.1fx%s", d.simSpeed, d.isPaused ? " [PAUSED]" : "");
+    ImGui::Separator();
+    ImGui::Text("NPC  total:%d  idle:%d  work:%d  rest:%d",
+                d.npcTotal, d.npcIdle, d.npcWorking, d.npcResting);
+    ImGui::Text("Satisfaction: %.1f%%", d.avgSatisfaction);
+    ImGui::Separator();
+    ImGui::Text("FPS: %.1f  Elevators: %d", d.fps, d.elevatorCount);
+
+    ImGui::End();
 }
 
 } // namespace vse

@@ -84,6 +84,25 @@ struct RenderText {
     int         fontSize;   // px
 };
 
+/**
+ * DebugInfo — 디버그 패널에 표시할 정보.
+ */
+struct DebugInfo {
+    int     gameTick        = 0;
+    int     gameHour        = 0;
+    int     gameMinute      = 0;
+    int     gameDay         = 1;
+    float   simSpeed        = 1.0f;
+    bool    isPaused        = false;
+    int     npcTotal        = 0;
+    int     npcIdle         = 0;
+    int     npcWorking      = 0;
+    int     npcResting      = 0;
+    int     elevatorCount   = 0;
+    float   avgSatisfaction = 100.0f;
+    float   fps             = 0.0f;
+};
+
 // ── 프레임 데이터 ─────────────────────────────────────────
 /**
  * RenderFrame — 1 프레임에 그려야 할 전체 데이터.
@@ -111,6 +130,9 @@ struct RenderFrame {
     // 디버그 플래그
     bool drawGrid      = true;   // 그리드 선 표시
     bool drawDebugInfo = true;   // FPS, 틱 정보 등
+
+    // 디버그 정보
+    DebugInfo debug;
 };
 
 } // namespace vse

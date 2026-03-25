@@ -9,6 +9,7 @@ add_executable(TowerTycoonTests
     test_RenderFrame.cpp
     test_RenderAgent.cpp
     test_InputMapper.cpp
+    test_DebugInfo.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE

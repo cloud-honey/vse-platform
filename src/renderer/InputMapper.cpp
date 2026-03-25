@@ -1,10 +1,29 @@
 #include "renderer/InputMapper.h"
+#include "imgui.h"
+#include "imgui_impl_sdl2.h"
 
 namespace vse {
 
 void InputMapper::processEvent(const SDL_Event& event,
                                 std::vector<GameCommand>& outCommands)
 {
+    // ImGui 이벤트 처리
+    ImGui_ImplSDL2_ProcessEvent(&event);
+    ImGuiIO& io = ImGui::GetIO();
+
+    // ImGui가 키보드/마우스 이벤트를 캡처하면 게임 커맨드로 변환하지 않음
+    if (io.WantCaptureKeyboard && 
+        (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)) {
+        return;
+    }
+    if (io.WantCaptureMouse && 
+        (event.type == SDL_MOUSEMOTION || 
+         event.type == SDL_MOUSEBUTTONDOWN || 
+         event.type == SDL_MOUSEBUTTONUP || 
+         event.type == SDL_MOUSEWHEEL)) {
+        return;
+    }
+
     switch (event.type) {
 
     case SDL_QUIT:

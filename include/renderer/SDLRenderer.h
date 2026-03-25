@@ -43,6 +43,7 @@ private:
     void drawElevators(const RenderFrame& frame, const Camera& camera);
     void drawAgents(const RenderFrame& frame, const Camera& camera);
     void drawFloorLabels(const RenderFrame& frame, const Camera& camera);
+    void drawDebugPanel(const RenderFrame& frame);
 
     SDL_Window*   window_   = nullptr;
     SDL_Renderer* renderer_ = nullptr;
