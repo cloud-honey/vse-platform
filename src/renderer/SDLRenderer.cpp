@@ -107,8 +107,10 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
+    // DebugPanel::draw() — 별도 구성요소에 위임 (Design Spec 구조)
+    // drawDebugInfo=false 또는 debugPanel_.isVisible()=false 시 패널 숨김
     if (frame.drawDebugInfo) {
-        drawDebugPanel(frame);
+        debugPanel_.draw(frame);
     }
 
     ImGui::Render();
@@ -301,29 +303,6 @@ void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera
     // 실제 텍스트는 Dear ImGui 오버레이로 처리 예정
     (void)frame;
     (void)camera;
-}
-
-void SDLRenderer::drawDebugPanel(const RenderFrame& frame)
-{
-    const auto& d = frame.debug;
-    // FirstUseEver: 실행 중 드래그 이동 가능 (Gemini 검토 반영 — DX 개선)
-    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(220, 180), ImGuiCond_FirstUseEver);
-    ImGui::Begin("VSE Debug", nullptr,
-        ImGuiWindowFlags_NoResize |
-        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings);
-
-    ImGui::Text("Day %d  %02d:%02d", d.gameDay, d.gameHour, d.gameMinute);
-    ImGui::Text("Tick: %d", d.gameTick);
-    ImGui::Text("Speed: %.1fx%s", d.simSpeed, d.isPaused ? " [PAUSED]" : "");
-    ImGui::Separator();
-    ImGui::Text("NPC  total:%d  idle:%d  work:%d  rest:%d",
-                d.npcTotal, d.npcIdle, d.npcWorking, d.npcResting);
-    ImGui::Text("Satisfaction: %.1f%%", d.avgSatisfaction);
-    ImGui::Separator();
-    ImGui::Text("FPS: %.1f  Elevators: %d", d.fps, d.elevatorCount);
-
-    ImGui::End();
 }
 
 } // namespace vse

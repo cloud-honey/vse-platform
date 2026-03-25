@@ -69,6 +69,7 @@ add_executable(TowerTycoon
     src/renderer/SDLRenderer.cpp
     src/renderer/InputMapper.cpp
     src/renderer/RenderFrameCollector.cpp
+    src/renderer/DebugPanel.cpp
 )
 
 target_link_libraries(TowerTycoon PRIVATE

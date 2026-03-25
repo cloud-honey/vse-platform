@@ -19,7 +19,7 @@ TEST_CASE("DebugInfo 기본값 검증", "[DebugInfo]")
     REQUIRE(d.gameTick == 0);
     REQUIRE(d.gameHour == 0);
     REQUIRE(d.gameMinute == 0);
-    REQUIRE(d.gameDay == 1);
+    REQUIRE(d.gameDay == 0);
     REQUIRE(float_eq(d.simSpeed, 1.0f));
     REQUIRE(d.isPaused == false);
     REQUIRE(d.npcTotal == 0);
@@ -37,7 +37,7 @@ TEST_CASE("RenderFrame.debug 필드 존재 확인", "[RenderFrame][DebugInfo]")
     
     // 기본값 확인
     REQUIRE(frame.debug.gameTick == 0);
-    REQUIRE(frame.debug.gameDay == 1);
+    REQUIRE(frame.debug.gameDay == 0);
     REQUIRE(float_eq(frame.debug.simSpeed, 1.0f));
     REQUIRE(frame.debug.isPaused == false);
     

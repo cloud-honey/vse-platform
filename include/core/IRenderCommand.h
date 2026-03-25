@@ -91,7 +91,7 @@ struct DebugInfo {
     int     gameTick        = 0;
     int     gameHour        = 0;
     int     gameMinute      = 0;
-    int     gameDay         = 1;
+    int     gameDay         = 0;  // 0-indexed (GameTime.day와 동일 규칙 — Types.h)
     float   simSpeed        = 1.0f;
     bool    isPaused        = false;
     int     npcTotal        = 0;

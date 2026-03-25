@@ -1,6 +1,7 @@
 #pragma once
 #include "core/IRenderCommand.h"
 #include "renderer/Camera.h"
+#include "renderer/DebugPanel.h"
 
 // Forward declarations — SDL2 타입 (include 금지 in headers)
 struct SDL_Window;
@@ -14,8 +15,11 @@ namespace vse {
  * 책임:
  * - SDL2 윈도우/렌더러 생성·파괴
  * - RenderFrame 소비 → 화면 출력
- * - 타일 그리드, 엘리베이터, 디버그 텍스트 그리기
+ * - 타일 그리드, 엘리베이터, NPC 그리기
  * - Domain 시스템 참조 금지 (RenderFrame만 받는다)
+ *
+ * DebugPanel은 SDLRenderer가 소유하는 별도 구성요소 (Design Spec §디렉터리).
+ * debugPanel() 접근자로 토글 제어 가능.
  */
 class SDLRenderer {
 public:
@@ -35,6 +39,9 @@ public:
 
     bool isValid() const { return window_ != nullptr && renderer_ != nullptr; }
 
+    // DebugPanel 접근 (F3 토글 등 외부 제어용)
+    DebugPanel& debugPanel() { return debugPanel_; }
+
 private:
     // 그리드 렌더링
     void drawGridBackground(const RenderFrame& frame, const Camera& camera);
@@ -43,10 +50,10 @@ private:
     void drawElevators(const RenderFrame& frame, const Camera& camera);
     void drawAgents(const RenderFrame& frame, const Camera& camera);
     void drawFloorLabels(const RenderFrame& frame, const Camera& camera);
-    void drawDebugPanel(const RenderFrame& frame);
 
-    SDL_Window*   window_   = nullptr;
-    SDL_Renderer* renderer_ = nullptr;
+    SDL_Window*   window_      = nullptr;
+    SDL_Renderer* renderer_    = nullptr;
+    DebugPanel    debugPanel_;              // Design Spec: 별도 구성요소로 분리
 };
 
 } // namespace vse
