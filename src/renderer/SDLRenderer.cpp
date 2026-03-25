@@ -75,6 +75,9 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         drawGridLines(frame, camera);
     }
 
+    // 에이전트 렌더링 (TASK-01-008)
+    drawAgents(frame, camera);
+
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
 
@@ -182,6 +185,69 @@ void SDLRenderer::drawElevators(const RenderFrame& frame, const Camera& camera)
             SDL_SetRenderDrawColor(renderer_, 255, 255, 200, 180);
             SDL_RenderDrawRectF(renderer_, &rect);
         }
+    }
+}
+
+void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
+{
+    // NPC 스프라이트: 16×32px 컬러 박스 (Phase 1)
+    // 상태별 색상: Idle=회색, Working=파랑, Resting=주황
+    // pixel은 PositionComponent.pixel — 좌하단 기준 월드 픽셀 좌표
+
+    float zoom = camera.zoomLevel();
+    int ts = frame.tileSize;
+
+    // NPC 크기: 타일의 절반 너비, 한 층 높이 (16×32)
+    float npcW = (ts * 0.5f) * zoom;
+    float npcH = ts * zoom;
+
+    for (const auto& agent : frame.agents) {
+        // pixel.x, pixel.y → 화면 좌표
+        float sx = camera.worldToScreenX(static_cast<float>(agent.pixel.x));
+        float sy = camera.worldToScreenY(static_cast<float>(agent.pixel.y));
+
+        // sy는 NPC 발 위치 (하단 기준) → 상단으로 npcH만큼 올림
+        float drawY = sy - npcH;
+
+        // 화면 밖 컬링
+        if (sx + npcW < 0 || sx > camera.viewportW()) continue;
+        if (drawY + npcH < 0 || drawY > camera.viewportH()) continue;
+
+        // 상태별 색상
+        uint8_t r, g, b;
+        switch (agent.state) {
+        case AgentState::Working:
+            r = 79; g = 142; b = 247;   // 파랑
+            break;
+        case AgentState::Resting:
+            r = 255; g = 165; b = 0;    // 주황
+            break;
+        case AgentState::Idle:
+        default:
+            r = 160; g = 160; b = 170;  // 회색
+            break;
+        }
+
+        // 몸통
+        SDL_SetRenderDrawColor(renderer_, r, g, b, 230);
+        SDL_FRect body = {sx, drawY, npcW, npcH};
+        SDL_RenderFillRectF(renderer_, &body);
+
+        // 머리 (상단 1/4 크기, 밝게)
+        float headSize = npcW * 0.8f;
+        float headX = sx + (npcW - headSize) * 0.5f;
+        float headY = drawY - headSize;
+        SDL_SetRenderDrawColor(renderer_,
+            static_cast<uint8_t>(std::min(255, r + 60)),
+            static_cast<uint8_t>(std::min(255, g + 40)),
+            static_cast<uint8_t>(std::min(255, b + 30)),
+            230);
+        SDL_FRect head = {headX, headY, headSize, headSize};
+        SDL_RenderFillRectF(renderer_, &head);
+
+        // 방향 표시 (좌우 화살표 느낌 — 테두리로 강조)
+        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 80);
+        SDL_RenderDrawRectF(renderer_, &body);
     }
 }
 

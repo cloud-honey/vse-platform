@@ -7,6 +7,7 @@ add_executable(TowerTycoonTests
     test_TransportSystem.cpp
     test_Camera.cpp
     test_RenderFrame.cpp
+    test_RenderAgent.cpp
     test_InputMapper.cpp
 )
 
@@ -27,6 +28,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/Camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/RenderFrameCollector.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

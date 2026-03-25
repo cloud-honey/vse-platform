@@ -2,6 +2,7 @@
 #include "core/Types.h"
 #include <vector>
 #include <cstdint>
+#include <string>
 
 namespace vse {
 
@@ -54,6 +55,24 @@ struct RenderElevator {
 };
 
 /**
+ * RenderAgent — NPC 에이전트 1명의 렌더링 정보.
+ *
+ * Phase 1: 16×32px 컬러 박스. Phase 2: 스프라이트 시트 + 애니메이션.
+ *
+ * pixel: 보간 픽셀 위치 (PositionComponent.pixel).
+ *        렌더러가 카메라 변환 후 화면에 그린다.
+ * facing: 방향 (Left/Right) — 스프라이트 플립 결정.
+ * state: 행동 상태 (Idle/Working/Resting) — 색상 결정.
+ *        Idle=회색, Working=파랑, Resting=주황.
+ */
+struct RenderAgent {
+    EntityId    id      = INVALID_ENTITY;
+    PixelPos    pixel;              // 절대 픽셀 위치 (좌하단 기준 월드 좌표)
+    Direction   facing  = Direction::Right;
+    AgentState  state   = AgentState::Idle;
+};
+
+/**
  * RenderText — 텍스트 오버레이 (디버그/HUD).
  */
 struct RenderText {
@@ -85,6 +104,7 @@ struct RenderFrame {
     // 렌더 커맨드 목록
     std::vector<RenderTile>     tiles;
     std::vector<RenderElevator> elevators;
+    std::vector<RenderAgent>    agents;
     std::vector<RenderText>     texts;
 
     // 디버그 플래그

@@ -41,6 +41,7 @@ private:
     void drawGridLines(const RenderFrame& frame, const Camera& camera);
     void drawTiles(const RenderFrame& frame, const Camera& camera);
     void drawElevators(const RenderFrame& frame, const Camera& camera);
+    void drawAgents(const RenderFrame& frame, const Camera& camera);
     void drawFloorLabels(const RenderFrame& frame, const Camera& camera);
 
     SDL_Window*   window_   = nullptr;

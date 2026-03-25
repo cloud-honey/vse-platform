@@ -104,6 +104,23 @@ RenderFrame RenderFrameCollector::collect() const
         frame.elevators.push_back(re);
     }
 
+    // ── 에이전트 수집 (TASK-01-008) ──────────────────────
+    // PositionComponent.pixel + AgentComponent.state → RenderAgent
+    if (agentSys_ != nullptr && registry_ != nullptr) {
+        auto view = registry_->view<PositionComponent, AgentComponent>();
+        for (auto entity : view) {
+            const auto& pos   = view.get<PositionComponent>(entity);
+            const auto& agent = view.get<AgentComponent>(entity);
+
+            RenderAgent ra;
+            ra.id     = entity;
+            ra.pixel  = pos.pixel;
+            ra.facing = pos.facing;
+            ra.state  = agent.state;
+            frame.agents.push_back(ra);
+        }
+    }
+
     return frame;
 }
 
