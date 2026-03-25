@@ -3,7 +3,7 @@
   "updated_at": "2026-03-25T10:52:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 게임 루프 완성 (3주 목표)",
-  "overall_status": "planning",
+  "overall_status": "in_progress",
   "tasks": [
     {
       "id": "TASK-03-001",
@@ -509,43 +509,52 @@
         "id": "TASK-03-001",
         "title": "NPC AI 고도화 (스트레스, 만족도 조건부 감소)",
         "layer": "Layer 1",
-        "notes": "스트레스 임계값, 엘리베이터 대기 시간 패널티"
+        "notes": "스트레스 임계값, 엘리베이터 대기 시간 패널티",
+        "status": "completed",
+        "commit": "7dfb3c2",
+        "tests": "229/229"
       },
       {
         "id": "TASK-03-002",
         "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
         "layer": "Layer 1",
-        "notes": "임대료 공식, 입주 조건, 퇴거 로직"
+        "notes": "임대료 공식, 입주 조건, 퇴거 로직",
+        "status": "pending"
       },
       {
         "id": "TASK-03-003",
         "title": "스프라이트 시트 렌더링 전환 (Phase 2)",
         "layer": "Layer 3",
-        "notes": "16×32 픽셀아트 스프라이트, 상태별 애니메이션"
+        "notes": "16×32 픽셀아트 스프라이트, 상태별 애니메이션",
+        "status": "pending"
       },
       {
         "id": "TASK-03-004",
         "title": "카메라 개선 (건물 외관, 층 라벨)",
         "layer": "Layer 3",
-        "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽"
+        "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽",
+        "status": "pending"
       },
       {
         "id": "TASK-03-005",
         "title": "게임 UI (잔액, 별점, 인게임 HUD)",
         "layer": "Layer 3",
-        "notes": "ImGui HUD — 잔액 표시, 별점 아이콘"
+        "notes": "ImGui HUD — 잔액 표시, 별점 아이콘",
+        "status": "pending"
       },
       {
         "id": "TASK-03-006",
         "title": "건물 건설 인터랙션 (클릭으로 층/테넌트 배치)",
         "layer": "Layer 3",
-        "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드"
+        "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드",
+        "status": "pending"
       },
       {
         "id": "TASK-03-007",
         "title": "통합 + 알파 버전 확인",
         "layer": "전체",
-        "notes": "Steam 빌드 준비, macOS + Windows 패키지"
+        "notes": "Steam 빌드 준비, macOS + Windows 패키지",
+        "status": "pending"
       }
     ]
   },
@@ -693,6 +702,23 @@
       "confirmed_by_human": false,
       "notes": "누적 액션 8개 처리: const_cast 제거, StarRatingChangedPayload Types.h 이동, epsilon 문서화, API 결정 기록, NPC 타이밍+경제별점 통합 테스트 2개 추가. Windows 빌드 완료. 215/215 통과.",
       "difficulty": 3
+    }
+  ],
+  "sprint3_completed": [
+    {
+      "id": "TASK-03-000",
+      "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
+      "status": "completed",
+      "commit": "db6d957",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-001",
+      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
+      "status": "completed",
+      "commit": "7dfb3c2",
+      "tests": "229/229",
+      "date": "2026-03-26"
     }
   ]
 }
