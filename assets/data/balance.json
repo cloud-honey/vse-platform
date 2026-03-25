@@ -1,0 +1,9 @@
+{
+  "economy": {
+    "starting_balance": 1000000,
+    "office_rent_per_tile_per_day": 500,
+    "residential_rent_per_tile_per_day": 300,
+    "commercial_rent_per_tile_per_day": 800,
+    "elevator_maintenance_per_day": 1000
+  }
+}

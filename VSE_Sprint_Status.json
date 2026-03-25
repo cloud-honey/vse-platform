@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T05:39:50",
+  "updated_at": "2026-03-25T05:55:08",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "in_progress",
@@ -102,7 +102,7 @@
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "경제 흐름, 저장/로드, 엘리베이터 이동 통합 확인."
+      "notes": "경제 흐름, 저장/로드, 엘리베이터 이동 통합 확인. [추가 액션 from 3모델 리뷰] ①엘리베이터 도착 층 검증(snapshot.currentFloor==targetFloor) ②NPC 타이밍 정밀화(틱 540=9시출근/1080=18시퇴근) ③getAllElevators() 스냅샷 API 결정(per-ID query vs bulk snapshot) ④Bootstrapper::initDomainOnly() 기반 통합 테스트 리팩토링 검토"
     }
   ],
   "escalations": [],

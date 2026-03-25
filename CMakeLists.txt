@@ -64,6 +64,7 @@ add_executable(TowerTycoon
     src/domain/GridSystem.cpp
     src/domain/AgentSystem.cpp
     src/domain/TransportSystem.cpp
+    src/domain/EconomyEngine.cpp
     src/core/EventBus.cpp
     src/core/SimClock.cpp
     src/core/ConfigManager.cpp
