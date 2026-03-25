@@ -33,11 +33,15 @@ public:
     // ── Data accessors ────────────────────────────────────────────────────
     // Returns a const ref to the full balance data JSON object.
     // If not yet loaded, returns a static empty JSON object.
+    // ⚠️ Reference validity: returned ref is invalidated by the next checkAndReload()
+    //    that modifies balance data. Do NOT store across tick boundaries.
+    //    Read values at point of use and cache locally if needed.
     const nlohmann::json& getBalanceData() const;
 
     // Returns content_["balance"]["tenants"][key] for the given TenantType.
     // Mapping: Office→"office", Residential→"residential", Commercial→"commercial".
     // If not found (or type is COUNT/unknown), returns a static empty JSON object.
+    // ⚠️ Same reference validity caveat as getBalanceData().
     const nlohmann::json& getTenantDef(TenantType type) const;
 
     // ── Hot-reload ────────────────────────────────────────────────────────

@@ -136,6 +136,14 @@ Please review this report against `CLAUDE.md` and `VSE_Design_Spec.md`.
 3. List **only issues found** — omit anything that passed.
 4. Deliver the result as a **Markdown (.md) file**.
 
+## Cross-Validation
+
+| Model | Verdict | Key Issues |
+|---|---|---|
+| Gemini 3 Flash | Conditional Pass → **Pass (doc fix)** | P1: 참조 유효성 문서화 필요(→헤더 주석 추가), partial file read 시 기존 데이터 보존 확인(→이미 구현됨, 보고서 서술 보완); P2: syscall 빈도 600틱이면 OK, 경로 하드코딩 |
+
+---
+
 **Review template:**
 
 ```markdown
