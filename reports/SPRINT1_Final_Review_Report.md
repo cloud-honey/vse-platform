@@ -13,18 +13,18 @@
 
 | Task ID | 제목 | 레이어 | 상태 | 테스트 | 담당 |
 |---------|------|--------|------|--------|------|
-| TASK-01-001 | CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성 | 인프라 | ✅ 완료 | 1/1 | 붐2 |
-| TASK-01-002 | SimClock + EventBus 구현 | Layer 0 | ✅ 완료 | 14/14 | 붐2 + 붐 |
-| TASK-01-003 | ConfigManager + JSON 로딩 | Layer 0 | ✅ 완료 | 27/27 | 붐2 + 붐 |
-| TASK-01-004 | IGridSystem + GridSystem | Layer 0+1 | ✅ 완료 | 18/18 | 붐 |
-| TASK-01-005 | IAgentSystem + AgentSystem (ECS) | Layer 0+1 | ✅ 완료 | 15/15 | 붐 |
-| TASK-01-006 | ITransportSystem + ElevatorSystem (LOOK) | Layer 0+1 | ✅ 완료 | 21/21 | 붐 |
-| TASK-01-007 | SDL2 윈도우 + 타일 그리드 렌더링 | Layer 3 | ✅ 완료 | 34/34 | 붐 |
-| TASK-01-008 | NPC 스프라이트 렌더링 | Layer 3 | ✅ 완료 | 11/11 | 붐 |
-| TASK-01-009 | Dear ImGui 디버그 패널 | Layer 3 | ✅ 완료 | 8/8 | 붐2 + 붐 |
+| TASK-01-001 | CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성 | 인프라 | ✅ 완료 | 1 | 붐2 |
+| TASK-01-002 | SimClock + EventBus 구현 | Layer 0 | ✅ 완료 | 14 | 붐2 + 붐 |
+| TASK-01-003 | ConfigManager + JSON 로딩 | Layer 0 | ✅ 완료 | 27 | 붐2 + 붐 |
+| TASK-01-004 | IGridSystem + GridSystem | Layer 0+1 | ✅ 완료 | 23 | 붐 |
+| TASK-01-005 | IAgentSystem + AgentSystem (ECS) | Layer 0+1 | ✅ 완료 | 16 | 붐 |
+| TASK-01-006 | ITransportSystem + ElevatorSystem (LOOK) | Layer 0+1 | ✅ 완료 | 21 | 붐 |
+| TASK-01-007 | SDL2 윈도우 + 타일 그리드 렌더링 | Layer 3 | ✅ 완료 | 24 | 붐 |
+| TASK-01-008 | NPC 스프라이트 렌더링 | Layer 3 | ✅ 완료 | 8 | 붐 |
+| TASK-01-009 | Dear ImGui 디버그 패널 | Layer 3 | ✅ 완료 | 8 | 붐2 + 붐 |
 | TASK-01-010 | 통합 + 프로토타입 동작 확인 | 전체 | ✅ 완료 | — | 붐 |
 
-**전체 테스트: 142/142 통과**
+**전체 테스트: 142/142 통과** (태스크별 수치는 최종 누적 기준 — 일부 태스크에서 이전 태스크 테스트 리팩토링으로 분포 변동)
 
 ---
 
@@ -229,9 +229,11 @@ Sprint 1에서 수행된 모든 교차 검증과 반영 내역.
 
 ## 9. 결론
 
-**VSE Platform Sprint 1은 목표를 달성했다.**
+**VSE Platform Sprint 1 프로토타입 기반 구축을 완료했다.**
 
-- Phase 1 기반 레이어(0/1/3) 전체 구현 완료
+> ⚠️ 참고: CLAUDE.md Phase 1 전체 범위(Economy, SaveLoad, StarRating 등)는 Sprint 2~3에서 순차 구현 예정. 본 보고서의 "완료"는 **Sprint 1 목표(타일 그리드 + NPC 이동 프로토타입)** 기준이다.
+
+- Sprint 1 목표 시스템(Grid/Agent/Transport/Renderer/ImGui) 구현 완료
 - 3개 AI 모델 교차 검증 3회 수행, 주요 설계 드리프트 수정
 - 142/142 테스트 통과, 빌드 성공, 프로토타입 실행 확인
 - DebugPanel 별도 분리, PixelPos 계약 명확화, gameDay 0-indexed 통일

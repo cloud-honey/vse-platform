@@ -185,10 +185,12 @@ struct std::hash<vse::TileCoord> {
 
 namespace vse { // reopen
 
-// Pixel position (render space). Origin: top-left (SDL2 convention).
-// Conversion:
+// Pixel position — world-space coordinates (bottom-left origin, Y increases upward).
+// Sprint 1 확정 규칙 (2026-03-25):
 //   pixelX = tile.x * config.tileSize
-//   pixelY = (config.maxFloors - 1 - tile.floor) * config.tileSize
+//   pixelY = tile.floor * config.tileSize   (NOT SDL2 screen space)
+// Camera::worldToScreenX/Y() converts to SDL2 screen space (top-left, Y↓).
+// PositionComponent.pixel = NPC foot (발바닥) position in world space.
 struct PixelPos {
     float x;
     float y;
