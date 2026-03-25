@@ -35,37 +35,37 @@ RenderFrame RenderFrameCollector::collect() const
             if (tileOpt.has_value()) {
                 switch (tileOpt->tenantType) {
                 case TenantType::Office:
-                    c = Color::fromRGBA(70, 130, 180, 230);  // 파란
+                    c = Color::fromRGBA(90, 150, 210, 240);  // 밝은 파랑 (TASK-02-008)
                     break;
                 case TenantType::Residential:
-                    c = Color::fromRGBA(60, 179, 113, 230);  // 초록
+                    c = Color::fromRGBA(80, 200, 130, 240);  // 밝은 초록 (TASK-02-008)
                     break;
                 case TenantType::Commercial:
-                    c = Color::fromRGBA(255, 165, 0, 230);   // 주황
+                    c = Color::fromRGBA(255, 180, 40, 240);  // 밝은 노란-주황 (TASK-02-008)
                     break;
                 default:
-                    c = Color::fromRGBA(128, 128, 128, 230);
+                    c = Color::fromRGBA(160, 160, 170, 230); // 밝은 회색 (TASK-02-008)
                     break;
                 }
-                // 엘리베이터 샤프트 타일
+                // 엘리베이터 샤프트 타일 — 더 밝은 메탈릭 그레이 (TASK-02-008)
                 if (tileOpt->isElevatorShaft) {
-                    c = Color::fromRGBA(100, 100, 120, 200);
+                    c = Color::fromRGBA(130, 130, 160, 220);
                 }
             } else {
-                c = Color::fromRGBA(128, 128, 128, 230);
+                c = Color::fromRGBA(160, 160, 170, 230);     // 밝은 회색 (TASK-02-008)
             }
 
             frame.tiles.push_back(RenderTile{x, f, c});
         }
     }
 
-    // 로비 (0층) — 빈 타일 특수 색상
+    // 로비 (0층) — 빈 타일 특수 색상 — 어두운 배경 대비 구별 (TASK-02-008)
     if (grid_.isFloorBuilt(0)) {
         for (int x = 0; x < frame.floorWidth; ++x) {
             auto coord = TileCoord{x, 0};
             if (!grid_.isTileEmpty(coord)) continue;  // 이미 추가된 건 스킵
             frame.tiles.push_back(RenderTile{x, 0,
-                Color::fromRGBA(80, 80, 100, 150)});
+                Color::fromRGBA(70, 75, 90, 200)});
         }
     }
 

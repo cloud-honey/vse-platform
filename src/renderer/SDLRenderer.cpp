@@ -79,8 +79,8 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 {
     if (!renderer_) return;
 
-    // 배경 클리어 — 하늘색
-    SDL_SetRenderDrawColor(renderer_, 135, 206, 235, 255);
+    // 배경 클리어 — 어두운 블루-그레이 (건물 대비 강화)
+    SDL_SetRenderDrawColor(renderer_, 40, 44, 52, 255);
     SDL_RenderClear(renderer_);
 
     // 건물 배경 (건설된 층)
@@ -157,7 +157,7 @@ void SDLRenderer::drawGridLines(const RenderFrame& frame, const Camera& camera)
     // 줌이 작으면 그리드 선 생략 (0.5 이하)
     if (zoom < 0.5f) return;
 
-    SDL_SetRenderDrawColor(renderer_, 80, 80, 100, 60);
+    SDL_SetRenderDrawColor(renderer_, 80, 85, 100, 40);
 
     // 수평선 (층 경계)
     for (int f = 0; f <= frame.maxFloors; ++f) {
@@ -260,18 +260,24 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
         if (sx + npcW < 0 || sx > camera.viewportW()) continue;
         if (drawY + npcH < 0 || drawY > camera.viewportH()) continue;
 
-        // 상태별 색상
+        // 상태별 색상 (TASK-02-008: 고채도 색상으로 NPC 가시성 향상)
         uint8_t r, g, b;
         switch (agent.state) {
         case AgentState::Working:
-            r = 79;  g = 142; b = 247;  // 파랑
+            r = 0;   g = 220; b = 100;  // 밝은 초록
             break;
         case AgentState::Resting:
-            r = 255; g = 165; b = 0;    // 주황
+            r = 255; g = 220; b = 50;   // 밝은 노랑
+            break;
+        case AgentState::WaitingElevator:
+            r = 180; g = 100; b = 255;  // 밝은 보라
+            break;
+        case AgentState::InElevator:
+            r = 120; g = 70;  b = 180;  // 어두운 보라
             break;
         case AgentState::Idle:
         default:
-            r = 160; g = 160; b = 170;  // 회색
+            r = 0;   g = 200; b = 220;  // 밝은 시안
             break;
         }
 
@@ -292,8 +298,8 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
         SDL_FRect body = {sx, bodyY, npcW, bodyH};
         SDL_RenderFillRectF(renderer_, &body);
 
-        // ── 전체 외곽 테두리 (16×32 경계 확인용) ────────
-        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 60);
+        // ── 전체 외곽 테두리 (1px 흰색 아웃라인, NPC 가시성 향상) ────────
+        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 180);
         SDL_FRect outline = {sx, drawY, npcW, npcH};
         SDL_RenderDrawRectF(renderer_, &outline);
     }

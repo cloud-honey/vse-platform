@@ -87,7 +87,7 @@
       "title": "렌더링 비주얼 개선 (색상 대비, 로비 구분, NPC 크기)",
       "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
