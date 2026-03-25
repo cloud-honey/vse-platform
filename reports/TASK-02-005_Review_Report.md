@@ -119,9 +119,9 @@ void processElevator(entt::registry& reg, EntityId id,
 ## Open Items
 
 - **P2**: `shaftX = 0` hardcoded. Phase 2 should resolve nearest shaft from NPC position using `GridSystem.isElevatorShaft()`.
-- **P2**: Return-home path (Idle after workEnd) also needs elevator logic when homeTenant is on different floor than current position. Currently only outbound (to workplace) is fully tested.
+- ~~**P2**: Return-home path (Idle after workEnd) also needs elevator logic when homeTenant is on different floor than current position.~~ **Fixed in Post-Review Fix** (see below).
 - **P2**: `lunchHour → Resting` transition doesn't check floor; NPC at workplace may want to go to a restaurant on another floor. Out of scope for Phase 1.
-- **P3**: NPC stuck in `InElevator` if elevator breaks (e.g., removed mid-ride). No graceful recovery path yet.
+- ~~**P3**: NPC stuck in `InElevator` if elevator breaks (e.g., removed mid-ride). No graceful recovery path yet.~~ Partially addressed: phantom agent issue fixed for workEndHour case.
 
 ---
 
@@ -165,3 +165,43 @@ Please review this report against `CLAUDE.md` and `VSE_Design_Spec.md`.
 ---
 *If no issues: write "No issues found." and stop.*
 ```
+
+---
+
+## Post-Review Fix (2026-03-25)
+
+### Issues Fixed
+
+#### Issue 1: Return-home elevator travel missing (3-model consensus P1)
+**Problem**: NPCs used the elevator only for outbound trips (home→work). At `workEndHour`, NPCs on a different floor from home transitioned directly to `Idle` without elevator travel, leaving them stranded on the work floor.
+
+**Root cause**: `processSchedule()` already correctly resolved `homeTenant` destination and called `callElevator()` for the return trip. However, `processElevator()` had an early-return that forced any NPC in `WaitingElevator` or `InElevator` to `Idle` when `time.hour >= workEndHour` — this killed the home-bound elevator trip immediately.
+
+**Fix in `src/domain/AgentSystem.cpp` `processElevator()`**:
+- When `workEndHour` is reached and the NPC is in `WaitingElevator`:
+  - If `targetFloor == homeFloor` (going home): allow elevator trip to continue (do not abort).
+  - If `targetFloor != homeFloor` (going to work): abort and transition to `Idle` (old behavior).
+- When `workEndHour` is reached and the NPC is `InElevator` (on board):
+  - Do NOT force `Idle` immediately.
+  - If elevator is at home floor: exit and transition to `Idle`.
+  - Otherwise: re-route `targetFloor` to home floor and let normal exit logic handle arrival.
+
+#### Issue 2: Phantom agent when work ends while InElevator (Gemini P1)
+**Problem**: When `workEndHour` was reached while InElevator, the old code forced `Idle` and removed `ElevatorPassengerComponent` — but did NOT call `exitPassenger()` if the elevator was at a non-target floor, leaving a ghost passenger in the TransportSystem.
+
+**Fix in `src/domain/AgentSystem.cpp` `processElevator()`**:
+- Changed `targetFloor` to `homeDest.floor` instead of forcing Idle.
+- The NPC rides the elevator to the home floor and exits normally via the standard exit logic, which calls `exitPassenger()` correctly.
+
+### Test Changes
+
+| # | Test Name | Change |
+|---|---|---|
+| 8 | NPC re-routes to home when workEndHour reached during elevator | **Updated** — now verifies re-route behavior instead of forced Idle |
+| 11 | NPC at floor 2 at workEndHour → WaitingElevator when home is floor 0 | **New** — verifies return-home elevator call |
+| 12 | NPC re-routes to home floor when workEndHour while InElevator | **New** — verifies phantom agent fix |
+| 13 | NPC arrives at home floor via elevator and transitions to Idle | **New** — full round-trip test |
+
+### Test Results
+- **187/187 tests passed** (184 existing + 3 new)
+- No interface headers (I*.h) modified
