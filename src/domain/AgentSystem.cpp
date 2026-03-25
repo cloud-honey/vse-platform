@@ -235,40 +235,61 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
                                    const AgentScheduleComponent& schedule,
                                    const GameTime& time)
 {
-    // 퇴근 시간 초과 시 엘리베이터 중도 포기 → Idle
+    // 퇴근 시간 초과 시 처리 — 귀가 중인 경우는 중단하지 않음
     if (time.hour >= schedule.workEndHour) {
         if (reg.all_of<ElevatorPassengerComponent>(id)) {
-            // 탑승 중이면 하차 처리
             auto& passengerComp = reg.get<ElevatorPassengerComponent>(id);
+
+            // 귀가 목적지(홈 층) 조회
+            auto homeDest = resolveDestination(agent.homeTenant);
+            int homeFloor = homeDest.has_value() ? homeDest->floor : -1;
+
             if (!passengerComp.waiting) {
-                // 탑승 중인 경우 하차 시도 (현재 층에 그냥 내리기)
-                auto elevators = transport_->getAllElevators();
-                for (auto elevId : elevators) {
-                    auto snap = transport_->getElevatorState(elevId);
-                    if (!snap.has_value()) continue;
-                    // 이 에이전트가 탑승한 엘리베이터인지 확인
-                    for (auto p : snap->passengers) {
-                        if (p == id) {
-                            transport_->exitPassenger(elevId, id);
-                            break;
-                        }
-                    }
+                // Issue 2: 탑승 중(InElevator)이고 퇴근 시간 → 귀가 목적지로 재설정
+                // targetFloor가 이미 홈 층이면 그냥 계속 진행
+                if (passengerComp.targetFloor != homeFloor && homeFloor >= 0) {
+                    passengerComp.targetFloor = homeFloor;
+                    spdlog::debug("AgentSystem: entity {:d} work end while InElevator, re-route to home floor {}",
+                                  static_cast<uint32_t>(id), homeFloor);
+                    // 재설정한 틱에서는 즉시 하차 체크 금지 (같은 틱에 exit 방지)
+                    return;
+                }
+                // 이미 귀가 중(targetFloor == homeFloor) → 정상 하차 로직으로 계속 진행
+            } else {
+                // WaitingElevator 상태 — 귀가 중이면 계속, 출근 중이면 포기
+                // 홈 층 대기 중이면 귀가 목적지로 이미 설정된 것 → 계속 진행
+                if (passengerComp.targetFloor == homeFloor) {
+                    // 귀가 중 → 엘리베이터 계속 대기 (return 하지 않음)
+                } else {
+                    // 출근 중 대기 → 포기하고 Idle
+                    reg.remove<ElevatorPassengerComponent>(id);
+                    agent.state = AgentState::Idle;
+
+                    Event ev;
+                    ev.type    = EventType::AgentStateChanged;
+                    ev.source  = id;
+                    ev.payload = static_cast<int>(AgentState::Idle);
+                    eventBus_.publish(ev);
+
+                    spdlog::debug("AgentSystem: entity {:d} work end while waiting for work elevator, forced Idle",
+                                  static_cast<uint32_t>(id));
+                    return;
                 }
             }
-            reg.remove<ElevatorPassengerComponent>(id);
+        } else {
+            // ElevatorPassengerComponent 없는데 WaitingElevator/InElevator → Idle로 복구
+            agent.state = AgentState::Idle;
+
+            Event ev;
+            ev.type    = EventType::AgentStateChanged;
+            ev.source  = id;
+            ev.payload = static_cast<int>(AgentState::Idle);
+            eventBus_.publish(ev);
+
+            spdlog::debug("AgentSystem: entity {:d} work end, no passenger comp, forced Idle",
+                          static_cast<uint32_t>(id));
+            return;
         }
-
-        agent.state = AgentState::Idle;
-
-        Event ev;
-        ev.type    = EventType::AgentStateChanged;
-        ev.source  = id;
-        ev.payload = static_cast<int>(AgentState::Idle);
-        eventBus_.publish(ev);
-
-        spdlog::debug("AgentSystem: entity {:d} work end during elevator, forced Idle",
-                      static_cast<uint32_t>(id));
-        return;
     }
 
     if (!reg.all_of<ElevatorPassengerComponent>(id)) {
