@@ -23,3 +23,4 @@ third_party/
 
 # Debug
 *.dSYM/
+build-win/

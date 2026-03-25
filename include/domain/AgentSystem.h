@@ -47,7 +47,7 @@ public:
 
     std::vector<EntityId> getAgentsInState(entt::registry& reg, AgentState state) const override;
 
-    float getAverageSatisfaction(entt::registry& reg) const override;
+    float getAverageSatisfaction(const entt::registry& reg) const override;
 
     // ── SaveLoad support ───────────────────────────────────────────────────
     /** Register a restored agent in the activeAgents_ tracking set. */

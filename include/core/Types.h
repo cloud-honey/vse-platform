@@ -118,6 +118,15 @@ enum class StarRating : uint8_t {
     Star5
 };
 
+// ── Event Payloads (shared) ─────────────────
+
+/** Payload for StarRatingChanged event. Moved from StarRatingSystem.h (TASK-02-009). */
+struct StarRatingChangedPayload {
+    StarRating oldRating;
+    StarRating newRating;
+    float avgSatisfaction;
+};
+
 // ── Event Types ─────────────────────────────
 enum class EventType : uint16_t {
     // SimClock

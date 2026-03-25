@@ -134,7 +134,7 @@ public:
     virtual std::vector<EntityId> getAgentsInState(entt::registry& reg, AgentState state) const = 0;
 
     /** 전체 에이전트 평균 만족도 (StarRatingSystem용) */
-    virtual float getAverageSatisfaction(entt::registry& reg) const = 0;
+    virtual float getAverageSatisfaction(const entt::registry& reg) const = 0;
 };
 
 } // namespace vse

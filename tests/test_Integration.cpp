@@ -21,6 +21,8 @@
 #include "domain/GridSystem.h"
 #include "domain/AgentSystem.h"
 #include "domain/TransportSystem.h"
+#include "domain/EconomyEngine.h"
+#include "domain/StarRatingSystem.h"
 #include <entt/entt.hpp>
 
 using namespace vse;
@@ -154,4 +156,96 @@ TEST_CASE("Integration - SimClock: TickAdvanced and HourChanged events delivered
     REQUIRE(tickCount == 120);
     // Must have received exactly 2 HourChanged events (at tick 60 and tick 120)
     REQUIRE(hourCount == 2);
+}
+// ── TASK-02-009: NPC precise timing (tick 540 = 9am work start, tick 1080 = 6pm work end) ──
+
+TEST_CASE("Integration - NPC precise timing: Working at tick 540, Idle at tick 1080", "[Integration]") {
+    PreloadedConfig config;
+    EventBus eventBus;
+    entt::registry registry;
+    GridSystem grid(eventBus, config);
+    AgentSystem agents(grid, eventBus);  // no transport → same-floor only
+
+    grid.buildFloor(0);
+    EntityId homeId = registry.create();
+    grid.placeTenant({2, 0}, TenantType::Residential, 2, homeId);
+    EntityId workId = registry.create();
+    grid.placeTenant({6, 0}, TenantType::Office, 2, workId);
+
+    auto spawnResult = agents.spawnAgent(registry, homeId, workId);
+    REQUIRE(spawnResult.ok());
+    EntityId agentId = spawnResult.value;
+
+    // Advance to tick 539 (8:59 AM) — should still be Idle
+    for (int tick = 0; tick < 539; ++tick) {
+        eventBus.flush();
+        agents.update(registry, GameTime::fromTick(tick));
+    }
+    REQUIRE(agents.getState(registry, agentId) == AgentState::Idle);
+
+    // Tick 540 (9:00 AM) — should transition to Working
+    eventBus.flush();
+    agents.update(registry, GameTime::fromTick(540));
+    REQUIRE(agents.getState(registry, agentId) == AgentState::Working);
+
+    // Advance to tick 1079 (5:59 PM) — still Working (after lunch)
+    for (int tick = 541; tick < 1080; ++tick) {
+        eventBus.flush();
+        agents.update(registry, GameTime::fromTick(tick));
+    }
+    auto stateAt1079 = agents.getState(registry, agentId);
+    REQUIRE((stateAt1079 == AgentState::Working || stateAt1079 == AgentState::Resting));
+
+    // Tick 1080 (6:00 PM) — should transition to Idle
+    eventBus.flush();
+    agents.update(registry, GameTime::fromTick(1080));
+    REQUIRE(agents.getState(registry, agentId) == AgentState::Idle);
+}
+
+// ── TASK-02-009: Economy + StarRating integration ──
+
+TEST_CASE("Integration - Economy income + StarRating update in one simulation day", "[Integration]") {
+    PreloadedConfig config;
+    EventBus eventBus;
+    entt::registry registry;
+    GridSystem grid(eventBus, config);
+    AgentSystem agents(grid, eventBus);
+
+    EconomyConfig ecfg;
+    ecfg.startingBalance = 100000;
+    ecfg.officeRentPerTilePerDay = 500;
+    ecfg.residentialRentPerTilePerDay = 300;
+    ecfg.commercialRentPerTilePerDay = 800;
+    ecfg.elevatorMaintenancePerDay = 500;
+    EconomyEngine economy(ecfg);
+
+    StarRatingSystem::Config srCfg;
+    StarRatingSystem starRating(eventBus, srCfg);
+    starRating.initRegistry(registry);
+
+    // Setup: floor 0 with residential + office
+    grid.buildFloor(0);
+    EntityId homeId = registry.create();
+    grid.placeTenant({2, 0}, TenantType::Residential, 2, homeId);
+    EntityId workId = registry.create();
+    grid.placeTenant({6, 0}, TenantType::Office, 3, workId);
+
+    auto spawnResult = agents.spawnAgent(registry, homeId, workId);
+    REQUIRE(spawnResult.ok());
+
+    // Run one full game day (1440 ticks)
+    for (int tick = 0; tick < 1440; ++tick) {
+        eventBus.flush();
+        GameTime t = GameTime::fromTick(tick);
+        agents.update(registry, t);
+        economy.update(t);
+        starRating.update(registry, agents, t);
+    }
+
+    // StarRating should have been computed (at least Star1)
+    auto rating = starRating.getCurrentRating(registry);
+    REQUIRE(static_cast<int>(rating) >= static_cast<int>(StarRating::Star1));
+
+    // Economy should still have balance (starting 100000, small operations)
+    REQUIRE(economy.getBalance() > 0);
 }

@@ -97,7 +97,9 @@ public:
     /** 특정 층 대기 인원 수 */
     virtual int getWaitingCount(int floor) const = 0;
 
-    /** 전체 엘리베이터 목록 */
+    /** 전체 엘리베이터 목록.
+     *  Phase 1 API decision: per-ID query via getElevatorState() is sufficient.
+     *  Bulk snapshot API deferred to Phase 2 if performance requires it. */
     virtual std::vector<EntityId> getAllElevators() const = 0;
 };
 

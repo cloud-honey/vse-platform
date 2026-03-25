@@ -423,7 +423,7 @@ std::vector<EntityId> AgentSystem::getAgentsInState(entt::registry& reg, AgentSt
     return result;
 }
 
-float AgentSystem::getAverageSatisfaction(entt::registry& reg) const
+float AgentSystem::getAverageSatisfaction(const entt::registry& reg) const
 {
     auto view = reg.view<AgentComponent>();
     float total = 0.0f;

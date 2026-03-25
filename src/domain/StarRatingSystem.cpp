@@ -60,9 +60,7 @@ void StarRatingSystem::update(entt::registry& reg, const IAgentSystem& agents, c
     StarRating oldRating = comp.currentRating;
     
     // Get current stats from agents.
-    // NOTE: IAgentSystem::getAverageSatisfaction() takes entt::registry& (non-const) for
-    //       EnTT view creation, but does not mutate the registry. const_cast is safe here.
-    float avgSatisfaction = agents.getAverageSatisfaction(const_cast<entt::registry&>(reg));
+    float avgSatisfaction = agents.getAverageSatisfaction(reg);
     int population = agents.activeAgentCount();
     
     // Compute new rating
@@ -121,8 +119,10 @@ StarRating StarRatingSystem::computeRating(float avgSatisfaction, int population
     // Find highest threshold that satisfaction meets or exceeds
     // Start from highest threshold (index 4 = Star5) down to index 1 (Star2)
     for (int i = 4; i >= 1; --i) {
-        // Use small epsilon for floating point comparison
-        if (avgSatisfaction >= config_.satisfactionThresholds[i] - 0.0001f) {
+        // Float comparison epsilon: 0.0001f to handle rounding near threshold boundaries.
+        // Phase 1 hardcoded; Phase 2 may move to config if balance tuning needs sub-threshold precision.
+        constexpr float kEpsilon = 0.0001f;
+        if (avgSatisfaction >= config_.satisfactionThresholds[i] - kEpsilon) {
             // i=4 → Star5, i=3 → Star4, i=2 → Star3, i=1 → Star2
             return static_cast<StarRating>(i + 1); // StarRating enum: Star1=1, Star2=2, etc.
         }

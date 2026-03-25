@@ -36,14 +36,7 @@ struct StarRatingComponent {
     int totalPopulation = 0;
 };
 
-/**
- * @brief Payload for StarRatingChanged event.
- */
-struct StarRatingChangedPayload {
-    StarRating oldRating;
-    StarRating newRating;
-    float avgSatisfaction;
-};
+// StarRatingChangedPayload moved to Types.h (TASK-02-009)
 
 class StarRatingSystem {
 public:

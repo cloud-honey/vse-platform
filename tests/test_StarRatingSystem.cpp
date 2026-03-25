@@ -74,7 +74,7 @@ public:
         return {}; // Not used in tests
     }
     
-    float getAverageSatisfaction(entt::registry& reg) const override {
+    float getAverageSatisfaction(const entt::registry& reg) const override {
         (void)reg;
         return avgSatisfaction_;
     }
