@@ -473,6 +473,8 @@ If none: "None — fully compliant with spec."]
 - 판정(Verdict)은 반드시 Pass / Conditional Pass / Fail 세 가지 중 하나
 - 검증 기준: `CLAUDE.md` + `VSE_Design_Spec.md`
 
+**실제 예시:** `reports/TASK-02-003_Review_Report.md` ← 003부터 이 양식을 기준으로 작성
+
 ---
 
 ## 코드 주석 규칙 (전 모델 필수)
