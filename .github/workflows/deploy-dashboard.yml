@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'VSE_Sprint_Status.json'
-      - 'vse-dashboard/index.html'
+      - 'VSE_Dashboard.html'
 
 jobs:
   trigger:
