@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T13:21:52",
+  "updated_at": "2026-03-25T13:31:29",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "planning",
@@ -315,5 +315,171 @@
     "tests": "142/142",
     "tasks_done": 10,
     "highlight": "타일 그리드 + NPC 프로토타입 + ImGui 디버그 패널. Windows 실행 확인."
+  },
+  "sprint1_tasks": [
+    {
+      "id": "TASK-01-001",
+      "title": "CMake 프로젝트 구조 + SDL2/EnTT/ImGui 의존성",
+      "assignee": "붐2",
+      "layer": "인프라",
+      "status": "done",
+      "notes": "CMake 구조, CI, Linux 빌드. ctest 1/1 ✅"
+    },
+    {
+      "id": "TASK-01-002",
+      "title": "SimClock + EventBus 구현",
+      "assignee": "붐2",
+      "layer": "Layer 0",
+      "status": "done",
+      "notes": "1 tick=1 min, deferred-only, double-buffer. 14/14 ✅"
+    },
+    {
+      "id": "TASK-01-003",
+      "title": "ConfigManager + JSON 로딩",
+      "assignee": "붐2",
+      "layer": "Layer 0",
+      "status": "done",
+      "notes": "dot notation, typed getters, isLoaded(). 27/27 ✅"
+    },
+    {
+      "id": "TASK-01-004",
+      "title": "IGridSystem + GridSystem",
+      "assignee": "붐",
+      "layer": "Layer 0+1",
+      "status": "done",
+      "notes": "30층 타일 그리드, 엘리베이터 샤프트, anchor 배치. 23/23 ✅"
+    },
+    {
+      "id": "TASK-01-005",
+      "title": "IAgentSystem + AgentSystem (ECS)",
+      "assignee": "붐",
+      "layer": "Layer 0+1",
+      "status": "done",
+      "notes": "ECS 컴포넌트 5종, 스케줄 기반 상태전환. 16/16 ✅"
+    },
+    {
+      "id": "TASK-01-006",
+      "title": "ITransportSystem + ElevatorSystem (LOOK)",
+      "assignee": "붐",
+      "layer": "Layer 0+1",
+      "status": "done",
+      "notes": "LOOK 알고리즘, 6-state FSM, 다중배차. 21/21 ✅"
+    },
+    {
+      "id": "TASK-01-007",
+      "title": "SDL2 윈도우 + 타일 그리드 렌더링",
+      "assignee": "붐",
+      "layer": "Layer 3",
+      "status": "done",
+      "notes": "Camera, InputMapper, RenderFrameCollector. 24/24 ✅"
+    },
+    {
+      "id": "TASK-01-008",
+      "title": "NPC 스프라이트 렌더링",
+      "assignee": "붐",
+      "layer": "Layer 3",
+      "status": "done",
+      "notes": "RenderAgentCmd, 16×32px, Y-sort, const view. 8/8 ✅"
+    },
+    {
+      "id": "TASK-01-009",
+      "title": "Dear ImGui 디버그 패널",
+      "assignee": "붐2",
+      "layer": "Layer 3",
+      "status": "done",
+      "notes": "DebugPanel 분리, NewFrame 매 프레임, gameDay 0-indexed. 8/8 ✅"
+    },
+    {
+      "id": "TASK-01-010",
+      "title": "통합 + 프로토타입 동작 확인",
+      "assignee": "붐",
+      "layer": "전체",
+      "status": "done",
+      "notes": "main.cpp 통합, NPC 5명 씬, Windows 실행 확인. 142/142 ✅"
+    }
+  ],
+  "sprint3_plan": {
+    "sprint": 3,
+    "goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
+    "tasks": [
+      {
+        "id": "TASK-03-001",
+        "title": "NPC AI 고도화 (스트레스, 만족도 조건부 감소)",
+        "layer": "Layer 1",
+        "notes": "스트레스 임계값, 엘리베이터 대기 시간 패널티"
+      },
+      {
+        "id": "TASK-03-002",
+        "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
+        "layer": "Layer 1",
+        "notes": "임대료 공식, 입주 조건, 퇴거 로직"
+      },
+      {
+        "id": "TASK-03-003",
+        "title": "스프라이트 시트 렌더링 전환 (Phase 2)",
+        "layer": "Layer 3",
+        "notes": "16×32 픽셀아트 스프라이트, 상태별 애니메이션"
+      },
+      {
+        "id": "TASK-03-004",
+        "title": "카메라 개선 (건물 외관, 층 라벨)",
+        "layer": "Layer 3",
+        "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽"
+      },
+      {
+        "id": "TASK-03-005",
+        "title": "게임 UI (잔액, 별점, 인게임 HUD)",
+        "layer": "Layer 3",
+        "notes": "ImGui HUD — 잔액 표시, 별점 아이콘"
+      },
+      {
+        "id": "TASK-03-006",
+        "title": "건물 건설 인터랙션 (클릭으로 층/테넌트 배치)",
+        "layer": "Layer 3",
+        "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드"
+      },
+      {
+        "id": "TASK-03-007",
+        "title": "통합 + 알파 버전 확인",
+        "layer": "전체",
+        "notes": "Steam 빌드 준비, macOS + Windows 패키지"
+      }
+    ]
+  },
+  "sprint4_plan": {
+    "sprint": 4,
+    "goal": "Steam 출시 준비 — 멀티플레이 기반, 오디오, 최적화",
+    "tasks": [
+      {
+        "id": "TASK-04-001",
+        "title": "오디오 시스템 (BGM/SFX)",
+        "layer": "Layer 2",
+        "notes": "WAVEMIX.DLL 역분석 기반, SDL_mixer"
+      },
+      {
+        "id": "TASK-04-002",
+        "title": "재난 시스템 (화재/폭탄 — Phase 2)",
+        "layer": "Layer 1",
+        "notes": "역분석 문서 supplement_02 참조"
+      },
+      {
+        "id": "TASK-04-003",
+        "title": "Dirty Rect 렌더링 최적화",
+        "layer": "Layer 3",
+        "notes": "성능 실측 후 결정"
+      },
+      {
+        "id": "TASK-04-004",
+        "title": "HiDPI + 해상도 대응",
+        "layer": "Layer 3",
+        "notes": "Phase 2"
+      },
+      {
+        "id": "TASK-04-005",
+        "title": "Steam 빌드 + 배포 파이프라인",
+        "layer": "인프라",
+        "notes": "Steam SDK 연동, 업적 기초"
+      }
+    ]
   }
 }
