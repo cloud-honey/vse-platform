@@ -167,7 +167,7 @@ None.
 | Model | Verdict | Key Issues |
 |---|---|---|
 | GPT-5.4 Thinking | pending | — |
-| Gemini 3 Flash   | pending | — |
+| Gemini 3 Flash   | Pass | P1: daily reset race condition, history O(N); P2: rent formula, update() |
 | DeepSeek V3      | pending | — |
 
 ---
