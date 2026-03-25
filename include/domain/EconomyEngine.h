@@ -27,12 +27,25 @@
 
 namespace vse {
 
+/**
+ * EconomyConfig — balance.json에서 읽어와 EconomyEngine 생성 시 전달.
+ *
+ * JSON 경로 (balance.json):
+ *   startingBalance            ← economy.startingBalance
+ *   officeRentPerTilePerDay    ← tenants.office.rent
+ *   residentialRentPerTilePerDay ← tenants.residential.rent
+ *   commercialRentPerTilePerDay  ← tenants.commercial.rent
+ *   elevatorMaintenancePerDay  ← economy.elevatorMaintenancePerDay
+ *
+ * @note Phase 1: 부채(debt), 이자, 인플레이션 지원 없음 (CLAUDE.md §제외 항목).
+ *       balance가 0 미만이 되는 경우는 구현 가능하나 Phase 1에서 게임 로직으로 활용 금지.
+ */
 struct EconomyConfig {
-    int64_t startingBalance;          // Cents — from balance.json "economy.starting_balance"
-    int64_t officeRentPerTilePerDay;  // Cents — from balance.json "economy.office_rent_per_tile_per_day"
-    int64_t residentialRentPerTilePerDay; // Cents
-    int64_t commercialRentPerTilePerDay;  // Cents
-    int64_t elevatorMaintenancePerDay;    // Cents per elevator shaft per day
+    int64_t startingBalance;              // Cents — balance.json "economy.startingBalance"
+    int64_t officeRentPerTilePerDay;      // Cents — balance.json "tenants.office.rent"
+    int64_t residentialRentPerTilePerDay; // Cents — balance.json "tenants.residential.rent"
+    int64_t commercialRentPerTilePerDay;  // Cents — balance.json "tenants.commercial.rent"
+    int64_t elevatorMaintenancePerDay;    // Cents — balance.json "economy.elevatorMaintenancePerDay"
 };
 
 class EconomyEngine : public IEconomyEngine {

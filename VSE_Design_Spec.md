@@ -111,8 +111,9 @@ vse-platform/
 │
 ├── assets/
 │   ├── config/
-│   │   ├── game_config.json          # Master config (tick rate, limits, etc.)
-│   │   └── balance.json              # Economy values (hot-reloadable)
+│   │   └── game_config.json          # Master config (tick rate, limits, etc.)
+│   ├── data/
+│   │   └── balance.json              # Economy values (hot-reloadable, tenants+economy schema)
 │   ├── content/
 │   │   └── tenants.json              # Tenant type definitions
 │   ├── sprites/                      # Placeholder sprites
@@ -933,46 +934,55 @@ public:
 
 ### 5.7 IEconomyEngine
 
+> **TASK-02-003 업데이트 (2026-03-25):**
+> - 화폐 단위: `int` → `int64_t Cents` (오버플로우 방지)
+> - `GameMinute` timestamp → `GameTime` (통일성)
+> - `collectRent` / `payMaintenance`: 파라미터 없음 → `const IGridSystem& grid, const GameTime& time` (외부 의존성 명시)
+> - `addIncome` / `addExpense`: `const GameTime& time` 파라미터 추가
+> - `ExpenseRecord::category` 예시: `"maintenance", "construction", "elevator"` → `"rent", "maintenance", "elevator"`
+
 ```cpp
 // include/core/IEconomyEngine.h
 #pragma once
 #include "core/Types.h"
 #include "core/Error.h"
+#include "core/IGridSystem.h"
 #include <vector>
 #include <string>
 
 namespace vse {
 
 struct IncomeRecord {
-    EntityId tenantEntity;
+    EntityId   tenantEntity;
     TenantType type;
-    int amount;
-    GameMinute timestamp;
+    int64_t    amount;    // Cents
+    GameTime   timestamp;
 };
 
 struct ExpenseRecord {
-    std::string category;       // "maintenance", "construction", "elevator"
-    int amount;
-    GameMinute timestamp;
+    std::string category; // "rent", "maintenance", "elevator"
+    int64_t     amount;   // Cents
+    GameTime    timestamp;
 };
 
 class IEconomyEngine {
 public:
     virtual ~IEconomyEngine() = default;
 
-    virtual int getBalance() const = 0;
-    virtual void addIncome(EntityId tenant, TenantType type, int amount) = 0;
-    virtual void addExpense(const std::string& category, int amount) = 0;
+    virtual int64_t getBalance() const = 0;
+    virtual void addIncome(EntityId tenant, TenantType type, int64_t amount, const GameTime& time) = 0;
+    virtual void addExpense(const std::string& category, int64_t amount, const GameTime& time) = 0;
 
-    // Called by SimClock DayChanged event handler
-    virtual void collectRent() = 0;
-    virtual void payMaintenance() = 0;
+    // Called once per game day (DayChanged event)
+    virtual void collectRent(const IGridSystem& grid, const GameTime& time) = 0;
+    virtual void payMaintenance(const IGridSystem& grid, const GameTime& time) = 0;
 
+    // Called every tick by Bootstrapper
     virtual void update(const GameTime& time) = 0;
 
-    virtual int getDailyIncome() const = 0;
-    virtual int getDailyExpense() const = 0;
-    virtual std::vector<IncomeRecord> getRecentIncome(int count) const = 0;
+    virtual int64_t getDailyIncome()  const = 0;
+    virtual int64_t getDailyExpense() const = 0;
+    virtual std::vector<IncomeRecord>  getRecentIncome(int count)   const = 0;
     virtual std::vector<ExpenseRecord> getRecentExpenses(int count) const = 0;
 };
 
@@ -1640,6 +1650,15 @@ DoorOpening → Agent exits → AgentState = Moving → DoorClosing
 
 ### 10.2 balance.json (hot-reloadable)
 
+> 경로: `assets/data/balance.json` (TASK-02-003에서 `assets/config/` → `assets/data/`로 이동 확정)
+>
+> EconomyConfig 로딩 키 매핑:
+> - `startingBalance` ← `economy.startingBalance`
+> - `officeRentPerTilePerDay` ← `tenants.office.rent`
+> - `residentialRentPerTilePerDay` ← `tenants.residential.rent`
+> - `commercialRentPerTilePerDay` ← `tenants.commercial.rent`
+> - `elevatorMaintenancePerDay` ← `economy.elevatorMaintenancePerDay`
+
 ```json
 {
     "tenants": {
@@ -1679,9 +1698,8 @@ DoorOpening → Agent exits → AgentState = Moving → DoorClosing
         "thresholds": [0, 30, 50, 70, 90]
     },
     "economy": {
-        "floorBuildCost": 10000,
-        "elevatorBuildCost": 15000,
-        "elevatorMaintenancePerDay": 200
+        "startingBalance": 1000000,
+        "elevatorMaintenancePerDay": 1000
     }
 }
 ```

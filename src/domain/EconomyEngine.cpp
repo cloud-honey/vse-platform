@@ -56,7 +56,8 @@ void EconomyEngine::addExpense(const std::string& category, int64_t amount, cons
         return;
     }
     
-    // Underflow guard (debt allowed in Phase 1)
+    // Underflow guard — balance can go negative (no debt/interest mechanics in Phase 1,
+    // but clamping to INT64_MIN prevents undefined behavior from overflow)
     if (balance_ < INT64_MIN + amount) {
         spdlog::warn("EconomyEngine::addExpense: underflow detected, clamping to INT64_MIN");
         balance_ = INT64_MIN;

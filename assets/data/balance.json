@@ -1,9 +1,42 @@
 {
+  "tenants": {
+    "office": {
+      "rent": 500,
+      "maintenance": 100,
+      "maxOccupants": 6,
+      "width": 4,
+      "satisfactionDecayRate": 0.1,
+      "buildCost": 5000
+    },
+    "residential": {
+      "rent": 300,
+      "maintenance": 50,
+      "maxOccupants": 3,
+      "width": 3,
+      "satisfactionDecayRate": 0.05,
+      "buildCost": 3000
+    },
+    "commercial": {
+      "rent": 800,
+      "maintenance": 200,
+      "maxOccupants": 0,
+      "width": 5,
+      "satisfactionDecayRate": 0.15,
+      "buildCost": 8000
+    }
+  },
+  "npc": {
+    "baseMoveSpeed": 1.0,
+    "satisfactionGainWork": 0.5,
+    "satisfactionLossWait": -2.0,
+    "satisfactionLossNoElevator": -5.0,
+    "leaveThreshold": 20.0
+  },
+  "starRating": {
+    "thresholds": [0, 30, 50, 70, 90]
+  },
   "economy": {
-    "starting_balance": 1000000,
-    "office_rent_per_tile_per_day": 500,
-    "residential_rent_per_tile_per_day": 300,
-    "commercial_rent_per_tile_per_day": 800,
-    "elevator_maintenance_per_day": 1000
+    "startingBalance": 1000000,
+    "elevatorMaintenancePerDay": 1000
   }
 }
