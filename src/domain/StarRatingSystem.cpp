@@ -59,7 +59,9 @@ void StarRatingSystem::update(entt::registry& reg, const IAgentSystem& agents, c
     // Store old rating for event
     StarRating oldRating = comp.currentRating;
     
-    // Get current stats from agents
+    // Get current stats from agents.
+    // NOTE: IAgentSystem::getAverageSatisfaction() takes entt::registry& (non-const) for
+    //       EnTT view creation, but does not mutate the registry. const_cast is safe here.
     float avgSatisfaction = agents.getAverageSatisfaction(const_cast<entt::registry&>(reg));
     int population = agents.activeAgentCount();
     
