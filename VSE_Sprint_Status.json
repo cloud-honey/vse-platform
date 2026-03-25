@@ -1,108 +1,117 @@
 {
-  "sprint": 2,
-  "updated_at": "2026-03-25T10:39:00",
+  "sprint": 3,
+  "updated_at": "2026-03-25T10:52:00",
   "phase": "Phase 1",
-  "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
-  "overall_status": "in_progress",
+  "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 게임 루프 완성 (3주 목표)",
+  "overall_status": "planning",
   "tasks": [
     {
-      "id": "TASK-02-001",
-      "title": "Bootstrapper 클래스 분리 (main.cpp 리팩토링)",
+      "id": "TASK-03-001",
+      "title": "Design Spec v1.5 동기화 (Sprint 2 deviation 정리)",
       "assignee": "붐",
-      "layer": "인프라",
-      "status": "done",
+      "layer": "문서",
+      "difficulty": 2,
+      "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "Bootstrapper 클래스 분리 완료. main.cpp 3줄로 단순화. 147/147 테스트 통과."
+      "notes": "IAgentSystem const 수정, ErrorCode enum, getTenantDef 스펙 정렬, Windows 빌드 범위 재분류"
     },
     {
-      "id": "TASK-02-002",
-      "title": "통합 테스트 3종 추가 (엘리베이터 시나리오, NPC 일일 사이클)",
-      "assignee": "붐",
-      "layer": "테스트",
-      "status": "done",
-      "qa_status": "pending",
-      "design_check": "pending",
-      "confirmed_by_human": false,
-      "notes": "통합 테스트 3종 완료 (엘리베이터, NPC 일과, SimClock+EventBus). 150/150 통과. 커밋 4283d50"
-    },
-    {
-      "id": "TASK-02-003",
-      "title": "IEconomyEngine + EconomyEngine (수입/지출)",
-      "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "done",
-      "qa_status": "pending",
-      "design_check": "pending",
-      "confirmed_by_human": false,
-      "notes": "IEconomyEngine + EconomyEngine (int64_t Cents). 임대료/유지비/잔액/이력 20개 테스트. 170/170 통과. 커밋 4a914f7"
-    },
-    {
-      "id": "TASK-02-004",
-      "title": "StarRatingSystem (별점 1~5)",
-      "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "done",
-      "qa_status": "pending",
-      "design_check": "pending",
-      "confirmed_by_human": false,
-      "notes": "StarRatingSystem 구현. 별점 1~5, NPC 만족도 기반. 174/174 통과. 커밋 168f047"
-    },
-    {
-      "id": "TASK-02-005",
-      "title": "NPC 경로 탐색 + 엘리베이터 탑승 (다른 층 이동)",
-      "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "done",
-      "qa_status": "pending",
-      "design_check": "pending",
-      "confirmed_by_human": false,
-      "notes": "AgentSystem 엘리베이터 연동. WaitingElevator→InElevator→Working 다층 이동. 10개 신규 테스트. 184/184 통과. TransportSystem Idle 동층 호출 버그 수정."
-    },
-    {
-      "id": "TASK-02-006",
-      "title": "ISaveLoad + SaveLoad (MessagePack 직렬화)",
+      "id": "TASK-03-002",
+      "title": "NPC AI 고도화 (스트레스, 만족도 조건부 감소)",
       "assignee": "붐",
       "layer": "Layer 1",
-      "status": "done",
+      "difficulty": 4,
+      "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "ISaveLoad + SaveLoadSystem (MessagePack). Manual serialization, 2-pass entity remap, non-ECS export/import. 200/200 통과. 커밋 794e058"
+      "notes": "스트레스 임계값, 엘리베이터 대기 시간 패널티, 히스테레시스 쿨다운"
     },
     {
-      "id": "TASK-02-007",
-      "title": "ContentRegistry + 핫 리로드 (balance.json)",
+      "id": "TASK-03-003",
+      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
       "assignee": "붐2",
-      "layer": "Layer 0",
-      "status": "done",
+      "layer": "Layer 1",
+      "difficulty": 3,
+      "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "600 ticks마다 파일 변경 감지. 개발 편의성 향상."
+      "notes": "임대료 공식, 입주 조건, 퇴거 로직, tenants.json 분리"
     },
     {
-      "id": "TASK-02-008",
-      "title": "렌더링 비주얼 개선 (색상 대비, 로비 구분, NPC 크기)",
+      "id": "TASK-03-004",
+      "title": "다중 엘리베이터 지원 (shaftX 동적 조회)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "difficulty": 3,
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "shaftX=0 하드코딩 제거, GridSystem::findNearestShaft()"
+    },
+    {
+      "id": "TASK-03-005",
+      "title": "스프라이트 시트 렌더링 전환",
       "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "done",
+      "difficulty": 3,
+      "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "Sprint 1 Windows 실행 피드백 반영. 배경/건물 색상 대비, 로비 표시, NPC 가시성."
+      "notes": "16×32 픽셀아트 스프라이트, 상태별 애니메이션"
     },
     {
-      "id": "TASK-02-009",
-      "title": "통합 + Sprint 2 동작 확인",
-      "assignee": "붐 + QA",
-      "layer": "전체",
-      "status": "done",
+      "id": "TASK-03-006",
+      "title": "게임 UI — HUD (잔액, 별점, 시간)",
+      "assignee": "붐2",
+      "layer": "Layer 3",
+      "difficulty": 2,
+      "status": "pending",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "누적 액션 8개 처리: const_cast 제거, StarRatingChangedPayload Types.h 이동, epsilon 문서화, API 결정 기록, NPC 타이밍+경제별점 통합 테스트 2개 추가. Windows 빌드 완료. 215/215 통과."
+      "notes": "ImGui HUD — 잔액 표시, 별점 아이콘, 게임 시간"
+    },
+    {
+      "id": "TASK-03-007",
+      "title": "건물 건설 인터랙션 (마우스 클릭 배치)",
+      "assignee": "붐",
+      "layer": "Layer 3",
+      "difficulty": 4,
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "마우스 클릭 → BuildFloor/PlaceTenant/PlaceElevator 커맨드, 배치 프리뷰"
+    },
+    {
+      "id": "TASK-03-008",
+      "title": "카메라 개선 (층 라벨, 건물 외벽)",
+      "assignee": "붐2",
+      "layer": "Layer 3",
+      "difficulty": 2,
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽 렌더링"
+    },
+    {
+      "id": "TASK-03-009",
+      "title": "통합 + 알파 빌드",
+      "assignee": "붐 + QA",
+      "layer": "전체",
+      "difficulty": 3,
+      "status": "pending",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "macOS + Windows 패키지, 전체 게임루프 검증"
     }
   ],
   "escalations": [],
@@ -383,7 +392,8 @@
       "assignee": "붐2",
       "layer": "인프라",
       "status": "done",
-      "notes": "CMake 구조, CI, Linux 빌드. ctest 1/1 ✅"
+      "notes": "CMake 구조, CI, Linux 빌드. ctest 1/1 ✅",
+      "difficulty": 1
     },
     {
       "id": "TASK-01-002",
@@ -391,7 +401,8 @@
       "assignee": "붐2",
       "layer": "Layer 0",
       "status": "done",
-      "notes": "1 tick=1 min, deferred-only, double-buffer. 14/14 ✅"
+      "notes": "1 tick=1 min, deferred-only, double-buffer. 14/14 ✅",
+      "difficulty": 2
     },
     {
       "id": "TASK-01-003",
@@ -399,7 +410,8 @@
       "assignee": "붐2",
       "layer": "Layer 0",
       "status": "done",
-      "notes": "dot notation, typed getters, isLoaded(). 27/27 ✅"
+      "notes": "dot notation, typed getters, isLoaded(). 27/27 ✅",
+      "difficulty": 2
     },
     {
       "id": "TASK-01-004",
@@ -407,7 +419,8 @@
       "assignee": "붐",
       "layer": "Layer 0+1",
       "status": "done",
-      "notes": "30층 타일 그리드, 엘리베이터 샤프트, anchor 배치. 23/23 ✅"
+      "notes": "30층 타일 그리드, 엘리베이터 샤프트, anchor 배치. 23/23 ✅",
+      "difficulty": 3
     },
     {
       "id": "TASK-01-005",
@@ -415,7 +428,8 @@
       "assignee": "붐",
       "layer": "Layer 0+1",
       "status": "done",
-      "notes": "ECS 컴포넌트 5종, 스케줄 기반 상태전환. 16/16 ✅"
+      "notes": "ECS 컴포넌트 5종, 스케줄 기반 상태전환. 16/16 ✅",
+      "difficulty": 3
     },
     {
       "id": "TASK-01-006",
@@ -423,7 +437,8 @@
       "assignee": "붐",
       "layer": "Layer 0+1",
       "status": "done",
-      "notes": "LOOK 알고리즘, 6-state FSM, 다중배차. 21/21 ✅"
+      "notes": "LOOK 알고리즘, 6-state FSM, 다중배차. 21/21 ✅",
+      "difficulty": 4
     },
     {
       "id": "TASK-01-007",
@@ -431,7 +446,8 @@
       "assignee": "붐",
       "layer": "Layer 3",
       "status": "done",
-      "notes": "Camera, InputMapper, RenderFrameCollector. 24/24 ✅"
+      "notes": "Camera, InputMapper, RenderFrameCollector. 24/24 ✅",
+      "difficulty": 4
     },
     {
       "id": "TASK-01-008",
@@ -439,7 +455,8 @@
       "assignee": "붐",
       "layer": "Layer 3",
       "status": "done",
-      "notes": "RenderAgentCmd, 16×32px, Y-sort, const view. 8/8 ✅"
+      "notes": "RenderAgentCmd, 16×32px, Y-sort, const view. 8/8 ✅",
+      "difficulty": 2
     },
     {
       "id": "TASK-01-009",
@@ -447,7 +464,8 @@
       "assignee": "붐2",
       "layer": "Layer 3",
       "status": "done",
-      "notes": "DebugPanel 분리, NewFrame 매 프레임, gameDay 0-indexed. 8/8 ✅"
+      "notes": "DebugPanel 분리, NewFrame 매 프레임, gameDay 0-indexed. 8/8 ✅",
+      "difficulty": 2
     },
     {
       "id": "TASK-01-010",
@@ -455,7 +473,8 @@
       "assignee": "붐",
       "layer": "전체",
       "status": "done",
-      "notes": "main.cpp 통합, NPC 5명 씬, Windows 실행 확인. 142/142 ✅"
+      "notes": "main.cpp 통합, NPC 5명 씬, Windows 실행 확인. 142/142 ✅",
+      "difficulty": 3
     }
   ],
   "sprint3_plan": {
@@ -541,5 +560,115 @@
         "notes": "Steam SDK 연동, 업적 기초"
       }
     ]
-  }
+  },
+  "sprint2_completed": [
+    {
+      "id": "TASK-02-001",
+      "title": "Bootstrapper 클래스 분리 (main.cpp 리팩토링)",
+      "assignee": "붐",
+      "layer": "인프라",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "Bootstrapper 클래스 분리 완료. main.cpp 3줄로 단순화. 147/147 테스트 통과.",
+      "difficulty": 2
+    },
+    {
+      "id": "TASK-02-002",
+      "title": "통합 테스트 3종 추가 (엘리베이터 시나리오, NPC 일일 사이클)",
+      "assignee": "붐",
+      "layer": "테스트",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "통합 테스트 3종 완료 (엘리베이터, NPC 일과, SimClock+EventBus). 150/150 통과. 커밋 4283d50",
+      "difficulty": 2
+    },
+    {
+      "id": "TASK-02-003",
+      "title": "IEconomyEngine + EconomyEngine (수입/지출)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "IEconomyEngine + EconomyEngine (int64_t Cents). 임대료/유지비/잔액/이력 20개 테스트. 170/170 통과. 커밋 4a914f7",
+      "difficulty": 3
+    },
+    {
+      "id": "TASK-02-004",
+      "title": "StarRatingSystem (별점 1~5)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "StarRatingSystem 구현. 별점 1~5, NPC 만족도 기반. 174/174 통과. 커밋 168f047",
+      "difficulty": 3
+    },
+    {
+      "id": "TASK-02-005",
+      "title": "NPC 경로 탐색 + 엘리베이터 탑승 (다른 층 이동)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "AgentSystem 엘리베이터 연동. WaitingElevator→InElevator→Working 다층 이동. 10개 신규 테스트. 184/184 통과. TransportSystem Idle 동층 호출 버그 수정.",
+      "difficulty": 3
+    },
+    {
+      "id": "TASK-02-006",
+      "title": "ISaveLoad + SaveLoad (MessagePack 직렬화)",
+      "assignee": "붐",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "ISaveLoad + SaveLoadSystem (MessagePack). Manual serialization, 2-pass entity remap, non-ECS export/import. 200/200 통과. 커밋 794e058",
+      "difficulty": 4
+    },
+    {
+      "id": "TASK-02-007",
+      "title": "ContentRegistry + 핫 리로드 (balance.json)",
+      "assignee": "붐2",
+      "layer": "Layer 0",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "600 ticks마다 파일 변경 감지. 개발 편의성 향상.",
+      "difficulty": 2
+    },
+    {
+      "id": "TASK-02-008",
+      "title": "렌더링 비주얼 개선 (색상 대비, 로비 구분, NPC 크기)",
+      "assignee": "붐2",
+      "layer": "Layer 3",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "Sprint 1 Windows 실행 피드백 반영. 배경/건물 색상 대비, 로비 표시, NPC 가시성.",
+      "difficulty": 2
+    },
+    {
+      "id": "TASK-02-009",
+      "title": "통합 + Sprint 2 동작 확인",
+      "assignee": "붐 + QA",
+      "layer": "전체",
+      "status": "done",
+      "qa_status": "pending",
+      "design_check": "pending",
+      "confirmed_by_human": false,
+      "notes": "누적 액션 8개 처리: const_cast 제거, StarRatingChangedPayload Types.h 이동, epsilon 문서화, API 결정 기록, NPC 타이밍+경제별점 통합 테스트 2개 추가. Windows 빌드 완료. 215/215 통과.",
+      "difficulty": 3
+    }
+  ]
 }

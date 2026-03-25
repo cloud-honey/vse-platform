@@ -501,19 +501,20 @@ function render(d){
       completed: true
     },
     {
-      id: 's2', label: 'S2 🔥', title: 'Sprint 2 — 경제/저장/NPC 이동',
-      cls: '',
-      goal: d.sprint_goal,
-      tasks: tasks,
-      completed: false,
-      active: true
+      id: 's2', label: 'S2 ✅', title: 'Sprint 2 — 경제/저장/NPC 이동',
+      cls: 'done-tab',
+      goal: d.sprint >= 3 ? '경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동' : d.sprint_goal,
+      tasks: d.sprint >= 3 ? (d.sprint2_completed || []) : tasks,
+      completed: d.sprint >= 3
     },
     {
-      id: 's3', label: 'S3 📋', title: 'Sprint 3 — AI 고도화/스프라이트/UI',
-      cls: 'plan-tab',
-      goal: d.sprint3_plan ? d.sprint3_plan.goal : '계획 중',
-      tasks: d.sprint3_plan ? d.sprint3_plan.tasks : [],
-      planned: true
+      id: 's3', label: d.sprint >= 3 ? 'S3 🔥' : 'S3 📋',
+      title: 'Sprint 3 — AI 고도화/스프라이트/UI',
+      cls: d.sprint >= 3 ? '' : 'plan-tab',
+      goal: d.sprint >= 3 ? d.sprint_goal : (d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
+      tasks: d.sprint >= 3 ? tasks : (d.sprint3_plan ? d.sprint3_plan.tasks : []),
+      active: d.sprint >= 3,
+      planned: d.sprint < 3
     },
     {
       id: 's4', label: 'S4 🚀', title: 'Sprint 4 — Steam 출시 준비',
@@ -526,7 +527,7 @@ function render(d){
 
   /* 탭 렌더 함수 */
   window._sprintDefs = sprintDefs;
-  window._activeTab = window._activeTab || 's2';  // 기본값: 현재 스프린트
+  window._activeTab = window._activeTab || (d.sprint >= 3 ? 's3' : 's2');  // 기본값: 현재 스프린트
 
   function renderTabs() {
     const tabBar = document.getElementById('sprintTabs');
@@ -553,10 +554,11 @@ function render(d){
     tl.innerHTML = def.tasks.map(t => {
       const status = t.status || 'planned';
       const assignee = t.assignee || '—';
+      const diff = t.difficulty ? '⭐'.repeat(t.difficulty) : '';
       return `
         <div class="titem">
           <div class="tid">${t.id}</div>
-          <div class="ttit">${t.title}${t.notes?`<small>${t.notes}</small>`:''}</div>
+          <div class="ttit">${t.title}${diff?`<span style="margin-left:6px;font-size:10px;opacity:0.7" title="난이도 ${t.difficulty}/5">${diff}</span>`:''}${t.notes?`<small>${t.notes}</small>`:''}</div>
           ${assignee !== '—' ? `<span class="ab ${abClass(assignee)}">${assignee}</span>` : ''}
           <span class="lb">${t.layer || ''}</span>
           <div class="swrap">
@@ -612,9 +614,10 @@ function render(d){
   const s1Done  = s1 ? s1Total : 0;  // Sprint 1 완료 = 10/10
   const s2Total = tasks.length;
   const s2Done  = done;
-  const s3Tasks = (d.sprint3_plan && d.sprint3_plan.tasks) || [];
-  const s3Total = s3Tasks.length;
-  const s3Done  = s3Tasks.filter(t => t.status === 'done').length;
+  // Sprint 3 = current tasks (when sprint >= 3)
+  const s3Tasks = d.sprint >= 3 ? tasks : ((d.sprint3_plan && d.sprint3_plan.tasks) || []);
+  const s3Total = d.sprint >= 3 ? tasks.length : s3Tasks.length;
+  const s3Done  = d.sprint >= 3 ? done : s3Tasks.filter(t => t.status === 'done').length;
   const s4Tasks = (d.sprint4_plan && d.sprint4_plan.tasks) || [];
   const s4Total = s4Tasks.length;
   const s4Done  = s4Tasks.filter(t => t.status === 'done').length;
