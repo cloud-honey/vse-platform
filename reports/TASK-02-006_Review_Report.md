@@ -4,8 +4,8 @@
 > Date: 2026-03-25
 > Task: TASK-02-006 ISaveLoad + SaveLoad (MessagePack Serialization)
 > Layer: Layer 1 — Domain Module
-> Tests: 13 new test cases + 187 existing = **200/200 passed**
-> Commit: 794e058
+> Tests: 14 new test cases + 187 existing = **201/201 passed**
+> Commit: 97f8df4 (post-review fix)
 
 ---
 
@@ -183,8 +183,8 @@ Each system exports/imports its own internal state:
 
 ## Open Items
 
-- **P1**: Grid `TileData::tenantEntity` IDs not remapped after load. Currently works because Grid is imported before entities and only used for anchor lookup. Must fix before Phase 2 SaveLoad migration.
-- **P1**: TransportSystem `ElevatorCar::passengers` EntityIds not remapped. Elevator operations after load may reference stale IDs. Must fix before elevator + agent interaction after load is tested end-to-end.
+- ~~**P1**: Grid `TileData::tenantEntity` IDs not remapped~~ → **Fixed** (commit 97f8df4). `GridSystem::remapEntityIds()` added.
+- ~~**P1**: TransportSystem `ElevatorCar::passengers` EntityIds not remapped~~ → **Fixed** (commit 97f8df4). `TransportSystem::remapPassengerIds()` added. Test 14 verifies passenger identity after round-trip.
 - **P2**: `SaveMetadata::playtimeSeconds` always 0. Add real-time tracking in Bootstrapper.
 - **P2**: `buildingName` hardcoded to "My Tower". Add user input or config-based naming.
 - **P2**: Consider `entt::snapshot` for Phase 2 if component count grows significantly.
@@ -195,7 +195,7 @@ Each system exports/imports its own internal state:
 
 | Model | Verdict | Key Issues |
 |---|---|---|
-| — | — | (to be filled after review) |
+| GPT-5.4 Thinking | Conditional Pass → **Pass (Post-Fix)** | P0: Grid tenantEntity remap 누락(→수정완료), Transport passenger remap 누락(→수정완료, 테스트 14 추가); P1: SaveMetadata balance int64_t 타입 설계문서 불일치(→보고서 기록), entt::snapshot deviation 서술 정정 |
 
 ---
 
