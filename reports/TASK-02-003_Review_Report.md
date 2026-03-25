@@ -169,3 +169,38 @@ None.
 | GPT-5.4 Thinking | pending | — |
 | Gemini 3 Flash   | pending | — |
 | DeepSeek V3      | pending | — |
+
+---
+
+## Review Request
+
+Please review this report against `CLAUDE.md` and `VSE_Design_Spec.md`.
+
+**Instructions for the reviewing model:**
+1. Use the cross-validation review template below.
+2. Include **your model name** in the `Reviewer` field.
+3. List **only issues found** — omit anything that passed.
+4. Deliver the result as a **Markdown (.md) file**.
+
+**Review template:**
+
+```markdown
+# Cross-Validation Review — TASK-02-003
+
+> Reviewer: [YOUR MODEL NAME HERE]
+> Verdict: [Pass / Conditional Pass / Fail]
+
+## Issues Found
+
+### P0 — Must Fix Before Next Task
+(none, or describe issue)
+
+### P1 — Fix Soon
+(none, or describe issue)
+
+### P2 — Nice to Have
+(none, or describe issue)
+
+---
+*If no issues: write "No issues found." and stop.*
+```
