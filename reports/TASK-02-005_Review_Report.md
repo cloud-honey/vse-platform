@@ -60,8 +60,13 @@ void processElevator(entt::registry& reg, EntityId id,
 4. `processElevator()`:
    - **Waiting**: polls `getElevatorsAtFloor(currentFloor)`, boards if `state == Boarding`
    - **InElevator**: polls `getAllElevators()`, exits if `currentFloor == targetFloor && (DoorOpening || Boarding)`
-   - On exit: updates `PositionComponent.tile.floor`, removes `ElevatorPassengerComponent`, sets state to `Working`
-5. Work-end cleanup: if `time.hour >= workEndHour` while in elevator → force `Idle`, remove component
+   - On exit: updates `PositionComponent.tile.floor`, removes `ElevatorPassengerComponent`, sets state to `Working` (outbound) or `Idle` (return-home)
+   - **Phase 1 simplification**: exits directly to `Working`/`Idle` without `Moving` intermediate state. Design Spec specifies `Moving → path to destination` after exit; this is deferred to a later sprint when horizontal pathfinding is integrated.
+5. Work-end while elevator:
+   - **WaitingElevator (outbound)**: abort → force `Idle`
+   - **WaitingElevator (return-home)**: continue waiting
+   - **InElevator (outbound)**: re-route `targetFloor` to home floor + issue `callElevator(homeFloor)` hall call so LOOK algorithm stops there
+   - **InElevator (return-home)**: continue to home floor, exit → `Idle`
 
 ### Backward compatibility
 - `AgentSystem(IGridSystem&, EventBus&)` sets `transport_ = nullptr`
@@ -74,7 +79,7 @@ void processElevator(entt::registry& reg, EntityId id,
 
 ---
 
-## Test Cases (10)
+## Test Cases (13)
 
 | # | Test Name | Result |
 |---|---|---|
@@ -85,9 +90,12 @@ void processElevator(entt::registry& reg, EntityId id,
 | 5 | ElevatorPassengerComponent attached on WaitingElevator, removed after exit | ✅ Pass |
 | 6 | NPC does not double-board while InElevator | ✅ Pass |
 | 7 | callElevator called with correct floor when WaitingElevator | ✅ Pass |
-| 8 | NPC returns to Idle when workEndHour reached during elevator | ✅ Pass |
+| 8 | NPC re-routes to home when workEndHour reached during elevator | ✅ Pass |
 | 9 | Two NPCs on floor 0 both board same elevator | ✅ Pass |
 | 10 | NPC on same floor as workplace → Working (no WaitingElevator) | ✅ Pass |
+| 11 | NPC at floor 2 at workEndHour → WaitingElevator when home is floor 0 | ✅ Pass |
+| 12 | NPC re-routes to home floor when workEndHour reached while InElevator | ✅ Pass |
+| 13 | NPC arrives at home floor via elevator and transitions to Idle | ✅ Pass |
 
 ---
 
@@ -95,11 +103,15 @@ void processElevator(entt::registry& reg, EntityId id,
 
 1. **`InElevator` state used instead of staying `WaitingElevator`**: Spec says set `waiting=false` in `ElevatorPassengerComponent` and keep `WaitingElevator` state while on board. Implementation uses distinct `InElevator` state for clarity — makes `update()` routing and test assertions cleaner. The `InElevator` state was already defined in the `AgentState` enum.
 
-2. **`shaftX = 0` hardcoded**: As specified in Phase 1. Only one shaft is assumed.
+2. **`shaftX = 0` hardcoded**: As specified in Phase 1. Only one shaft is assumed. Phase 2 should use `GridSystem::findNearestShaft()`.
 
 3. **`processSchedule()` refactored**: The original `processSchedule()` only set `agent.state`. Now it also determines `destTenant` to check if floor change is needed. Logic is otherwise equivalent for same-floor cases.
 
 4. **TransportSystem same-floor bugfix**: Not in spec but necessary for correctness. The elevator was stuck `Idle` when the NPC called `callElevator(0, currentFloor, dir)` and the elevator was already at that floor. The `DoorClosing` state already had this pattern — added the same to `Idle`.
+
+5. **AgentSystem polls TransportSystem for boarding/exit decisions (Phase 1 deviation)**: Design Spec designates `TransportSystem::update()` as responsible for passenger boarding, with `ElevatorPassengerComponent` owned by `TransportSystem`. Current implementation has `AgentSystem::processElevator()` poll `getElevatorsAtFloor()` / `getAllElevators()` directly. This simplification is intentional for Phase 1 to avoid bidirectional coupling. Phase 3 refactor target: move boarding/exit logic into `TransportSystem::update()` with event-driven notification to `AgentSystem`.
+
+6. **Exit state is `Working`/`Idle` directly, not `Moving`**: Design Spec elevator flow specifies `Agent exits → AgentState = Moving → path to destination`. Phase 1 omits the post-exit `Moving` step; NPC teleports to floor via `PositionComponent.tile.floor` update. Full horizontal pathfinding integration deferred to a later sprint.
 
 ---
 
@@ -131,7 +143,7 @@ void processElevator(entt::registry& reg, EntityId id,
 |---|---|---|
 | DeepSeek V3 | Conditional Pass → **Pass (Post-Fix)** | P2: 귀가 경로 미구현(→수정완료), shaftX=0 하드코딩, 점심 층간 이동 미구현 |
 | Gemini 3 Flash | Conditional Pass → **Pass (Post-Fix 2)** | P1: 귀가 경로 미완(→수정완료), phantom agent(→수정완료); P2: shaftX=0, waiting bool 중복; P2 re-route hall call 누락 → 실제 버그로 판명(→수정완료, 커밋 4cb28f8) |
-| GPT-5.4 Thinking | Conditional Pass | P1: 하차 후 Moving 단계 생략(Phase 1 단순화로 문서화), FSM 소유권 AgentSystem 폴링 방식(현재 구조 유지), 귀가 경로 미완(→수정완료), 생성자 설계 계약 서술 불일치(보고서 정확도 이슈); P2: InElevator 스펙 인용 오류(보고서 수정완료) |
+| GPT-5.4 Thinking | Conditional Pass → **Pass (Post-Fix 3)** | P1: 보고서 Key Behaviors/Test Cases 수정 전 내용 혼재(→보고서 업데이트완료), 하차 후 Moving 단계 생략(→Phase 1 deviation 명시), FSM 소유권 AgentSystem 폴링 방식(→deviation 명시); P2: 점심 층간 이동 미결(→open item 유지) |
 
 ---
 
