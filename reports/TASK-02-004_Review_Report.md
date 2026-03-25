@@ -123,7 +123,7 @@ None.
 |---|---|---|
 | GPT-5.4 Thinking | pending | — |
 | Gemini 3 Flash   | Conditional Pass | P1: 히스테레시스 없음(이벤트 플리커), initRegistry 이중호출 위험 |
-| DeepSeek V3      | pending | — |
+| DeepSeek V3      | Conditional Pass | P1: const_cast 제거 필요; P2: Payload → Types.h 이동 |
 
 ---
 
