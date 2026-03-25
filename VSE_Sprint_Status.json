@@ -1,6 +1,6 @@
 {
   "sprint": 2,
-  "updated_at": "2026-03-25T06:12:20",
+  "updated_at": "2026-03-25T07:07:30",
   "phase": "Phase 1",
   "sprint_goal": "경제 시스템 + 저장/로드 + 별점 + NPC 엘리베이터 이동 (3주 목표)",
   "overall_status": "in_progress",
@@ -43,11 +43,11 @@
       "title": "StarRatingSystem (별점 1~5)",
       "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "in_progress",
       "qa_status": "pending",
       "design_check": "pending",
       "confirmed_by_human": false,
-      "notes": "층수, NPC 만족도, 서비스 기준. AgentSystem + EconomyEngine 연동."
+      "notes": "붐2(DeepSeek V3) 작업 중 — StarRatingSystem 구현"
     },
     {
       "id": "TASK-02-005",
