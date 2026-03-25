@@ -262,6 +262,30 @@
       "time": "16:10",
       "title": "TASK-02-004 StarRatingSystem 완료",
       "detail": "붐2(DeepSeek V3) 구현. 별점 1~5, NPC 만족도+인구 기반. StarRatingChanged 이벤트. 174/174 통과. 커밋 168f047"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "16:37",
+      "title": "TASK-02-005 NPC 다층 엘리베이터 이동 1차 완료",
+      "detail": "붐2(DeepSeek V3) 구현. WaitingElevator→InElevator FSM 연동, TransportSystem 동일층 호출 버그 수정, 10개 신규 테스트. 184/184 통과. 커밋 69e7beb"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "17:05",
+      "title": "TASK-02-005 P1 수정 — 귀가 경로 + phantom agent",
+      "detail": "3모델 리뷰 반영. 귀가 경로(퇴근 후 엘리베이터 탑승) 구현, InElevator 중 workEndHour 도달 시 re-route. 테스트 11~13 추가. 187/187 통과. 커밋 36d04bb"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "17:15",
+      "title": "TASK-02-005 P2 버그 수정 — re-route hall call 누락",
+      "detail": "Gemini 지적: targetFloor 재설정 시 엘리베이터 carCalls에 미반영 → callElevator 재발행으로 LOOK 알고리즘에 home floor 추가. 187/187 유지. 커밋 4cb28f8"
+    },
+    {
+      "date": "2026-03-25",
+      "time": "17:19",
+      "title": "TASK-02-005 3모델 교차 검증 완료 — 전원 Pass",
+      "detail": "DeepSeek: Pass, Gemini: Pass (P2→실제버그 수정), GPT-5.4: Pass (보고서 Deviations 정리). 최종 커밋 c5ff00c. TASK-02-005 완전 종료."
     }
   ],
   "references": [
