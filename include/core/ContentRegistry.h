@@ -38,9 +38,15 @@ public:
     //    Read values at point of use and cache locally if needed.
     const nlohmann::json& getBalanceData() const;
 
-    // Returns content_["balance"]["tenants"][key] for the given TenantType.
+    // Returns balance data for the given TenantType from content_["balance"]["tenants"][key].
     // Mapping: Office→"office", Residential→"residential", Commercial→"commercial".
     // If not found (or type is COUNT/unknown), returns a static empty JSON object.
+    //
+    // ⚠️ Phase 1 deviation: Design Spec defines getTenantDef() as returning content
+    //    definitions from tenants.json (displayName, sprite, description). Phase 1
+    //    loads only balance.json, so this returns economy balance values (rent, maintenance, etc.).
+    //    When tenants.json is added (Phase 2+), this method should return tenants.json data
+    //    and a separate getBalanceTenantConfig() should serve the economic values.
     // ⚠️ Same reference validity caveat as getBalanceData().
     const nlohmann::json& getTenantDef(TenantType type) const;
 

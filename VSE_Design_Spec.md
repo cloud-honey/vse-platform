@@ -351,6 +351,12 @@ namespace defaults {
 
 namespace vse {
 
+// NOTE: Actual implementation (Error.h) uses a simplified enum.
+// This spec lists the original design; implementation uses:
+//   None=0, FileNotFound, FileReadError, JsonParseError,
+//   InvalidArgument, OutOfRange, SystemError, FloorNotBuilt
+// Spec values below are the original design-time names.
+// When in doubt, Error.h is authoritative.
 enum class ErrorCode : uint16_t {
     Ok = 0,
     InvalidCoordinate,
