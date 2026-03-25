@@ -197,6 +197,7 @@ Each system exports/imports its own internal state:
 |---|---|---|
 | GPT-5.4 Thinking | Conditional Pass → **Pass (Post-Fix)** | P0: Grid tenantEntity remap 누락(→수정완료), Transport passenger remap 누락(→수정완료, 테스트 14 추가); P1: SaveMetadata balance int64_t 타입 설계문서 불일치(→보고서 기록), entt::snapshot deviation 서술 정정 |
 | DeepSeek V3 | Conditional Pass → **Pass (Post-Fix)** | P1: Entity ID remap 미완(→GPT P0으로 이미 수정완료), EnTT snapshot 스펙 이탈(→Design Spec §5.8 업데이트 완료); P2: playtimeSeconds=0, buildingName 하드코딩 |
+| Gemini 2.5 Flash | **Pass** | P2: playtimeSeconds=0, buildingName 하드코딩, 보고서 "11-step" 문서 오류 |
 
 ---
 
