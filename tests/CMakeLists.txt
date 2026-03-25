@@ -11,6 +11,7 @@ add_executable(TowerTycoonTests
     test_InputMapper.cpp
     test_DebugInfo.cpp
     test_Bootstrapper.cpp
+    test_Integration.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
