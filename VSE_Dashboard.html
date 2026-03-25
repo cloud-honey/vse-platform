@@ -589,25 +589,38 @@ function render(d){
     ?iss.map(i=>`<div class="ac ac-yellow"><div class="ac-ttl" style="color:var(--yellow)">${i.title||''}</div><div class="ac-desc">${i.description||''}</div></div>`).join('')
     :'<div class="empty">No design issues ✓</div>';
 
-  /* 전체 진행률 (Phase 1 누적: Sprint 1 완료 10/10 + Sprint 2 현재) */
-  const s1 = d.sprint1_summary;
-  const s1Done = s1 ? parseInt(s1.tests) : 0;  // Sprint 1은 10/10 완료
+  /* 전체 진행률 — Sprint 1~4 전체 합산 */
+  const s1      = d.sprint1_summary;
   const s1Total = 10;
-  const s2Done = done;
+  const s1Done  = s1 ? s1Total : 0;  // Sprint 1 완료 = 10/10
   const s2Total = tasks.length;
-  const totalDone = (s1 ? s1Total : 0) + s2Done;
-  const totalAll  = (s1 ? s1Total : 0) + s2Total;
-  const totalPct  = totalAll ? Math.round(totalDone / totalAll * 100) : pct;
+  const s2Done  = done;
+  const s3Tasks = (d.sprint3_plan && d.sprint3_plan.tasks) || [];
+  const s3Total = s3Tasks.length;
+  const s3Done  = s3Tasks.filter(t => t.status === 'done').length;
+  const s4Tasks = (d.sprint4_plan && d.sprint4_plan.tasks) || [];
+  const s4Total = s4Tasks.length;
+  const s4Done  = s4Tasks.filter(t => t.status === 'done').length;
+
+  const totalDone = s1Done + s2Done + s3Done + s4Done;
+  const totalAll  = s1Total + s2Total + s3Total + s4Total;
+  const totalPct  = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
+
   document.getElementById('totalPctLabel').textContent = totalPct + '%';
   document.getElementById('totalPctBar').style.width = totalPct + '%';
+
+  // 라벨: "X/Y 태스크 완료"
+  const totalLabel = document.getElementById('totalPctLabel');
+  totalLabel.title = `${totalDone}/${totalAll} 태스크 완료`;
 
   /* Sprint 진행 알약 */
   const pills = document.getElementById('sprintPills');
   pills.innerHTML = '';
-  if (s1) {
-    pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S1 10/10 ✅</span>`;
-  }
-  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} 진행중</span>`;
+  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S1 ${s1Total}/${s1Total} ✅</span>`;
+  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} 🔥</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S3 ${s3Done}/${s3Total} 📋</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S4 ${s4Done}/${s4Total} 🚀</span>`;
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.1);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">전체 ${totalDone}/${totalAll}</span>`;
 
   /* Sprint 1 이력 카드 */
   if (s1) {
