@@ -121,7 +121,7 @@ None.
 
 | Model | Verdict | Key Issues |
 |---|---|---|
-| GPT-5.4 Thinking | pending | — |
+| GPT-5.4 Thinking | Conditional Pass | P0: getAverageSatisfaction IAgentSystem 계약 확인 필요(실제론 존재함); P1: epsilon이 밸런스 수치 변경 효과 |
 | Gemini 3 Flash   | Conditional Pass | P1: 히스테레시스 없음(이벤트 플리커), initRegistry 이중호출 위험 |
 | DeepSeek V3      | Conditional Pass | P1: const_cast 제거 필요; P2: Payload → Types.h 이동 |
 
