@@ -1,0 +1,2 @@
+/usr/bin/x86_64-w64-mingw32-ar qc libspdlog.a CMakeFiles/spdlog.dir/src/spdlog.cpp.obj CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.obj CMakeFiles/spdlog.dir/src/color_sinks.cpp.obj CMakeFiles/spdlog.dir/src/file_sinks.cpp.obj CMakeFiles/spdlog.dir/src/async.cpp.obj CMakeFiles/spdlog.dir/src/cfg.cpp.obj CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.obj
+/usr/bin/x86_64-w64-mingw32-ranlib libspdlog.a

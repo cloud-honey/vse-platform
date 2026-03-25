@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

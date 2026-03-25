@@ -60,6 +60,7 @@ target_compile_definitions(project_includes INTERFACE
 # ──────────────────────────────────────────────
 add_executable(TowerTycoon
     src/main.cpp
+    src/core/Bootstrapper.cpp
     src/domain/GridSystem.cpp
     src/domain/AgentSystem.cpp
     src/domain/TransportSystem.cpp
@@ -70,6 +71,10 @@ add_executable(TowerTycoon
     src/renderer/InputMapper.cpp
     src/renderer/RenderFrameCollector.cpp
     src/renderer/DebugPanel.cpp
+)
+
+target_compile_definitions(TowerTycoon PRIVATE
+    VSE_PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
 )
 
 target_link_libraries(TowerTycoon PRIVATE
@@ -84,6 +89,11 @@ target_link_libraries(TowerTycoon PRIVATE
     msgpack-cxx
     spdlog::spdlog
 )
+
+# Windows (MinGW): SDL2main 링크 필수 (WinMain 리디렉션)
+if(WIN32)
+    target_link_libraries(TowerTycoon PRIVATE SDL2::SDL2main)
+endif()
 
 # macOS: link required frameworks
 if(APPLE)

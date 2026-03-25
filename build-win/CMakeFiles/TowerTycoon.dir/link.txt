@@ -1,0 +1,3 @@
+/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/TowerTycoon.dir/objects.a
+/usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/TowerTycoon.dir/objects.a @CMakeFiles/TowerTycoon.dir/objects1.rsp
+/usr/bin/x86_64-w64-mingw32-g++-posix -O3 -DNDEBUG -Wl,--undefined=WinMain -Wl,--whole-archive CMakeFiles/TowerTycoon.dir/objects.a -Wl,--no-whole-archive -o TowerTycoon.exe -Wl,--out-implib,libTowerTycoon.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/TowerTycoon.dir/linkLibs.rsp

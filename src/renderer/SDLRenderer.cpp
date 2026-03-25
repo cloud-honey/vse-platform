@@ -64,10 +64,12 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
 
 void SDLRenderer::shutdown()
 {
-    // Dear ImGui 종료
-    ImGui_ImplSDLRenderer2_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
-    ImGui::DestroyContext();
+    // Dear ImGui 종료 (초기화된 경우에만)
+    if (renderer_) {
+        ImGui_ImplSDLRenderer2_Shutdown();
+        ImGui_ImplSDL2_Shutdown();
+        ImGui::DestroyContext();
+    }
 
     if (renderer_) { SDL_DestroyRenderer(renderer_); renderer_ = nullptr; }
     if (window_)   { SDL_DestroyWindow(window_);     window_   = nullptr; }

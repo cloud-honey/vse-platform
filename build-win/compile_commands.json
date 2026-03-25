@@ -1,0 +1,908 @@
+[
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/imgui.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/imgui.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/imgui_draw.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_draw.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_draw.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_draw.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/imgui_tables.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_tables.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_tables.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_tables.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/imgui_widgets.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_widgets.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_widgets.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_widgets.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/imgui_demo.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_demo.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/imgui_demo.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_demo.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdl2.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/backends/imgui_impl_sdl2.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/backends/imgui_impl_sdl2.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdl2.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/imgui.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -w -o CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdlrenderer2.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/backends/imgui_impl_sdlrenderer2.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/imgui-src/backends/imgui_impl_sdlrenderer2.cpp",
+  "output": "CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdlrenderer2.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/main.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/main.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/main.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/main.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/AgentSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/AgentSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/AgentSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/domain/AgentSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/TransportSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/TransportSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/TransportSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/domain/TransportSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/EventBus.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/EventBus.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/core/ConfigManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/ConfigManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/ConfigManager.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/core/ConfigManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/Camera.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/Camera.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/SDLRenderer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/SDLRenderer.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/SDLRenderer.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/SDLRenderer.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/InputMapper.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/InputMapper.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/InputMapper.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/InputMapper.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/RenderFrameCollector.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/RenderFrameCollector.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/RenderFrameCollector.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/RenderFrameCollector.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/spdlog.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/spdlog.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/spdlog.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/spdlog.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/stdout_sinks.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/stdout_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/color_sinks.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/color_sinks.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/color_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/color_sinks.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/file_sinks.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/file_sinks.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/file_sinks.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/file_sinks.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/async.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/async.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/async.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/async.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/cfg.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/cfg.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/cfg.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/cfg.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB @CMakeFiles/spdlog.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -o CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/bundled_fmtlib_format.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-src/src/bundled_fmtlib_format.cpp",
+  "output": "_deps/spdlog-build/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/benchmark/catch_chronometer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/catch_chronometer.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/catch_chronometer.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/catch_chronometer.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_analyse.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_analyse.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_analyse.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_analyse.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_benchmark_function.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_benchmark_function.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_benchmark_function.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_benchmark_function.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_run_for_at_least.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_run_for_at_least.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_run_for_at_least.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_run_for_at_least.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_stats.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_stats.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/benchmark/detail/catch_stats.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/benchmark/detail/catch_stats.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/generators/catch_generator_exception.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generator_exception.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generator_exception.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generator_exception.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/generators/catch_generators.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generators.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generators.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generators.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/generators/catch_generators_random.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generators_random.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/generators/catch_generators_random.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/generators/catch_generators_random.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_automake.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_automake.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_automake.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_automake.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_common_base.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_common_base.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_common_base.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_common_base.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_compact.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_compact.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_compact.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_compact.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_console.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_console.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_console.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_console.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_cumulative_base.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_cumulative_base.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_cumulative_base.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_cumulative_base.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_event_listener.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_event_listener.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_event_listener.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_event_listener.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_helpers.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_helpers.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_helpers.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_helpers.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_json.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_json.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_json.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_json.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_junit.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_junit.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_junit.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_junit.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_multi.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_multi.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_multi.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_multi.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_registrars.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_registrars.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_registrars.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_registrars.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_sonarqube.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_sonarqube.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_sonarqube.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_sonarqube.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_streaming_base.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_streaming_base.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_streaming_base.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_streaming_base.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_tap.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_tap.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_tap.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_tap.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_teamcity.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_teamcity.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_teamcity.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_teamcity.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_xml.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_xml.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/reporters/catch_reporter_xml.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/reporters/catch_reporter_xml.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_capture.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_capture.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_capture.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_capture.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_config.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_config.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_config.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_config.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_exception.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_exception.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_exception.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_exception.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_generatortracker.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_generatortracker.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_generatortracker.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_generatortracker.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_registry_hub.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_registry_hub.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_registry_hub.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_registry_hub.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_reporter.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_reporter.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter_factory.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_reporter_factory.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_reporter_factory.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_reporter_factory.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_testcase.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_testcase.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/interfaces/catch_interfaces_testcase.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/interfaces/catch_interfaces_testcase.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_approx.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_approx.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_approx.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_approx.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_assertion_result.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_assertion_result.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_assertion_result.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_assertion_result.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_config.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_config.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_config.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_config.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_get_random_seed.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_get_random_seed.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_get_random_seed.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_get_random_seed.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_message.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_message.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_message.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_message.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_registry_hub.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_registry_hub.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_registry_hub.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_registry_hub.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_session.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_session.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_session.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_session.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_tag_alias_autoregistrar.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_tag_alias_autoregistrar.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_tag_alias_autoregistrar.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_tag_alias_autoregistrar.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_test_case_info.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_test_case_info.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_test_case_info.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_test_case_info.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_test_spec.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_test_spec.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_test_spec.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_test_spec.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_timer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_timer.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_timer.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_timer.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_tostring.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_tostring.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_tostring.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_tostring.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_totals.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_totals.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_totals.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_totals.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_translate_exception.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_translate_exception.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_translate_exception.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_translate_exception.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/catch_version.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_version.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/catch_version.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/catch_version.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_assertion_handler.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_assertion_handler.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_assertion_handler.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_assertion_handler.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_case_insensitive_comparisons.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_case_insensitive_comparisons.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_case_insensitive_comparisons.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_case_insensitive_comparisons.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_clara.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_clara.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_clara.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_clara.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_commandline.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_commandline.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_commandline.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_commandline.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_console_colour.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_console_colour.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_console_colour.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_console_colour.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_context.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_context.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_context.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_context.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_debug_console.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_debug_console.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_debug_console.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_debug_console.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_debugger.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_debugger.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_debugger.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_debugger.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_decomposer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_decomposer.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_decomposer.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_decomposer.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_enforce.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_enforce.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_enforce.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_enforce.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_enum_values_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_enum_values_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_enum_values_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_enum_values_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_errno_guard.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_errno_guard.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_errno_guard.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_errno_guard.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_exception_translator_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_exception_translator_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_exception_translator_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_exception_translator_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_fatal_condition_handler.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_fatal_condition_handler.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_fatal_condition_handler.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_fatal_condition_handler.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_floating_point_helpers.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_floating_point_helpers.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_floating_point_helpers.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_floating_point_helpers.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_getenv.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_getenv.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_getenv.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_getenv.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_istream.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_istream.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_istream.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_istream.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_jsonwriter.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_jsonwriter.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_jsonwriter.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_jsonwriter.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_lazy_expr.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_lazy_expr.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_lazy_expr.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_lazy_expr.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_leak_detector.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_leak_detector.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_leak_detector.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_leak_detector.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_list.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_list.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_list.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_list.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_message_info.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_message_info.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_message_info.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_message_info.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_output_redirect.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_output_redirect.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_output_redirect.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_output_redirect.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_parse_numbers.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_parse_numbers.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_parse_numbers.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_parse_numbers.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_polyfills.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_polyfills.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_polyfills.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_polyfills.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_random_number_generator.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_random_number_generator.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_random_number_generator.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_random_number_generator.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_random_seed_generation.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_random_seed_generation.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_random_seed_generation.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_random_seed_generation.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reporter_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reporter_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_spec_parser.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reporter_spec_parser.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reporter_spec_parser.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reporter_spec_parser.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_result_type.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_result_type.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_result_type.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_result_type.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_reusable_string_stream.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reusable_string_stream.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_reusable_string_stream.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_reusable_string_stream.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_run_context.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_run_context.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_run_context.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_run_context.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_section.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_section.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_section.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_section.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_singletons.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_singletons.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_singletons.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_singletons.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_source_line_info.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_source_line_info.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_source_line_info.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_source_line_info.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_startup_exception_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_startup_exception_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_startup_exception_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_startup_exception_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_stdstreams.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_stdstreams.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_stdstreams.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_stdstreams.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_string_manip.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_string_manip.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_string_manip.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_string_manip.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_stringref.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_stringref.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_stringref.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_stringref.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_tag_alias_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_tag_alias_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_tag_alias_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_tag_alias_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_info_hasher.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_info_hasher.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_info_hasher.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_info_hasher.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_registry_impl.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_registry_impl.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_registry_impl.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_registry_impl.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_tracker.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_tracker.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_case_tracker.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_case_tracker.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_failure_exception.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_failure_exception.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_failure_exception.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_failure_exception.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_registry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_registry.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_registry.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_registry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_test_spec_parser.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_spec_parser.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_test_spec_parser.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_test_spec_parser.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_textflow.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_textflow.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_textflow.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_textflow.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_uncaught_exceptions.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_uncaught_exceptions.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_uncaught_exceptions.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_uncaught_exceptions.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_wildcard_pattern.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_wildcard_pattern.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_wildcard_pattern.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_wildcard_pattern.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/internal/catch_xmlwriter.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_xmlwriter.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_xmlwriter.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/internal/catch_xmlwriter.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_container_properties.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_container_properties.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_container_properties.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_container_properties.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_exception.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_exception.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_exception.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_exception.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_floating_point.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_floating_point.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_floating_point.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_floating_point.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_predicate.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_predicate.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_predicate.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_predicate.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_quantifiers.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_quantifiers.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_quantifiers.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_quantifiers.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_string.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_string.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_string.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_string.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_templated.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_templated.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/catch_matchers_templated.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/catch_matchers_templated.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2.dir/catch2/matchers/internal/catch_matchers_impl.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/internal/catch_matchers_impl.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/matchers/internal/catch_matchers_impl.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2.dir/catch2/matchers/internal/catch_matchers_impl.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-build/src",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix  @CMakeFiles/Catch2WithMain.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/Catch2WithMain.dir/catch2/internal/catch_main.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_main.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/src/catch2/internal/catch_main.cpp",
+  "output": "_deps/catch2-build/src/CMakeFiles/Catch2WithMain.dir/catch2/internal/catch_main.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/PlaceholderTest.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/PlaceholderTest.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/PlaceholderTest.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/PlaceholderTest.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_SimClock.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_SimClock.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_SimClock.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_SimClock.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_ConfigManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_ConfigManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_ConfigManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_ConfigManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_GridSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_GridSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_GridSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_GridSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_AgentSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_AgentSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_AgentSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_AgentSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_TransportSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_TransportSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_TransportSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_TransportSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_Camera.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_Camera.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_Camera.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_Camera.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_RenderFrame.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderFrame.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderFrame.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_RenderFrame.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_RenderAgent.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderAgent.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderAgent.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_RenderAgent.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_InputMapper.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_InputMapper.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_InputMapper.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_InputMapper.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_DebugInfo.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_DebugInfo.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_DebugInfo.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_DebugInfo.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/SimClock.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/SimClock.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/SimClock.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/SimClock.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/EventBus.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/EventBus.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/EventBus.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/EventBus.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/ConfigManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/ConfigManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/ConfigManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/ConfigManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/domain/GridSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/GridSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/domain/AgentSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/AgentSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/AgentSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/AgentSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/domain/TransportSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/TransportSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/TransportSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TransportSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/Camera.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/Camera.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/RenderFrameCollector.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/RenderFrameCollector.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/RenderFrameCollector.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/RenderFrameCollector.cpp.obj"
+}
+]

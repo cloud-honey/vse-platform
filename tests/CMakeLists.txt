@@ -10,6 +10,7 @@ add_executable(TowerTycoonTests
     test_RenderAgent.cpp
     test_InputMapper.cpp
     test_DebugInfo.cpp
+    test_Bootstrapper.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -18,6 +19,10 @@ target_link_libraries(TowerTycoonTests PRIVATE
     spdlog::spdlog
     EnTT::EnTT
     nlohmann_json::nlohmann_json
+    SDL2::SDL2
+    SDL2_image::SDL2_image
+    SDL2_ttf::SDL2_ttf
+    imgui
 )
 
 # 구현 파일 링크
@@ -25,11 +30,15 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/SimClock.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/EventBus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/Bootstrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GridSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/Camera.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/RenderFrameCollector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SDLRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/InputMapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/DebugPanel.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

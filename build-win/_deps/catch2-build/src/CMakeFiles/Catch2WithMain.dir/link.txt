@@ -1,0 +1,2 @@
+/usr/bin/x86_64-w64-mingw32-ar qc libCatch2Main.a CMakeFiles/Catch2WithMain.dir/catch2/internal/catch_main.cpp.obj
+/usr/bin/x86_64-w64-mingw32-ranlib libCatch2Main.a
