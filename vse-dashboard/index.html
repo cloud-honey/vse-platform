@@ -55,6 +55,17 @@ h1 span{color:var(--accent);}
 .sprint-n{font-family:var(--display);font-size:clamp(28px,8vw,50px);
   font-weight:800;color:var(--surface2);line-height:1;letter-spacing:-.04em;}
 
+/* ── SPRINT TABS ─────────────────────────────────────── */
+.stab{font-family:var(--mono);font-size:11px;padding:5px 14px;border-radius:20px;
+  border:1px solid var(--border);background:var(--surface);color:var(--text2);
+  cursor:pointer;transition:all .2s;white-space:nowrap;}
+.stab:hover{border-color:var(--accent);color:var(--accent);}
+.stab.active{background:rgba(79,142,247,.15);border-color:var(--accent);color:var(--accent);font-weight:600;}
+.stab.done-tab{border-color:rgba(46,204,138,.3);color:var(--green);}
+.stab.done-tab.active{background:rgba(46,204,138,.12);}
+.stab.plan-tab{border-color:rgba(240,180,41,.2);color:var(--yellow);}
+.stab.plan-tab.active{background:rgba(240,180,41,.08);}
+
 /* ── GOAL BANNER ─────────────────────────────────────── */
 .goal{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(124,111,255,.08));
   border:1px solid rgba(79,142,247,.2);border-radius:10px;padding:13px 17px;margin-bottom:18px;}
@@ -250,6 +261,18 @@ h1 span{color:var(--accent);}
     <div class="goal-txt" id="sprintGoal">Loading...</div>
   </div>
 
+  <!-- 전체 진행률 바 -->
+  <div id="totalProgressBar" style="margin-bottom:18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;">📊 Phase 1 전체 진행률</span>
+      <span id="totalPctLabel" style="font-family:var(--display);font-size:18px;font-weight:800;color:var(--accent);">0%</span>
+    </div>
+    <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden;">
+      <div id="totalPctBar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .6s ease;width:0%"></div>
+    </div>
+    <div id="sprintPills" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;"></div>
+  </div>
+
   <!-- STAT CARDS -->
   <div class="stats">
     <div class="stat blue">
@@ -277,10 +300,12 @@ h1 span{color:var(--accent);}
   <!-- MAIN GRID -->
   <div class="mgrid">
 
-    <!-- Task list -->
+    <!-- Sprint 탭 + Task list -->
     <div class="sec">
-      <div class="sec-hdr">
-        <div class="sec-ttl">Tasks</div>
+      <!-- 탭 네비게이션 -->
+      <div id="sprintTabs" style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;"></div>
+      <div class="sec-hdr" style="margin-bottom:8px;">
+        <div class="sec-ttl" id="activeTabTitle">Tasks</div>
         <div class="sec-cnt" id="taskCount">0 tasks</div>
       </div>
       <div class="tlist" id="taskList">
@@ -307,6 +332,15 @@ h1 span{color:var(--accent);}
           </div>
         </div>
         <div class="r-status" id="overallStatus">—</div>
+      </div>
+
+      <!-- Sprint 1 이력 카드 -->
+      <div class="sec" id="sprint1Card" style="display:none">
+        <div class="sec-hdr">
+          <div class="sec-ttl">✅ Sprint 1 완료</div>
+          <div class="sec-cnt" id="s1Badge">S01</div>
+        </div>
+        <div id="sprint1Summary" style="padding:4px 0;font-size:13px;color:var(--text2);line-height:1.7;"></div>
       </div>
 
       <!-- Escalations -->
@@ -417,7 +451,24 @@ function render(d){
   /* Header */
   document.getElementById('sprintNum').textContent='S'+String(d.sprint).padStart(2,'0');
   document.getElementById('sprintGoal').textContent=d.sprint_goal;
-  document.getElementById('overallStatus').textContent=(d.overall_status||'').toUpperCase();
+  const osEl=document.getElementById('overallStatus');
+  const osMap={
+    'in_progress':'🟢 IN PROGRESS',
+    'planning':'🔵 PLANNING',
+    'completed':'✅ COMPLETED',
+    'blocked':'🔴 BLOCKED',
+    'paused':'⏸ PAUSED'
+  };
+  const osStyle={
+    'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);',
+    'planning':'color:#a78bfa;background:rgba(167,139,250,.12);',
+    'completed':'color:#34d399;background:rgba(52,211,153,.12);',
+    'blocked':'color:#f87171;background:rgba(248,113,113,.12);',
+    'paused':'color:#fbbf24;background:rgba(251,191,36,.12);'
+  };
+  const osKey=(d.overall_status||'').toLowerCase();
+  osEl.textContent=osMap[osKey]||(d.overall_status||'—').toUpperCase();
+  osEl.style.cssText=(osStyle[osKey]||'')+'border-radius:6px;padding:3px 8px;';
   const dt=new Date(d.updated_at);
   const fmt=dt.toLocaleDateString('ko-KR')+' '+dt.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('updatedTime').textContent=fmt;
@@ -440,20 +491,91 @@ function render(d){
   document.getElementById('progressRing').style.strokeDashoffset=C-(pct/100)*C;
   document.getElementById('progressPct').textContent=pct+'%';
 
-  /* Task list */
-  const tl=document.getElementById('taskList');
-  tl.innerHTML=tasks.length?tasks.map(t=>`
-    <div class="titem">
-      <div class="tid">${t.id}</div>
-      <div class="ttit">${t.title}${t.notes?`<small>${t.notes}</small>`:''}</div>
-      <span class="ab ${abClass(t.assignee)}">${t.assignee}</span>
-      <span class="lb">${t.layer}</span>
-      <div class="swrap">
-        <span class="sp sp-${t.status}">${t.status.replace('_',' ')}</span>
-        ${t.qa_status&&t.qa_status!=='pending'?`<span class="qb qb-${t.qa_status}">QA</span>`:''}
-        ${t.confirmed_by_human?`<span class="confirm" title="Human confirmed">✓</span>`:''}
-      </div>
-    </div>`).join(''):'<div class="empty">No tasks yet</div>';
+  /* Sprint 탭 데이터 구성 */
+  const sprintDefs = [
+    {
+      id: 's1', label: 'S1 ✅', title: 'Sprint 1 — 프로토타입 기반',
+      cls: 'done-tab',
+      goal: 'NPC 이동 프로토타입 + SDL2 렌더링 + ImGui 디버그 패널',
+      tasks: d.sprint1_tasks || [],
+      completed: true
+    },
+    {
+      id: 's2', label: 'S2 🔥', title: 'Sprint 2 — 경제/저장/NPC 이동',
+      cls: '',
+      goal: d.sprint_goal,
+      tasks: tasks,
+      completed: false,
+      active: true
+    },
+    {
+      id: 's3', label: 'S3 📋', title: 'Sprint 3 — AI 고도화/스프라이트/UI',
+      cls: 'plan-tab',
+      goal: d.sprint3_plan ? d.sprint3_plan.goal : '계획 중',
+      tasks: d.sprint3_plan ? d.sprint3_plan.tasks : [],
+      planned: true
+    },
+    {
+      id: 's4', label: 'S4 🚀', title: 'Sprint 4 — Steam 출시 준비',
+      cls: 'plan-tab',
+      goal: d.sprint4_plan ? d.sprint4_plan.goal : '계획 중',
+      tasks: d.sprint4_plan ? d.sprint4_plan.tasks : [],
+      planned: true
+    }
+  ];
+
+  /* 탭 렌더 함수 */
+  window._sprintDefs = sprintDefs;
+  window._activeTab = window._activeTab || 's2';  // 기본값: 현재 스프린트
+
+  function renderTabs() {
+    const tabBar = document.getElementById('sprintTabs');
+    tabBar.innerHTML = sprintDefs.map(s => `
+      <button class="stab ${s.cls} ${window._activeTab === s.id ? 'active' : ''}"
+        onclick="selectTab('${s.id}')">${s.label}</button>
+    `).join('');
+  }
+
+  function renderTasksForTab(tabId) {
+    const def = sprintDefs.find(s => s.id === tabId);
+    if (!def) return;
+    const tl = document.getElementById('taskList');
+    const tc = document.getElementById('taskCount');
+    const tt = document.getElementById('activeTabTitle');
+    tt.textContent = def.title;
+    tc.textContent = def.tasks.length + ' tasks';
+
+    if (!def.tasks.length) {
+      tl.innerHTML = '<div class="empty">태스크 없음</div>';
+      return;
+    }
+
+    tl.innerHTML = def.tasks.map(t => {
+      const status = t.status || 'planned';
+      const assignee = t.assignee || '—';
+      return `
+        <div class="titem">
+          <div class="tid">${t.id}</div>
+          <div class="ttit">${t.title}${t.notes?`<small>${t.notes}</small>`:''}</div>
+          ${assignee !== '—' ? `<span class="ab ${abClass(assignee)}">${assignee}</span>` : ''}
+          <span class="lb">${t.layer || ''}</span>
+          <div class="swrap">
+            <span class="sp sp-${status}">${status.replace('_',' ')}</span>
+            ${t.qa_status&&t.qa_status!=='pending'?`<span class="qb qb-${t.qa_status}">QA</span>`:''}
+            ${t.confirmed_by_human?`<span class="confirm" title="Human confirmed">✓</span>`:''}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  window.selectTab = function(tabId) {
+    window._activeTab = tabId;
+    renderTabs();
+    renderTasksForTab(tabId);
+  };
+
+  renderTabs();
+  renderTasksForTab(window._activeTab);
 
   /* Escalations */
   const esc=d.escalations||[];
@@ -483,6 +605,50 @@ function render(d){
   document.getElementById('issueList').innerHTML=iss.length
     ?iss.map(i=>`<div class="ac ac-yellow"><div class="ac-ttl" style="color:var(--yellow)">${i.title||''}</div><div class="ac-desc">${i.description||''}</div></div>`).join('')
     :'<div class="empty">No design issues ✓</div>';
+
+  /* 전체 진행률 — Sprint 1~4 전체 합산 */
+  const s1      = d.sprint1_summary;
+  const s1Total = 10;
+  const s1Done  = s1 ? s1Total : 0;  // Sprint 1 완료 = 10/10
+  const s2Total = tasks.length;
+  const s2Done  = done;
+  const s3Tasks = (d.sprint3_plan && d.sprint3_plan.tasks) || [];
+  const s3Total = s3Tasks.length;
+  const s3Done  = s3Tasks.filter(t => t.status === 'done').length;
+  const s4Tasks = (d.sprint4_plan && d.sprint4_plan.tasks) || [];
+  const s4Total = s4Tasks.length;
+  const s4Done  = s4Tasks.filter(t => t.status === 'done').length;
+
+  const totalDone = s1Done + s2Done + s3Done + s4Done;
+  const totalAll  = s1Total + s2Total + s3Total + s4Total;
+  const totalPct  = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
+
+  document.getElementById('totalPctLabel').textContent = totalPct + '%';
+  document.getElementById('totalPctBar').style.width = totalPct + '%';
+
+  // 라벨: "X/Y 태스크 완료"
+  const totalLabel = document.getElementById('totalPctLabel');
+  totalLabel.title = `${totalDone}/${totalAll} 태스크 완료`;
+
+  /* Sprint 진행 알약 */
+  const pills = document.getElementById('sprintPills');
+  pills.innerHTML = '';
+  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S1 ${s1Total}/${s1Total} ✅</span>`;
+  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} 🔥</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S3 ${s3Done}/${s3Total} 📋</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S4 ${s4Done}/${s4Total} 🚀</span>`;
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.1);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">전체 ${totalDone}/${totalAll}</span>`;
+
+  /* Sprint 1 이력 카드 */
+  if (s1) {
+    document.getElementById('sprint1Card').style.display = '';
+    document.getElementById('sprint1Summary').innerHTML = `
+      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">완료일:</span> ${s1.completed_at}</div>
+      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">테스트:</span> ${s1.tests} ✅</div>
+      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">태스크:</span> ${s1.tasks_done}/10 완료</div>
+      <div style="color:var(--text2);font-size:12px;line-height:1.6;">${s1.highlight}</div>
+    `;
+  }
 
   /* History */
   const hist=(d.history||[]).slice().reverse(); // newest first
