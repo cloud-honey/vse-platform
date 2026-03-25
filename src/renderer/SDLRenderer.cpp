@@ -101,15 +101,18 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
 
-    // 디버그 패널 (ImGui)
+    // ImGui 프레임 — NewFrame/Render는 매 프레임 호출 필수
+    // (Gemini 검토 반영: drawDebugInfo=false 시에도 내부 타이머/상태 정상 유지)
+    ImGui_ImplSDLRenderer2_NewFrame();
+    ImGui_ImplSDL2_NewFrame();
+    ImGui::NewFrame();
+
     if (frame.drawDebugInfo) {
-        ImGui_ImplSDLRenderer2_NewFrame();
-        ImGui_ImplSDL2_NewFrame();
-        ImGui::NewFrame();
         drawDebugPanel(frame);
-        ImGui::Render();
-        ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
     }
+
+    ImGui::Render();
+    ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
 
     SDL_RenderPresent(renderer_);
 }
@@ -303,10 +306,11 @@ void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera
 void SDLRenderer::drawDebugPanel(const RenderFrame& frame)
 {
     const auto& d = frame.debug;
-    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
-    ImGui::SetNextWindowSize(ImVec2(220, 180), ImGuiCond_Always);
+    // FirstUseEver: 실행 중 드래그 이동 가능 (Gemini 검토 반영 — DX 개선)
+    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(220, 180), ImGuiCond_FirstUseEver);
     ImGui::Begin("VSE Debug", nullptr,
-        ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoResize |
         ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings);
 
     ImGui::Text("Day %d  %02d:%02d", d.gameDay, d.gameHour, d.gameMinute);
