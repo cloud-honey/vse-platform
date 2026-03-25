@@ -168,6 +168,7 @@ None.
 |---|---|---|
 | GPT-5.4 Thinking | pending | — |
 | Gemini 3 Flash   | Pass | P1: daily reset race condition, history O(N); P2: rent formula, update() |
+| Claude           | Conditional Pass | P1: interface mismatch with spec (GameTime param added) |
 | DeepSeek V3      | pending | — |
 
 ---
