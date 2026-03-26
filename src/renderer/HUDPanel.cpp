@@ -78,7 +78,8 @@ std::string HUDPanel::formatBalance(int64_t balance)
 
 std::string HUDPanel::formatStars(float rating)
 {
-    // Clamp rating to 0.0-5.0 range
+    // NaN/Inf 보호 + 0.0~5.0 클램프
+    if (!std::isfinite(rating)) rating = 0.0f;
     rating = std::max(0.0f, std::min(5.0f, rating));
     
     std::stringstream ss;
