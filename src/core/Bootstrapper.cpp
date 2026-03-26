@@ -355,7 +355,10 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
     // TASK-03-007: HUD 필드 채우기
     frame.balance = economy_->getBalance();
     StarRating rating = starRating_->getCurrentRating(registry_);
-    frame.starRating = static_cast<float>(static_cast<uint8_t>(rating)); // Convert Star0=0.0, Star1=1.0, ..., Star5=5.0
+    // StarRating enum은 uint8_t 기반 순차값 (Star0=0 ... Star5=5) — static_assert로 보장
+    static_assert(static_cast<uint8_t>(StarRating::Star0) == 0u, "StarRating enum order changed");
+    static_assert(static_cast<uint8_t>(StarRating::Star5) == 5u, "StarRating enum order changed");
+    frame.starRating = static_cast<float>(static_cast<uint8_t>(rating));
     frame.currentTick = static_cast<int>(simClock_.currentTick());
     frame.tenantCount = grid_->getTenantCount();
     frame.npcCount = agents_->activeAgentCount();
