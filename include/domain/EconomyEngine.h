@@ -49,6 +49,7 @@ struct EconomyConfig {
     int64_t commercialRentPerTilePerDay;  // Cents — balance.json "tenants.commercial.rent"
     int64_t elevatorMaintenancePerDay;    // Cents — balance.json "economy.elevatorMaintenancePerDay"
     int64_t floorBuildCost;               // Cents — balance.json "economy.floorBuildCost"
+    double  quarterlyTaxRate = 0.05;      // Fraction — balance.json "economy.quarterlyTaxRate" (default 5%)
 };
 
 class EconomyEngine : public IEconomyEngine {

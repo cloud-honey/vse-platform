@@ -69,6 +69,7 @@ bool Bootstrapper::init() {
     economyConfig_.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
     economyConfig_.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
     economyConfig_.floorBuildCost = balanceData.value("economy.floorBuildCost", 10000LL);
+    economyConfig_.quarterlyTaxRate = balanceData.value("economy.quarterlyTaxRate", 0.05);
     economy_ = std::make_unique<EconomyEngine>(economyConfig_, eventBus_);
 
     // TenantSystem 초기화
@@ -150,6 +151,7 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
     economyConfig_.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
     economyConfig_.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
     economyConfig_.floorBuildCost = balanceData.value("economy.floorBuildCost", 10000LL);
+    economyConfig_.quarterlyTaxRate = balanceData.value("economy.quarterlyTaxRate", 0.05);
     economy_ = std::make_unique<EconomyEngine>(economyConfig_, eventBus_);
 
     // TenantSystem 초기화

@@ -203,6 +203,7 @@ enum class EventType : uint16_t {
     DailySettlement = 550,
     WeeklyReport = 551,
     QuarterlySettlement = 552,
+    StarRatingReEvalRequested = 553,  // Quarterly: trigger StarRatingSystem re-evaluation
 
     // System
     GameSaved = 900,

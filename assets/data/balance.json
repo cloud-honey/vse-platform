@@ -39,6 +39,7 @@
   "economy": {
     "startingBalance": 1000000,
     "elevatorMaintenancePerDay": 1000,
-    "floorBuildCost": 10000
+    "floorBuildCost": 10000,
+    "quarterlyTaxRate": 0.05
   }
 }

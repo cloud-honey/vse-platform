@@ -196,17 +196,23 @@ void EconomyEngine::update(const GameTime& time) {
         
         // 3. Quarterly Settlement (every 90 days)
         if (time.day > 0 && time.day % 90 == 0) {
-            int64_t tax = quarterlyIncome_ / 10;  // 10% tax
-            addExpense("tax", tax, time);
+            // Tax = balance * taxRate (configurable, default 5%) — spec §5.20
+            int64_t tax = static_cast<int64_t>(balance_ * config_.quarterlyTaxRate);
+            if (tax > 0) addExpense("tax", tax, time);
             
             Event quarterlyEv;
             quarterlyEv.type = EventType::QuarterlySettlement;
             quarterlyEv.payload = QuarterlySettlementPayload{time.day / 90, tax, balance_};
             eventBus_.publish(quarterlyEv);
             
+            // Star rating re-evaluation — spec §5.20 item 3
+            Event starReEvalEv;
+            starReEvalEv.type = EventType::StarRatingReEvalRequested;
+            eventBus_.publish(starReEvalEv);
+            
             quarterlyIncome_ = 0;
-            spdlog::debug("EconomyEngine: quarterly settlement for quarter {}, tax={}", 
-                          time.day / 90, tax);
+            spdlog::debug("EconomyEngine: quarterly settlement for quarter {}, tax={} ({}% of balance={})", 
+                          time.day / 90, tax, static_cast<int>(config_.quarterlyTaxRate * 100), balance_);
         }
     }
 }

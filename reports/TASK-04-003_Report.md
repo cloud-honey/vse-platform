@@ -32,7 +32,7 @@
 All existing 297 tests and the 6 new settlement-related tests passed successfully.
 
 ## Commit Details
-(Commit hash will be added after the commit is made.)
+eb24438
 
 ## Issues Encountered
 - Initial compilation failures due to incorrect event payload access (`std::get_if` instead of `std::any_cast` due to disabled exceptions).
