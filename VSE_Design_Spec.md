@@ -1,9 +1,11 @@
 # VSE Design Specification — Phase 1
-> Version: 1.5 | Author: 붐 (PM) | Date: 2026-03-26
+> Version: 2.0 | Author: 붐 (PM) | Date: 2026-03-26
 > Source of truth: `CLAUDE.md` v1.3 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
 > v1.2: Final review 6 items — true fixed-tick loop, CLAUDE.md sync, EnTT snapshot save/restore, Bootstrapper=composition root, config immutable ticks, document consistency
+> v1.5: Sprint 2 implementation sync (Bootstrapper API, SaveMetadata balance int64_t, StarRatingChangedPayload, manual JSON+MessagePack save strategy)
+> v2.0: Sprint 3 implementation sync + Sprint 4 planned systems
 
 ---
 
@@ -303,6 +305,7 @@ enum class EventType : uint16_t {
     ExpensePaid,
     RentCollected,
     BalanceChanged,
+    InsufficientFunds,
 
     // Building
     TenantPlaced = 600,
@@ -1381,6 +1384,229 @@ private:
 - `EconomyEngine`, `StarRatingSystem`, `SaveLoadSystem`, `ContentRegistry`는 `include/domain/` 또는 `src/domain/`에 구현체 존재. `Bootstrapper`가 직접 `unique_ptr`로 소유 (Phase 1에서는 아직 `Bootstrapper` 멤버 미포함 — Sprint 3에서 통합 예정).
 - `MAX_TICKS_PER_FRAME = 8` spiral-of-death guard: `Bootstrapper::run()` 내 accumulator 루프에서 적용.
 
+### 5.16 NPC Stress System
+
+> **Sprint 3 Implementation (2026-03-26):**
+> - AgentComponent now includes `float stress` field (0.0–100.0)
+> - Stress increases when NPC waits for elevator or experiences delays
+> - Satisfaction decreases when stress > 50.0
+> - Stress serialized via SaveLoadSystem
+> - `AgentSatisfactionChanged` event fires when satisfaction changes
+> - Leave threshold: satisfaction < 10.0 (10%)
+
+**Stress Mechanics:**
+- Stress accumulates at configurable rate when NPC is in `WaitingElevator` state
+- Additional stress penalty when elevator wait exceeds timeout threshold
+- Stress decays gradually when NPC is in `Working` or `Resting` states
+- When stress > 50.0, satisfaction decreases proportionally
+- High stress (> 80.0) triggers faster satisfaction decay
+
+**Implementation Details:**
+- Stress field added to `AgentComponent` in `IAgentSystem.h`
+- `AgentSystem::updateSatisfactionAndStress()` handles stress accumulation/decay
+- Stress values serialized in save/load via ECS component persistence
+- `AgentSatisfactionChanged` event payload includes old/new satisfaction values
+
+### 5.17 TenantSystem
+
+> **Sprint 3 Implementation (2026-03-26):**
+> - Manages tenant lifecycle: placement, removal, rent collection, maintenance payments
+> - TenantComponent fields: anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown
+> - `TenantSystem::onDayChanged()` → calls `EconomyEngine.collectRent()` and `EconomyEngine.payMaintenance()`
+> - Eviction reset: if satisfaction recovers before eviction, countdown resets
+> - Serialized via SaveLoadSystem
+
+**TenantComponent Structure:**
+```cpp
+struct TenantComponent {
+    TenantType  type            = TenantType::COUNT;
+    TileCoord   anchorTile      = {0, 0};
+    int         width           = 1;
+    int64_t     rentPerDay      = 0;      // Cents
+    int64_t     maintenanceCost = 0;      // Cents per day
+    int         maxOccupants    = 0;
+    int         occupantCount   = 0;      // Current occupant NPC count
+    int64_t     buildCost       = 0;      // Cents (one-time)
+    float       satisfactionDecayRate = 0.0f; // Per-tick rate for NPC satisfaction
+    bool        isEvicted       = false;
+    int         evictionCountdown = 0;    // Ticks remaining before despawn (0 = not evicting)
+};
+```
+
+**Tenant Lifecycle:**
+1. **Placement**: `TenantSystem::placeTenant()` creates entity with TenantComponent, calls `GridSystem::placeTenant()`
+2. **Daily Operations**: `onDayChanged()` collects rent from all tenants, pays maintenance costs
+3. **Eviction Process**: When average NPC satisfaction in tenant < threshold, eviction countdown starts
+4. **Recovery**: If satisfaction improves above threshold before countdown reaches 0, eviction resets
+5. **Removal**: Countdown reaches 0 → tenant marked evicted, removed from grid, entity destroyed
+
+**Dependencies:**
+- `IGridSystem`: Tenant placement/removal on grid
+- `IEconomyEngine`: Rent collection and maintenance payments
+- `EventBus`: TenantPlaced/TenantRemoved events
+- `ContentRegistry`: Tenant attributes from balance.json
+
+### 5.18 Economy Loop
+
+> **Sprint 4 Planned System:**
+> - Bootstrapper tick loop calls `collectRent()` and `payMaintenance()` each game day (every 24 ticks)
+> - `buildFloor()` deducts cost from balance; rejects if balance insufficient
+> - `placeTenant()` deducts initial interior cost
+> - HUD shows daily income/expense
+> - Events: `InsufficientFundsEvent{action, required, available}`
+
+**Daily Economy Cycle:**
+- **Midnight (tick % 24 == 0)**: Rent collection from all tenants
+- **Midnight + 1 tick**: Maintenance payments for all tenants and elevators
+- **Real-time**: Construction costs deducted immediately when action executed
+
+**Funds Validation:**
+- `GridSystem::buildFloor()` checks balance before construction
+- `TenantSystem::placeTenant()` checks balance before tenant placement
+- Insufficient funds → `InsufficientFundsEvent` with action details
+- UI shows red balance warning when funds low
+
+**HUD Integration:**
+- Daily income/expense display in top-right HUD
+- Running balance with color coding (green=positive, red=negative)
+- Toast notifications for large transactions
+
+### 5.19 Stair Movement System
+
+> **Sprint 4 Planned System:**
+> - AgentSystem stair logic: if `|targetFloor - currentFloor| <= 4` → use stairs
+> - Stair speed: 2 ticks per floor (slower than elevator)
+> - State during stair movement: `Walking` (reuse existing sprite)
+> - Priority: stairs preferred for ≤4 floors; elevator required for ≥5 floors
+> - Elevator wait timeout: if waiting > threshold AND distance ≤ 4 → switch to stairs
+
+**Stair Mechanics:**
+- **Distance Threshold**: 4 floors or less → stairs, 5+ floors → elevator required
+- **Movement Speed**: 2 ticks per floor transition (vs elevator 1 tick per floor)
+- **Pathfinding**: Stairwell tiles at fixed X positions on each floor
+- **State Management**: `AgentState::Walking` during stair movement, special stair animation frame
+
+**Fallback Logic:**
+- NPC calls elevator for 5+ floor distance
+- If elevator wait exceeds configurable timeout (e.g., 30 ticks)
+- AND floor distance ≤ 4 → switch to stairs
+- Prevents NPCs stuck waiting for busy elevators on short trips
+
+**Implementation:**
+- Stairwell tiles marked in GridSystem (non-tenantable)
+- AgentSystem pathfinding includes stairwell routing
+- TransportSystem updated to handle stair-based floor transitions
+
+### 5.20 Periodic Settlement System
+
+> **Sprint 4 Planned System:**
+> - `EconomyEngine::update()` daily settlement at midnight (tick % 24 == 0)
+> - Weekly report event on Sunday (tick % 168 == 0)
+> - Quarterly settlement every 90 days: tax deduction + star rating re-evaluation
+> - Settlement events → HUD ImGui toast notification
+
+**Settlement Schedule:**
+- **Daily**: Rent collection, maintenance payments (already in §5.18)
+- **Weekly (Sunday)**: Financial summary, NPC satisfaction report
+- **Quarterly (90 days)**: Tax payment (percentage of balance), star rating review
+
+**Quarterly Settlement:**
+1. Tax calculation: `balance * taxRate` (configurable, e.g., 5%)
+2. Tax deduction from balance
+3. Star rating re-evaluation based on:
+   - Average NPC satisfaction
+   - Building occupancy rate
+   - Financial stability (profit/loss history)
+4. Rating change events with UI notifications
+
+**UI Integration:**
+- ImGui toast notifications for settlement events
+- Detailed settlement report in pause menu
+- Historical settlement records accessible via UI
+
+### 5.21 Game Over + Victory Conditions
+
+> **Sprint 4 Planned System:**
+> - Bankruptcy: balance < 0 for 30 consecutive days → GameOver
+> - TOWER achievement: ★5 + 100 floors + 300 NPCs
+> - GameOver/TOWER screen: ImGui modal
+
+**Game Over Conditions:**
+- **Bankruptcy**: Negative balance for 30 consecutive game days
+- **Mass Exodus**: NPC count drops below 10% of capacity for 7 days
+- **Critical System Failure**: Unrecoverable save corruption
+
+**Victory Conditions:**
+- **TOWER Achievement**: 
+  - ★5 star rating
+  - 100 floors built
+  - 300 active NPCs
+  - Positive balance for 90 consecutive days
+- **Master Tycoon**: All tenant types at max occupancy, perfect satisfaction
+
+**Endgame UI:**
+- Fullscreen ImGui modal with victory/defeat message
+- Statistics summary (play time, total revenue, NPC count, etc.)
+- Options: New Game, Return to Main Menu, Quit
+- Achievement unlock notifications
+
+### 5.22 Main Menu + Game State Machine
+
+> **Sprint 4 Planned System:**
+> - States: Menu → Playing → Paused → GameOver
+> - Main menu (ImGui fullscreen): New Game, Load Game, Settings, Quit
+> - ESC → pause menu: Continue / Save / Main Menu
+> - New Game calls `setupInitialScene()`
+> - Load Game connects to SaveLoadSystem
+
+**State Machine:**
+```
+[Main Menu]
+  ├─ New Game → [Playing] (calls setupInitialScene())
+  ├─ Load Game → [Playing] (SaveLoadSystem::load())
+  ├─ Settings → [Settings Menu]
+  └─ Quit → Exit
+
+[Playing]
+  ├─ ESC → [Paused]
+  ├─ GameOver condition → [GameOver]
+  └─ TOWER achievement → [Victory]
+
+[Paused]
+  ├─ Continue → [Playing]
+  ├─ Save → QuickSave → [Paused]
+  ├─ Main Menu → [Main Menu] (with save prompt)
+  └─ Quit → Exit (with save prompt)
+```
+
+**UI Implementation:**
+- Main menu: Fullscreen ImGui with background art
+- Pause menu: Semi-transparent overlay with game view visible
+- Settings: Graphics, audio, controls, game options
+- Save/Load: Integrated with SaveLoadSystem file browser
+
+### 5.23 DI-005 Resolution
+
+> **Sprint 4 Planned System:**
+> - MockGridSystem elevator anchor mismatch fix
+> - Document what DI-005 was and how it's resolved in Sprint 4
+
+**DI-005 Issue:**
+- MockGridSystem test utility had incorrect elevator anchor positioning
+- Elevator shaft placement coordinates mismatched between test and production
+- Caused elevator rendering and NPC boarding failures in integration tests
+
+**Resolution:**
+1. **Anchor Standardization**: Unified elevator anchor tile calculation
+2. **Test Fix**: Updated MockGridSystem to match production GridSystem behavior
+3. **Validation**: Added comprehensive elevator placement tests
+4. **Documentation**: Clear anchor coordinate rules in GridSystem spec
+
+**Impact:**
+- Eliminates elevator rendering glitches
+- Ensures consistent NPC boarding behavior
+- Improves test reliability for elevator-related features
+
 ---
 
 ## 6. ECS Component & System Map
@@ -1856,6 +2082,7 @@ public:
 | 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
 | 2026-03-24 | 1.3 | Self-review 9 fixes: **[Critical]** (C-1) speed multiplier now `accumulator += dt * speed` instead of tick cap, (C-2) accumulator ownership moved from SimClock to Bootstrapper — SimClock is pure tick counter; **[Important]** (I-1) Core API header rule clarified (I*.h = pure virtual, others = runtime declarations), (I-2) processCommands() drain-once-per-frame rule, (I-3) system update() signatures unified to `(registry&, GameTime&)` — no dt param, (I-4) SaveLoad: non-ECS state (Grid floors_, Economy balance) requires custom serialization alongside EnTT snapshot; **[Minor]** PixelPos config ref, GameCommandIssued = post-process notification, TileCoord std::hash added. |
 | 2026-03-24 | 1.4 | External review (DeepSeek R1 + GPT-5.4): (3.2) SaveLoad entity cross-reference safety — removed "automatically safe" assertion, added round-trip test requirements, clarified restore sequence (ECS first → non-ECS → derived caches); (3.3) spawnAgent() redesigned to `(reg, homeTenantId, workplaceId, optional spawnPos)` — EntityId-based; (3.4) TransportSystem internal separation guide added (ElevatorCarFSM + LookScheduler); (3.5) PixelPos x conversion formula added; (3.6) CLAUDE.md version synced to v1.3. |
+| 2026-03-26 | 2.0 | Sprint 3 implementation sync + Sprint 4 planned systems: **(1) §5.16 NPC Stress System** — AgentComponent.stress field, satisfaction decay, AgentSatisfactionChanged event, leave threshold; **(2) §5.17 TenantSystem** — TenantComponent fields (anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown), onDayChanged(), eviction reset logic; **(3) §5.18 Economy Loop** — buildFloor cost deduction, collectRent/payMaintenance auto-call, InsufficientFundsEvent; **(4) §5.19 Stair Movement System** — ≤4 floor stair preference, 2 ticks/floor speed, elevator wait fallback; **(5) §5.20 Periodic Settlement** — daily/weekly/quarterly settlement schedule, ImGui toast; **(6) §5.21 Game Over + Victory** — bankruptcy 30-day rule, TOWER achievement conditions; **(7) §5.22 Main Menu + State Machine** — Menu/Playing/Paused/GameOver states; **(8) §5.23 DI-005 Resolution** — MockGridSystem elevator anchor mismatch fix. |
 | 2026-03-26 | 1.5 | Sprint 2 구현 반영 동기화: **(1) Bootstrapper §5.15** — API 시그니처 실제 구현으로 전면 교체 (`initialize` → `init/run/shutdown/initDomainOnly`, `unique_ptr<I*>` 소유 → 직접 멤버, `#ifdef VSE_TESTING` 접근자 가드, `setupInitialScene()` 공용 헬퍼, `accumulator_` Bootstrapper 소유 명시); **(2) ISaveLoad §5.8** — `SaveMetadata.balance` `int` → `int64_t` (TASK-02-003 Cents 단위 통일); **(3) Types.h §2** — `StarRatingChangedPayload` struct 추가 (TASK-02-009: StarRatingSystem.h에서 이동, 레이어 결합 감소); **(4) SaveLoad 직렬화 전략** — EnTT snapshot → 수동 JSON + MessagePack 2-pass remap으로 확정 반영 (이미 §5.8에 있었으나 이유 보강); **(5) SimClock §5.1** — 주석/설계 메모 실제 구현과 일치 확인 (변경 없음). |
 
 ---
