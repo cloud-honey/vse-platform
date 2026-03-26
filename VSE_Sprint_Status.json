@@ -85,6 +85,17 @@
   ],
   "history": [
     {
+      "date": "2026-03-26",
+      "title": "Sprint 3 kickoff — Design Spec sync + NPC AI stress system",
+      "summary": "TASK-03-001 Design Spec v1.5 sync complete; TASK-03-002 NPC AI stress/satisfaction system complete with 229 tests and 3-model review fixes.",
+      "details": [
+        "TASK-03-001: VSE_Design_Spec.md v1.5 sync (Bootstrapper/SaveMetadata/StarRatingChangedPayload)",
+        "TASK-03-002: stress field, satisfaction decay, leave threshold, SaveLoad serialization",
+        "3-model review fixes applied: AgentSatisfactionChanged event, unused constants cleanup, stress round-trip test",
+        "Current Sprint 3 progress: 1/7 dashboard task done (+ pre-task Design Spec sync)"
+      ]
+    },
+    {
       "date": "2026-03-24",
       "time": "13:00",
       "title": "VSE Platform 프로젝트 착수",
