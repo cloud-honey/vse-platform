@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T17:52:00+09:00",
+  "updated_at": "2026-03-26T18:20:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "sprint3_complete",
@@ -675,38 +675,79 @@
     ]
   },
   "sprint4_plan": {
-    "sprint": 4,
-    "goal": "Steam 출시 준비 — 멀티플레이 기반, 오디오, 최적화",
+    "goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
     "tasks": [
       {
+        "id": "TASK-04-000",
+        "title": "Design Spec v2.0 동기화",
+        "assignee": "붐",
+        "layer": "문서",
+        "status": "pending",
+        "difficulty": 2,
+        "notes": "Sprint 3 구현 반영 + Sprint 4 사양 추가"
+      },
+      {
         "id": "TASK-04-001",
-        "title": "오디오 시스템 (BGM/SFX)",
-        "layer": "Layer 2",
-        "notes": "WAVEMIX.DLL 역분석 기반, SDL_mixer"
+        "title": "경제 루프 활성화 (임대료 자동 수집, 건설 비용 차감)",
+        "assignee": "붐2",
+        "layer": "Layer 1",
+        "status": "pending",
+        "difficulty": 3,
+        "notes": "collectRent/payMaintenance Bootstrapper 연결, 잔액 부족 시 거부"
       },
       {
         "id": "TASK-04-002",
-        "title": "재난 시스템 (화재/폭탄 — Phase 2)",
+        "title": "NPC 계단 이동 (4층 이하 계단, 5층↑ 엘리베이터)",
+        "assignee": "붐2",
         "layer": "Layer 1",
-        "notes": "역분석 문서 supplement_02 참조"
+        "status": "pending",
+        "difficulty": 3,
+        "notes": "AgentSystem 경로 선택 로직 추가"
       },
       {
         "id": "TASK-04-003",
-        "title": "Dirty Rect 렌더링 최적화",
-        "layer": "Layer 3",
-        "notes": "성능 실측 후 결정"
+        "title": "정기 결산 시스템 (일/주/분기 자동 결산)",
+        "assignee": "붐2",
+        "layer": "Layer 1",
+        "status": "pending",
+        "difficulty": 2,
+        "notes": "EconomyEngine::update 확장, 분기 세금/별점 재평가"
       },
       {
         "id": "TASK-04-004",
-        "title": "HiDPI + 해상도 대응",
-        "layer": "Layer 3",
-        "notes": "Phase 2"
+        "title": "게임 오버 + TOWER 달성 조건",
+        "assignee": "붐2",
+        "layer": "Layer 1",
+        "status": "pending",
+        "difficulty": 2,
+        "notes": "파산(잔액 < 0 × 30일), TOWER 달성 모달"
       },
       {
         "id": "TASK-04-005",
-        "title": "Steam 빌드 + 배포 파이프라인",
-        "layer": "인프라",
-        "notes": "Steam SDK 연동, 업적 기초"
+        "title": "메인 메뉴 + 새 게임/불러오기/일시정지",
+        "assignee": "붐2",
+        "layer": "Layer 3",
+        "status": "pending",
+        "difficulty": 3,
+        "notes": "게임 상태 머신 (Menu→Playing→Paused→GameOver)"
+      },
+      {
+        "id": "TASK-04-006",
+        "title": "DI-005 해결 + 테스트 품질 개선",
+        "assignee": "붐2",
+        "layer": "테스트",
+        "status": "pending",
+        "difficulty": 2,
+        "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
+      },
+      {
+        "id": "TASK-04-007",
+        "title": "통합 + Sprint 4 macOS + Windows 빌드",
+        "assignee": "붐",
+        "layer": "전체",
+        "status": "pending",
+        "difficulty": 4,
+        "notes": "맥미니 네이티브 빌드 포함"
       }
     ]
   },
