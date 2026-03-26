@@ -5,7 +5,20 @@ include(FetchContent)
 # ──────────────────────────────────────────────
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
+# SDL2_ttf: Ubuntu apt 패키지는 SDL2_ttf::SDL2_ttf target 없는 경우 있음
+# CONFIG 없이 MODULE 모드로 찾고, 없으면 pkg-config 시도
+find_package(SDL2_ttf QUIET)
+if(NOT SDL2_ttf_FOUND AND NOT TARGET SDL2_ttf::SDL2_ttf)
+    find_package(PkgConfig QUIET)
+    if(PkgConfig_FOUND)
+        pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
+        add_library(SDL2_ttf::SDL2_ttf INTERFACE IMPORTED)
+        target_include_directories(SDL2_ttf::SDL2_ttf INTERFACE ${SDL2_TTF_INCLUDE_DIRS})
+        target_link_libraries(SDL2_ttf::SDL2_ttf INTERFACE ${SDL2_TTF_LIBRARIES})
+    else()
+        message(FATAL_ERROR "SDL2_ttf not found")
+    endif()
+endif()
 
 # ──────────────────────────────────────────────
 # EnTT (header-only)
