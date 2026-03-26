@@ -20,10 +20,12 @@
       "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
       "assignee": "DeepSeek V3",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "임대료 공식, 입주 조건, 퇴거 로직"
+      "notes": "임대료 공식, 입주 조건, 퇴거 로직",
+      "commit": "eb28060",
+      "tests": "244/244"
     },
     {
       "id": "TASK-03-003",
