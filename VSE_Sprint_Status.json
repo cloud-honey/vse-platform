@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:18:00+09:00",
+  "updated_at": "2026-03-26T14:25:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -63,13 +63,13 @@
     {
       "id": "TASK-03-005",
       "title": "게임 UI (잔액, 별점, 인게임 HUD — ImGui)",
-      "assignee": "TBD",
+      "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
       "difficulty": 2,
-      "notes": ""
+      "notes": "271/271 tests, commit a0aba97"
     },
     {
       "id": "TASK-03-006",
@@ -376,6 +376,12 @@
       "time": "14:18",
       "title": "Gemini 3.1 Pro 교차 검증 반영",
       "detail": "03-003: AnimationSystem.pruneStale() 추가 — 매 프레임 스테일 에이전트 정리. 03-004: Pass (수정 불필요). 263/263 통과."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:24",
+      "title": "TASK-03-005 게임 HUD 완료",
+      "detail": "HUDPanel 구현 — 잔액(₩ 천단위), 별점(★☆), 틱, 테넌트/NPC 수. ImGui top-left 고정. frame.showHUD + hudPanel_.isVisible() 이중 제어. 붐2 단독 완료. 271/271. commit a0aba97"
     }
   ],
   "references": [
@@ -889,6 +895,17 @@
         "gemini": "Pass"
       },
       "reviewer_note": "수정: 텍스처 캐시, screenX 건물기준, TTF 라이프사이클 정리 — Gemini Pass",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-005",
+      "title": "게임 HUD (잔액, 별점, 틱, ImGui)",
+      "status": "completed",
+      "commit": "a0aba97",
+      "tests": "271/271",
+      "difficulty": 2,
+      "reviewer": {},
+      "reviewer_note": "교차 검증 예정",
       "date": "2026-03-26"
     }
   ]
