@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T12:35:00+09:00",
+  "updated_at": "2026-03-26T13:35:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -41,13 +41,13 @@
     {
       "id": "TASK-03-003",
       "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
-      "assignee": "TBD",
+      "assignee": "붐2+붐",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
       "difficulty": 3,
-      "notes": ""
+      "notes": "251/251 tests, commit 43de0f1"
     },
     {
       "id": "TASK-03-004",
@@ -346,6 +346,12 @@
       "time": "12:25",
       "title": "대시보드 완료 보고서 & 교차 검증 카드 추가",
       "detail": "🔍 완료 보고서 섹션 신설. Sprint 1/2/3 전체 태스크 3모델 판정 표시. 난이도 ⭐ 표시 추가."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "13:35",
+      "title": "TASK-03-003 스프라이트 시트 렌더링 전환 완료",
+      "detail": "SpriteSheet 클래스, AnimationSystem (상태별 프레임 애니메이션), 폴백 컬러박스 유지. 붐2 구현 + 붐 버그픽스. 251/251 통과. commit 43de0f1"
     }
   ],
   "references": [
@@ -829,6 +835,17 @@
         "gpt": "Conditional Pass",
         "gemini": "Fail→수정 후 Pass"
       },
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-003",
+      "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
+      "status": "completed",
+      "commit": "43de0f1",
+      "tests": "251/251",
+      "difficulty": 3,
+      "reviewer": {},
+      "reviewer_note": "3모델 교차 검증 예정",
       "date": "2026-03-26"
     }
   ]
