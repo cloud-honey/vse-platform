@@ -1,5 +1,6 @@
 #include "renderer/AnimationSystem.h"
 #include <spdlog/spdlog.h>
+#include <cmath>
 
 namespace vse {
 
@@ -36,22 +37,16 @@ int AnimationSystem::getFrame(EntityId agentId, AgentState state, float dt) {
     // Update timer
     anim.timer += dt;
     
-    // Check if we need to advance to next frame
-    if (anim.timer >= frameDuration) {
-        anim.timer = 0.0f;
-        
-        // Calculate number of frames in this animation
-        int frameCount = endFrame - startFrame + 1;
-        
+    int frameCount = endFrame - startFrame + 1;
+    // Advance multiple frames if dt > frameDuration (prevents timer drift)
+    if (frameDuration > 0.0f && anim.timer >= frameDuration) {
+        int steps = static_cast<int>(anim.timer / frameDuration);
+        anim.timer = std::fmod(anim.timer, frameDuration);
         if (frameCount > 1) {
-            // Animated state: cycle through frames
-            anim.frameIndex = startFrame + ((anim.frameIndex - startFrame + 1) % frameCount);
+            anim.frameIndex = startFrame + ((anim.frameIndex - startFrame + steps) % frameCount);
         } else {
-            // Static state: stay on the same frame
             anim.frameIndex = startFrame;
         }
-        
-        // Update frame duration (in case state changed)
         anim.frameDuration = frameDuration;
     }
     
@@ -90,18 +85,18 @@ void AnimationSystem::getAnimationParams(AgentState state, int& startFrame, int&
             break;
             
         case AgentState::Resting:
-            // rest_0, rest_1 (using rest_0 and elevator_0 as rest frames)
+            // rest_0 only (frame 6) — distinct from elevator (frame 7)
             startFrame = 6;
-            endFrame = 7;
-            frameDuration = 0.8f; // 0.8 seconds per frame (slower)
+            endFrame = 6;
+            frameDuration = 0.8f;
             break;
             
         case AgentState::WaitingElevator:
         case AgentState::InElevator:
-            // elevator_0 (static)
+            // elevator_0 (frame 7, static)
             startFrame = 7;
             endFrame = 7;
-            frameDuration = 1.0f; // Not used for static frame
+            frameDuration = 1.0f;
             break;
             
         default:

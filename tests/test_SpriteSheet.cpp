@@ -137,11 +137,11 @@ TEST_CASE("AnimationSystem - Timer advance", "[AnimationSystem]") {
         // Advance past first frame duration
         int frame2 = animSys.getFrame(static_cast<vse::EntityId>(1), AgentState::Idle, 0.6f);
         
-        // Advance past second frame duration (should cycle back)
-        int frame3 = animSys.getFrame(static_cast<vse::EntityId>(1), AgentState::Idle, 1.2f);
+        // frame2 advanced past 0.5s → frame=1, timer~=0.1
+        // advance 0.4s more → timer~=0.5 → steps=1 → frame back to 0
+        int frame3 = animSys.getFrame(static_cast<vse::EntityId>(1), AgentState::Idle, 0.4f);
         
         REQUIRE(frame1 != frame2);
-        REQUIRE(frame2 != frame3);
         REQUIRE(frame3 == frame1); // Should cycle back to first frame
     }
 }
