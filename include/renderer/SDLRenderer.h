@@ -66,7 +66,11 @@ private:
     
     // Font system
     FontManager fontManager_;
-    
+    // Floor label texture cache: key = floor index, value = {texture, w, h}
+    struct LabelTexture { SDL_Texture* tex = nullptr; int w = 0; int h = 0; };
+    std::unordered_map<int, LabelTexture> labelCache_;
+    void clearLabelCache();
+
     // Frame time tracking for animation
     float lastFrameTime_ = 0.0f;
 };

@@ -99,6 +99,8 @@ void SDLRenderer::shutdown()
     if (renderer_) { SDL_DestroyRenderer(renderer_); renderer_ = nullptr; }
     if (window_)   { SDL_DestroyWindow(window_);     window_   = nullptr; }
     
+    // Clear label cache before TTF_Quit (textures must be freed before renderer destroyed)
+    clearLabelCache();
     // Quit SDL_ttf
     TTF_Quit();
 }
@@ -388,75 +390,61 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera, flo
     }
 }
 
+void SDLRenderer::clearLabelCache()
+{
+    for (auto& [k, lt] : labelCache_) {
+        if (lt.tex) SDL_DestroyTexture(lt.tex);
+    }
+    labelCache_.clear();
+}
+
 void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera)
 {
-    // Only draw labels when zoomed in enough
-    if (camera.zoomLevel() < 0.5f) {
-        return;
-    }
+    // Only draw labels when zoomed in enough (hysteresis: hide < 0.48, show >= 0.52)
+    static bool labelsVisible = false;
+    float zoom = camera.zoomLevel();
+    if (!labelsVisible && zoom >= 0.52f) labelsVisible = true;
+    if (labelsVisible  && zoom <  0.48f) { labelsVisible = false; clearLabelCache(); }
+    if (!labelsVisible) return;
 
-    // Calculate building dimensions
-    int buildingWidthPx = frame.floorWidth * frame.tileSize;
-    int buildingHeightPx = frame.maxFloors * frame.tileSize;
+    // Label X: left edge of building (tile x=0) minus a small offset
+    float buildingLeftX = camera.tileToScreenX(0);
+    float labelOffsetX  = 8.0f * zoom; // 8 world-px gap, scales with zoom
+    float screenX = buildingLeftX - labelOffsetX - 24.0f * zoom;
 
-    // Draw floor labels for each floor
     for (int floor = 0; floor < frame.maxFloors; ++floor) {
-        // Calculate floor position in world coordinates
-        float floorWorldY = floor * frame.tileSize;
-        
-        // Convert to screen coordinates
-        float screenX = camera.worldToScreenX(-10.0f); // 10 pixels left of building
-        float screenY = camera.worldToScreenY(floorWorldY + frame.tileSize / 2.0f);
-        
-        // Check if floor is visible in viewport
-        if (screenY < -20 || screenY > camera.viewportH() + 20) {
-            continue;
-        }
+        float floorWorldY = static_cast<float>(floor * frame.tileSize);
+        float screenY = camera.worldToScreenY(floorWorldY + frame.tileSize * 0.5f);
 
-        // Prepare label text
-        std::string label = "L" + std::to_string(floor);
-        
+        if (screenY < -20 || screenY > camera.viewportH() + 20) continue;
+
         if (fontManager_.isLoaded()) {
-            // Render text using SDL2_ttf
-            TTF_Font* font = fontManager_.get();
-            SDL_Color textColor = {255, 255, 255, 255}; // White
-            
-            // Create surface from text
-            SDL_Surface* textSurface = TTF_RenderUTF8_Blended(font, label.c_str(), textColor);
-            if (!textSurface) {
-                continue;
+            // Cache miss → create texture
+            if (labelCache_.find(floor) == labelCache_.end()) {
+                TTF_Font* font = fontManager_.get();
+                std::string label = "L" + std::to_string(floor);
+                SDL_Color col = {255, 255, 255, 255};
+                SDL_Surface* surf = TTF_RenderUTF8_Blended(font, label.c_str(), col);
+                if (!surf) continue;
+                SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer_, surf);
+                int w = surf->w, h = surf->h;
+                SDL_FreeSurface(surf);
+                if (!tex) continue;
+                labelCache_[floor] = {tex, w, h};
             }
-            
-            // Create texture from surface
-            SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
-            if (!textTexture) {
-                SDL_FreeSurface(textSurface);
-                continue;
-            }
-            
-            // Get texture dimensions
-            int textW, textH;
-            SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
-            
-            // Draw text with background for better readability
-            SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 180); // Semi-transparent black background
-            SDL_FRect bgRect = {screenX - 2, screenY - textH/2 - 2, textW + 4, textH + 4};
-            SDL_RenderFillRectF(renderer_, &bgRect);
-            
-            // Draw text
-            SDL_FRect textRect = {screenX, screenY - textH/2, static_cast<float>(textW), static_cast<float>(textH)};
-            SDL_RenderCopyF(renderer_, textTexture, nullptr, &textRect);
-            
-            // Cleanup
-            SDL_DestroyTexture(textTexture);
-            SDL_FreeSurface(textSurface);
+            auto& lt = labelCache_[floor];
+            SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 160);
+            SDL_FRect bg = {screenX - 2, screenY - lt.h * 0.5f - 2,
+                            static_cast<float>(lt.w + 4), static_cast<float>(lt.h + 4)};
+            SDL_RenderFillRectF(renderer_, &bg);
+            SDL_FRect dst = {screenX, screenY - lt.h * 0.5f,
+                             static_cast<float>(lt.w), static_cast<float>(lt.h)};
+            SDL_RenderCopyF(renderer_, lt.tex, nullptr, &dst);
         } else {
-            // Fallback: draw colored rectangle indicator
-            SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255); // Blue indicator
+            // Fallback colored rect
+            SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255);
             SDL_FRect rect = {screenX - 5, screenY - 5, 10, 10};
             SDL_RenderFillRectF(renderer_, &rect);
-            
-            // Draw border
             SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
             SDL_RenderDrawRectF(renderer_, &rect);
         }
