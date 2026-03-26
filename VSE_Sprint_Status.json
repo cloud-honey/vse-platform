@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:25:00+09:00",
+  "updated_at": "2026-03-26T14:32:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -69,7 +69,7 @@
       "qa_status": "pass",
       "confirmed_by_human": true,
       "difficulty": 2,
-      "notes": "271/271 tests, commit a0aba97"
+      "notes": "271/271 tests, 3모델 교차 검증 Pass"
     },
     {
       "id": "TASK-03-006",
@@ -382,6 +382,12 @@
       "time": "14:24",
       "title": "TASK-03-005 게임 HUD 완료",
       "detail": "HUDPanel 구현 — 잔액(₩ 천단위), 별점(★☆), 틱, 테넌트/NPC 수. ImGui top-left 고정. frame.showHUD + hudPanel_.isVisible() 이중 제어. 붐2 단독 완료. 271/271. commit a0aba97"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:32",
+      "title": "TASK-03-005 3모델 교차 검증 완료 (Gemini+GPT+DeepSeek R1)",
+      "detail": "수정: formatBalance 천단위 버그, public static 변환+실제 테스트, NoInputs 플래그, INT64_MIN 안전 처리, formatStars NaN 보호. 271/271."
     }
   ],
   "references": [
@@ -901,11 +907,15 @@
       "id": "TASK-03-005",
       "title": "게임 HUD (잔액, 별점, 틱, ImGui)",
       "status": "completed",
-      "commit": "a0aba97",
+      "commit": "3438456",
       "tests": "271/271",
       "difficulty": 2,
-      "reviewer": {},
-      "reviewer_note": "교차 검증 예정",
+      "reviewer": {
+        "gemini": "Conditional Pass → 수정 완료",
+        "gpt": "Conditional Pass → 수정 완료",
+        "deepseek": "Conditional Pass → 수정 완료"
+      },
+      "reviewer_note": "formatBalance 버그, NoInputs 플래그, INT64_MIN, NaN 보호 전부 수정",
       "date": "2026-03-26"
     }
   ]
