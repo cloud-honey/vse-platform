@@ -4,6 +4,7 @@
 #include <spdlog/spdlog.h>
 #include <cmath>
 #include <string>
+#include <unordered_set>
 
 // Dear ImGui 헤더 (cpp 파일에만 include)
 #include "imgui.h"
@@ -313,6 +314,13 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera, flo
     //   drawY = sy - npcH → 스프라이트 상단 화면 y (SDL2 좌상단 원점 기준)
     //
     // agents는 Y-sort(pos.y 오름차순) 완료 상태로 전달됨
+
+    // 현재 프레임에 없는 에이전트 animStates_ 정리 (메모리 누수 방지)
+    {
+        std::unordered_set<EntityId> currentIds;
+        for (const auto& agent : frame.agents) currentIds.insert(agent.id);
+        animationSystem_.pruneStale(currentIds);
+    }
 
     float zoom = camera.zoomLevel();
     int ts = frame.tileSize;

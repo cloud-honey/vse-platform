@@ -1,34 +1,20 @@
 # TASK-03-003 Sprite Sheet — Gemini Review
-**Reviewer:** Gemini
+**Reviewer:** Gemini 3.1 Pro
 **Date:** 2026-03-26
-**Verdict:** Pass
+**Verdict:** Conditional Pass
 
 ## Summary
-The implementation successfully transitions the agent rendering from simple colored boxes to a sprite sheet-based system. The new `SpriteSheet` and `AnimationSystem` classes are well-designed, self-contained, and correctly integrated into the existing `SDLRenderer`.
-
-Key architectural strengths include:
-- **Graceful Fallback:** The `SpriteSheet` class robustly handles texture loading failures by falling back to the previous colored-box rendering, ensuring the application remains functional even if assets are missing.
-- **Separation of Concerns:** Animation logic is properly encapsulated within the `AnimationSystem`, decoupling it from the core rendering loop.
-- **Robust Animation Timing:** The animation timer correctly handles variable frame rates (`dt`) and prevents temporal drift, which is crucial for smooth animation.
-
-The changes are correctly confined to the rendering layer, complying with the project's architecture.
+The implementation successfully replaces the colored-box placeholders with a sprite sheet rendering system using an 8-frame 128x32px PNG. `AnimationSystem` accurately maps states (`Idle`, `Walking`, `Working`, `Resting`, `Elevator`) to correct frame ranges and handles timer-based transitions. The multi-frame skip issue for `dt > frameDuration` has been resolved.
 
 ## Issues Found
 | # | Severity | Location | Description | Recommendation |
 |---|---|---|---|---|
-| 1 | Low | `src/renderer/SDLRenderer.cpp` (in `drawAgents`) | The `drawAgents` function contains a redundant `if (npcSheet_) { ... } else { ... }` block. Since `npcSheet_` is always initialized, the `else` block containing the old colored-box rendering logic is unreachable. The fallback is now handled internally by `npcSheet_->drawFrame`. | Remove the `else` block from `drawAgents` to simplify the code. The `if (npcSheet_)` check can also be removed, leaving only the call to `npcSheet_->drawFrame`. |
-| 2 | Low | `tests/test_SpriteSheet.cpp` | In the test case "AnimationSystem - Frame selection by state", the assertion for the `Resting` state is `REQUIRE((frame == 6 || frame == 7));`. However, the implementation in `AnimationSystem.cpp` correctly assigns only frame 6 to the `Resting` state. | Correct the test assertion to `REQUIRE(frame == 6);` to accurately reflect the implementation. |
+| 1 | Medium | `src/renderer/AnimationSystem.cpp` | **Memory Leak Risk (Entity Lifecycle)**: `std::unordered_map<EntityId, AnimationState> animStates_` grows indefinitely if agents are destroyed but `removeAgent(EntityId)` is not called. | Ensure the core domain or ECS system properly hooks into `removeAgent` when an agent entity is destroyed. |
+| 2 | Low | `src/renderer/SpriteSheet.cpp` | **Fallback Rendering**: When texture loading fails, colored box fallback is triggered, but repeated console logs might spam the logger on every frame. | Ensure the texture load failure state is cached so it only logs the missing texture error once per session. |
+| 3 | Low | `src/renderer/AnimationSystem.cpp` | **Float precision**: Accumulating `dt` into `anim.timer` over very long periods might cause precision loss if not clamped. | Reset `anim.timer` using `std::fmod` against `frameDuration` rather than unbounded accumulation. |
 
 ## Test Coverage Assessment
-The tests in `test_SpriteSheet.cpp` are comprehensive. They cover:
-- SpriteSheet loading failure and fallback.
-- Animation state transitions and correct frame selection.
-- Timer-based frame advancement and cycling.
-- Agent state management (adding, removing, clearing).
-
-The coverage is sufficient for the new components. The minor issue found in the test logic (Issue #2) does not detract from the overall quality of the test suite.
+Test coverage is excellent (252/252 passing). Multi-frame skip logic is effectively tested. However, coverage lacks a test for agent cleanup (`removeAgent` memory footprint verification) to prevent the `animStates_` map from growing continuously over time.
 
 ## Final Verdict
-**Pass.**
-
-The implementation is robust, well-architected, and meets all requirements. The identified issues are minor and do not impact functionality. This task provides a solid foundation for future visual improvements. For the upcoming click-interaction task (03-006), care should be taken to ensure the click-detection bounding box calculations precisely match the rendering logic for `npcW` and `npcH`.
+**Conditional Pass**. The visual feature works excellently. Please address the `EntityId` lifecycle management in `AnimationSystem` to ensure long-running simulations do not leak memory via the `animStates_` map before closing the ticket. This is especially important before proceeding to click interactions in TASK-03-006.

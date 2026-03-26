@@ -2,6 +2,7 @@
 
 #include "core/Types.h"
 #include <unordered_map>
+#include <unordered_set>
 #include <cstdint>
 
 namespace vse {
@@ -50,6 +51,11 @@ public:
      * @param agentId Agent identifier
      */
     void removeAgent(EntityId agentId);
+
+    /**
+     * @brief Remove stale agents not present in activeIds (call once per frame)
+     */
+    void pruneStale(const std::unordered_set<EntityId>& activeIds);
     
     /**
      * @brief Clear all animation states

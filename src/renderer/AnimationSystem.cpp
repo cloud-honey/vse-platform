@@ -109,4 +109,14 @@ void AnimationSystem::getAnimationParams(AgentState state, int& startFrame, int&
     }
 }
 
+void AnimationSystem::pruneStale(const std::unordered_set<EntityId>& activeIds) {
+    for (auto it = animStates_.begin(); it != animStates_.end(); ) {
+        if (activeIds.find(it->first) == activeIds.end()) {
+            it = animStates_.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
 } // namespace vse
