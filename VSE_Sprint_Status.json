@@ -1,6 +1,6 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-27T00:10:00+09:00",
+  "updated_at": "2026-03-27T08:32:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
@@ -50,9 +50,10 @@
       "title": "게임 오버 + TOWER 달성 조건",
       "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "difficulty": 2,
-      "notes": "파산(잔액 < 0 × 30일), TOWER 달성 모달"
+      "notes": "게임오버+승리 조건 완료. 310/310. 교차검증 대기.",
+      "qa_status": "pending"
     },
     {
       "id": "TASK-04-005",
