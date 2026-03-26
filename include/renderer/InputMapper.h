@@ -1,5 +1,7 @@
 #pragma once
 #include "core/InputTypes.h"
+#include "renderer/BuildModeState.h"
+#include "renderer/Camera.h"
 #include <SDL.h>
 #include <vector>
 
@@ -18,6 +20,7 @@ namespace vse {
  * - F3: 디버그 오버레이 토글
  * - ESC: 종료
  * - 마우스 클릭: 타일 선택
+ * - B/T 키: 건설 모드 토글
  */
 class InputMapper {
 public:
@@ -33,8 +36,15 @@ public:
     // 카메라 팬 속도 (px/frame)
     void setPanSpeed(float speed) { panSpeed_ = speed; }
 
+    // Build mode management
+    void setCamera(const Camera* cam) { camera_ = cam; }
+    void setBuildMode(BuildModeState state) { buildMode_ = state; }
+    BuildModeState getBuildMode() const { return buildMode_; }
+
 private:
     float panSpeed_ = 8.0f;
+    const Camera* camera_ = nullptr;
+    BuildModeState buildMode_;
 };
 
 } // namespace vse

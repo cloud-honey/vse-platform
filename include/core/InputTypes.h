@@ -65,6 +65,13 @@ struct GameCommand {
         return cmd;
     }
 
+    static GameCommand makePlaceTenant(int x, int floor, int tenantType, int width) {
+        GameCommand cmd{};
+        cmd.type = CommandType::PlaceTenant;
+        cmd.placeTenant = {x, floor, tenantType, width};
+        return cmd;
+    }
+
     static GameCommand makeCameraPan(float dx, float dy) {
         GameCommand cmd{};
         cmd.type = CommandType::CameraPan;

@@ -63,6 +63,7 @@ bool Bootstrapper::init() {
         static_cast<float>(2 * tileSizePx_)
     );
     inputMapper_.setPanSpeed(panSpeed_);
+    inputMapper_.setCamera(&camera_);  // TASK-03-006: 카메라 설정
     collector_ = std::make_unique<RenderFrameCollector>(*grid_, *transport_, tileSizePx_);
     collector_->setAgentSource(agents_.get(), &registry_);
 
@@ -191,6 +192,14 @@ void Bootstrapper::run() {
         collector_->setDrawDebugInfo(drawDebug_);
         RenderFrame frame = collector_->collect();
         fillDebugInfo(frame, realDeltaMs);
+        
+        // TASK-03-006: 마우스 위치 및 빌드 모드 상태 추가
+        int mouseX, mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        frame.mouseX = mouseX;
+        frame.mouseY = mouseY;
+        frame.buildMode = inputMapper_.getBuildMode();
+        
         sdlRenderer_.render(frame, camera_);
     }
 }

@@ -81,6 +81,7 @@ add_executable(TowerTycoon
     src/renderer/SpriteSheet.cpp
     src/renderer/AnimationSystem.cpp
     src/renderer/FontManager.cpp
+    src/renderer/BuildCursor.cpp
 )
 
 target_compile_definitions(TowerTycoon PRIVATE

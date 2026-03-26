@@ -58,6 +58,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SpriteSheet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AnimationSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/FontManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/BuildCursor.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

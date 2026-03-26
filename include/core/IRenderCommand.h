@@ -1,5 +1,6 @@
 #pragma once
 #include "core/Types.h"
+#include "renderer/BuildModeState.h"
 #include <vector>
 #include <cstdint>
 #include <string>
@@ -141,6 +142,13 @@ struct RenderFrame {
 
     // 디버그 정보
     DebugInfo debug;
+
+    // 마우스 위치 (BuildCursor용)
+    int mouseX = 0;
+    int mouseY = 0;
+
+    // Build mode 상태 (건설 모드 피드백용)
+    BuildModeState buildMode;
 };
 
 } // namespace vse

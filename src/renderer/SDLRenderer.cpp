@@ -141,6 +141,10 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // 에이전트 렌더링 (TASK-03-003: Sprite Sheet 시스템)
     drawAgents(frame, camera, dt);
 
+    // 건설 모드 커서 피드백 (TASK-03-006)
+    buildCursor_.draw(renderer_, camera, frame.mouseX, frame.mouseY, 
+                      frame.buildMode, frame.tileSize);
+
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
 

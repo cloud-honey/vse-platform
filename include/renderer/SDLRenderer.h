@@ -6,6 +6,7 @@
 #include "renderer/SpriteSheet.h"
 #include "renderer/AnimationSystem.h"
 #include "renderer/FontManager.h"
+#include "renderer/BuildCursor.h"
 #include <unordered_map>
 #include <cstdint>
 
@@ -64,6 +65,7 @@ private:
     SDL_Renderer* renderer_    = nullptr;
     DebugPanel    debugPanel_;              // Design Spec: 별도 구성요소로 분리
     HUDPanel      hudPanel_;                // 게임 HUD 패널
+    BuildCursor   buildCursor_;             // 건설 모드 커서 피드백
     
     // Sprite sheet system
     std::unique_ptr<SpriteSheet> npcSheet_;
