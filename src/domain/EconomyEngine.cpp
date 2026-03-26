@@ -17,9 +17,10 @@
 
 namespace vse {
 
-EconomyEngine::EconomyEngine(const EconomyConfig& config)
+EconomyEngine::EconomyEngine(const EconomyConfig& config, EventBus& eventBus)
     : balance_(config.startingBalance)
-    , config_(config) {
+    , config_(config)
+    , eventBus_(eventBus) {
     spdlog::debug("EconomyEngine created with starting balance: {} cents", balance_);
 }
 
@@ -157,15 +158,57 @@ void EconomyEngine::payMaintenance(const IGridSystem& grid, const GameTime& time
 }
 
 void EconomyEngine::update(const GameTime& time) {
-    // Reset daily counters at start of new day
+    // Guard: only once per day change
+    if (time.day == lastSettlementDay_) return;
+    
+    // Settlement happens at midnight (hour 0, minute 0)
     if (time.hour == 0 && time.minute == 0) {
+        lastSettlementDay_ = time.day;
+        
+        // 1. Daily Settlement — publish event with yesterday's totals
+        Event dailyEv;
+        dailyEv.type = EventType::DailySettlement;
+        dailyEv.payload = DailySettlementPayload{time.day, dailyIncome_, dailyExpense_, balance_};
+        eventBus_.publish(dailyEv);
+        
+        // Accumulate weekly/quarterly totals BEFORE resetting daily
+        weeklyIncome_ += dailyIncome_;
+        weeklyExpense_ += dailyExpense_;
+        quarterlyIncome_ += dailyIncome_;
+        
+        // Reset daily counters
         dailyIncome_ = 0;
         dailyExpense_ = 0;
-        spdlog::debug("EconomyEngine: reset daily counters for new day");
+        spdlog::debug("EconomyEngine: daily settlement for day {}, weekly income={}, quarterly income={}", 
+                      time.day, weeklyIncome_, quarterlyIncome_);
+        
+        // 2. Weekly Report (every 7 days)
+        if (time.day > 0 && time.day % 7 == 0) {
+            Event weeklyEv;
+            weeklyEv.type = EventType::WeeklyReport;
+            weeklyEv.payload = WeeklyReportPayload{time.day / 7, weeklyIncome_, weeklyExpense_};
+            eventBus_.publish(weeklyEv);
+            
+            weeklyIncome_ = 0;
+            weeklyExpense_ = 0;
+            spdlog::debug("EconomyEngine: weekly report for week {}", time.day / 7);
+        }
+        
+        // 3. Quarterly Settlement (every 90 days)
+        if (time.day > 0 && time.day % 90 == 0) {
+            int64_t tax = quarterlyIncome_ / 10;  // 10% tax
+            addExpense("tax", tax, time);
+            
+            Event quarterlyEv;
+            quarterlyEv.type = EventType::QuarterlySettlement;
+            quarterlyEv.payload = QuarterlySettlementPayload{time.day / 90, tax, balance_};
+            eventBus_.publish(quarterlyEv);
+            
+            quarterlyIncome_ = 0;
+            spdlog::debug("EconomyEngine: quarterly settlement for quarter {}, tax={}", 
+                          time.day / 90, tax);
+        }
     }
-    
-    // Currently no per-tick logic needed
-    // Placeholder for future StarRating hooks
 }
 
 int64_t EconomyEngine::getDailyIncome() const {
@@ -222,8 +265,12 @@ nlohmann::json EconomyEngine::exportState() const {
     j["balance"]      = balance_;
     j["dailyIncome"]  = dailyIncome_;
     j["dailyExpense"] = dailyExpense_;
+    j["weeklyIncome"] = weeklyIncome_;
+    j["weeklyExpense"] = weeklyExpense_;
+    j["quarterlyIncome"] = quarterlyIncome_;
     j["lastRentDay"]  = lastRentDay_;
     j["lastMaintenanceDay"] = lastMaintenanceDay_;
+    j["lastSettlementDay"] = lastSettlementDay_;
 
     json incArr = json::array();
     for (const auto& r : incomeHistory_) {
@@ -257,8 +304,12 @@ void EconomyEngine::importState(const nlohmann::json& j) {
     balance_            = j.value("balance", int64_t(0));
     dailyIncome_        = j.value("dailyIncome", int64_t(0));
     dailyExpense_       = j.value("dailyExpense", int64_t(0));
+    weeklyIncome_       = j.value("weeklyIncome", int64_t(0));
+    weeklyExpense_      = j.value("weeklyExpense", int64_t(0));
+    quarterlyIncome_    = j.value("quarterlyIncome", int64_t(0));
     lastRentDay_        = j.value("lastRentDay", -1);
     lastMaintenanceDay_ = j.value("lastMaintenanceDay", -1);
+    lastSettlementDay_  = j.value("lastSettlementDay", -1);
 
     incomeHistory_.clear();
     if (j.contains("incomeHistory")) {

@@ -38,7 +38,7 @@ struct EconomyTestFixture {
 
         content.loadContentPack(std::string(VSE_PROJECT_ROOT) + "/assets");
         grid = std::make_unique<GridSystem>(bus, cfg);
-        economy = std::make_unique<EconomyEngine>(makeTestEconomyConfig());
+        economy = std::make_unique<EconomyEngine>(makeTestEconomyConfig(), bus);
         tenantSystem = std::make_unique<TenantSystem>(*grid, bus, *economy);
 
         grid->buildFloor(0);

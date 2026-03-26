@@ -28,6 +28,12 @@ static EconomyConfig makeTestConfig() {
     };
 }
 
+// Test helper to create EconomyEngine with mock EventBus
+static EconomyEngine createTestEngine(const EconomyConfig& config) {
+    static EventBus mockEventBus;
+    return EconomyEngine(config, mockEventBus);
+}
+
 // Mock GridSystem for testing
 class MockGridSystem : public IGridSystem {
 public:
@@ -154,14 +160,14 @@ private:
 
 TEST_CASE("EconomyEngine - Initial balance equals config.startingBalance", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     REQUIRE(engine.getBalance() == config.startingBalance);
 }
 
 TEST_CASE("EconomyEngine - addIncome increases balance correctly", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addIncome(EntityId{100}, TenantType::Office, 5000, time);
@@ -172,7 +178,7 @@ TEST_CASE("EconomyEngine - addIncome increases balance correctly", "[EconomyEngi
 
 TEST_CASE("EconomyEngine - addExpense decreases balance correctly", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addExpense("maintenance", 3000, time);
@@ -184,7 +190,7 @@ TEST_CASE("EconomyEngine - addExpense decreases balance correctly", "[EconomyEng
 TEST_CASE("EconomyEngine - Balance can go negative (debt allowed)", "[EconomyEngine]") {
     auto config = makeTestConfig();
     config.startingBalance = 1000;
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addExpense("construction", 2000, time);
@@ -194,7 +200,7 @@ TEST_CASE("EconomyEngine - Balance can go negative (debt allowed)", "[EconomyEng
 
 TEST_CASE("EconomyEngine - getRecentIncome returns newest first, capped at requested count", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addIncome(EntityId{1}, TenantType::Office, 100, time);
@@ -209,7 +215,7 @@ TEST_CASE("EconomyEngine - getRecentIncome returns newest first, capped at reque
 
 TEST_CASE("EconomyEngine - getRecentExpenses returns newest first, capped at requested count", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addExpense("maintenance", 100, time);
@@ -224,7 +230,7 @@ TEST_CASE("EconomyEngine - getRecentExpenses returns newest first, capped at req
 
 TEST_CASE("EconomyEngine - History capped at 100 entries", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     // Add 110 income records
@@ -238,7 +244,7 @@ TEST_CASE("EconomyEngine - History capped at 100 entries", "[EconomyEngine]") {
 
 TEST_CASE("EconomyEngine - collectRent adds income for office tenant", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     // Add an office tenant with width 3
@@ -254,7 +260,7 @@ TEST_CASE("EconomyEngine - collectRent adds income for office tenant", "[Economy
 
 TEST_CASE("EconomyEngine - collectRent for residential tenant", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     // Add a residential tenant with width 2
@@ -269,7 +275,7 @@ TEST_CASE("EconomyEngine - collectRent for residential tenant", "[EconomyEngine]
 
 TEST_CASE("EconomyEngine - collectRent for commercial tenant", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     // Add a commercial tenant with width 4
@@ -284,7 +290,7 @@ TEST_CASE("EconomyEngine - collectRent for commercial tenant", "[EconomyEngine]"
 
 TEST_CASE("EconomyEngine - collectRent is idempotent per day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     grid.addTenant({5, 1}, TenantType::Office, 2, EntityId{100});
@@ -303,7 +309,7 @@ TEST_CASE("EconomyEngine - collectRent is idempotent per day", "[EconomyEngine]"
 
 TEST_CASE("EconomyEngine - payMaintenance charges per elevator shaft", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     // Add 3 elevator shafts
@@ -321,7 +327,7 @@ TEST_CASE("EconomyEngine - payMaintenance charges per elevator shaft", "[Economy
 
 TEST_CASE("EconomyEngine - payMaintenance is idempotent per day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     grid.addElevatorShaft({2, 0});
@@ -340,7 +346,7 @@ TEST_CASE("EconomyEngine - payMaintenance is idempotent per day", "[EconomyEngin
 
 TEST_CASE("EconomyEngine - dailyIncome resets on new day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime day1{1, 12, 0};
     engine.addIncome(EntityId{100}, TenantType::Office, 5000, day1);
@@ -355,7 +361,7 @@ TEST_CASE("EconomyEngine - dailyIncome resets on new day", "[EconomyEngine]") {
 
 TEST_CASE("EconomyEngine - dailyExpense resets on new day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime day1{1, 12, 0};
     engine.addExpense("maintenance", 3000, day1);
@@ -371,7 +377,7 @@ TEST_CASE("EconomyEngine - dailyExpense resets on new day", "[EconomyEngine]") {
 TEST_CASE("EconomyEngine - Overflow guard: addIncome near INT64_MAX clamps and logs warning", "[EconomyEngine]") {
     auto config = makeTestConfig();
     config.startingBalance = INT64_MAX - 100;
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addIncome(EntityId{100}, TenantType::Office, 200, time);
@@ -383,7 +389,7 @@ TEST_CASE("EconomyEngine - Overflow guard: addIncome near INT64_MAX clamps and l
 TEST_CASE("EconomyEngine - Underflow guard: addExpense near INT64_MIN clamps", "[EconomyEngine]") {
     auto config = makeTestConfig();
     config.startingBalance = INT64_MIN + 100;
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     engine.addExpense("construction", 200, time);
@@ -394,7 +400,7 @@ TEST_CASE("EconomyEngine - Underflow guard: addExpense near INT64_MIN clamps", "
 
 TEST_CASE("EconomyEngine - Non-positive amounts are ignored", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     
     GameTime time{0, 12, 0};
     int64_t initialBalance = engine.getBalance();
@@ -411,7 +417,7 @@ TEST_CASE("EconomyEngine - Non-positive amounts are ignored", "[EconomyEngine]")
 
 TEST_CASE("EconomyEngine - collectRent and payMaintenance both run on same day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     // Add a tenant and an elevator shaft
@@ -434,7 +440,7 @@ TEST_CASE("EconomyEngine - collectRent and payMaintenance both run on same day",
 
 TEST_CASE("EconomyEngine - Neither rent nor maintenance runs twice on same day", "[EconomyEngine]") {
     auto config = makeTestConfig();
-    EconomyEngine engine(config);
+    EconomyEngine engine = createTestEngine(config);
     MockGridSystem grid;
     
     grid.addTenant({5, 1}, TenantType::Office, 1, EntityId{100});

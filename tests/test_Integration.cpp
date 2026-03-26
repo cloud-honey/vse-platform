@@ -218,7 +218,7 @@ TEST_CASE("Integration - Economy income + StarRating update in one simulation da
     ecfg.residentialRentPerTilePerDay = 300;
     ecfg.commercialRentPerTilePerDay = 800;
     ecfg.elevatorMaintenancePerDay = 500;
-    EconomyEngine economy(ecfg);
+    EconomyEngine economy(ecfg, eventBus);
 
     StarRatingSystem::Config srCfg;
     StarRatingSystem starRating(eventBus, srCfg);
@@ -291,7 +291,7 @@ TEST_CASE("Integration - HUD data sources provide valid values", "[Integration][
     ecfg.residentialRentPerTilePerDay = 300;
     ecfg.commercialRentPerTilePerDay = 800;
     ecfg.elevatorMaintenancePerDay = 500;
-    EconomyEngine economy(ecfg);
+    EconomyEngine economy(ecfg, eventBus);
 
     StarRatingSystem::Config srCfg;
     StarRatingSystem starRating(eventBus, srCfg);

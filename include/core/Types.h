@@ -135,6 +135,28 @@ struct InsufficientFundsPayload {
     int64_t available;
 };
 
+/** Payload for DailySettlement event. */
+struct DailySettlementPayload {
+    int day;
+    int64_t income;
+    int64_t expense;
+    int64_t balance;
+};
+
+/** Payload for WeeklyReport event. */
+struct WeeklyReportPayload {
+    int weekNumber;       // day / 7
+    int64_t weeklyIncome;
+    int64_t weeklyExpense;
+};
+
+/** Payload for QuarterlySettlement event. */
+struct QuarterlySettlementPayload {
+    int quarter;          // day / 90
+    int64_t taxAmount;    // 10% of quarterly income
+    int64_t balance;
+};
+
 // ── Event Types ─────────────────────────────
 enum class EventType : uint16_t {
     // SimClock
@@ -176,6 +198,11 @@ enum class EventType : uint16_t {
 
     // Input/Command — notification AFTER command is processed (for UI feedback/logging, not for command delivery)
     GameCommandIssued = 700,
+
+    // Settlement Events
+    DailySettlement = 550,
+    WeeklyReport = 551,
+    QuarterlySettlement = 552,
 
     // System
     GameSaved = 900,

@@ -21,6 +21,7 @@
 #pragma once
 #include "core/IEconomyEngine.h"
 #include "core/IGridSystem.h"
+#include "core/EventBus.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 #include <cstdint>
@@ -52,7 +53,7 @@ struct EconomyConfig {
 
 class EconomyEngine : public IEconomyEngine {
 public:
-    explicit EconomyEngine(const EconomyConfig& config);
+    explicit EconomyEngine(const EconomyConfig& config, EventBus& eventBus);
     
     // IEconomyEngine implementation
     int64_t getBalance() const override;
@@ -73,12 +74,17 @@ public:
 private:
     int64_t balance_;
     EconomyConfig config_;
+    EventBus& eventBus_;
     std::vector<IncomeRecord>  incomeHistory_;   // capped at 100 entries
     std::vector<ExpenseRecord> expenseHistory_;  // capped at 100 entries
     int64_t dailyIncome_  = 0;
     int64_t dailyExpense_ = 0;
+    int64_t weeklyIncome_ = 0;
+    int64_t weeklyExpense_ = 0;
+    int64_t quarterlyIncome_ = 0;
     int     lastRentDay_ = -1;        // guard: collect rent only once per game day
     int     lastMaintenanceDay_ = -1; // guard: pay maintenance only once per game day
+    int     lastSettlementDay_ = -1;  // guard: settle only once per day
     
     void addIncomeRecord(const IncomeRecord& record);
     void addExpenseRecord(const ExpenseRecord& record);

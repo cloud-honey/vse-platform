@@ -63,7 +63,7 @@ struct SaveLoadFixture {
         : grid(bus, cfg)
         , transport(grid, bus, cfg)
         , agents(grid, bus, transport)
-        , economy(loadEconomyConfig())
+        , economy(loadEconomyConfig(), bus)
         , starRating(bus, StarRatingSystem::Config{})
         , clock(bus)
         , saveLoad(reg, clock, grid, economy, starRating, transport, agents, testDir())
