@@ -1,7 +1,9 @@
 #include "renderer/SDLRenderer.h"
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include <spdlog/spdlog.h>
 #include <cmath>
+#include <string>
 
 // Dear ImGui 헤더 (cpp 파일에만 include)
 #include "imgui.h"
@@ -25,6 +27,12 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
         spdlog::error("SDL_Init failed: {}", SDL_GetError());
         return false;
+    }
+    
+    // Initialize SDL_ttf
+    if (TTF_Init() == -1) {
+        spdlog::warn("TTF_Init failed: {}", TTF_GetError());
+        // Continue without font support - fallback rendering will be used
     }
 
     window_ = SDL_CreateWindow(
@@ -60,6 +68,12 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
         spdlog::warn("Sprite sheet not loaded, using fallback rendering");
     }
 
+    // Load font
+    std::string fontPath = std::string(VSE_PROJECT_ROOT) + "/content/fonts/default.ttf";
+    if (!fontManager_.load(fontPath, 16)) {
+        spdlog::warn("Font not loaded, floor labels will use fallback rectangles");
+    }
+
     // Dear ImGui 초기화
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -84,6 +98,9 @@ void SDLRenderer::shutdown()
 
     if (renderer_) { SDL_DestroyRenderer(renderer_); renderer_ = nullptr; }
     if (window_)   { SDL_DestroyWindow(window_);     window_   = nullptr; }
+    
+    // Quit SDL_ttf
+    TTF_Quit();
 }
 
 void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
@@ -149,22 +166,59 @@ void SDLRenderer::drawGridBackground(const RenderFrame& frame, const Camera& cam
     // Phase 1: floor 0은 항상 존재 → 전체 maxFloors 영역에 옅은 배경
 
     int ts = frame.tileSize;
+    float zoom = camera.zoomLevel();
+    
+    // Draw building exterior frame (only when zoomed in enough)
+    if (zoom >= 0.5f) {
+        // Calculate building bounds
+        float buildingLeft = camera.tileToScreenX(0);
+        float buildingRight = camera.tileToScreenX(frame.floorWidth);
+        float buildingTop = camera.tileToScreenY(frame.maxFloors);
+        float buildingBottom = camera.tileToScreenY(0);
+        float buildingWidth = buildingRight - buildingLeft;
+        float buildingHeight = buildingBottom - buildingTop;
+        
+        // Draw outer frame (3px border)
+        SDL_SetRenderDrawColor(renderer_, 120, 120, 140, 255);
+        SDL_FRect outerFrame = {
+            buildingLeft - 3, buildingTop - 3,
+            buildingWidth + 6, buildingHeight + 6
+        };
+        SDL_RenderDrawRectF(renderer_, &outerFrame);
+        
+        // Draw inner frame (1px border)
+        SDL_SetRenderDrawColor(renderer_, 180, 180, 200, 255);
+        SDL_FRect innerFrame = {
+            buildingLeft - 1, buildingTop - 1,
+            buildingWidth + 2, buildingHeight + 2
+        };
+        SDL_RenderDrawRectF(renderer_, &innerFrame);
+    }
+
+    // Draw floor backgrounds with zebra pattern
     for (int f = 0; f < frame.maxFloors; ++f) {
         float sx = camera.tileToScreenX(0);
         float sy = camera.tileToScreenY(f);
-        float w  = frame.floorWidth * ts * camera.zoomLevel();
-        float h  = ts * camera.zoomLevel();
+        float w  = frame.floorWidth * ts * zoom;
+        float h  = ts * zoom;
 
         // 화면 밖이면 스킵
         if (sy + h < 0 || sy > camera.viewportH()) continue;
         if (sx + w < 0 || sx > camera.viewportW()) continue;
 
-        // 층 0(로비)만 살짝 다른 색
-        if (f == 0) {
-            SDL_SetRenderDrawColor(renderer_, 60, 60, 80, 200);
+        // Zebra pattern: alternate floor colors for better readability
+        if (f % 2 == 0) {
+            // Even floors (including lobby)
+            if (f == 0) {
+                SDL_SetRenderDrawColor(renderer_, 60, 60, 80, 200); // Lobby
+            } else {
+                SDL_SetRenderDrawColor(renderer_, 40, 42, 54, 180); // Darker even floors
+            }
         } else {
-            SDL_SetRenderDrawColor(renderer_, 40, 42, 54, 180);
+            // Odd floors
+            SDL_SetRenderDrawColor(renderer_, 45, 47, 60, 180); // Lighter odd floors
         }
+        
         SDL_FRect rect = {sx, sy, w, h};
         SDL_RenderFillRectF(renderer_, &rect);
     }
@@ -336,10 +390,77 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera, flo
 
 void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera)
 {
-    // Phase 1: SDL2_ttf 없이는 텍스트 못 그림 → 로비(0층)만 색으로 표시
-    // 실제 텍스트는 Dear ImGui 오버레이로 처리 예정
-    (void)frame;
-    (void)camera;
+    // Only draw labels when zoomed in enough
+    if (camera.zoomLevel() < 0.5f) {
+        return;
+    }
+
+    // Calculate building dimensions
+    int buildingWidthPx = frame.floorWidth * frame.tileSize;
+    int buildingHeightPx = frame.maxFloors * frame.tileSize;
+
+    // Draw floor labels for each floor
+    for (int floor = 0; floor < frame.maxFloors; ++floor) {
+        // Calculate floor position in world coordinates
+        float floorWorldY = floor * frame.tileSize;
+        
+        // Convert to screen coordinates
+        float screenX = camera.worldToScreenX(-10.0f); // 10 pixels left of building
+        float screenY = camera.worldToScreenY(floorWorldY + frame.tileSize / 2.0f);
+        
+        // Check if floor is visible in viewport
+        if (screenY < -20 || screenY > camera.viewportH() + 20) {
+            continue;
+        }
+
+        // Prepare label text
+        std::string label = "L" + std::to_string(floor);
+        
+        if (fontManager_.isLoaded()) {
+            // Render text using SDL2_ttf
+            TTF_Font* font = fontManager_.get();
+            SDL_Color textColor = {255, 255, 255, 255}; // White
+            
+            // Create surface from text
+            SDL_Surface* textSurface = TTF_RenderUTF8_Blended(font, label.c_str(), textColor);
+            if (!textSurface) {
+                continue;
+            }
+            
+            // Create texture from surface
+            SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer_, textSurface);
+            if (!textTexture) {
+                SDL_FreeSurface(textSurface);
+                continue;
+            }
+            
+            // Get texture dimensions
+            int textW, textH;
+            SDL_QueryTexture(textTexture, nullptr, nullptr, &textW, &textH);
+            
+            // Draw text with background for better readability
+            SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 180); // Semi-transparent black background
+            SDL_FRect bgRect = {screenX - 2, screenY - textH/2 - 2, textW + 4, textH + 4};
+            SDL_RenderFillRectF(renderer_, &bgRect);
+            
+            // Draw text
+            SDL_FRect textRect = {screenX, screenY - textH/2, static_cast<float>(textW), static_cast<float>(textH)};
+            SDL_RenderCopyF(renderer_, textTexture, nullptr, &textRect);
+            
+            // Cleanup
+            SDL_DestroyTexture(textTexture);
+            SDL_FreeSurface(textSurface);
+        } else {
+            // Fallback: draw colored rectangle indicator
+            SDL_SetRenderDrawColor(renderer_, 100, 100, 255, 255); // Blue indicator
+            SDL_FRect rect = {screenX - 5, screenY - 5, 10, 10};
+            SDL_RenderFillRectF(renderer_, &rect);
+            
+            // Draw border
+            SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 255);
+            SDL_RenderDrawRectF(renderer_, &rect);
+        }
+    }
 }
 
 } // namespace vse

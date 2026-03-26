@@ -4,6 +4,7 @@
 #include "renderer/DebugPanel.h"
 #include "renderer/SpriteSheet.h"
 #include "renderer/AnimationSystem.h"
+#include "renderer/FontManager.h"
 #include <unordered_map>
 #include <cstdint>
 
@@ -62,6 +63,9 @@ private:
     // Sprite sheet system
     std::unique_ptr<SpriteSheet> npcSheet_;
     AnimationSystem animationSystem_;
+    
+    // Font system
+    FontManager fontManager_;
     
     // Frame time tracking for animation
     float lastFrameTime_ = 0.0f;

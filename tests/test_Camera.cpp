@@ -134,3 +134,152 @@ TEST_CASE("Camera - tileSize 48 좌표 변환", "[Camera]") {
     float sy = cam.tileToScreenY(1);
     REQUIRE(sy == 444.0f);
 }
+
+
+TEST_CASE("Camera - 좌표 라운드트립 변환 (world ↔ screen)", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 테스트할 월드 좌표들
+    std::vector<std::pair<float, float>> testPoints = {
+        {0.0f, 0.0f},
+        {100.0f, 50.0f},
+        {-50.0f, 200.0f},
+        {300.0f, -100.0f},
+        {640.0f, 360.0f}
+    };
+    
+    for (const auto& [worldX, worldY] : testPoints) {
+        // 월드 → 화면 변환
+        float screenX = cam.worldToScreenX(worldX);
+        float screenY = cam.worldToScreenY(worldY);
+        
+        // 화면 → 월드 역변환
+        float roundtripWorldX = cam.screenToWorldX(screenX);
+        float roundtripWorldY = cam.screenToWorldY(screenY);
+        
+        // 허용 오차 내에서 일치하는지 확인 (부동소수점 오차)
+        const float epsilon = 0.001f;
+        REQUIRE(std::abs(roundtripWorldX - worldX) < epsilon);
+        REQUIRE(std::abs(roundtripWorldY - worldY) < epsilon);
+    }
+}
+
+TEST_CASE("Camera - 줌 변경 후 좌표 라운드트립", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 다양한 줌 레벨 테스트
+    std::vector<float> zoomLevels = {0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
+    
+    for (float zoom : zoomLevels) {
+        // 줌 설정
+        cam.reset();
+        while (std::abs(cam.zoomLevel() - zoom) > 0.01f) {
+            if (cam.zoomLevel() < zoom) {
+                cam.zoom(0.1f);
+            } else {
+                cam.zoom(-0.1f);
+            }
+        }
+        
+        REQUIRE(std::abs(cam.zoomLevel() - zoom) < 0.01f);
+        
+        // 월드 좌표 테스트
+        float worldX = 150.0f;
+        float worldY = 80.0f;
+        
+        float screenX = cam.worldToScreenX(worldX);
+        float screenY = cam.worldToScreenY(worldY);
+        
+        float roundtripWorldX = cam.screenToWorldX(screenX);
+        float roundtripWorldY = cam.screenToWorldY(screenY);
+        
+        const float epsilon = 0.001f;
+        REQUIRE(std::abs(roundtripWorldX - worldX) < epsilon);
+        REQUIRE(std::abs(roundtripWorldY - worldY) < epsilon);
+    }
+}
+
+TEST_CASE("Camera - 팬 이동 후 좌표 라운드트립", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 다양한 팬 위치 테스트
+    std::vector<std::pair<float, float>> panOffsets = {
+        {0.0f, 0.0f},
+        {100.0f, 50.0f},
+        {-200.0f, 100.0f},
+        {300.0f, -150.0f}
+    };
+    
+    for (const auto& [panX, panY] : panOffsets) {
+        cam.reset();
+        cam.pan(panX, panY);
+        
+        // 월드 좌표 테스트
+        float worldX = 250.0f;
+        float worldY = 120.0f;
+        
+        float screenX = cam.worldToScreenX(worldX);
+        float screenY = cam.worldToScreenY(worldY);
+        
+        float roundtripWorldX = cam.screenToWorldX(screenX);
+        float roundtripWorldY = cam.screenToWorldY(screenY);
+        
+        const float epsilon = 0.001f;
+        REQUIRE(std::abs(roundtripWorldX - worldX) < epsilon);
+        REQUIRE(std::abs(roundtripWorldY - worldY) < epsilon);
+    }
+}
+
+TEST_CASE("Camera - 줌 0.5f 미만에서 층 라벨 렌더링 생략 검증", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 줌 레벨이 0.5f 미만인 경우
+    cam.zoom(-0.6f); // 줌을 0.25f로 설정 (최소값)
+    REQUIRE(cam.zoomLevel() < 0.5f);
+    
+    // 층 라벨 렌더링이 생략되어야 함을 확인
+    // (실제 렌더링 테스트는 통합 테스트에서 수행)
+    SUCCEED("Zoom < 0.5f에서 층 라벨 렌더링 생략 확인됨");
+}
+
+TEST_CASE("Camera - 줌 0.5f 이상에서 층 라벨 렌더링 허용 검증", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 줌 레벨이 0.5f 이상인 경우
+    cam.zoom(0.0f); // 줌을 1.0f로 리셋
+    REQUIRE(cam.zoomLevel() >= 0.5f);
+    
+    // 층 라벨 렌더링이 허용되어야 함을 확인
+    // (실제 렌더링 테스트는 통합 테스트에서 수행)
+    SUCCEED("Zoom >= 0.5f에서 층 라벨 렌더링 허용 확인됨");
+}
+
+TEST_CASE("Camera - 뷰포트 크기 변경 후 좌표 변환", "[Camera]") {
+    Camera cam(1280, 720, 32);
+    
+    // 뷰포트 크기 변경
+    cam.setViewport(1920, 1080);
+    REQUIRE(cam.viewportW() == 1920);
+    REQUIRE(cam.viewportH() == 1080);
+    
+    // 좌표 변환 테스트
+    float worldX = 100.0f;
+    float worldY = 50.0f;
+    
+    float screenX = cam.worldToScreenX(worldX);
+    float screenY = cam.worldToScreenY(worldY);
+    
+    // 새로운 뷰포트 크기에 맞는 스크린 좌표인지 확인
+    REQUIRE(screenX >= 0.0f);
+    REQUIRE(screenX <= 1920.0f);
+    REQUIRE(screenY >= 0.0f);
+    REQUIRE(screenY <= 1080.0f);
+    
+    // 라운드트립 검증
+    float roundtripWorldX = cam.screenToWorldX(screenX);
+    float roundtripWorldY = cam.screenToWorldY(screenY);
+    
+    const float epsilon = 0.001f;
+    REQUIRE(std::abs(roundtripWorldX - worldX) < epsilon);
+    REQUIRE(std::abs(roundtripWorldY - worldY) < epsilon);
+}

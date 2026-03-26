@@ -9,6 +9,7 @@ add_executable(TowerTycoonTests
     test_EconomyEngine.cpp
     test_StarRatingSystem.cpp
     test_Camera.cpp
+    test_FontManager.cpp
     test_RenderFrame.cpp
     test_RenderAgent.cpp
     test_InputMapper.cpp
@@ -54,6 +55,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/DebugPanel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SpriteSheet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AnimationSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/FontManager.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE
