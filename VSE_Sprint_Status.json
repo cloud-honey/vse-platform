@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:12:00+09:00",
+  "updated_at": "2026-03-26T14:18:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -370,6 +370,12 @@
       "time": "14:08",
       "title": "TASK-03-004 교차 검증 완료 (GPT+DeepSeek Conditional Pass → 수정 후 Pass)",
       "detail": "라벨 텍스처 매 프레임 생성 → 캐시 전환, screenX 고정값 → 건물 왼쪽 기준, TTF 라이프사이클 중복 초기화 정리, zoom 히스테리시스 추가. 263/263. commit f857b61"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:18",
+      "title": "Gemini 3.1 Pro 교차 검증 반영",
+      "detail": "03-003: AnimationSystem.pruneStale() 추가 — 매 프레임 스테일 에이전트 정리. 03-004: Pass (수정 불필요). 263/263 통과."
     }
   ],
   "references": [
@@ -859,13 +865,13 @@
       "id": "TASK-03-003",
       "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
       "status": "completed",
-      "commit": "53666df",
+      "commit": "1323eac",
       "tests": "252/252",
       "difficulty": 3,
       "reviewer": {
         "deepseek": "Conditional Pass",
         "gpt": "Conditional Pass",
-        "gemini": "Pass"
+        "gemini": "Conditional Pass → 수정 후 Pass"
       },
       "reviewer_note": "수정 반영: Resting/Elevator 프레임 분리, dt 멀티프레임 스킵 수정",
       "date": "2026-03-26"
