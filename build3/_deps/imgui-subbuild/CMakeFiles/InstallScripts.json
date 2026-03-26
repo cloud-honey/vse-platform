@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/imgui-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

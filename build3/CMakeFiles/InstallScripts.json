@@ -1,0 +1,14 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/entt-build/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/nlohmann_json-build/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/msgpack-build/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/spdlog-build/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/catch2-build/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/_deps/catch2-build/src/cmake_install.cmake",
+		"/home/sykim/.openclaw/workspace/vse-platform/build3/tests/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -79,6 +79,7 @@ add_executable(TowerTycoon
     src/renderer/DebugPanel.cpp
     src/renderer/SpriteSheet.cpp
     src/renderer/AnimationSystem.cpp
+    src/renderer/FontManager.cpp
 )
 
 target_compile_definitions(TowerTycoon PRIVATE
