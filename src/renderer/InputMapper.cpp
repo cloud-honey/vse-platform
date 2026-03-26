@@ -120,12 +120,13 @@ void InputMapper::processEvent(const SDL_Event& event,
                 }
                 break;
             case BuildAction::PlaceTenant:
-                // PlaceTenant 커맨드
+                // PlaceTenant 커맨드 — BuildCursor와 동일하게 중앙 정렬 좌표 사용
                 if (camera_) {
-                    int x = camera_->screenToTileX(event.button.x);
-                    int floor = camera_->screenToTileFloor(event.button.y);
+                    int tileX = camera_->screenToTileX(event.button.x);
+                    int floor  = camera_->screenToTileFloor(event.button.y);
+                    int startX = tileX - buildMode_.tenantWidth / 2; // cursor와 동일
                     outCommands.push_back(GameCommand::makePlaceTenant(
-                        x, floor, buildMode_.tenantType, buildMode_.tenantWidth));
+                        startX, floor, buildMode_.tenantType, buildMode_.tenantWidth));
                 }
                 break;
             case BuildAction::None:
