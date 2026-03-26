@@ -23,7 +23,8 @@
       "width": 5,
       "satisfactionDecayRate": 0.15,
       "buildCost": 8000
-    }
+    },
+    "evictionThreshold": 20.0
   },
   "npc": {
     "baseMoveSpeed": 1.0,

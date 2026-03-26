@@ -68,6 +68,7 @@ add_executable(TowerTycoon
     src/domain/EconomyEngine.cpp
     src/domain/StarRatingSystem.cpp
     src/domain/SaveLoadSystem.cpp
+    src/domain/TenantSystem.cpp
     src/core/EventBus.cpp
     src/core/SimClock.cpp
     src/core/ConfigManager.cpp

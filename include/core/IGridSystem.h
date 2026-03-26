@@ -15,6 +15,24 @@ struct TileData {
     int tileWidth = 1;              // Only meaningful on anchor tile
 };
 
+/**
+ * TenantComponent — 테넌트(사무실/주거/상업) 데이터 컴포넌트.
+ * GridSystem.placeTenant() 호출 시 엔티티에 부착.
+ */
+struct TenantComponent {
+    TenantType  type            = TenantType::COUNT;
+    TileCoord   anchorTile      = {0, 0};
+    int         width           = 1;
+    int64_t     rentPerDay      = 0;      // Cents
+    int64_t     maintenanceCost = 0;      // Cents per day
+    int         maxOccupants    = 0;
+    int         occupantCount   = 0;      // Current occupant NPC count
+    int64_t     buildCost       = 0;      // Cents (one-time)
+    float       satisfactionDecayRate = 0.0f; // Per-tick rate for NPC satisfaction
+    bool        isEvicted       = false;
+    int         evictionCountdown = 0;    // Ticks remaining before despawn (0 = not evicting)
+};
+
 class IGridSystem {
 public:
     virtual ~IGridSystem() = default;

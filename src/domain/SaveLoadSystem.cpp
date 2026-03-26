@@ -294,6 +294,33 @@ json SaveLoadSystem::serializeEntities() const {
         entities.push_back(e);
     }
 
+    // Serialize TenantComponent entities
+    auto tenantView = reg_.view<TenantComponent>();
+    for (auto entity : tenantView) {
+        const auto& tenant = tenantView.get<TenantComponent>(entity);
+        
+        json e;
+        e["id"]   = static_cast<uint32_t>(entity);
+        e["type"] = "tenant";
+        
+        json tj;
+        tj["type"]               = static_cast<int>(tenant.type);
+        tj["anchorTileX"]        = tenant.anchorTile.x;
+        tj["anchorTileFloor"]    = tenant.anchorTile.floor;
+        tj["width"]              = tenant.width;
+        tj["rentPerDay"]         = tenant.rentPerDay;
+        tj["maintenanceCost"]    = tenant.maintenanceCost;
+        tj["maxOccupants"]       = tenant.maxOccupants;
+        tj["occupantCount"]      = tenant.occupantCount;
+        tj["buildCost"]          = tenant.buildCost;
+        tj["satisfactionDecayRate"] = tenant.satisfactionDecayRate;
+        tj["isEvicted"]          = tenant.isEvicted;
+        tj["evictionCountdown"]  = tenant.evictionCountdown;
+        e["tenant"] = tj;
+        
+        entities.push_back(e);
+    }
+
     return entities;
 }
 
@@ -369,6 +396,23 @@ std::unordered_map<uint32_t, EntityId> SaveLoadSystem::deserializeEntities(const
                 comp.currentRating   = static_cast<StarRating>(s.value("currentRating", 1));
                 comp.avgSatisfaction = s.value("avgSatisfaction", 50.0f);
                 comp.totalPopulation = s.value("totalPopulation", 0);
+            }
+        } else if (type == "tenant") {
+            if (e.contains("tenant")) {
+                auto& t = e["tenant"];
+                auto& comp = reg_.emplace<TenantComponent>(newEntity);
+                comp.type               = static_cast<TenantType>(t.value("type", 0));
+                comp.anchorTile.x       = t.value("anchorTileX", 0);
+                comp.anchorTile.floor   = t.value("anchorTileFloor", 0);
+                comp.width              = t.value("width", 1);
+                comp.rentPerDay         = t.value("rentPerDay", 0);
+                comp.maintenanceCost    = t.value("maintenanceCost", 0);
+                comp.maxOccupants       = t.value("maxOccupants", 0);
+                comp.occupantCount      = t.value("occupantCount", 0);
+                comp.buildCost          = t.value("buildCost", 0);
+                comp.satisfactionDecayRate = t.value("satisfactionDecayRate", 0.0f);
+                comp.isEvicted          = t.value("isEvicted", false);
+                comp.evictionCountdown  = t.value("evictionCountdown", 0);
             }
         }
     }

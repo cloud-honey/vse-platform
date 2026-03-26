@@ -134,3 +134,22 @@ make -j$(nproc) TowerTycoonTests
 ## Conclusion
 
 TASK-03-002 has been successfully implemented. The stress system and conditional satisfaction decay are fully functional with comprehensive test coverage. The implementation follows the layer rule (all logic in `src/domain/`), uses deferred events as required, and maintains backward compatibility with save/load system. All tests pass, and the implementation is ready for integration with other game systems.
+---
+
+## Cross-Validation Results
+
+| Reviewer | Model | Verdict | P0 | P1 (key) |
+|---|---|---|---|---|
+| GPT | github-copilot/gpt-5-mini | Conditional Pass | None | ContentRegistry 미통합, 미사용 상수, AgentSatisfactionChanged 누락, stress 직렬화 테스트 |
+| Gemini | google/gemini-2.5-flash | Conditional Pass | None | ContentRegistry 미통합, 테넌트별 decay 미구현 |
+| DeepSeek | deepseek/deepseek-chat | Conditional Pass | IAgentSystem.h 코멘트 게임로직 포함 | ContentRegistry 미통합, stress 직렬화 테스트 |
+
+## Post-Review Fixes (커밋 7dfb3c2)
+- ✅ 미사용 상수 3개 제거 (SATISFACTION_DECAY_OFFICE/RESIDENTIAL/COMMERCIAL, SATISFACTION_LOSS_NO_ELEVATOR → 주석으로 deferrred 명시)
+- ✅ AgentSatisfactionChanged 이벤트 발행 추가 (satisfaction 변경 시 deferred publish)
+- ✅ stress 직렬화 round-trip 테스트 추가 (test_SaveLoad.cpp)
+- ✅ IAgentSystem.h 코멘트 게임로직 설명 제거 (domain 레이어로 귀속 명시)
+- ⏭️ ContentRegistry 통합 → TASK-03-009 통합 태스크에서 처리
+- ⏭️ 테넌트별 decay rates → TASK-03-003 (테넌트 구현)에서 통합
+
+**Final: 229 tests / 810 assertions — All Pass**

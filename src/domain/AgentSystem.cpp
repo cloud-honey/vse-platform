@@ -247,6 +247,9 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
 
     // 상태 변경 이벤트
     if (agent.state != prevState) {
+        // 테넌트 점유자 수 업데이트 (Working 상태 변경 시)
+        updateTenantOccupantCount(reg, id, prevState, agent.state);
+
         Event ev;
         ev.type   = EventType::AgentStateChanged;
         ev.source = id;
@@ -403,6 +406,9 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
                 if (time.hour >= schedule.workEndHour) {
                     newState = AgentState::Idle;
                 }
+                
+                // 테넌트 점유자 수 업데이트 (상태 변경 시)
+                updateTenantOccupantCount(reg, id, agent.state, newState);
                 agent.state = newState;
 
                 Event ev;
@@ -551,6 +557,51 @@ void AgentSystem::updateSatisfactionAndStress(entt::registry& reg, EntityId id,
         
         spdlog::debug("AgentSystem: entity {:d} satisfaction {} < {}, transitioning to Leaving",
                       static_cast<uint32_t>(id), agent.satisfaction, LEAVE_THRESHOLD);
+    }
+}
+
+void AgentSystem::updateTenantOccupantCount(entt::registry& reg, EntityId agentId,
+                                            AgentState oldState, AgentState newState)
+{
+    // Working 상태 변경 시에만 처리
+    bool wasWorking = (oldState == AgentState::Working);
+    bool isWorking = (newState == AgentState::Working);
+    
+    if (wasWorking == isWorking) {
+        return; // Working 상태 변경 없음
+    }
+    
+    // 에이전트 컴포넌트 가져오기
+    auto* agent = reg.try_get<AgentComponent>(agentId);
+    if (!agent) {
+        return;
+    }
+    
+    // workplaceTenant 가져오기
+    EntityId tenantId = agent->workplaceTenant;
+    if (tenantId == INVALID_ENTITY) {
+        return; // 직장이 없는 에이전트
+    }
+    
+    // 테넌트 컴포넌트 가져오기
+    auto* tenant = reg.try_get<TenantComponent>(tenantId);
+    if (!tenant) {
+        return; // 테넌트가 없음
+    }
+    
+    // 점유자 수 업데이트
+    if (isWorking) {
+        // Working 상태 시작 → 점유자 증가
+        tenant->occupantCount++;
+        spdlog::debug("AgentSystem: tenant {} occupantCount++ → {}",
+                      static_cast<uint32_t>(tenantId), tenant->occupantCount);
+    } else {
+        // Working 상태 종료 → 점유자 감소
+        if (tenant->occupantCount > 0) {
+            tenant->occupantCount--;
+            spdlog::debug("AgentSystem: tenant {} occupantCount-- → {}",
+                          static_cast<uint32_t>(tenantId), tenant->occupantCount);
+        }
     }
 }
 

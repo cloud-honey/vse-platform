@@ -82,6 +82,10 @@ private:
 
     // 목적지 타일 조회 (anchor 위치)
     std::optional<TileCoord> resolveDestination(EntityId tenantEntityId) const;
+
+    // 테넌트 점유자 수 업데이트 (Working 상태 변경 시)
+    void updateTenantOccupantCount(entt::registry& reg, EntityId agentId,
+                                   AgentState oldState, AgentState newState);
 };
 
 } // namespace vse
