@@ -1,6 +1,6 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-26T19:50:00+09:00",
+  "updated_at": "2026-03-26T20:15:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
@@ -30,9 +30,10 @@
       "title": "NPC 계단 이동 (4층 이하 계단, 5층↑ 엘리베이터)",
       "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "difficulty": 3,
-      "notes": "AgentSystem 경로 선택 로직 추가"
+      "notes": "NPC 계단 이동 완료. 297/297 테스트. 교차검증 대기.",
+      "qa_status": "pending"
     },
     {
       "id": "TASK-04-003",
