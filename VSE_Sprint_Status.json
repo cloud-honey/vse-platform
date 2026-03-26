@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:32:00+09:00",
+  "updated_at": "2026-03-26T14:55:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -74,13 +74,13 @@
     {
       "id": "TASK-03-006",
       "title": "건물 건설 인터랙션 (마우스 클릭 → BuildFloor/PlaceTenant)",
-      "assignee": "TBD",
+      "assignee": "붐2+붐",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
       "difficulty": 3,
-      "notes": ""
+      "notes": "279/279 tests, 3모델 교차 검증 Pass"
     },
     {
       "id": "TASK-03-007",
@@ -388,6 +388,12 @@
       "time": "14:32",
       "title": "TASK-03-005 3모델 교차 검증 완료 (Gemini+GPT+DeepSeek R1)",
       "detail": "수정: formatBalance 천단위 버그, public static 변환+실제 테스트, NoInputs 플래그, INT64_MIN 안전 처리, formatStars NaN 보호. 271/271."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:55",
+      "title": "TASK-03-006 완료 + 3모델 교차 검증",
+      "detail": "붐2+붐. 교차검증: Layer위반, Cursor zoom, 좌표 불일치, SelectTile 픽셀→타일 변환 등 전부 수정. 279/279."
     }
   ],
   "references": [
@@ -916,6 +922,21 @@
         "deepseek": "Conditional Pass → 수정 완료"
       },
       "reviewer_note": "formatBalance 버그, NoInputs 플래그, INT64_MIN, NaN 보호 전부 수정",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-006",
+      "title": "건물 건설 인터랙션 (B키/T키, 마우스 클릭, BuildCursor)",
+      "status": "completed",
+      "commit": "latest",
+      "tests": "279/279",
+      "difficulty": 3,
+      "reviewer": {
+        "gpt": "Conditional Pass → 수정",
+        "gemini": "Conditional Pass → 수정",
+        "deepseek": "Conditional Pass → 수정"
+      },
+      "reviewer_note": "Layer 위반 수정, BuildCursor zoom, PlaceTenant 좌표 정렬, SelectTile 픽셀→타일 변환",
       "date": "2026-03-26"
     }
   ]
