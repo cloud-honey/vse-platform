@@ -85,13 +85,13 @@
     {
       "id": "TASK-03-007",
       "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
-      "assignee": "TBD",
+      "assignee": "붐2",
       "layer": "전체",
-      "status": "pending",
+      "status": "in_progress",
       "qa_status": "pending",
       "confirmed_by_human": false,
       "difficulty": 4,
-      "notes": ""
+      "notes": "HUD 연결 + Windows 빌드 진행 중"
     }
   ],
   "escalations": [],
