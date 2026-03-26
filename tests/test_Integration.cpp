@@ -18,6 +18,7 @@
 #include "core/SimClock.h"
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
+#include "core/IRenderCommand.h"
 #include "domain/GridSystem.h"
 #include "domain/AgentSystem.h"
 #include "domain/TransportSystem.h"
@@ -248,4 +249,106 @@ TEST_CASE("Integration - Economy income + StarRating update in one simulation da
 
     // Economy should still have balance (starting 100000, small operations)
     REQUIRE(economy.getBalance() > 0);
+}
+
+// ── TASK-03-007: HUD fields integration ──
+
+TEST_CASE("Integration - RenderFrame HUD fields wired correctly", "[Integration][HUD][RenderFrame]") {
+    // Test that HUD fields in RenderFrame can be set and read
+    RenderFrame frame;
+    
+    // Test initial values
+    REQUIRE(frame.balance == 0);
+    REQUIRE(frame.starRating == 0.0f);
+    REQUIRE(frame.currentTick == 0);
+    REQUIRE(frame.tenantCount == 0);
+    REQUIRE(frame.npcCount == 0);
+    
+    // Test setting values
+    frame.balance = 1234567;
+    frame.starRating = 3.5f;
+    frame.currentTick = 100;
+    frame.tenantCount = 5;
+    frame.npcCount = 12;
+    
+    REQUIRE(frame.balance == 1234567);
+    REQUIRE(frame.starRating == 3.5f);
+    REQUIRE(frame.currentTick == 100);
+    REQUIRE(frame.tenantCount == 5);
+    REQUIRE(frame.npcCount == 12);
+}
+
+TEST_CASE("Integration - HUD data sources provide valid values", "[Integration][HUD]") {
+    PreloadedConfig config;
+    EventBus eventBus;
+    entt::registry registry;
+    GridSystem grid(eventBus, config);
+    AgentSystem agents(grid, eventBus);
+
+    EconomyConfig ecfg;
+    ecfg.startingBalance = 100000;
+    ecfg.officeRentPerTilePerDay = 500;
+    ecfg.residentialRentPerTilePerDay = 300;
+    ecfg.commercialRentPerTilePerDay = 800;
+    ecfg.elevatorMaintenancePerDay = 500;
+    EconomyEngine economy(ecfg);
+
+    StarRatingSystem::Config srCfg;
+    StarRatingSystem starRating(eventBus, srCfg);
+    starRating.initRegistry(registry);
+
+    // Setup: one floor with tenants
+    grid.buildFloor(0);
+    EntityId homeId = registry.create();
+    grid.placeTenant({2, 0}, TenantType::Residential, 2, homeId);
+    EntityId workId = registry.create();
+    grid.placeTenant({6, 0}, TenantType::Office, 3, workId);
+
+    auto spawnResult = agents.spawnAgent(registry, homeId, workId);
+    REQUIRE(spawnResult.ok());
+
+    // Check HUD data sources
+    REQUIRE(grid.getTenantCount() == 2);  // residential + office
+    REQUIRE(economy.getBalance() == ecfg.startingBalance);  // starting balance
+    REQUIRE(agents.activeAgentCount() == 1);  // one NPC
+    
+    // Star rating should be Star1 (minimum with NPC)
+    starRating.update(registry, agents, GameTime::fromTick(0));
+    auto rating = starRating.getCurrentRating(registry);
+    REQUIRE(static_cast<int>(rating) >= static_cast<int>(StarRating::Star1));
+}
+
+TEST_CASE("Integration - GridSystem getTenantCount works with multiple tenants", "[Integration][GridSystem][HUD]") {
+    PreloadedConfig config;
+    EventBus eventBus;
+    GridSystem grid(eventBus, config);
+    
+    grid.buildFloor(0);
+    grid.buildFloor(1);
+    
+    // Add tenants
+    REQUIRE(grid.placeTenant({0, 0}, TenantType::Residential, 2, INVALID_ENTITY).ok());
+    REQUIRE(grid.placeTenant({5, 0}, TenantType::Office, 3, INVALID_ENTITY).ok());
+    REQUIRE(grid.placeTenant({0, 1}, TenantType::Commercial, 4, INVALID_ENTITY).ok());
+    
+    REQUIRE(grid.getTenantCount() == 3);
+    
+    // Remove one tenant
+    REQUIRE(grid.removeTenant({5, 0}).ok());
+    REQUIRE(grid.getTenantCount() == 2);
+}
+
+TEST_CASE("Integration - RenderFrame mouse position fields", "[Integration][HUD][Mouse]") {
+    RenderFrame frame;
+    
+    // Initial values
+    REQUIRE(frame.mouseX == 0);
+    REQUIRE(frame.mouseY == 0);
+    
+    // Set values
+    frame.mouseX = 100;
+    frame.mouseY = 200;
+    
+    REQUIRE(frame.mouseX == 100);
+    REQUIRE(frame.mouseY == 200);
 }

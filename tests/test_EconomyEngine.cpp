@@ -48,6 +48,7 @@ public:
     Result<bool> buildFloor(int floor) override { return Result<bool>::success(true); }
     bool isFloorBuilt(int floor) const override { return floor >= 0 && floor < maxFloors_; }
     int builtFloorCount() const override { return maxFloors_; }
+    int getTenantCount() const override { return static_cast<int>(tenants_.size()); }
     
     Result<bool> placeTenant(TileCoord anchor, TenantType type, int width, EntityId entity) override {
         return Result<bool>::success(true);
