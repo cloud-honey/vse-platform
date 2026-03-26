@@ -1,4 +1,4 @@
-name: macOS Build
+name: Ubuntu Build
 
 on:
   push:
@@ -8,22 +8,22 @@ on:
 
 jobs:
   build:
-    name: macOS Build
-    runs-on: macos-latest
+    name: Ubuntu Build
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install SDL2 dependencies via brew
+      - name: Install SDL2 dependencies
         run: |
-          brew install sdl2 sdl2_image sdl2_ttf
+          sudo apt-get update -qq
+          sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 
       - name: Configure CMake
         run: |
           cmake -B build \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_OSX_ARCHITECTURES="arm64"
+            -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --parallel
