@@ -3,8 +3,7 @@
 #include <memory>
 
 // Forward declaration to avoid including SDL_ttf.h in header
-struct _TTF_Font;
-typedef struct _TTF_Font TTF_Font;
+#include <SDL_ttf.h>
 
 namespace vse {
 
