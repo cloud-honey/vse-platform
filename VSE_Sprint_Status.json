@@ -13,7 +13,8 @@
       "status": "done",
       "qa_status": "pass",
       "confirmed_by_human": true,
-      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2"
+      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2",
+      "difficulty": 3
     },
     {
       "id": "TASK-03-002",
@@ -25,7 +26,8 @@
       "confirmed_by_human": true,
       "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2",
       "commit": "eb28060",
-      "tests": "244/244"
+      "tests": "244/244",
+      "difficulty": 3
     },
     {
       "id": "TASK-03-003",
@@ -35,7 +37,8 @@
       "status": "done",
       "qa_status": "pass",
       "confirmed_by_human": true,
-      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
+      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060",
+      "difficulty": 3
     },
     {
       "id": "TASK-03-004",
@@ -45,7 +48,8 @@
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽"
+      "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽",
+      "difficulty": 2
     },
     {
       "id": "TASK-03-005",
@@ -55,7 +59,8 @@
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "ImGui HUD — 잔액 표시, 별점 아이콘"
+      "notes": "ImGui HUD — 잔액 표시, 별점 아이콘",
+      "difficulty": 2
     },
     {
       "id": "TASK-03-006",
@@ -65,7 +70,8 @@
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드"
+      "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드",
+      "difficulty": 3
     },
     {
       "id": "TASK-03-007",
@@ -75,7 +81,8 @@
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "Steam 빌드 준비, macOS + Windows 패키지"
+      "notes": "Steam 빌드 준비, macOS + Windows 패키지",
+      "difficulty": 4
     }
   ],
   "escalations": [],
@@ -757,6 +764,10 @@
       "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
       "status": "completed",
       "commit": "db6d957",
+      "tests": "—",
+      "difficulty": 2,
+      "reviewer": {},
+      "reviewer_note": "문서 동기화 태스크 — 교차 검증 스킵",
       "date": "2026-03-26"
     },
     {
@@ -765,14 +776,7 @@
       "status": "completed",
       "commit": "7dfb3c2",
       "tests": "229/229",
-      "date": "2026-03-26"
-    },
-    {
-      "id": "TASK-03-002",
-      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
-      "status": "completed",
-      "commit": "7dfb3c2",
-      "tests": "229/229",
+      "difficulty": 3,
       "reviewer": {
         "deepseek": "Conditional Pass",
         "gpt": "Conditional Pass",
@@ -781,11 +785,12 @@
       "date": "2026-03-26"
     },
     {
-      "id": "TASK-03-003",
+      "id": "TASK-03-002",
       "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
       "status": "completed",
       "commit": "eb28060",
       "tests": "244/244",
+      "difficulty": 3,
       "reviewer": {
         "deepseek": "Pass",
         "gpt": "Conditional Pass",

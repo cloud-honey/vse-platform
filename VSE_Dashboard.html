@@ -673,6 +673,7 @@ function render(d){
     if (l.includes('pass')) return '#27ae60';
     return '#888';
   };
+  const diffStars = n => n ? '⭐'.repeat(Math.min(n,5)) : '';
   const allCompleted = [
     ...(d.sprint1_tasks||[]).filter(t=>t.status==='done'),
     ...(d.sprint2_completed||[]),
@@ -695,6 +696,7 @@ function render(d){
         return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
             <span style="font-size:11px;color:#888;font-weight:600;">${t.id}</span>
+            ${t.difficulty ? `<span style="font-size:11px;" title="난이도">${diffStars(t.difficulty)}</span>` : ''}
             ${t.tests ? `<span style="font-size:11px;color:var(--green);margin-left:auto;">✅ ${t.tests}</span>` : ''}
           </div>
           <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4;">${t.title||''}</div>
