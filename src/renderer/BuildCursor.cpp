@@ -34,21 +34,22 @@ void BuildCursor::draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouse
 void BuildCursor::drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor, int tileSize)
 {
     // 전체 층 너비 하이라이트 (파랑, alpha 100)
+    SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
     SDL_SetRenderDrawColor(r, 0, 120, 255, 100);
-    
-    // 층의 모든 타일에 대해 하이라이트
-    for (int x = 0; x < cam.viewportW() / tileSize + 2; ++x) {
+
+    float zoom = cam.zoomLevel();
+    float scaledTile = tileSize * zoom;
+    // zoom 적용된 타일 크기 기준으로 가시 타일 수 계산
+    int visibleTiles = static_cast<int>(cam.viewportW() / scaledTile) + 2;
+
+    float screenY = cam.tileToScreenY(floor);
+
+    for (int x = 0; x < visibleTiles; ++x) {
         float screenX = cam.tileToScreenX(x);
-        float screenY = cam.tileToScreenY(floor);
-        
-        SDL_Rect rect = {
-            static_cast<int>(screenX),
-            static_cast<int>(screenY),
-            tileSize,
-            tileSize
-        };
-        
-        SDL_RenderFillRect(r, &rect);
+        if (screenX + scaledTile < 0 || screenX > cam.viewportW()) continue;
+
+        SDL_FRect rect = {screenX, screenY, scaledTile, scaledTile};
+        SDL_RenderFillRectF(r, &rect);
     }
 }
 
@@ -61,23 +62,20 @@ void BuildCursor::drawTenantHighlight(SDL_Renderer* r, const Camera& cam, int ti
     // 시작 타일 위치 계산 (중앙 정렬)
     int startX = tileX - width / 2;
     
+    SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
+    float zoom = cam.zoomLevel();
+    float scaledTile = tileSize * zoom;
+    float screenY = cam.tileToScreenY(floor);
+
     for (int i = 0; i < width; ++i) {
         int currentX = startX + i;
-        
-        // 타일이 그리드 내에 있는지 확인
         if (currentX < 0) continue;
-        
+
         float screenX = cam.tileToScreenX(currentX);
-        float screenY = cam.tileToScreenY(floor);
-        
-        SDL_Rect rect = {
-            static_cast<int>(screenX),
-            static_cast<int>(screenY),
-            tileSize,
-            tileSize
-        };
-        
-        SDL_RenderFillRect(r, &rect);
+        if (screenX + scaledTile < 0 || screenX > cam.viewportW()) continue;
+
+        SDL_FRect rect = {screenX, screenY, scaledTile, scaledTile};
+        SDL_RenderFillRectF(r, &rect);
     }
 }
 

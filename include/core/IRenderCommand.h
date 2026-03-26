@@ -1,6 +1,6 @@
 #pragma once
 #include "core/Types.h"
-#include "renderer/BuildModeState.h"
+#include "core/InputTypes.h"
 #include <vector>
 #include <cstdint>
 #include <string>

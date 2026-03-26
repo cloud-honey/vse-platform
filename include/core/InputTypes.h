@@ -113,4 +113,15 @@ struct GameCommand {
     }
 };
 
+// BuildModeState — 렌더러 빌드 모드 상태 (RenderFrame 전달용)
+// Layer 0 데이터 계약 (값 타입, 코드 로직 없음)
+enum class BuildAction { None, BuildFloor, PlaceTenant };
+
+struct BuildModeState {
+    BuildAction action     = BuildAction::None;
+    int         tenantType  = 0;   // 0=Office, 1=Residential, 2=Commercial
+    int         tenantWidth = 1;
+    bool        active      = false;
+};
+
 } // namespace vse
