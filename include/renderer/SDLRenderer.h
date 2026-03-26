@@ -2,6 +2,10 @@
 #include "core/IRenderCommand.h"
 #include "renderer/Camera.h"
 #include "renderer/DebugPanel.h"
+#include "renderer/SpriteSheet.h"
+#include "renderer/AnimationSystem.h"
+#include <unordered_map>
+#include <cstdint>
 
 // Forward declarations — SDL2 타입 (include 금지 in headers)
 struct SDL_Window;
@@ -48,12 +52,19 @@ private:
     void drawGridLines(const RenderFrame& frame, const Camera& camera);
     void drawTiles(const RenderFrame& frame, const Camera& camera);
     void drawElevators(const RenderFrame& frame, const Camera& camera);
-    void drawAgents(const RenderFrame& frame, const Camera& camera);
+    void drawAgents(const RenderFrame& frame, const Camera& camera, float dt);
     void drawFloorLabels(const RenderFrame& frame, const Camera& camera);
 
     SDL_Window*   window_      = nullptr;
     SDL_Renderer* renderer_    = nullptr;
     DebugPanel    debugPanel_;              // Design Spec: 별도 구성요소로 분리
+    
+    // Sprite sheet system
+    std::unique_ptr<SpriteSheet> npcSheet_;
+    AnimationSystem animationSystem_;
+    
+    // Frame time tracking for animation
+    float lastFrameTime_ = 0.0f;
 };
 
 } // namespace vse

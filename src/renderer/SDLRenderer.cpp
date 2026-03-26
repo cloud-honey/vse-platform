@@ -10,7 +10,10 @@
 
 namespace vse {
 
-SDLRenderer::SDLRenderer() = default;
+SDLRenderer::SDLRenderer() 
+    : lastFrameTime_(0.0f)
+{
+}
 
 SDLRenderer::~SDLRenderer()
 {
@@ -49,6 +52,14 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 
+    // Load sprite sheet
+    std::string spritePath = std::string(VSE_PROJECT_ROOT) + "/content/sprites/npc_sheet.png";
+    npcSheet_ = std::make_unique<SpriteSheet>(renderer_, spritePath);
+    
+    if (!npcSheet_->isLoaded()) {
+        spdlog::warn("Sprite sheet not loaded, using fallback rendering");
+    }
+
     // Dear ImGui 초기화
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -79,6 +90,16 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 {
     if (!renderer_) return;
 
+    // Calculate delta time for animation
+    float currentTime = static_cast<float>(SDL_GetTicks()) / 1000.0f;
+    float dt = 0.0f;
+    if (lastFrameTime_ > 0.0f) {
+        dt = currentTime - lastFrameTime_;
+        // Clamp delta time to avoid large jumps
+        if (dt > 0.1f) dt = 0.1f;
+    }
+    lastFrameTime_ = currentTime;
+
     // 배경 클리어 — 어두운 블루-그레이 (건물 대비 강화)
     SDL_SetRenderDrawColor(renderer_, 40, 44, 52, 255);
     SDL_RenderClear(renderer_);
@@ -97,8 +118,8 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         drawGridLines(frame, camera);
     }
 
-    // 에이전트 렌더링 (TASK-01-008)
-    drawAgents(frame, camera);
+    // 에이전트 렌더링 (TASK-03-003: Sprite Sheet 시스템)
+    drawAgents(frame, camera, dt);
 
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
@@ -225,17 +246,16 @@ void SDLRenderer::drawElevators(const RenderFrame& frame, const Camera& camera)
     }
 }
 
-void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
+void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera, float dt)
 {
-    // NPC Phase 1 렌더링: 16×32px 전체 실루엣 컬러 박스
-    // 규격 준수 (GPT-5.4 검토 반영): 머리 포함 전체 외곽을 16×32 안에 수용
+    // TASK-03-003: Sprite Sheet 렌더링 시스템
+    // NPC 렌더링: 16×32px 스프라이트 시트 또는 폴백 컬러 박스
     //
     // 좌표 계약:
     //   agent.pos = NPC 발바닥 월드 픽셀 (좌하단 원점, Y↑)
     //   sy = worldToScreenY(pos.y) → 발바닥의 화면 y
     //   drawY = sy - npcH → 스프라이트 상단 화면 y (SDL2 좌상단 원점 기준)
     //
-    // 상태별 색상: Idle=회색, Working=파랑, Resting=주황
     // agents는 Y-sort(pos.y 오름차순) 완료 상태로 전달됨
 
     float zoom = camera.zoomLevel();
@@ -244,11 +264,6 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
     // NPC 전체 크기: 16×32px (tileSize 기준 — 타일 절반 너비, 한 층 높이)
     float npcW = (ts * 0.5f) * zoom;
     float npcH = ts * zoom;
-
-    // 머리 크기: 전체 높이의 상위 30% (npcH * 0.3), 16×32 규격 안에 포함
-    float headH    = npcH * 0.30f;
-    float bodyH    = npcH - headH;           // 몸통 = 나머지 70%
-    float headW    = npcW * 0.75f;           // 머리 너비 (약간 좁게)
 
     for (const auto& agent : frame.agents) {
         // pos(발바닥 월드 픽셀) → 화면 좌표
@@ -260,48 +275,62 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera)
         if (sx + npcW < 0 || sx > camera.viewportW()) continue;
         if (drawY + npcH < 0 || drawY > camera.viewportH()) continue;
 
-        // 상태별 색상 (TASK-02-008: 고채도 색상으로 NPC 가시성 향상)
-        uint8_t r, g, b;
-        switch (agent.state) {
-        case AgentState::Working:
-            r = 0;   g = 220; b = 100;  // 밝은 초록
-            break;
-        case AgentState::Resting:
-            r = 255; g = 220; b = 50;   // 밝은 노랑
-            break;
-        case AgentState::WaitingElevator:
-            r = 180; g = 100; b = 255;  // 밝은 보라
-            break;
-        case AgentState::InElevator:
-            r = 120; g = 70;  b = 180;  // 어두운 보라
-            break;
-        case AgentState::Idle:
-        default:
-            r = 0;   g = 200; b = 220;  // 밝은 시안
-            break;
+        // Get animation frame from AnimationSystem
+        int frameIndex = animationSystem_.getFrame(agent.id, agent.state, dt);
+        
+        // Draw using sprite sheet (or fallback)
+        if (npcSheet_) {
+            npcSheet_->drawFrame(frameIndex, sx, drawY, npcW, npcH);
+        } else {
+            // Fallback to colored rectangles (should not happen if sprite sheet loaded)
+            // 상태별 색상 (TASK-02-008: 고채도 색상으로 NPC 가시성 향상)
+            uint8_t r, g, b;
+            switch (agent.state) {
+            case AgentState::Working:
+                r = 0;   g = 220; b = 100;  // 밝은 초록
+                break;
+            case AgentState::Resting:
+                r = 255; g = 220; b = 50;   // 밝은 노랑
+                break;
+            case AgentState::WaitingElevator:
+                r = 180; g = 100; b = 255;  // 밝은 보라
+                break;
+            case AgentState::InElevator:
+                r = 120; g = 70;  b = 180;  // 어두운 보라
+                break;
+            case AgentState::Idle:
+            default:
+                r = 0;   g = 200; b = 220;  // 밝은 시안
+                break;
+            }
+
+            // 머리 크기: 전체 높이의 상위 30% (npcH * 0.3), 16×32 규격 안에 포함
+            float headH    = npcH * 0.30f;
+            float bodyH    = npcH - headH;           // 몸통 = 나머지 70%
+            float headW    = npcW * 0.75f;           // 머리 너비 (약간 좁게)
+
+            // ── 머리 (상단 30%) ─────────────────────────────
+            // 16×32 박스 안에 배치 — 규격 위반 없음
+            float headX = sx + (npcW - headW) * 0.5f;
+            SDL_SetRenderDrawColor(renderer_,
+                static_cast<uint8_t>(std::min(255, static_cast<int>(r) + 50)),
+                static_cast<uint8_t>(std::min(255, static_cast<int>(g) + 35)),
+                static_cast<uint8_t>(std::min(255, static_cast<int>(b) + 25)),
+                230);
+            SDL_FRect head = {headX, drawY, headW, headH};
+            SDL_RenderFillRectF(renderer_, &head);
+
+            // ── 몸통 (하단 70%) ─────────────────────────────
+            float bodyY = drawY + headH;
+            SDL_SetRenderDrawColor(renderer_, r, g, b, 230);
+            SDL_FRect body = {sx, bodyY, npcW, bodyH};
+            SDL_RenderFillRectF(renderer_, &body);
+
+            // ── 전체 외곽 테두리 (1px 흰색 아웃라인, NPC 가시성 향상) ────────
+            SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 180);
+            SDL_FRect outline = {sx, drawY, npcW, npcH};
+            SDL_RenderDrawRectF(renderer_, &outline);
         }
-
-        // ── 머리 (상단 30%) ─────────────────────────────
-        // 16×32 박스 안에 배치 — 규격 위반 없음
-        float headX = sx + (npcW - headW) * 0.5f;
-        SDL_SetRenderDrawColor(renderer_,
-            static_cast<uint8_t>(std::min(255, static_cast<int>(r) + 50)),
-            static_cast<uint8_t>(std::min(255, static_cast<int>(g) + 35)),
-            static_cast<uint8_t>(std::min(255, static_cast<int>(b) + 25)),
-            230);
-        SDL_FRect head = {headX, drawY, headW, headH};
-        SDL_RenderFillRectF(renderer_, &head);
-
-        // ── 몸통 (하단 70%) ─────────────────────────────
-        float bodyY = drawY + headH;
-        SDL_SetRenderDrawColor(renderer_, r, g, b, 230);
-        SDL_FRect body = {sx, bodyY, npcW, bodyH};
-        SDL_RenderFillRectF(renderer_, &body);
-
-        // ── 전체 외곽 테두리 (1px 흰색 아웃라인, NPC 가시성 향상) ────────
-        SDL_SetRenderDrawColor(renderer_, 255, 255, 255, 180);
-        SDL_FRect outline = {sx, drawY, npcW, npcH};
-        SDL_RenderDrawRectF(renderer_, &outline);
     }
 }
 
