@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T12:25:00+09:00",
+  "updated_at": "2026-03-26T12:35:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -13,76 +13,74 @@
       "status": "done",
       "qa_status": "pass",
       "confirmed_by_human": true,
-      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2",
-      "difficulty": 3
+      "difficulty": 3,
+      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2"
     },
     {
       "id": "TASK-03-002",
-      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
+      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
       "assignee": "DeepSeek V3",
       "layer": "Layer 1",
       "status": "done",
       "qa_status": "pass",
       "confirmed_by_human": true,
-      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2",
-      "commit": "eb28060",
-      "tests": "244/244",
-      "difficulty": 3
+      "difficulty": 3,
+      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
     },
     {
       "id": "TASK-03-003",
-      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
-      "assignee": "DeepSeek V3",
+      "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
+      "assignee": "TBD",
       "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
-      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060",
-      "difficulty": 3
+      "status": "pending",
+      "qa_status": "pending",
+      "confirmed_by_human": false,
+      "difficulty": 3,
+      "notes": ""
     },
     {
       "id": "TASK-03-004",
-      "title": "카메라 개선 (건물 외관, 층 라벨)",
+      "title": "카메라 개선 (건물 외관, 층 라벨, SDL2_ttf 텍스트)",
       "assignee": "TBD",
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "SDL2_ttf 텍스트, 층 번호, 건물 외벽",
-      "difficulty": 2
+      "difficulty": 2,
+      "notes": ""
     },
     {
       "id": "TASK-03-005",
-      "title": "게임 UI (잔액, 별점, 인게임 HUD)",
+      "title": "게임 UI (잔액, 별점, 인게임 HUD — ImGui)",
       "assignee": "TBD",
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "ImGui HUD — 잔액 표시, 별점 아이콘",
-      "difficulty": 2
+      "difficulty": 2,
+      "notes": ""
     },
     {
       "id": "TASK-03-006",
-      "title": "건물 건설 인터랙션 (클릭으로 층/테넌트 배치)",
+      "title": "건물 건설 인터랙션 (마우스 클릭 → BuildFloor/PlaceTenant)",
       "assignee": "TBD",
       "layer": "Layer 3",
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "마우스 클릭 → BuildFloor/PlaceTenant 커맨드",
-      "difficulty": 3
+      "difficulty": 3,
+      "notes": ""
     },
     {
       "id": "TASK-03-007",
-      "title": "통합 + 알파 버전 확인",
+      "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
       "assignee": "TBD",
       "layer": "전체",
       "status": "pending",
       "qa_status": "pending",
       "confirmed_by_human": false,
-      "notes": "Steam 빌드 준비, macOS + Windows 패키지",
-      "difficulty": 4
+      "difficulty": 4,
+      "notes": ""
     }
   ],
   "escalations": [],
@@ -313,6 +311,30 @@
       "time": "19:52",
       "title": "Sprint 3 계획 확정",
       "detail": "9태스크 정의. 난이도 ⭐⭐~⭐⭐⭐⭐. 대시보드 Sprint 탭 전환 (S2✅, S3🔥). 난이도 표시 추가."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "08:20",
+      "title": "TASK-03-000 Design Spec v1.5 동기화 완료",
+      "detail": "VSE_Design_Spec.md v1.4 → v1.5. Bootstrapper/SaveMetadata/StarRatingChangedPayload 반영. 커밋 db6d957"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "08:37",
+      "title": "TASK-03-001 NPC AI 고도화 완료",
+      "detail": "stress 필드, 만족도 감소/증가 로직, leave threshold, SaveLoad 직렬화. 붐2(DeepSeek) 구현 + 붐 직접 반영. 229/229 통과. 3모델 Conditional Pass. 커밋 7dfb3c2"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "10:38",
+      "title": "TASK-03-002 테넌트 3종 완전 구현 완료",
+      "detail": "TenantComponent ECS, TenantSystem (입주/퇴거/임대료/유지비), SaveLoad 직렬화. 붐2(DeepSeek) 구현. 244/244 통과. GPT/Gemini/DeepSeek 3모델 교차 검증 완료. 커밋 eb28060"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "12:25",
+      "title": "대시보드 완료 보고서 & 교차 검증 카드 추가",
+      "detail": "🔍 완료 보고서 섹션 신설. Sprint 1/2/3 전체 태스크 3모델 판정 표시. 난이도 ⭐ 표시 추가."
     }
   ],
   "references": [
