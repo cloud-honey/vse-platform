@@ -45,10 +45,10 @@ void HUDPanel::draw(const RenderFrame& frame)
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", starsStr.c_str());
 
     // Row 3: Current tick
-    ImGui::Text("T:%d", frame.currentTick);
+    ImGui::Text("Tick:%d", frame.currentTick);
 
     // Row 4: Tenants/NPCs
-    ImGui::Text("T:%d NPC:%d", frame.tenantCount, frame.npcCount);
+    ImGui::Text("Tenants:%d NPC:%d", frame.tenantCount, frame.npcCount);
 
     ImGui::End();
 }

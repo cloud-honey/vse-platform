@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/usr/bin/x86_64-w64-mingw32-g++-posix")
+set(CMAKE_CXX_COMPILER "/usr/bin/x86_64-w64-mingw32-g++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "13.0.0")
@@ -21,19 +21,19 @@ set(CMAKE_CXX_SIMULATE_ID "")
 set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "GNU")
 set(CMAKE_CXX_COMPILER_APPLE_SYSROOT "")
 set(CMAKE_CXX_SIMULATE_VERSION "")
-set(CMAKE_CXX_COMPILER_ARCHITECTURE_ID "x86_64")
+set(CMAKE_CXX_COMPILER_ARCHITECTURE_ID "")
 
 
 
 
 set(CMAKE_AR "/usr/bin/x86_64-w64-mingw32-ar")
-set(CMAKE_CXX_COMPILER_AR "/usr/bin/x86_64-w64-mingw32-gcc-ar-posix")
+set(CMAKE_CXX_COMPILER_AR "/usr/bin/x86_64-w64-mingw32-gcc-ar")
 set(CMAKE_RANLIB "/usr/bin/x86_64-w64-mingw32-ranlib")
-set(CMAKE_CXX_COMPILER_RANLIB "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-posix")
+set(CMAKE_CXX_COMPILER_RANLIB "/usr/bin/x86_64-w64-mingw32-gcc-ranlib")
 set(CMAKE_LINKER "/usr/bin/x86_64-w64-mingw32-ld")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
-set(CMAKE_CXX_COMPILER_LINKER "NOTFOUND")
+set(CMAKE_CXX_COMPILER_LINKER "")
 set(CMAKE_CXX_COMPILER_LINKER_ID "")
 set(CMAKE_CXX_COMPILER_LINKER_VERSION )
 set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT )
@@ -42,7 +42,7 @@ set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
 set(CMAKE_CXX_COMPILER_LOADED 1)
 set(CMAKE_CXX_COMPILER_WORKS TRUE)
-set(CMAKE_CXX_ABI_COMPILED TRUE)
+set(CMAKE_CXX_ABI_COMPILED 0)
 
 set(CMAKE_CXX_COMPILER_ENV_VAR "CXX")
 
@@ -65,9 +65,9 @@ set(CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED TRUE)
 set(CMAKE_CXX_LINKER_PUSHPOP_STATE_SUPPORTED )
 
 # Save compiler ABI information.
-set(CMAKE_CXX_SIZEOF_DATA_PTR "8")
+set(CMAKE_CXX_SIZEOF_DATA_PTR "")
 set(CMAKE_CXX_COMPILER_ABI "")
-set(CMAKE_CXX_BYTE_ORDER "LITTLE_ENDIAN")
+set(CMAKE_CXX_BYTE_ORDER "")
 set(CMAKE_CXX_LIBRARY_ARCHITECTURE "")
 
 if(CMAKE_CXX_SIZEOF_DATA_PTR)
@@ -91,9 +91,9 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed;/usr/x86_64-w64-mingw32/include")
-set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;mingw32;gcc_s;gcc;moldname;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc_s;gcc;moldname;mingwex;kernel32")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "/usr/lib/gcc/x86_64-w64-mingw32/13-posix;/usr/x86_64-w64-mingw32/lib")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "")
+set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
 

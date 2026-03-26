@@ -1,2 +1,0 @@
-/usr/bin/x86_64-w64-mingw32-ar qc libimgui.a "CMakeFiles/imgui.dir/_deps/imgui-src/imgui.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_draw.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_tables.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_widgets.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/imgui_demo.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdl2.cpp.obj" "CMakeFiles/imgui.dir/_deps/imgui-src/backends/imgui_impl_sdlrenderer2.cpp.obj"
-/usr/bin/x86_64-w64-mingw32-ranlib libimgui.a
