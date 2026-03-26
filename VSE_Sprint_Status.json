@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T13:45:00+09:00",
+  "updated_at": "2026-03-26T14:05:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -52,13 +52,13 @@
     {
       "id": "TASK-03-004",
       "title": "카메라 개선 (건물 외관, 층 라벨, SDL2_ttf 텍스트)",
-      "assignee": "TBD",
+      "assignee": "붐2+붐",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
       "difficulty": 2,
-      "notes": ""
+      "notes": "263/263 tests, commit 66ebb74"
     },
     {
       "id": "TASK-03-005",
@@ -358,6 +358,12 @@
       "time": "13:45",
       "title": "TASK-03-003 교차 검증 완료 (GPT+DeepSeek Conditional Pass → 수정 후 Pass)",
       "detail": "Resting 프레임을 Elevator(7)와 분리(6 단독), dt>frameDuration 멀티프레임 스킵 수정. 252/252 통과. commit 53666df"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:05",
+      "title": "TASK-03-004 카메라 개선 완료",
+      "detail": "FontManager (SDL2_ttf, 폴백 지원), drawFloorLabels() 층 라벨 구현, 건물 외관 지브라 패턴. 붐2 구현 + 붐 버그픽스(CMakeLists FontManager.cpp 등록). 263/263 통과. commit 66ebb74"
     }
   ],
   "references": [
@@ -855,6 +861,17 @@
         "gpt": "Conditional Pass"
       },
       "reviewer_note": "수정 반영: Resting/Elevator 프레임 분리, dt 멀티프레임 스킵 수정",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-004",
+      "title": "카메라 개선 (건물 외관, 층 라벨, FontManager + SDL2_ttf)",
+      "status": "completed",
+      "commit": "66ebb74",
+      "tests": "263/263",
+      "difficulty": 2,
+      "reviewer": {},
+      "reviewer_note": "교차 검증 예정",
       "date": "2026-03-26"
     }
   ]
