@@ -79,9 +79,9 @@ private:
     std::vector<ExpenseRecord> expenseHistory_;  // capped at 100 entries
     int64_t dailyIncome_  = 0;
     int64_t dailyExpense_ = 0;
-    int64_t weeklyIncome_ = 0;
-    int64_t weeklyExpense_ = 0;
-    int64_t quarterlyIncome_ = 0;
+    int64_t weeklyIncome_ = 0;      // accumulates since last WeeklyReport reset
+    int64_t weeklyExpense_ = 0;     // accumulates since last WeeklyReport reset
+    int64_t quarterlyIncome_ = 0;   // accumulates since last QuarterlySettlement reset (tax base)
     int     lastRentDay_ = -1;        // guard: collect rent only once per game day
     int     lastMaintenanceDay_ = -1; // guard: pay maintenance only once per game day
     int     lastSettlementDay_ = -1;  // guard: settle only once per day
