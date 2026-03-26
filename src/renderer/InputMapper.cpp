@@ -120,20 +120,24 @@ void InputMapper::processEvent(const SDL_Event& event,
                 }
                 break;
             case BuildAction::PlaceTenant:
-                // PlaceTenant 커맨드 — BuildCursor와 동일하게 중앙 정렬 좌표 사용
+                // PlaceTenant 커맨드 — BuildCursor와 동일하게 중앙 정렬, 우측 경계 클램프
                 if (camera_) {
-                    int tileX = camera_->screenToTileX(event.button.x);
+                    int tileX  = camera_->screenToTileX(event.button.x);
                     int floor  = camera_->screenToTileFloor(event.button.y);
-                    int startX = tileX - buildMode_.tenantWidth / 2; // cursor와 동일
+                    int startX = tileX - buildMode_.tenantWidth / 2;
+                    if (startX < 0) startX = 0;
                     outCommands.push_back(GameCommand::makePlaceTenant(
                         startX, floor, buildMode_.tenantType, buildMode_.tenantWidth));
                 }
                 break;
             case BuildAction::None:
             default:
-                // 기본 SelectTile 커맨드
-                outCommands.push_back(
-                    GameCommand::makeSelectTile(event.button.x, event.button.y));
+                // SelectTile — 픽셀→타일 좌표 변환 후 전달
+                {
+                    int tx = camera_->screenToTileX(event.button.x);
+                    int tf = camera_->screenToTileFloor(event.button.y);
+                    outCommands.push_back(GameCommand::makeSelectTile(tx, tf));
+                }
                 break;
             }
         }
