@@ -364,6 +364,17 @@ h1 span{color:var(--accent);}
     </div>
   </div><!-- /mgrid -->
 
+  <!-- REVIEW REPORTS GRID -->
+  <div class="bgrid" id="reviewGrid">
+    <div class="sec" style="grid-column:1/-1">
+      <div class="sec-hdr">
+        <div class="sec-ttl">🔍 완료 보고서 &amp; 교차 검증</div>
+        <div class="sec-cnt" id="reviewCount">0</div>
+      </div>
+      <div id="reviewList"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
   <!-- HISTORY + REFERENCES GRID -->
   <div class="bgrid" id="extraGrid">
 
@@ -652,6 +663,49 @@ function render(d){
       <div style="color:var(--text2);font-size:12px;line-height:1.6;">${s1.highlight}</div>
     `;
   }
+
+  /* Review Reports */
+  const verdictColor = v => {
+    if (!v) return '#888';
+    const l = v.toLowerCase();
+    if (l.includes('fail')) return '#e74c3c';
+    if (l.includes('conditional')) return '#f39c12';
+    if (l.includes('pass')) return '#27ae60';
+    return '#888';
+  };
+  const allCompleted = [
+    ...(d.sprint1_tasks||[]).filter(t=>t.status==='done'),
+    ...(d.sprint2_completed||[]),
+    ...(d.sprint3_completed||[])
+  ];
+  document.getElementById('reviewCount').textContent = allCompleted.length;
+  document.getElementById('reviewList').innerHTML = allCompleted.length
+    ? `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;padding:4px 0;">` +
+      allCompleted.slice().reverse().map(t => {
+        const rv = t.reviewer || {};
+        const hasReview = Object.keys(rv).length > 0;
+        const reviewHtml = hasReview
+          ? Object.entries(rv).map(([model, verdict]) =>
+              `<span style="display:inline-flex;align-items:center;gap:4px;margin:2px 4px 2px 0;font-size:11px;">
+                <span style="color:#aaa;text-transform:uppercase;">${model}:</span>
+                <span style="color:${verdictColor(verdict)};font-weight:600;">${verdict}</span>
+              </span>`
+            ).join('')
+          : `<span style="color:#666;font-size:11px;">교차 검증 없음</span>`;
+        return `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:11px;color:#888;font-weight:600;">${t.id}</span>
+            ${t.tests ? `<span style="font-size:11px;color:var(--green);margin-left:auto;">✅ ${t.tests}</span>` : ''}
+          </div>
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4;">${t.title||''}</div>
+          ${t.commit ? `<div style="font-size:11px;color:#888;margin-bottom:6px;">commit: <code style="background:#1a1a2e;padding:1px 5px;border-radius:3px;">${t.commit}</code></div>` : ''}
+          <div style="border-top:1px solid var(--border);padding-top:8px;margin-top:4px;">
+            <div style="font-size:11px;color:#aaa;margin-bottom:4px;font-weight:600;">🔍 3모델 교차 검증</div>
+            <div>${reviewHtml}</div>
+          </div>
+        </div>`;
+      }).join('') + `</div>`
+    : '<div class="empty">완료된 태스크 없음</div>';
 
   /* History */
   const hist=(d.history||[]).slice().reverse(); // newest first

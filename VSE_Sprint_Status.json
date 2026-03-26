@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T09:00:00+09:00",
+  "updated_at": "2026-03-26T12:25:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -17,25 +17,25 @@
     },
     {
       "id": "TASK-03-002",
-      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
+      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
       "assignee": "DeepSeek V3",
       "layer": "Layer 1",
       "status": "done",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
-      "notes": "임대료 공식, 입주 조건, 퇴거 로직",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2",
       "commit": "eb28060",
       "tests": "244/244"
     },
     {
       "id": "TASK-03-003",
-      "title": "스프라이트 시트 렌더링 전환 (Phase 2)",
-      "assignee": "TBD",
+      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
+      "assignee": "DeepSeek V3",
       "layer": "Layer 3",
-      "status": "pending",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
-      "notes": "16×32 픽셀아트 스프라이트, 상태별 애니메이션"
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
     },
     {
       "id": "TASK-03-004",
@@ -580,7 +580,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "Bootstrapper 클래스 분리 완료. main.cpp 3줄로 단순화. 147/147 테스트 통과.",
-      "difficulty": 2
+      "difficulty": 2,
+      "reviewer": {
+        "gpt": "Conditional Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "b6163ad",
+      "tests": "147/147",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-002",
@@ -592,7 +600,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "통합 테스트 3종 완료 (엘리베이터, NPC 일과, SimClock+EventBus). 150/150 통과. 커밋 4283d50",
-      "difficulty": 2
+      "difficulty": 2,
+      "reviewer": {
+        "gpt": "Conditional Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "0939eca",
+      "tests": "150/150",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-003",
@@ -604,7 +620,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "IEconomyEngine + EconomyEngine (int64_t Cents). 임대료/유지비/잔액/이력 20개 테스트. 170/170 통과. 커밋 4a914f7",
-      "difficulty": 3
+      "difficulty": 3,
+      "reviewer": {
+        "gpt": "Conditional Pass",
+        "gemini": "Conditional Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "8932cb6",
+      "tests": "170/170",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-004",
@@ -616,7 +640,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "StarRatingSystem 구현. 별점 1~5, NPC 만족도 기반. 174/174 통과. 커밋 168f047",
-      "difficulty": 3
+      "difficulty": 3,
+      "reviewer": {
+        "gpt": "Conditional Pass",
+        "gemini": "Conditional Pass",
+        "deepseek": "Conditional Pass"
+      },
+      "commit": "168f047",
+      "tests": "174/174",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-005",
@@ -628,7 +660,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "AgentSystem 엘리베이터 연동. WaitingElevator→InElevator→Working 다층 이동. 10개 신규 테스트. 184/184 통과. TransportSystem Idle 동층 호출 버그 수정.",
-      "difficulty": 3
+      "difficulty": 3,
+      "reviewer": {
+        "gpt": "Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "c5ff00c",
+      "tests": "187/187",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-006",
@@ -640,7 +680,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "ISaveLoad + SaveLoadSystem (MessagePack). Manual serialization, 2-pass entity remap, non-ECS export/import. 200/200 통과. 커밋 794e058",
-      "difficulty": 4
+      "difficulty": 4,
+      "reviewer": {
+        "gpt": "Pass (Post-Fix)",
+        "gemini": "Pass",
+        "deepseek": "Pass (Post-Fix)"
+      },
+      "commit": "5d76eb6",
+      "tests": "201/201",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-007",
@@ -652,7 +700,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "600 ticks마다 파일 변경 감지. 개발 편의성 향상.",
-      "difficulty": 2
+      "difficulty": 2,
+      "reviewer": {
+        "gpt": "Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "5785367",
+      "tests": "213/213",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-008",
@@ -664,7 +720,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "Sprint 1 Windows 실행 피드백 반영. 배경/건물 색상 대비, 로비 표시, NPC 가시성.",
-      "difficulty": 2
+      "difficulty": 2,
+      "reviewer": {
+        "gpt": "Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "9d94865",
+      "tests": "213/213",
+      "date": "2026-03-25"
     },
     {
       "id": "TASK-02-009",
@@ -676,7 +740,15 @@
       "design_check": "pending",
       "confirmed_by_human": false,
       "notes": "누적 액션 8개 처리: const_cast 제거, StarRatingChangedPayload Types.h 이동, epsilon 문서화, API 결정 기록, NPC 타이밍+경제별점 통합 테스트 2개 추가. Windows 빌드 완료. 215/215 통과.",
-      "difficulty": 3
+      "difficulty": 3,
+      "reviewer": {
+        "gpt": "Pass",
+        "gemini": "Pass",
+        "deepseek": "Pass"
+      },
+      "commit": "97e879c",
+      "tests": "215/215",
+      "date": "2026-03-25"
     }
   ],
   "sprint3_completed": [
@@ -693,6 +765,32 @@
       "status": "completed",
       "commit": "7dfb3c2",
       "tests": "229/229",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-002",
+      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
+      "status": "completed",
+      "commit": "7dfb3c2",
+      "tests": "229/229",
+      "reviewer": {
+        "deepseek": "Conditional Pass",
+        "gpt": "Conditional Pass",
+        "gemini": "Conditional Pass"
+      },
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-003",
+      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
+      "status": "completed",
+      "commit": "eb28060",
+      "tests": "244/244",
+      "reviewer": {
+        "deepseek": "Pass",
+        "gpt": "Conditional Pass",
+        "gemini": "Fail→수정 후 Pass"
+      },
       "date": "2026-03-26"
     }
   ]
