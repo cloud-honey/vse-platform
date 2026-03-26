@@ -1,5 +1,0 @@
-if(EXISTS "/home/sykim/.openclaw/workspace/vse-platform/build3/tests/TowerTycoonTests-b12d07c_tests.cmake")
-  include("/home/sykim/.openclaw/workspace/vse-platform/build3/tests/TowerTycoonTests-b12d07c_tests.cmake")
-else()
-  add_test(TowerTycoonTests_NOT_BUILT-b12d07c TowerTycoonTests_NOT_BUILT-b12d07c)
-endif()
