@@ -6,6 +6,17 @@
   "overall_status": "in_progress",
   "tasks": [
     {
+      "id": "TASK-03-000",
+      "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
+      "assignee": "붐",
+      "layer": "문서",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 2,
+      "notes": "Bootstrapper/SaveMetadata/StarRatingChangedPayload 반영. 커밋 db6d957"
+    },
+    {
       "id": "TASK-03-001",
       "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
       "assignee": "DeepSeek V3",
