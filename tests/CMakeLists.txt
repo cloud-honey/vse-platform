@@ -22,6 +22,7 @@ add_executable(TowerTycoonTests
     test_SpriteSheet.cpp
     test_HUDPanel.cpp
     test_EconomyLoop.cpp
+    test_StairMovement.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE

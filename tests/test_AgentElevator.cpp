@@ -19,8 +19,8 @@ struct PreloadedConfig : ConfigManager {
 // ── 엘리베이터 포함 테스트 픽스처 ────────────────────────────────────────────
 // 층 구성:
 //   floor 0: 거주지 (homeTenant, x=0~1)
-//   floor 2: 직장   (workTenant, x=0~1)
-//   elevator shaft x=0, floor 0~2
+//   floor 6: 직장   (workTenant, x=0~1)
+//   elevator shaft x=0, floor 0~6
 struct ElevFixture {
     EventBus         bus;
     PreloadedConfig  cfg;
@@ -39,12 +39,11 @@ struct ElevFixture {
         , agents(grid, bus, transport)
     {
         // 층 0 (auto), 1, 2 건설
-        grid.buildFloor(1);
-        grid.buildFloor(2);
+        for (int f = 1; f <= 6; ++f) grid.buildFloor(f);
 
-        // elevator shaft x=0, floor 0~2
-        grid.placeElevatorShaft(0, 0, 2);
-        auto elevResult = transport.createElevator(0, 0, 2, 8);
+        // elevator shaft x=0, floor 0~6
+        grid.placeElevatorShaft(0, 0, 6);
+        auto elevResult = transport.createElevator(0, 0, 6, 8);
         REQUIRE(elevResult.ok());
         elevId = elevResult.value;
 
@@ -52,9 +51,9 @@ struct ElevFixture {
         homeTenantId = reg.create();
         grid.placeTenant({2, 0}, TenantType::Residential, 2, homeTenantId);
 
-        // 직장 테넌트 floor 2, x=2
+        // 직장 테넌트 floor 6, x=2
         workTenantId = reg.create();
-        grid.placeTenant({2, 2}, TenantType::Office, 2, workTenantId);
+        grid.placeTenant({2, 6}, TenantType::Office, 2, workTenantId);
     }
 
     // 엘리베이터를 특정 층의 Boarding 상태로 만드는 헬퍼
@@ -81,9 +80,9 @@ struct ElevFixture {
     }
 };
 
-// ── Test 1: floor 0 거주 NPC → floor 2 직장 → tick 540 (9am) → WaitingElevator ──
+// ── Test 1: floor 0 거주 NPC → floor 6 직장 → tick 540 (9am) → WaitingElevator ──
 
-TEST_CASE("AgentElevator - NPC floor 0, workplace floor 2 → WaitingElevator at 9am", "[AgentElevator]") {
+TEST_CASE("AgentElevator - NPC floor 0, workplace floor 6 → WaitingElevator at 9am", "[AgentElevator]") {
     ElevFixture f;
 
     // 층 0에 스폰 (거주지 위치)
@@ -159,7 +158,7 @@ TEST_CASE("AgentElevator - NPC exits elevator at target floor, position updated"
     for (int i = 0; i < 15 && !atTarget; ++i) {
         f.transport.update(GameTime{0, 9, 0});
         auto snap = f.transport.getElevatorState(f.elevId);
-        if (snap && snap->currentFloor == 2 &&
+        if (snap && snap->currentFloor == 6 &&
             (snap->state == ElevatorState::DoorOpening ||
              snap->state == ElevatorState::Boarding)) {
             atTarget = true;
@@ -172,7 +171,7 @@ TEST_CASE("AgentElevator - NPC exits elevator at target floor, position updated"
 
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::Working);
     const auto& pos = f.reg.get<PositionComponent>(agentId);
-    REQUIRE(pos.tile.floor == 2);
+    REQUIRE(pos.tile.floor == 6);
 }
 
 // ── Test 4: transport_ = nullptr → WaitingElevator 진입 안 함 ─────────────────
@@ -223,7 +222,7 @@ TEST_CASE("AgentElevator - ElevatorPassengerComponent attached when WaitingEleva
     // ElevatorPassengerComponent 부착 확인
     REQUIRE(f.reg.all_of<ElevatorPassengerComponent>(agentId));
     auto& pc = f.reg.get<ElevatorPassengerComponent>(agentId);
-    REQUIRE(pc.targetFloor == 2);
+    REQUIRE(pc.targetFloor == 6);
     REQUIRE(pc.waiting == true);
 
     // 엘리베이터 Boarding 상태로
@@ -238,7 +237,7 @@ TEST_CASE("AgentElevator - ElevatorPassengerComponent attached when WaitingEleva
     for (int i = 0; i < 15 && !atTarget; ++i) {
         f.transport.update(GameTime{0, 9, 0});
         auto snap = f.transport.getElevatorState(f.elevId);
-        if (snap && snap->currentFloor == 2 &&
+        if (snap && snap->currentFloor == 6 &&
             (snap->state == ElevatorState::DoorOpening ||
              snap->state == ElevatorState::Boarding)) {
             atTarget = true;
@@ -400,16 +399,16 @@ TEST_CASE("AgentElevator - NPC same floor as workplace → normal Working state"
     REQUIRE_FALSE(f.reg.all_of<ElevatorPassengerComponent>(agentId));
 }
 
-// ── Test 11: Return-home elevator — NPC at floor 2 at workEndHour → WaitingElevator ──
+// ── Test 11: Return-home elevator — NPC at floor 6 at workEndHour → WaitingElevator ──
 
-TEST_CASE("AgentElevator - NPC at floor 2 at workEndHour transitions to WaitingElevator when home is floor 0", "[AgentElevator]") {
+TEST_CASE("AgentElevator - NPC at floor 6 at workEndHour transitions to WaitingElevator when home is floor 0", "[AgentElevator]") {
     ElevFixture f;
 
     auto result = f.agents.spawnAgent(f.reg, f.homeTenantId, f.workTenantId);
     REQUIRE(result.ok());
     EntityId agentId = result.value;
 
-    // 9시 → WaitingElevator (출근: floor 0 → floor 2)
+    // 9시 → WaitingElevator (출근: floor 0 → floor 6)
     f.agents.update(f.reg, GameTime{0, 9, 0});
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::WaitingElevator);
 
@@ -424,7 +423,7 @@ TEST_CASE("AgentElevator - NPC at floor 2 at workEndHour transitions to WaitingE
     for (int i = 0; i < 15 && !atTarget; ++i) {
         f.transport.update(GameTime{0, 9, 0});
         auto snap = f.transport.getElevatorState(f.elevId);
-        if (snap && snap->currentFloor == 2 &&
+        if (snap && snap->currentFloor == 6 &&
             (snap->state == ElevatorState::DoorOpening ||
              snap->state == ElevatorState::Boarding)) {
             atTarget = true;
@@ -432,12 +431,12 @@ TEST_CASE("AgentElevator - NPC at floor 2 at workEndHour transitions to WaitingE
     }
     REQUIRE(atTarget);
 
-    // 하차 → Working at floor 2
+    // 하차 → Working at floor 6
     f.agents.update(f.reg, GameTime{0, 9, 0});
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::Working);
-    REQUIRE(f.reg.get<PositionComponent>(agentId).tile.floor == 2);
+    REQUIRE(f.reg.get<PositionComponent>(agentId).tile.floor == 6);
 
-    // 18시 (workEndHour) → WaitingElevator (귀가: floor 2 → floor 0)
+    // 18시 (workEndHour) → WaitingElevator (귀가: floor 6 → floor 0)
     f.agents.update(f.reg, GameTime{0, 18, 0});
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::WaitingElevator);
 
@@ -457,7 +456,7 @@ TEST_CASE("AgentElevator - NPC re-routes to home floor when workEndHour reached 
     REQUIRE(result.ok());
     EntityId agentId = result.value;
 
-    // 9시 → WaitingElevator (출근: floor 0 → floor 2)
+    // 9시 → WaitingElevator (출근: floor 0 → floor 6)
     f.agents.update(f.reg, GameTime{0, 9, 0});
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::WaitingElevator);
 
@@ -467,8 +466,8 @@ TEST_CASE("AgentElevator - NPC re-routes to home floor when workEndHour reached 
     f.agents.update(f.reg, GameTime{0, 9, 0}); // 탑승
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::InElevator);
 
-    // 탑승 중 targetFloor == 2 (직장)
-    REQUIRE(f.reg.get<ElevatorPassengerComponent>(agentId).targetFloor == 2);
+    // 탑승 중 targetFloor == 6 (직장)
+    REQUIRE(f.reg.get<ElevatorPassengerComponent>(agentId).targetFloor == 6);
 
     // 엘리베이터를 이동시켜 1층 이상으로 (0층이 아닌 곳)
     // Boarding(doorTicks=3): 3틱 소진 → DoorClosing: 1틱 → MovingUp: 1틱 → floor 1
@@ -508,7 +507,7 @@ TEST_CASE("AgentElevator - NPC arrives at home floor via elevator and transition
     for (int i = 0; i < 15 && !atWork; ++i) {
         f.transport.update(GameTime{0, 9, 0});
         auto snap = f.transport.getElevatorState(f.elevId);
-        if (snap && snap->currentFloor == 2 &&
+        if (snap && snap->currentFloor == 6 &&
             (snap->state == ElevatorState::DoorOpening ||
              snap->state == ElevatorState::Boarding)) {
             atWork = true;
@@ -517,9 +516,9 @@ TEST_CASE("AgentElevator - NPC arrives at home floor via elevator and transition
     REQUIRE(atWork);
     f.agents.update(f.reg, GameTime{0, 9, 0}); // 하차 → Working
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::Working);
-    REQUIRE(f.reg.get<PositionComponent>(agentId).tile.floor == 2);
+    REQUIRE(f.reg.get<PositionComponent>(agentId).tile.floor == 6);
 
-    // 퇴근: 18시 → WaitingElevator (floor 2 → floor 0)
+    // 퇴근: 18시 → WaitingElevator (floor 6 → floor 0)
     f.agents.update(f.reg, GameTime{0, 18, 0});
     REQUIRE(f.agents.getState(f.reg, agentId) == AgentState::WaitingElevator);
 
@@ -529,7 +528,7 @@ TEST_CASE("AgentElevator - NPC arrives at home floor via elevator and transition
     for (int i = 0; i < 15 && !elevAtFloor2Boarding; ++i) {
         f.transport.update(GameTime{0, 18, 0});
         auto snap = f.transport.getElevatorState(f.elevId);
-        if (snap && snap->currentFloor == 2 &&
+        if (snap && snap->currentFloor == 6 &&
             (snap->state == ElevatorState::DoorOpening ||
              snap->state == ElevatorState::Boarding)) {
             elevAtFloor2Boarding = true;

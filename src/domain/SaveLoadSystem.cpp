@@ -231,6 +231,9 @@ json SaveLoadSystem::serializeEntities() const {
         aj["satisfaction"]    = agent.satisfaction;
         aj["moveSpeed"]       = agent.moveSpeed;
         aj["stress"]          = agent.stress;
+        aj["stairTargetFloor"] = agent.stairTargetFloor;
+        aj["stairTicksRemaining"] = agent.stairTicksRemaining;
+        aj["elevatorWaitTicks"] = agent.elevatorWaitTicks;
         e["agent"] = aj;
 
         json pj;
@@ -347,6 +350,9 @@ std::unordered_map<uint32_t, EntityId> SaveLoadSystem::deserializeEntities(const
                 comp.satisfaction    = a.value("satisfaction", 100.0f);
                 comp.moveSpeed       = a.value("moveSpeed", 1.0f);
                 comp.stress          = a.value("stress", 0.0f);
+                comp.stairTargetFloor = a.value("stairTargetFloor", -1);
+                comp.stairTicksRemaining = a.value("stairTicksRemaining", 0);
+                comp.elevatorWaitTicks = a.value("elevatorWaitTicks", 0);
             }
 
             if (e.contains("position")) {

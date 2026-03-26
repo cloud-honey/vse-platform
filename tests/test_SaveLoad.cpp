@@ -71,12 +71,11 @@ struct SaveLoadFixture {
         , testSaveFile(testDir() + "/test_save.vsesave")
     {
         // Build floors 0, 1, 2
-        grid.buildFloor(1);
-        grid.buildFloor(2);
+        for (int f = 1; f <= 6; ++f) grid.buildFloor(f);
 
         // Elevator shaft x=0, floors 0~2
-        grid.placeElevatorShaft(0, 0, 2);
-        auto elevResult = transport.createElevator(0, 0, 2, 8);
+        grid.placeElevatorShaft(0, 0, 6);
+        auto elevResult = transport.createElevator(0, 0, 6, 8);
         REQUIRE(elevResult.ok());
         elevId = elevResult.value;
 
@@ -86,7 +85,7 @@ struct SaveLoadFixture {
 
         // Work tenant floor 2, x=2
         workTenantId = reg.create();
-        grid.placeTenant({2, 2}, TenantType::Office, 2, workTenantId);
+        grid.placeTenant({2, 6}, TenantType::Office, 2, workTenantId);
 
         // Star rating singleton
         starRating.initRegistry(reg);
@@ -270,7 +269,7 @@ TEST_CASE("SaveLoad - homeTenant/workplaceTenant references survive round-trip",
         auto& a = agentView.get<AgentComponent>(e);
         // Grid tiles should reference the same tenant entities
         auto homeTile = f.grid.getTile({2, 0});
-        auto workTile = f.grid.getTile({2, 2});
+        auto workTile = f.grid.getTile({2, 6});
         REQUIRE(homeTile.has_value());
         REQUIRE(workTile.has_value());
         REQUIRE(homeTile->tenantEntity == a.homeTenant);

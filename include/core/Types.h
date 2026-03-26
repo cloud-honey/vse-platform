@@ -81,6 +81,7 @@ enum class AgentState : uint8_t {
     Resting,
     WaitingElevator,
     InElevator,
+    UsingStairs,    // Moving via stairs
     Leaving,        // Dissatisfied, leaving building
     COUNT
 };

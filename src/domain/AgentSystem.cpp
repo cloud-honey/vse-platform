@@ -1,6 +1,7 @@
 #include "domain/AgentSystem.h"
 #include <spdlog/spdlog.h>
 #include <algorithm>
+#include <cmath>
 
 // TODO(TASK-03-009): Replace with ContentRegistry access when available
 // Values mirror balance.json npc.* fields
@@ -153,8 +154,12 @@ void AgentSystem::update(entt::registry& reg, const GameTime& time)
             continue;
         }
 
+        // 계단 이동 상태 처리
+        if (agent.state == AgentState::UsingStairs) {
+            processStairs(reg, entity, agent, schedule, time);
+        }
         // 엘리베이터 대기/탑승 상태 처리 (transport_ 있을 때만)
-        if (transport_ && (agent.state == AgentState::WaitingElevator ||
+        else if (transport_ && (agent.state == AgentState::WaitingElevator ||
                            agent.state == AgentState::InElevator)) {
             processElevator(reg, entity, agent, schedule, time);
         } else {
@@ -214,30 +219,56 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
             int targetFloor  = dest->floor;
 
             if (targetFloor != currentFloor) {
-                // 다층 이동 — 엘리베이터 호출
-                agent.state = AgentState::WaitingElevator;
+                // 계단 vs 엘리베이터 결정
+                int floorDiff = std::abs(targetFloor - currentFloor);
+                
+                if (floorDiff <= 4) {
+                    // 계단 사용 — 4층 이하 차이
+                    agent.state = AgentState::UsingStairs;
+                    agent.stairTargetFloor = targetFloor;
+                    agent.stairTicksRemaining = floorDiff * 2;  // 2 ticks per floor
+                    agent.elevatorWaitTicks = 0;  // Reset elevator wait counter
+                    
+                    spdlog::debug("AgentSystem: entity {:d} → UsingStairs floor {} → {} ({} ticks)",
+                                  static_cast<uint32_t>(id), currentFloor, targetFloor, 
+                                  agent.stairTicksRemaining);
 
-                auto& passengerComp = reg.emplace_or_replace<ElevatorPassengerComponent>(id);
-                passengerComp.targetFloor = targetFloor;
-                passengerComp.waiting     = true;
+                    // 상태 변경 이벤트
+                    Event ev;
+                    ev.type    = EventType::AgentStateChanged;
+                    ev.source  = id;
+                    ev.payload = static_cast<int>(AgentState::UsingStairs);
+                    eventBus_.publish(ev);
+                    return;
+                } else {
+                    // 엘리베이터 사용 — 5층 이상 차이
+                    agent.state = AgentState::WaitingElevator;
+                    agent.elevatorWaitTicks = 0;  // Reset elevator wait counter
+                    agent.stairTargetFloor = -1;  // Clear stair target
+                    agent.stairTicksRemaining = 0;
 
-                // 방향 결정
-                ElevatorDirection dir = (targetFloor > currentFloor)
-                                        ? ElevatorDirection::Up
-                                        : ElevatorDirection::Down;
+                    auto& passengerComp = reg.emplace_or_replace<ElevatorPassengerComponent>(id);
+                    passengerComp.targetFloor = targetFloor;
+                    passengerComp.waiting     = true;
 
-                transport_->callElevator(0, currentFloor, dir);
+                    // 방향 결정
+                    ElevatorDirection dir = (targetFloor > currentFloor)
+                                            ? ElevatorDirection::Up
+                                            : ElevatorDirection::Down;
 
-                spdlog::debug("AgentSystem: entity {:d} → WaitingElevator floor {} → {}",
-                              static_cast<uint32_t>(id), currentFloor, targetFloor);
+                    transport_->callElevator(0, currentFloor, dir);
 
-                // 상태 변경 이벤트
-                Event ev;
-                ev.type    = EventType::AgentStateChanged;
-                ev.source  = id;
-                ev.payload = static_cast<int>(AgentState::WaitingElevator);
-                eventBus_.publish(ev);
-                return;
+                    spdlog::debug("AgentSystem: entity {:d} → WaitingElevator floor {} → {}",
+                                  static_cast<uint32_t>(id), currentFloor, targetFloor);
+
+                    // 상태 변경 이벤트
+                    Event ev;
+                    ev.type    = EventType::AgentStateChanged;
+                    ev.source  = id;
+                    ev.payload = static_cast<int>(AgentState::WaitingElevator);
+                    eventBus_.publish(ev);
+                    return;
+                }
             }
         }
     }
@@ -340,6 +371,40 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
     const auto& pos = reg.get<PositionComponent>(id);
 
     if (passengerComp.waiting) {
+        // 엘리베이터 대기 시간 증가
+        agent.elevatorWaitTicks++;
+        
+        // 대기 시간 초과 체크 (20 ticks = 2 seconds)
+        if (agent.elevatorWaitTicks > 20) {
+            int currentFloor = pos.tile.floor;
+            int targetFloor = passengerComp.targetFloor;
+            int floorDiff = std::abs(targetFloor - currentFloor);
+            
+            // 4층 이하 차이면 계단으로 전환
+            if (floorDiff <= 4) {
+                spdlog::debug("AgentSystem: entity {:d} elevator wait timeout ({} ticks), switching to stairs floor {} → {}",
+                              static_cast<uint32_t>(id), agent.elevatorWaitTicks,
+                              currentFloor, targetFloor);
+                
+                // 엘리베이터 대기 취소
+                reg.remove<ElevatorPassengerComponent>(id);
+                
+                // 계단으로 전환
+                agent.state = AgentState::UsingStairs;
+                agent.stairTargetFloor = targetFloor;
+                agent.stairTicksRemaining = floorDiff * 2;
+                agent.elevatorWaitTicks = 0;
+                
+                Event ev;
+                ev.type    = EventType::AgentStateChanged;
+                ev.source  = id;
+                ev.payload = static_cast<int>(AgentState::UsingStairs);
+                eventBus_.publish(ev);
+                return;
+            }
+            // 5층 이상 차이면 계속 대기 (초과하지 않음)
+        }
+        
         // 대기 중 — 현재 층에 Boarding 상태의 엘리베이터가 있는지 확인
         int currentFloor = pos.tile.floor;
         auto elevatorsAtFloor = transport_->getElevatorsAtFloor(currentFloor);
@@ -355,6 +420,7 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
                 if (boardResult.ok()) {
                     passengerComp.waiting = false;
                     agent.state = AgentState::InElevator;
+                    agent.elevatorWaitTicks = 0;  // Reset wait counter on boarding
 
                     Event ev;
                     ev.type    = EventType::AgentStateChanged;
@@ -399,6 +465,7 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
 
                 // 컴포넌트 제거
                 reg.remove<ElevatorPassengerComponent>(id);
+                agent.elevatorWaitTicks = 0;  // Reset wait counter
 
                 // 상태 전환 — 직장 or 집 도착
                 AgentState newState = AgentState::Working;
@@ -423,6 +490,87 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
             }
         }
     }
+}
+
+void AgentSystem::processStairs(entt::registry& reg, EntityId id,
+                                 AgentComponent& agent,
+                                 const AgentScheduleComponent& schedule,
+                                 const GameTime& time)
+{
+    // 계단 이동 진행
+    if (agent.stairTicksRemaining > 0) {
+        agent.stairTicksRemaining--;
+        
+        spdlog::debug("AgentSystem: entity {:d} stair progress {}/{} ticks",
+                      static_cast<uint32_t>(id),
+                      agent.stairTicksRemaining,
+                      agent.stairTargetFloor);
+        
+        // 만약 0이 되었으면 즉시 완료 처리
+        if (agent.stairTicksRemaining == 0) {
+            // 계단 이동 완료
+            int targetFloor = agent.stairTargetFloor;
+            if (targetFloor >= 0) {
+                // 위치 업데이트
+                auto& posComp = reg.get<PositionComponent>(id);
+                posComp.tile.floor = targetFloor;
+                posComp.pixel.y    = static_cast<float>(targetFloor * 32);
+                
+                // 계단 필드 초기화
+                agent.stairTargetFloor = -1;
+                agent.stairTicksRemaining = 0;
+                
+                // 상태 전환 — 직장 or 집 도착
+                AgentState newState = AgentState::Working;
+                // 퇴근 시간 이후이면 Idle
+                if (time.hour >= schedule.workEndHour) {
+                    newState = AgentState::Idle;
+                }
+                
+                // 테넌트 점유자 수 업데이트 (상태 변경 시)
+                updateTenantOccupantCount(reg, id, agent.state, newState);
+                AgentState oldState = agent.state;
+                agent.state = newState;
+
+                Event ev;
+                ev.type    = EventType::AgentStateChanged;
+                ev.source  = id;
+                ev.payload = static_cast<int>(newState);
+                eventBus_.publish(ev);
+
+                spdlog::debug("AgentSystem: entity {:d} finished stairs at floor {} → state {} (was {})",
+                              static_cast<uint32_t>(id), targetFloor, static_cast<int>(newState),
+                              static_cast<int>(oldState));
+            } else {
+                // 잘못된 상태 — Idle로 복구
+                spdlog::warn("AgentSystem: entity {:d} in UsingStairs but stairTargetFloor = -1, resetting to Idle",
+                             static_cast<uint32_t>(id));
+                agent.state = AgentState::Idle;
+                agent.stairTargetFloor = -1;
+                agent.stairTicksRemaining = 0;
+                
+                Event ev;
+                ev.type    = EventType::AgentStateChanged;
+                ev.source  = id;
+                ev.payload = static_cast<int>(AgentState::Idle);
+                eventBus_.publish(ev);
+            }
+        }
+        // 아직 이동 중 (stairTicksRemaining > 0)
+        return;
+    }
+    
+    // stairTicksRemaining이 이미 0인 경우 (이상 상태)
+    spdlog::warn("AgentSystem: entity {:d} in UsingStairs but stairTicksRemaining = 0, resetting to Idle",
+                 static_cast<uint32_t>(id));
+    agent.state = AgentState::Idle;
+    agent.stairTargetFloor = -1;
+    
+    Event ev;
+    ev.type    = EventType::AgentStateChanged;
+    ev.source  = id;
+    ev.payload = static_cast<int>(AgentState::Idle);
+    eventBus_.publish(ev);
 }
 
 std::optional<AgentState> AgentSystem::getState(entt::registry& reg, EntityId id) const

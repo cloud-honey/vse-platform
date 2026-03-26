@@ -37,6 +37,9 @@ struct PositionComponent {
  * satisfaction: 0~100, 100이 최대 만족.
  * moveSpeed: 초당 타일 이동 속도 (기본값 1.0, Phase 2에서 config 연동).
  * stress: 0-100. Decay/recovery logic in AgentSystem (domain layer).
+ * stairTargetFloor: 계단 이동 시 목표 층 (-1 = 계단 사용 안 함)
+ * stairTicksRemaining: 계단 이동 남은 틱 수 (0 = 도착)
+ * elevatorWaitTicks: 엘리베이터 대기 시간 (틱 단위)
  */
 struct AgentComponent {
     AgentState state            = AgentState::Idle;
@@ -45,6 +48,9 @@ struct AgentComponent {
     float      satisfaction     = 100.0f;
     float      moveSpeed        = 1.0f;             // tiles/sec
     float      stress           = 0.0f;             // 0-100, increases on wait/no-elevator
+    int        stairTargetFloor = -1;               // -1 = not using stairs
+    int        stairTicksRemaining = 0;             // decremented each tick
+    int        elevatorWaitTicks = 0;               // ticks waiting for elevator
 };
 
 /**

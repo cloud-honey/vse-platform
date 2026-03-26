@@ -69,6 +69,12 @@ private:
                          const AgentScheduleComponent& schedule,
                          const GameTime& time);
 
+    // 계단 이동 처리
+    void processStairs(entt::registry& reg, EntityId id,
+                       AgentComponent& agent,
+                       const AgentScheduleComponent& schedule,
+                       const GameTime& time);
+
     // 엘리베이터 대기/탑승/하차 처리
     void processElevator(entt::registry& reg, EntityId id,
                          AgentComponent& agent,
