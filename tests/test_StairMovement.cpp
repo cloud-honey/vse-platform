@@ -173,45 +173,37 @@ TEST_CASE("StairMovement - transitions to Working after arrival", "[StairMovemen
     REQUIRE(agent.state == AgentState::Working);
 }
 
-// Test 6: Elevator wait timeout triggers stair fallback
+// Test 6: Elevator wait timeout triggers stair fallback (≥5 floors, 40 tick threshold)
 TEST_CASE("StairMovement - elevator wait timeout triggers stair fallback", "[StairMovement]") {
     StairTestFixture f;
 
-    // Create a scenario where elevator is far away:
-    // Work on floor 3 (diff = 3 ≤ 4), but initially chose elevator because
-    // we'll manually force elevator path then test timeout
-    EntityId work3 = f.reg.create();
-    f.grid->placeTenant({0, 3}, TenantType::Office, 3, work3);
-
-    // Spawn NPC that would use stairs to floor 3
-    // But we test the elevator timeout fallback:
-    // Force agent into WaitingElevator state manually
-    auto npcResult = f.agents->spawnAgent(f.reg, f.homeId, work3);
+    // NPC: floor 0 → floor 6 (diff=6 > 4 → elevator initially)
+    auto npcResult = f.agents->spawnAgent(f.reg, f.homeId, f.farWorkId);
     REQUIRE(npcResult.ok());
     EntityId npc = npcResult.value;
     auto& agent = f.reg.get<AgentComponent>(npc);
 
-    // Manually set to WaitingElevator as if elevator was chosen
-    agent.state = AgentState::WaitingElevator;
-    agent.elevatorWaitTicks = 0;
-    auto& passengerComp = f.reg.emplace_or_replace<ElevatorPassengerComponent>(npc);
-    passengerComp.targetFloor = 3;
-    passengerComp.waiting = true;
+    // Keep satisfaction high to prevent Leaving during wait
+    agent.satisfaction = 100.0f;
 
     GameTime t{0, 9, 0};
+    f.agents->update(f.reg, t); // Enter WaitingElevator
+    REQUIRE(agent.state == AgentState::WaitingElevator);
 
-    // Tick 21 times — after 20 ticks of waiting, should switch to stairs
-    for (int i = 0; i < 21; ++i) {
+    // Tick 41 times — threshold for ≥5 floors is 40 ticks
+    for (int i = 0; i < 41; ++i) {
+        agent.satisfaction = 100.0f; // Prevent satisfaction decay from triggering Leaving
         f.agents->update(f.reg, t);
         if (agent.state == AgentState::UsingStairs) break;
     }
 
     REQUIRE(agent.state == AgentState::UsingStairs);
-    REQUIRE(agent.stairTargetFloor == 3);
+    REQUIRE(agent.stairTargetFloor == 6);
+    REQUIRE(agent.stairTicksRemaining == 12); // 6 floors * 2 ticks
 }
 
-// Test 7: NPC with >4 floor difference stays waiting (no fallback)
-TEST_CASE("StairMovement - no stair fallback for > 4 floors", "[StairMovement]") {
+// Test 7: NPC still waiting before timeout threshold
+TEST_CASE("StairMovement - no stair fallback before timeout", "[StairMovement]") {
     StairTestFixture f;
 
     auto npcResult = f.agents->spawnAgent(f.reg, f.homeId, f.farWorkId);
@@ -220,14 +212,15 @@ TEST_CASE("StairMovement - no stair fallback for > 4 floors", "[StairMovement]")
     auto& agent = f.reg.get<AgentComponent>(npc);
 
     GameTime t{0, 9, 0};
-    f.agents->update(f.reg, t); // Should enter WaitingElevator
+    f.agents->update(f.reg, t); // Enter WaitingElevator
     REQUIRE(agent.state == AgentState::WaitingElevator);
 
-    // Wait 30 ticks — should NOT fallback to stairs (diff = 6 > 4)
-    for (int i = 0; i < 30; ++i) {
+    // Only 20 ticks — below 40 threshold for ≥5 floors
+    for (int i = 0; i < 20; ++i) {
         f.agents->update(f.reg, t);
+        // May board elevator if available — that's fine too
     }
 
-    // Still waiting or boarded elevator — NOT using stairs
+    // Should NOT have switched to stairs yet (threshold is 40)
     REQUIRE(agent.state != AgentState::UsingStairs);
 }

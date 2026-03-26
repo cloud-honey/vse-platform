@@ -372,39 +372,40 @@ void AgentSystem::processElevator(entt::registry& reg, EntityId id,
         // 엘리베이터 대기 시간 증가
         agent.elevatorWaitTicks++;
         
-        // 대기 시간 초과 체크 (20 ticks = 2 seconds)
-        if (agent.elevatorWaitTicks > 20) {
-            int currentFloor = pos.tile.floor;
-            int targetFloor = passengerComp.targetFloor;
-            int floorDiff = std::abs(targetFloor - currentFloor);
-            
-            // 4층 이하 차이면 계단으로 전환
-            if (floorDiff <= 4) {
-                spdlog::debug("AgentSystem: entity {:d} elevator wait timeout ({} ticks), switching to stairs floor {} → {}",
-                              static_cast<uint32_t>(id), agent.elevatorWaitTicks,
-                              currentFloor, targetFloor);
-                
-                // 엘리베이터 대기 취소
-                reg.remove<ElevatorPassengerComponent>(id);
-                
-                // 계단으로 전환
-                agent.state = AgentState::UsingStairs;
-                agent.stairTargetFloor = targetFloor;
-                agent.stairTicksRemaining = floorDiff * 2;
-                agent.elevatorWaitTicks = 0;
-                
-                Event ev;
-                ev.type    = EventType::AgentStateChanged;
-                ev.source  = id;
-                ev.payload = static_cast<int>(AgentState::UsingStairs);
-                eventBus_.publish(ev);
-                return;
-            }
-            // 5층 이상 차이면 계속 대기 (초과하지 않음)
+        // 대기 시간 초과 체크 — 층수 무관하게 계단 전환
+        // 짧은 거리(≤4)는 processSchedule에서 즉시 계단 선택하므로
+        // 여기 도달하는 에이전트는 floorDiff ≥ 5. 그래도 너무 오래 기다리면 계단.
+        // 20 ticks = 2초 (짧은 거리), 40 ticks = 4초 (5층+)
+        static constexpr int SHORT_WAIT = 20;  // ≤4층
+        static constexpr int LONG_WAIT  = 40;  // ≥5층
+        int currentFloor = pos.tile.floor;
+        int targetFloor = passengerComp.targetFloor;
+        int floorDiff = std::abs(targetFloor - currentFloor);
+        int waitThreshold = (floorDiff <= 4) ? SHORT_WAIT : LONG_WAIT;
+
+        if (agent.elevatorWaitTicks > waitThreshold) {
+            spdlog::debug("AgentSystem: entity {:d} elevator wait timeout ({} ticks, threshold {}), switching to stairs floor {} → {}",
+                          static_cast<uint32_t>(id), agent.elevatorWaitTicks, waitThreshold,
+                          currentFloor, targetFloor);
+
+            // 엘리베이터 대기 취소
+            reg.remove<ElevatorPassengerComponent>(id);
+
+            // 계단으로 전환
+            agent.state = AgentState::UsingStairs;
+            agent.stairTargetFloor = targetFloor;
+            agent.stairTicksRemaining = floorDiff * 2;
+            agent.elevatorWaitTicks = 0;
+
+            Event ev;
+            ev.type    = EventType::AgentStateChanged;
+            ev.source  = id;
+            ev.payload = static_cast<int>(AgentState::UsingStairs);
+            eventBus_.publish(ev);
+            return;
         }
         
         // 대기 중 — 현재 층에 Boarding 상태의 엘리베이터가 있는지 확인
-        int currentFloor = pos.tile.floor;
         auto elevatorsAtFloor = transport_->getElevatorsAtFloor(currentFloor);
 
         for (auto elevId : elevatorsAtFloor) {
