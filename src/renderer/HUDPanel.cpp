@@ -4,6 +4,8 @@
 #include <sstream>
 #include <iomanip>
 #include <cmath>
+#include <cstdint>
+#include <climits>
 
 namespace vse {
 
@@ -23,7 +25,9 @@ void HUDPanel::draw(const RenderFrame& frame)
         ImGuiWindowFlags_AlwaysAutoResize |
         ImGuiWindowFlags_NoSavedSettings |
         ImGuiWindowFlags_NoFocusOnAppearing |
-        ImGuiWindowFlags_NoNav);
+        ImGuiWindowFlags_NoNav |
+        ImGuiWindowFlags_NoInputs |       // 클릭 인터랙션 방해 방지 (TASK-03-006 대비)
+        ImGuiWindowFlags_NoMouseInputs);  // 마우스 이벤트 통과
 
     // Title
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Tower Tycoon");
@@ -52,7 +56,12 @@ void HUDPanel::draw(const RenderFrame& frame)
 std::string HUDPanel::formatBalance(int64_t balance)
 {
     bool negative = (balance < 0);
-    uint64_t val = negative ? static_cast<uint64_t>(-balance) : static_cast<uint64_t>(balance);
+    // INT64_MIN 안전 처리: -INT64_MIN은 uint64_t 최대값
+    uint64_t val = negative
+        ? (balance == INT64_MIN
+            ? static_cast<uint64_t>(INT64_MAX) + 1ULL
+            : static_cast<uint64_t>(-balance))
+        : static_cast<uint64_t>(balance);
 
     // Build digits in groups of 3 from right
     std::string digits = std::to_string(val);
