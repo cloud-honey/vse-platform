@@ -1,9 +1,9 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:55:00+09:00",
+  "updated_at": "2026-03-26T15:15:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
-  "overall_status": "in_progress",
+  "overall_status": "sprint3_complete",
   "tasks": [
     {
       "id": "TASK-03-000",
@@ -85,13 +85,13 @@
     {
       "id": "TASK-03-007",
       "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
-      "assignee": "붐2",
+      "assignee": "붐2+붐",
       "layer": "전체",
-      "status": "in_progress",
-      "qa_status": "pending",
-      "confirmed_by_human": false,
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
       "difficulty": 4,
-      "notes": "HUD 연결 + Windows 빌드 진행 중"
+      "notes": "279/279, Windows 빌드 27MB, commit 66554b4"
     }
   ],
   "escalations": [],
@@ -101,7 +101,7 @@
       "title": "HUD 데이터 미연결 — balance/starRating/tick/tenant/npc 항상 0",
       "severity": "high",
       "source": "TASK-03-005 GPT+Gemini",
-      "status": "03-007 처리 중",
+      "status": "해결됨",
       "detail": "RenderFrameCollector가 HUD 필드를 채우지 않음. SimClock/EconomyEngine/TenantSystem/AgentSystem 연결 필요."
     },
     {
@@ -109,7 +109,7 @@
       "title": "HUD 텍스트 중복 — T:가 tick/tenant 둘 다 사용",
       "severity": "low",
       "source": "TASK-03-005 GPT",
-      "status": "03-007 처리 예정",
+      "status": "해결됨",
       "detail": "T:%d(tick), T:%d NPC:%d(tenant+npc) → Tick:%d / Tenants:%d NPC:%d 로 변경 필요"
     },
     {
@@ -117,7 +117,7 @@
       "title": "Windows/MSVC 빌드 미검증",
       "severity": "medium",
       "source": "TASK-03-006 GPT+Gemini",
-      "status": "03-007 처리 중",
+      "status": "해결됨",
       "detail": "SDL/ImGui 이벤트 통합 및 렌더링 수학이 Windows에서 미검증. mingw 크로스 빌드 필요."
     },
     {
@@ -125,7 +125,7 @@
       "title": "마우스 좌표 RenderFrame 미연결",
       "severity": "medium",
       "source": "TASK-03-006",
-      "status": "03-007 처리 중",
+      "status": "해결됨",
       "detail": "frame.mouseX/mouseY가 항상 0. Bootstrapper 게임 루프에서 SDL_GetMouseState() 연결 필요."
     }
   ],
@@ -427,6 +427,12 @@
       "time": "14:55",
       "title": "TASK-03-006 완료 + 3모델 교차 검증",
       "detail": "붐2+붐. 교차검증: Layer위반, Cursor zoom, 좌표 불일치, SelectTile 픽셀→타일 변환 등 전부 수정. 279/279."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "15:15",
+      "title": "TASK-03-007 통합 완료 + Sprint 3 Windows 빌드",
+      "detail": "HUD balance/starRating/tick/tenant/npc 도메인 연결. 마우스 좌표 SDL_GetMouseState 연결. getTenantCount() IGridSystem 추가. Windows 빌드 27MB. dist-win/TowerTycoon-Sprint3-Windows.zip. 279/279."
     }
   ],
   "references": [
@@ -970,6 +976,17 @@
         "deepseek": "Conditional Pass → 수정"
       },
       "reviewer_note": "Layer 위반 수정, BuildCursor zoom, PlaceTenant 좌표 정렬, SelectTile 픽셀→타일 변환",
+      "date": "2026-03-26"
+    },
+    {
+      "id": "TASK-03-007",
+      "title": "통합 확인 + Sprint 3 Windows 빌드",
+      "status": "completed",
+      "commit": "66554b4",
+      "tests": "279/279",
+      "difficulty": 4,
+      "reviewer": {},
+      "reviewer_note": "교차 검증 예정",
       "date": "2026-03-26"
     }
   ]
