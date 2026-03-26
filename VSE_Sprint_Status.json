@@ -1,97 +1,82 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-26T18:24:00+09:00",
+  "updated_at": "2026-03-26T18:44:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
   "tasks": [
     {
-      "id": "TASK-03-000",
-      "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
+      "id": "TASK-04-000",
+      "title": "Design Spec v2.0 동기화",
       "assignee": "붐",
       "layer": "문서",
       "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
       "difficulty": 2,
-      "notes": "Bootstrapper/SaveMetadata/StarRatingChangedPayload 반영. 커밋 db6d957"
+      "notes": "Design Spec v2.0 완료. 커밋 99fa19b",
+      "qa_status": "pass"
     },
     {
-      "id": "TASK-03-001",
-      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
-      "assignee": "DeepSeek V3",
+      "id": "TASK-04-001",
+      "title": "경제 루프 활성화 (임대료 자동 수집, 건설 비용 차감)",
+      "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
+      "status": "pending",
       "difficulty": 3,
-      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2"
+      "notes": "collectRent/payMaintenance Bootstrapper 연결, 잔액 부족 시 거부"
     },
     {
-      "id": "TASK-03-002",
-      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
-      "assignee": "DeepSeek V3",
+      "id": "TASK-04-002",
+      "title": "NPC 계단 이동 (4층 이하 계단, 5층↑ 엘리베이터)",
+      "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
+      "status": "pending",
       "difficulty": 3,
-      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
+      "notes": "AgentSystem 경로 선택 로직 추가"
     },
     {
-      "id": "TASK-03-003",
-      "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 3,
-      "notes": "252/252 tests, commit 53666df"
-    },
-    {
-      "id": "TASK-03-004",
-      "title": "카메라 개선 (건물 외관, 층 라벨, SDL2_ttf 텍스트)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
+      "id": "TASK-04-003",
+      "title": "정기 결산 시스템 (일/주/분기 자동 결산)",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "pending",
       "difficulty": 2,
-      "notes": "263/263 tests, commit 66ebb74"
+      "notes": "EconomyEngine::update 확장, 분기 세금/별점 재평가"
     },
     {
-      "id": "TASK-03-005",
-      "title": "게임 UI (잔액, 별점, 인게임 HUD — ImGui)",
+      "id": "TASK-04-004",
+      "title": "게임 오버 + TOWER 달성 조건",
+      "assignee": "붐2",
+      "layer": "Layer 1",
+      "status": "pending",
+      "difficulty": 2,
+      "notes": "파산(잔액 < 0 × 30일), TOWER 달성 모달"
+    },
+    {
+      "id": "TASK-04-005",
+      "title": "메인 메뉴 + 새 게임/불러오기/일시정지",
       "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 2,
-      "notes": "271/271 tests, 3모델 교차 검증 Pass"
-    },
-    {
-      "id": "TASK-03-006",
-      "title": "건물 건설 인터랙션 (마우스 클릭 → BuildFloor/PlaceTenant)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
+      "status": "pending",
       "difficulty": 3,
-      "notes": "279/279 tests, 3모델 교차 검증 Pass"
+      "notes": "게임 상태 머신 (Menu→Playing→Paused→GameOver)"
     },
     {
-      "id": "TASK-03-007",
-      "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
-      "assignee": "붐2+붐",
+      "id": "TASK-04-006",
+      "title": "DI-005 해결 + 테스트 품질 개선",
+      "assignee": "붐2",
+      "layer": "테스트",
+      "status": "pending",
+      "difficulty": 2,
+      "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
+    },
+    {
+      "id": "TASK-04-007",
+      "title": "통합 + Sprint 4 macOS + Windows 빌드",
+      "assignee": "붐",
       "layer": "전체",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
+      "status": "pending",
       "difficulty": 4,
-      "notes": "279/279, Windows 빌드 27MB, commit 66554b4"
+      "notes": "맥미니 네이티브 빌드 포함"
     }
   ],
   "escalations": [],
@@ -674,83 +659,6 @@
       }
     ]
   },
-  "sprint4_plan": {
-    "goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
-    "tasks": [
-      {
-        "id": "TASK-04-000",
-        "title": "Design Spec v2.0 동기화",
-        "assignee": "붐",
-        "layer": "문서",
-        "status": "pending",
-        "difficulty": 2,
-        "notes": "Sprint 3 구현 반영 + Sprint 4 사양 추가"
-      },
-      {
-        "id": "TASK-04-001",
-        "title": "경제 루프 활성화 (임대료 자동 수집, 건설 비용 차감)",
-        "assignee": "붐2",
-        "layer": "Layer 1",
-        "status": "pending",
-        "difficulty": 3,
-        "notes": "collectRent/payMaintenance Bootstrapper 연결, 잔액 부족 시 거부"
-      },
-      {
-        "id": "TASK-04-002",
-        "title": "NPC 계단 이동 (4층 이하 계단, 5층↑ 엘리베이터)",
-        "assignee": "붐2",
-        "layer": "Layer 1",
-        "status": "pending",
-        "difficulty": 3,
-        "notes": "AgentSystem 경로 선택 로직 추가"
-      },
-      {
-        "id": "TASK-04-003",
-        "title": "정기 결산 시스템 (일/주/분기 자동 결산)",
-        "assignee": "붐2",
-        "layer": "Layer 1",
-        "status": "pending",
-        "difficulty": 2,
-        "notes": "EconomyEngine::update 확장, 분기 세금/별점 재평가"
-      },
-      {
-        "id": "TASK-04-004",
-        "title": "게임 오버 + TOWER 달성 조건",
-        "assignee": "붐2",
-        "layer": "Layer 1",
-        "status": "pending",
-        "difficulty": 2,
-        "notes": "파산(잔액 < 0 × 30일), TOWER 달성 모달"
-      },
-      {
-        "id": "TASK-04-005",
-        "title": "메인 메뉴 + 새 게임/불러오기/일시정지",
-        "assignee": "붐2",
-        "layer": "Layer 3",
-        "status": "pending",
-        "difficulty": 3,
-        "notes": "게임 상태 머신 (Menu→Playing→Paused→GameOver)"
-      },
-      {
-        "id": "TASK-04-006",
-        "title": "DI-005 해결 + 테스트 품질 개선",
-        "assignee": "붐2",
-        "layer": "테스트",
-        "status": "pending",
-        "difficulty": 2,
-        "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
-      },
-      {
-        "id": "TASK-04-007",
-        "title": "통합 + Sprint 4 macOS + Windows 빌드",
-        "assignee": "붐",
-        "layer": "전체",
-        "status": "pending",
-        "difficulty": 4,
-        "notes": "맥미니 네이티브 빌드 포함"
-      }
-    ]
-  },
   "sprint2_completed": [
     {
       "id": "TASK-02-001",
@@ -1047,6 +955,96 @@
       },
       "reviewer_note": "StarRating static_assert 추가. 엘리베이터 Mock 불일치 Sprint 4 이슈로 등록.",
       "date": "2026-03-26"
+    }
+  ],
+  "sprint3_tasks": [
+    {
+      "id": "TASK-03-000",
+      "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
+      "assignee": "붐",
+      "layer": "문서",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 2,
+      "notes": "Bootstrapper/SaveMetadata/StarRatingChangedPayload 반영. 커밋 db6d957"
+    },
+    {
+      "id": "TASK-03-001",
+      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
+      "assignee": "DeepSeek V3",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 3,
+      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2"
+    },
+    {
+      "id": "TASK-03-002",
+      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
+      "assignee": "DeepSeek V3",
+      "layer": "Layer 1",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 3,
+      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
+    },
+    {
+      "id": "TASK-03-003",
+      "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
+      "assignee": "붐2+붐",
+      "layer": "Layer 3",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 3,
+      "notes": "252/252 tests, commit 53666df"
+    },
+    {
+      "id": "TASK-03-004",
+      "title": "카메라 개선 (건물 외관, 층 라벨, SDL2_ttf 텍스트)",
+      "assignee": "붐2+붐",
+      "layer": "Layer 3",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 2,
+      "notes": "263/263 tests, commit 66ebb74"
+    },
+    {
+      "id": "TASK-03-005",
+      "title": "게임 UI (잔액, 별점, 인게임 HUD — ImGui)",
+      "assignee": "붐2",
+      "layer": "Layer 3",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 2,
+      "notes": "271/271 tests, 3모델 교차 검증 Pass"
+    },
+    {
+      "id": "TASK-03-006",
+      "title": "건물 건설 인터랙션 (마우스 클릭 → BuildFloor/PlaceTenant)",
+      "assignee": "붐2+붐",
+      "layer": "Layer 3",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 3,
+      "notes": "279/279 tests, 3모델 교차 검증 Pass"
+    },
+    {
+      "id": "TASK-03-007",
+      "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
+      "assignee": "붐2+붐",
+      "layer": "전체",
+      "status": "done",
+      "qa_status": "pass",
+      "confirmed_by_human": true,
+      "difficulty": 4,
+      "notes": "279/279, Windows 빌드 27MB, commit 66554b4"
     }
   ]
 }

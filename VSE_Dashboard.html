@@ -522,8 +522,8 @@ function render(d){
       id: 's3', label: d.sprint >= 3 ? 'S3 🔥' : 'S3 📋',
       title: 'Sprint 3 — AI 고도화/스프라이트/UI',
       cls: d.sprint >= 3 ? '' : 'plan-tab',
-      goal: d.sprint >= 3 ? d.sprint_goal : (d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
-      tasks: d.sprint >= 3 ? tasks : (d.sprint3_plan ? d.sprint3_plan.tasks : []),
+      goal: d.sprint === 3 ? d.sprint_goal : (d.sprint3_tasks ? 'Sprint 3 완료' : d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
+      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks ? d.sprint3_tasks : d.sprint3_plan ? d.sprint3_plan.tasks : []),
       active: d.sprint >= 3,
       planned: d.sprint < 3
     },
