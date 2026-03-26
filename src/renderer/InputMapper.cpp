@@ -35,14 +35,14 @@ void InputMapper::processEvent(const SDL_Event& event,
 
         switch (event.key.keysym.sym) {
         case SDLK_ESCAPE:
-            // ESC: 취소 또는 종료
+            // ESC: 취소 또는 일시정지
             if (buildMode_.action != BuildAction::None) {
                 // Build mode 취소
                 buildMode_.action = BuildAction::None;
                 buildMode_.active = false;
             } else {
-                // 게임 종료
-                outCommands.push_back(GameCommand::makeQuit());
+                // 게임 일시정지/재개
+                outCommands.push_back(GameCommand::makeTogglePause());
             }
             break;
         case SDLK_SPACE:
@@ -89,6 +89,26 @@ void InputMapper::processEvent(const SDL_Event& event,
                 buildMode_.active = true;
                 buildMode_.tenantType = 0; // Office부터 시작
             }
+            break;
+        case SDLK_n:
+            // N 키: New Game
+            outCommands.push_back(GameCommand::makeNewGame());
+            break;
+        case SDLK_l:
+            // L 키: Load Game
+            outCommands.push_back(GameCommand::makeLoadGame());
+            break;
+        case SDLK_s:
+            // S 키: Save Game
+            outCommands.push_back(GameCommand::makeSaveGame());
+            break;
+        case SDLK_m:
+            // M 키: Main Menu (transition to MainMenu state)
+            outCommands.push_back(GameCommand::makeTransitionState(static_cast<int>(GameState::MainMenu)));
+            break;
+        case SDLK_q:
+            // Q 키: Quit
+            outCommands.push_back(GameCommand::makeQuit());
             break;
         default: break;
         }

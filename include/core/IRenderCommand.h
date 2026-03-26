@@ -151,6 +151,9 @@ struct RenderFrame {
 
     // Build mode 상태 (건설 모드 피드백용)
     BuildModeState buildMode;
+
+    // Game state (for UI menus)
+    GameState gameState = GameState::MainMenu;
 };
 
 } // namespace vse

@@ -31,6 +31,13 @@ enum class CommandType : uint16_t {
     SetSpeed,               // payload: speedMultiplier (1, 2, 4)
     ToggleDebugOverlay,
     Quit,
+    
+    // ── UI 메뉴 ───────────
+    NewGame = 500,
+    LoadGame,
+    SaveGame,
+    TransitionState,        // payload: targetState
+    ResetGame,
 
     // ── 선택 ──────────────
     SelectTile = 400,       // payload: tileX, tileFloor
@@ -55,6 +62,7 @@ struct GameCommand {
         struct { float zoomDelta; }                     cameraZoom;
         struct { int speedMultiplier; }                 setSpeed;
         struct { int tileX; int tileFloor; }            selectTile;
+        struct { int targetState; }                     transitionState;
     };
 
     // 편의 생성자
@@ -109,6 +117,37 @@ struct GameCommand {
         GameCommand cmd{};
         cmd.type = CommandType::SelectTile;
         cmd.selectTile = {x, floor};
+        return cmd;
+    }
+
+    static GameCommand makeNewGame() {
+        GameCommand cmd{};
+        cmd.type = CommandType::NewGame;
+        return cmd;
+    }
+
+    static GameCommand makeLoadGame() {
+        GameCommand cmd{};
+        cmd.type = CommandType::LoadGame;
+        return cmd;
+    }
+
+    static GameCommand makeSaveGame() {
+        GameCommand cmd{};
+        cmd.type = CommandType::SaveGame;
+        return cmd;
+    }
+
+    static GameCommand makeTransitionState(int targetState) {
+        GameCommand cmd{};
+        cmd.type = CommandType::TransitionState;
+        cmd.transitionState = {targetState};
+        return cmd;
+    }
+
+    static GameCommand makeResetGame() {
+        GameCommand cmd{};
+        cmd.type = CommandType::ResetGame;
         return cmd;
     }
 };

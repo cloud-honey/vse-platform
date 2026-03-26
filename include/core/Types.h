@@ -119,6 +119,15 @@ enum class StarRating : uint8_t {
     Star5
 };
 
+// ── Game State ──────────────────────────────
+enum class GameState : uint8_t {
+    MainMenu = 0,
+    Playing,
+    Paused,
+    GameOver,
+    Victory
+};
+
 // ── Event Payloads (shared) ─────────────────
 
 /** Payload for StarRatingChanged event. Moved from StarRatingSystem.h (TASK-02-009). */
@@ -170,6 +179,12 @@ struct TowerAchievedPayload {
     int starRating;
     int floorCount;
     int npcCount;
+};
+
+/** Payload for GameStateChanged event. */
+struct GameStateChangedPayload {
+    GameState from;
+    GameState to;
 };
 
 // ── Event Types ─────────────────────────────

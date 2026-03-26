@@ -62,6 +62,7 @@ add_executable(TowerTycoon
     src/main.cpp
     src/core/Bootstrapper.cpp
     src/core/ContentRegistry.cpp
+    src/core/GameStateManager.cpp
     src/domain/GridSystem.cpp
     src/domain/AgentSystem.cpp
     src/domain/TransportSystem.cpp

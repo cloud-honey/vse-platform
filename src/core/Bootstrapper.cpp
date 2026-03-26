@@ -106,6 +106,15 @@ bool Bootstrapper::init() {
         }
     });
 
+    // Wire GameOver and TowerAchieved events to GameStateManager
+    eventBus_.subscribe(EventType::GameOver, [this](const Event& e) {
+        gameState_.transition(GameState::GameOver);
+    });
+    
+    eventBus_.subscribe(EventType::TowerAchieved, [this](const Event& e) {
+        gameState_.transition(GameState::Victory);
+    });
+
     setupInitialScene();
 
     // ── Layer 3 초기화 (Config 기반) ────────────────────
@@ -201,7 +210,18 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
         }
     });
 
+    // Wire GameOver and TowerAchieved events to GameStateManager
+    eventBus_.subscribe(EventType::GameOver, [this](const Event& e) {
+        gameState_.transition(GameState::GameOver);
+    });
+    
+    eventBus_.subscribe(EventType::TowerAchieved, [this](const Event& e) {
+        gameState_.transition(GameState::Victory);
+    });
+
     setupInitialScene();
+    // initDomainOnly는 테스트/헤드리스 모드 — 바로 Playing 상태로 진입
+    gameState_.transition(GameState::Playing);
 
     running_ = true;
     spdlog::info("Domain-only initialization completed");
@@ -322,9 +342,19 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             running_ = false;
             break;
         case CommandType::TogglePause:
-            if (simClock_.isPaused()) simClock_.resume();
-            else                      simClock_.pause();
-            spdlog::info("Pause: {}", simClock_.isPaused() ? "ON" : "OFF");
+            // Handle pause based on game state
+            if (gameState_.getState() == GameState::Playing) {
+                // Playing → Paused
+                gameState_.transition(GameState::Paused);
+                simClock_.pause();
+                spdlog::info("Game paused");
+            } else if (gameState_.getState() == GameState::Paused) {
+                // Paused → Playing
+                gameState_.transition(GameState::Playing);
+                simClock_.resume();
+                spdlog::info("Game resumed");
+            }
+            // Ignore in other states
             break;
         case CommandType::SetSpeed:
             simClock_.setSpeed(cmd.setSpeed.speedMultiplier);
@@ -388,6 +418,56 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 cmd.createElevator.capacity);
             break;
 
+        // ── UI 메뉴 커맨드 ──────────────────────────────
+        case CommandType::NewGame:
+            spdlog::info("New Game command received");
+            if (gameState_.getState() == GameState::MainMenu || 
+                gameState_.getState() == GameState::GameOver ||
+                gameState_.getState() == GameState::Victory) {
+                // Reset and start new game
+                // Clear registry and reinitialize
+                registry_.clear();
+                setupInitialScene();
+                gameState_.transition(GameState::Playing);
+                simClock_.resume();
+                spdlog::info("New game started");
+            }
+            break;
+            
+        case CommandType::LoadGame:
+            spdlog::info("Load Game command received");
+            // TODO: Implement SaveLoadSystem::load()
+            // For now, just transition to Playing
+            if (gameState_.getState() == GameState::MainMenu) {
+                gameState_.transition(GameState::Playing);
+                simClock_.resume();
+            }
+            break;
+            
+        case CommandType::SaveGame:
+            spdlog::info("Save Game command received");
+            // TODO: Implement SaveLoadSystem::save()
+            break;
+            
+        case CommandType::TransitionState:
+            spdlog::info("Transition State command received: {}", cmd.transitionState.targetState);
+            gameState_.transition(static_cast<GameState>(cmd.transitionState.targetState));
+            // If transitioning to MainMenu from Paused, also unpause
+            if (cmd.transitionState.targetState == static_cast<int>(GameState::MainMenu) &&
+                simClock_.isPaused()) {
+                simClock_.resume();
+            }
+            break;
+            
+        case CommandType::ResetGame:
+            spdlog::info("Reset Game command received");
+            // Clear registry and reinitialize
+            registry_.clear();
+            setupInitialScene();
+            gameState_.transition(GameState::MainMenu);
+            simClock_.pause();
+            break;
+
         default:
             break;
         }
@@ -430,6 +510,9 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
     frame.currentTick = static_cast<int>(simClock_.currentTick());
     frame.tenantCount = grid_->getTenantCount();
     frame.npcCount = agents_->activeAgentCount();
+    
+    // TASK-04-005: Game state
+    frame.gameState = gameState_.getState();
 }
 
 // ──────────────────────────────────────────────────────────

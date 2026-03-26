@@ -25,6 +25,7 @@ add_executable(TowerTycoonTests
     test_StairMovement.cpp
     test_Settlement.cpp
     test_GameOver.cpp
+    test_GameStateManager.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -46,6 +47,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ConfigManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/Bootstrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/ContentRegistry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/core/GameStateManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GridSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/AgentSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TransportSystem.cpp

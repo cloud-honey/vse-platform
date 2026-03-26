@@ -21,6 +21,7 @@
 #include "core/ConfigManager.h"
 #include "core/SimClock.h"
 #include "core/ContentRegistry.h"
+#include "core/GameStateManager.h"
 #include "domain/GridSystem.h"
 #include "domain/AgentSystem.h"
 #include "domain/TransportSystem.h"
@@ -102,11 +103,16 @@ private:
     bool running_     = false;
     int  accumulator_ = 0;
 
+    // ── Game state getter ───────────────────────────────
+public:
+    GameState getGameState() const { return gameState_.getState(); }
+
     // ── Core Runtime ────────────────────────────────────
     // 선언 순서 = 초기화 순서 (simClock_은 eventBus_ 이후)
     ConfigManager   config_;
     ContentRegistry content_;
     EventBus        eventBus_;
+    GameStateManager gameState_{eventBus_}; // Game state machine
     SimClock        simClock_{eventBus_};  // 시간 진행의 단일 소유자
     entt::registry  registry_;
 

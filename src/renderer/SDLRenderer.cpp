@@ -164,6 +164,9 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
     hudPanel_.draw(frame);
 
+    // Game state UI menus (TASK-04-005)
+    drawGameStateUI(frame);
+
     ImGui::Render();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
 
@@ -468,6 +471,244 @@ void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera
             SDL_RenderDrawRectF(renderer_, &rect);
         }
     }
+}
+
+void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
+    // Set up fullscreen window flags
+    ImGuiWindowFlags window_flags = 
+        ImGuiWindowFlags_NoDecoration | 
+        ImGuiWindowFlags_NoMove | 
+        ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoBackground;
+    
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    
+    ImGui::Begin("Game State UI", nullptr, window_flags);
+    
+    switch (frame.gameState) {
+        case GameState::MainMenu: {
+            // Title
+            ImGui::SetCursorPosY(ImGui::GetWindowHeight() * 0.3f);
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("TOWER TYCOON").x) * 0.5f);
+            ImGui::Text("TOWER TYCOON");
+            
+            ImGui::Spacing();
+            ImGui::Spacing();
+            
+            // Center buttons
+            float buttonWidth = 200.0f;
+            float buttonHeight = 40.0f;
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
+                // This will be handled by InputMapper via SDL events
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n; // Use N key for New Game
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Load Game", ImVec2(buttonWidth, buttonHeight))) {
+                // Use L key for Load Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_l;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
+                // Use Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            break;
+        }
+            
+        case GameState::Paused: {
+            // Semi-transparent background
+            ImGui::GetWindowDrawList()->AddRectFilled(
+                ImGui::GetWindowPos(),
+                ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowWidth(),
+                       ImGui::GetWindowPos().y + ImGui::GetWindowHeight()),
+                IM_COL32(0, 0, 0, 128));
+            
+            ImGui::SetCursorPosY(ImGui::GetWindowHeight() * 0.3f);
+            
+            // Title
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("PAUSED").x) * 0.5f);
+            ImGui::Text("PAUSED");
+            
+            ImGui::Spacing();
+            ImGui::Spacing();
+            
+            // Center buttons
+            float buttonWidth = 200.0f;
+            float buttonHeight = 40.0f;
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Resume", ImVec2(buttonWidth, buttonHeight))) {
+                // ESC to resume (same as toggle pause)
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_ESCAPE;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Save", ImVec2(buttonWidth, buttonHeight))) {
+                // Use S key for Save
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_s;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Main Menu", ImVec2(buttonWidth, buttonHeight))) {
+                // Use M key for Main Menu
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_m;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
+                // Use Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            break;
+        }
+            
+        case GameState::GameOver: {
+            // Dark background
+            ImGui::GetWindowDrawList()->AddRectFilled(
+                ImGui::GetWindowPos(),
+                ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowWidth(),
+                       ImGui::GetWindowPos().y + ImGui::GetWindowHeight()),
+                IM_COL32(40, 0, 0, 200));
+            
+            ImGui::SetCursorPosY(ImGui::GetWindowHeight() * 0.3f);
+            
+            // Title
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("GAME OVER").x) * 0.5f);
+            ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "GAME OVER");
+            
+            ImGui::Spacing();
+            ImGui::Spacing();
+            
+            // Center buttons
+            float buttonWidth = 200.0f;
+            float buttonHeight = 40.0f;
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
+                // N key for New Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
+                // Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            break;
+        }
+            
+        case GameState::Victory: {
+            // Victory background
+            ImGui::GetWindowDrawList()->AddRectFilled(
+                ImGui::GetWindowPos(),
+                ImVec2(ImGui::GetWindowPos().x + ImGui::GetWindowWidth(),
+                       ImGui::GetWindowPos().y + ImGui::GetWindowHeight()),
+                IM_COL32(0, 40, 0, 200));
+            
+            ImGui::SetCursorPosY(ImGui::GetWindowHeight() * 0.3f);
+            
+            // Title
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("VICTORY!").x) * 0.5f);
+            ImGui::TextColored(ImVec4(0.3f, 1.0f, 0.3f, 1.0f), "VICTORY!");
+            
+            ImGui::Spacing();
+            
+            // Message
+            const char* message = "You've built a successful tower!";
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize(message).x) * 0.5f);
+            ImGui::Text("%s", message);
+            
+            ImGui::Spacing();
+            ImGui::Spacing();
+            
+            // Center buttons
+            float buttonWidth = 200.0f;
+            float buttonHeight = 40.0f;
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
+                // N key for New Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            
+            ImGui::Spacing();
+            ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+            
+            if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
+                // Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
+            }
+            break;
+        }
+            
+        case GameState::Playing:
+            // No UI overlay in playing state
+            break;
+    }
+    
+    ImGui::End();
 }
 
 } // namespace vse
