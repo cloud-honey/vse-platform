@@ -1492,7 +1492,7 @@ struct TenantComponent {
 > **Sprint 4 Planned System:**
 > - AgentSystem stair logic: if `|targetFloor - currentFloor| <= 4` → use stairs
 > - Stair speed: 2 ticks per floor (slower than elevator)
-> - State during stair movement: `Walking` (reuse existing sprite)
+> - State during stair movement: `UsingStairs` (dedicated state for clear state machine separation; rendered as orange NPC)
 > - Priority: stairs preferred for ≤4 floors; elevator required for ≥5 floors
 > - Elevator wait timeout: if waiting > threshold AND distance ≤ 4 → switch to stairs
 

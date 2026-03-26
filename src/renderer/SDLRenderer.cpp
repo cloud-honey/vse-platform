@@ -370,6 +370,9 @@ void SDLRenderer::drawAgents(const RenderFrame& frame, const Camera& camera, flo
             case AgentState::InElevator:
                 r = 120; g = 70;  b = 180;  // 어두운 보라
                 break;
+            case AgentState::UsingStairs:
+                r = 255; g = 165; b = 0;    // 주황 (계단 이동)
+                break;
             case AgentState::Idle:
             default:
                 r = 0;   g = 200; b = 220;  // 밝은 시안

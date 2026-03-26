@@ -210,8 +210,8 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
         }
     }
 
-    // 상태 변경이 있고 목적지가 있을 경우 엘리베이터 필요 여부 확인
-    if (nextState != agent.state && destTenant != INVALID_ENTITY && transport_ != nullptr) {
+    // 상태 변경이 있고 목적지가 있을 경우 계단/엘리베이터 필요 여부 확인
+    if (nextState != agent.state && destTenant != INVALID_ENTITY) {
         auto dest = resolveDestination(destTenant);
         if (dest.has_value()) {
             const auto& pos = reg.get<PositionComponent>(id);
@@ -219,29 +219,27 @@ void AgentSystem::processSchedule(entt::registry& reg, EntityId id,
             int targetFloor  = dest->floor;
 
             if (targetFloor != currentFloor) {
-                // 계단 vs 엘리베이터 결정
                 int floorDiff = std::abs(targetFloor - currentFloor);
-                
-                if (floorDiff <= 4) {
-                    // 계단 사용 — 4층 이하 차이
+
+                // 계단 사용: ≤4층 차이 또는 엘리베이터 없음
+                if (floorDiff <= 4 || transport_ == nullptr) {
                     agent.state = AgentState::UsingStairs;
                     agent.stairTargetFloor = targetFloor;
                     agent.stairTicksRemaining = floorDiff * 2;  // 2 ticks per floor
-                    agent.elevatorWaitTicks = 0;  // Reset elevator wait counter
-                    
+                    agent.elevatorWaitTicks = 0;
+
                     spdlog::debug("AgentSystem: entity {:d} → UsingStairs floor {} → {} ({} ticks)",
-                                  static_cast<uint32_t>(id), currentFloor, targetFloor, 
+                                  static_cast<uint32_t>(id), currentFloor, targetFloor,
                                   agent.stairTicksRemaining);
 
-                    // 상태 변경 이벤트
                     Event ev;
                     ev.type    = EventType::AgentStateChanged;
                     ev.source  = id;
                     ev.payload = static_cast<int>(AgentState::UsingStairs);
                     eventBus_.publish(ev);
                     return;
-                } else {
-                    // 엘리베이터 사용 — 5층 이상 차이
+                } else if (transport_ != nullptr) {
+                    // 엘리베이터 사용 — 5층 이상 차이 + transport 있음
                     agent.state = AgentState::WaitingElevator;
                     agent.elevatorWaitTicks = 0;  // Reset elevator wait counter
                     agent.stairTargetFloor = -1;  // Clear stair target

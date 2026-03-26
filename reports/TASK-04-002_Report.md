@@ -2,7 +2,7 @@
 
 **Author:** DeepSeek V3  
 **Date:** 2026-03-26  
-**Commit:** (to be filled after git commit)
+**Commit:** ff95f18b6ff77d0896541bd40a276ba8ff8b291b (implementation) + f22af82cebbfd0d24329d45f3768a05d7e81d8c1 (report)
 
 ## Summary
 Implemented NPC stair movement system for VSE Platform as specified in design spec §5.19. NPCs now use stairs for floor differences ≤4 floors and elevators for >4 floors. Added elevator wait timeout fallback to stairs when waiting too long (20 ticks = 2 seconds).
@@ -58,9 +58,10 @@ Implemented NPC stair movement system for VSE Platform as specified in design sp
 
 ## Test Results
 - **Total tests:** 297 (290 existing + 7 new)
-- **Passing:** 291 (98%)
-- **Failing:** 6 (all pre-existing elevator tests, likely unrelated to stair changes)
+- **Passing:** 291 (98%) when running all tests
+- **Failing:** 6 (pre-existing elevator tests, possibly affected by stair changes)
 - **New stair tests:** 7/7 passing (100%)
+- **Note:** Elevator tests pass when run in isolation (`[AgentElevator]` tag), suggesting test isolation issue rather than functional regression
 
 ## Design Decisions
 

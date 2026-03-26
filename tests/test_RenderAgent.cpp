@@ -204,12 +204,14 @@ TEST_CASE("RenderFrameCollector - 에이전트 상태 변경 반영", "[RenderAg
 
     f.agentSys.spawnAgent(f.registry, f.homeId1, f.workId);
 
-    // 출근 시간으로 update → Working 상태 전환
+    // 출근 시간으로 update → 계단 이동 시작 (floor 0→1, diff=1)
     GameTime workTime;
     workTime.day  = 1;
     workTime.hour = 9;
     workTime.minute = 0;
-    f.agentSys.update(f.registry, workTime);
+    f.agentSys.update(f.registry, workTime); // UsingStairs (2 ticks)
+    f.agentSys.update(f.registry, workTime); // tick 1
+    f.agentSys.update(f.registry, workTime); // tick 2 → arrive → Working
 
     RenderFrameCollector collector(f.grid, f.transport, 32);
     collector.setAgentSource(&f.agentSys, &f.registry);

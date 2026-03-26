@@ -196,11 +196,11 @@ TEST_CASE("AgentElevator - no ITransportSystem → does NOT enter WaitingElevato
     REQUIRE(result.ok());
     EntityId agentId = result.value;
 
-    // 9시 업데이트 — 같은 층 이동이어야 함 (WaitingElevator 금지)
+    // 9시 업데이트 — transport 없어도 계단으로 이동 시작
     agents.update(reg, GameTime{0, 9, 0});
 
-    // transport 없으므로 층 차이 무시, Working으로 전환
-    REQUIRE(agents.getState(reg, agentId) == AgentState::Working);
+    // transport 없으면 계단 사용 (UsingStairs), 엘리베이터 금지
+    REQUIRE(agents.getState(reg, agentId) == AgentState::UsingStairs);
     REQUIRE(agents.getState(reg, agentId) != AgentState::WaitingElevator);
 }
 
