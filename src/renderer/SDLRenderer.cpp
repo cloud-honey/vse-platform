@@ -156,6 +156,10 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         debugPanel_.draw(frame);
     }
 
+    // HUDPanel::draw() — 게임 HUD 렌더링
+    // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
+    hudPanel_.draw(frame);
+
     ImGui::Render();
     ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), renderer_);
 

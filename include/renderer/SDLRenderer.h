@@ -2,6 +2,7 @@
 #include "core/IRenderCommand.h"
 #include "renderer/Camera.h"
 #include "renderer/DebugPanel.h"
+#include "renderer/HUDPanel.h"
 #include "renderer/SpriteSheet.h"
 #include "renderer/AnimationSystem.h"
 #include "renderer/FontManager.h"
@@ -46,6 +47,9 @@ public:
 
     // DebugPanel 접근 (F3 토글 등 외부 제어용)
     DebugPanel& debugPanel() { return debugPanel_; }
+    
+    // HUDPanel 접근
+    HUDPanel& hudPanel() { return hudPanel_; }
 
 private:
     // 그리드 렌더링
@@ -59,6 +63,7 @@ private:
     SDL_Window*   window_      = nullptr;
     SDL_Renderer* renderer_    = nullptr;
     DebugPanel    debugPanel_;              // Design Spec: 별도 구성요소로 분리
+    HUDPanel      hudPanel_;                // 게임 HUD 패널
     
     // Sprite sheet system
     std::unique_ptr<SpriteSheet> npcSheet_;

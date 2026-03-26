@@ -20,6 +20,7 @@ add_executable(TowerTycoonTests
     test_ContentRegistry.cpp
     test_TenantSystem.cpp
     test_SpriteSheet.cpp
+    test_HUDPanel.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -53,6 +54,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SDLRenderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/InputMapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/DebugPanel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/HUDPanel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SpriteSheet.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AnimationSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/FontManager.cpp

@@ -131,6 +131,14 @@ struct RenderFrame {
     bool drawGrid      = true;   // 그리드 선 표시
     bool drawDebugInfo = true;   // FPS, 틱 정보 등
 
+    // HUD 데이터
+    int64_t balance      = 0;       // Current player balance in KRW
+    float   starRating   = 0.0f;    // 0.0–5.0 (TOWER = 5.0)
+    int     currentTick  = 0;       // Current simulation tick
+    int     tenantCount  = 0;       // Occupied tenants
+    int     npcCount     = 0;       // Active NPCs
+    bool    showHUD      = true;    // Toggle HUD visibility
+
     // 디버그 정보
     DebugInfo debug;
 };

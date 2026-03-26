@@ -77,6 +77,7 @@ add_executable(TowerTycoon
     src/renderer/InputMapper.cpp
     src/renderer/RenderFrameCollector.cpp
     src/renderer/DebugPanel.cpp
+    src/renderer/HUDPanel.cpp
     src/renderer/SpriteSheet.cpp
     src/renderer/AnimationSystem.cpp
     src/renderer/FontManager.cpp
