@@ -26,6 +26,7 @@
 #include "domain/TransportSystem.h"
 #include "domain/EconomyEngine.h"
 #include "domain/StarRatingSystem.h"
+#include "domain/TenantSystem.h"
 #include "renderer/SDLRenderer.h"
 #include "renderer/Camera.h"
 #include "renderer/InputMapper.h"
@@ -114,6 +115,7 @@ private:
     std::unique_ptr<TransportSystem> transport_;
     std::unique_ptr<EconomyEngine>  economy_;
     std::unique_ptr<StarRatingSystem> starRating_;
+    std::unique_ptr<TenantSystem>   tenantSystem_;
 
     // ── Renderer (Layer 3) ──────────────────────────────
     SDLRenderer  sdlRenderer_;
@@ -129,6 +131,7 @@ private:
     float zoomMin_   = 0.25f;
     float zoomMax_   = 4.0f;
     float panSpeed_  = 8.0f;
+    EconomyConfig economyConfig_;
 
     // ── 렌더링 상태 ─────────────────────────────────────
     bool drawGrid_  = true;

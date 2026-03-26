@@ -63,13 +63,23 @@ bool Bootstrapper::init() {
 
     // EconomyEngine 초기화
     const auto& balanceData = content_.getBalanceData();
-    EconomyConfig econCfg;
-    econCfg.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
-    econCfg.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
-    econCfg.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
-    econCfg.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
-    econCfg.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
-    economy_ = std::make_unique<EconomyEngine>(econCfg);
+    economyConfig_.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
+    economyConfig_.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
+    economyConfig_.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
+    economyConfig_.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
+    economyConfig_.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
+    economyConfig_.floorBuildCost = balanceData.value("economy.floorBuildCost", 10000LL);
+    economy_ = std::make_unique<EconomyEngine>(economyConfig_);
+
+    // TenantSystem 초기화
+    tenantSystem_ = std::make_unique<TenantSystem>(*grid_, eventBus_, *economy_);
+    
+    // Wire TenantSystem to DayChanged event
+    eventBus_.subscribe(EventType::DayChanged, [this](const Event& e) {
+        if (tenantSystem_) {
+            tenantSystem_->onDayChanged(registry_, simClock_.currentGameTime());
+        }
+    });
 
     // StarRatingSystem 초기화
     StarRatingSystem::Config starCfg;
@@ -134,13 +144,23 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
 
     // EconomyEngine 초기화
     const auto& balanceData = content_.getBalanceData();
-    EconomyConfig econCfg;
-    econCfg.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
-    econCfg.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
-    econCfg.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
-    econCfg.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
-    econCfg.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
-    economy_ = std::make_unique<EconomyEngine>(econCfg);
+    economyConfig_.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
+    economyConfig_.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
+    economyConfig_.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
+    economyConfig_.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
+    economyConfig_.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
+    economyConfig_.floorBuildCost = balanceData.value("economy.floorBuildCost", 10000LL);
+    economy_ = std::make_unique<EconomyEngine>(economyConfig_);
+
+    // TenantSystem 초기화
+    tenantSystem_ = std::make_unique<TenantSystem>(*grid_, eventBus_, *economy_);
+    
+    // Wire TenantSystem to DayChanged event
+    eventBus_.subscribe(EventType::DayChanged, [this](const Event& e) {
+        if (tenantSystem_) {
+            tenantSystem_->onDayChanged(registry_, simClock_.currentGameTime());
+        }
+    });
 
     // StarRatingSystem 초기화
     StarRatingSystem::Config starCfg;
@@ -298,16 +318,74 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             break;
 
         // ── 도메인 커맨드 ──────────────────────────────
-        case CommandType::BuildFloor:
-            grid_->buildFloor(cmd.buildFloor.floor);
+        case CommandType::BuildFloor: {
+            int64_t balance = economy_->getBalance();
+            int64_t floorBuildCost = economyConfig_.floorBuildCost;
+            
+            if (balance >= floorBuildCost) {
+                economy_->addExpense("floor_build", floorBuildCost, simClock_.currentGameTime());
+                grid_->buildFloor(cmd.buildFloor.floor);
+            } else {
+                // Publish InsufficientFunds event
+                Event insufficientFundsEvent;
+                insufficientFundsEvent.type = EventType::InsufficientFunds;
+                insufficientFundsEvent.payload = InsufficientFundsPayload{
+                    "buildFloor",
+                    floorBuildCost,
+                    balance
+                };
+                eventBus_.publish(insufficientFundsEvent);
+                spdlog::warn("Insufficient funds to build floor: required ${}, available ${}", 
+                    floorBuildCost / 100.0, balance / 100.0);
+            }
             break;
-        case CommandType::PlaceTenant:
-            grid_->placeTenant(
-                TileCoord{cmd.placeTenant.x, cmd.placeTenant.floor},
-                static_cast<TenantType>(cmd.placeTenant.tenantType),
-                cmd.placeTenant.width,
-                INVALID_ENTITY);
+        }
+        case CommandType::PlaceTenant: {
+            TenantType tenantType = static_cast<TenantType>(cmd.placeTenant.tenantType);
+            
+            // Get build cost from balance.json
+            int64_t buildCost = 0;
+            const auto& balanceData = content_.getBalanceData();
+            
+            switch (tenantType) {
+                case TenantType::Office:
+                    buildCost = balanceData.value("tenants.office.buildCost", 5000LL);
+                    break;
+                case TenantType::Residential:
+                    buildCost = balanceData.value("tenants.residential.buildCost", 3000LL);
+                    break;
+                case TenantType::Commercial:
+                    buildCost = balanceData.value("tenants.commercial.buildCost", 8000LL);
+                    break;
+                default:
+                    spdlog::error("Unknown tenant type: {}", static_cast<int>(tenantType));
+                    break;
+            }
+            
+            int64_t balance = economy_->getBalance();
+            
+            if (balance >= buildCost) {
+                economy_->addExpense("tenant_build", buildCost, simClock_.currentGameTime());
+                grid_->placeTenant(
+                    TileCoord{cmd.placeTenant.x, cmd.placeTenant.floor},
+                    tenantType,
+                    cmd.placeTenant.width,
+                    INVALID_ENTITY);
+            } else {
+                // Publish InsufficientFunds event
+                Event insufficientFundsEvent;
+                insufficientFundsEvent.type = EventType::InsufficientFunds;
+                insufficientFundsEvent.payload = InsufficientFundsPayload{
+                    "placeTenant",
+                    buildCost,
+                    balance
+                };
+                eventBus_.publish(insufficientFundsEvent);
+                spdlog::warn("Insufficient funds to place tenant: required ${}, available ${}", 
+                    buildCost / 100.0, balance / 100.0);
+            }
             break;
+        }
         case CommandType::PlaceElevatorShaft:
             grid_->placeElevatorShaft(
                 cmd.placeShaft.shaftX,
@@ -354,6 +432,8 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
 
     // TASK-03-007: HUD 필드 채우기
     frame.balance = economy_->getBalance();
+    frame.dailyIncome = economy_->getDailyIncome();
+    frame.dailyExpense = economy_->getDailyExpense();
     StarRating rating = starRating_->getCurrentRating(registry_);
     // StarRating enum은 uint8_t 기반 순차값 (Star0=0 ... Star5=5) — static_assert로 보장
     static_assert(static_cast<uint8_t>(StarRating::Star0) == 0u, "StarRating enum order changed");

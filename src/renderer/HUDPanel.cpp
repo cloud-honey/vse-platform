@@ -40,14 +40,19 @@ void HUDPanel::draw(const RenderFrame& frame)
         : ImVec4(1.0f, 0.0f, 0.0f, 1.0f); // Red for negative
     ImGui::TextColored(balanceColor, "%s", balanceStr.c_str());
 
-    // Row 2: Star rating
+    // Row 2: Daily Income/Expense
+    std::string incomeStr = formatBalance(frame.dailyIncome);
+    std::string expenseStr = formatBalance(frame.dailyExpense);
+    ImGui::Text("In: %s | Out: %s", incomeStr.c_str(), expenseStr.c_str());
+
+    // Row 3: Star rating
     std::string starsStr = formatStars(frame.starRating);
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", starsStr.c_str());
 
-    // Row 3: Current tick
+    // Row 4: Current tick
     ImGui::Text("Tick:%d", frame.currentTick);
 
-    // Row 4: Tenants/NPCs
+    // Row 5: Tenants/NPCs
     ImGui::Text("Tenants:%d NPC:%d", frame.tenantCount, frame.npcCount);
 
     ImGui::End();

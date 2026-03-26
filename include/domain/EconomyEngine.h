@@ -47,6 +47,7 @@ struct EconomyConfig {
     int64_t residentialRentPerTilePerDay; // Cents — balance.json "tenants.residential.rent"
     int64_t commercialRentPerTilePerDay;  // Cents — balance.json "tenants.commercial.rent"
     int64_t elevatorMaintenancePerDay;    // Cents — balance.json "economy.elevatorMaintenancePerDay"
+    int64_t floorBuildCost;               // Cents — balance.json "economy.floorBuildCost"
 };
 
 class EconomyEngine : public IEconomyEngine {

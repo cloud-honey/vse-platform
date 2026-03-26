@@ -127,6 +127,13 @@ struct StarRatingChangedPayload {
     float avgSatisfaction;
 };
 
+/** Payload for InsufficientFunds event. */
+struct InsufficientFundsPayload {
+    std::string action;
+    int64_t required;
+    int64_t available;
+};
+
 // ── Event Types ─────────────────────────────
 enum class EventType : uint16_t {
     // SimClock
@@ -157,6 +164,9 @@ enum class EventType : uint16_t {
     ExpensePaid,
     RentCollected,
     BalanceChanged,
+
+    // Economy Errors
+    InsufficientFunds = 800,
 
     // Building
     TenantPlaced = 600,

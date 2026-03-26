@@ -139,6 +139,8 @@ struct RenderFrame {
     int     tenantCount  = 0;       // Occupied tenants
     int     npcCount     = 0;       // Active NPCs
     bool    showHUD      = true;    // Toggle HUD visibility
+    int64_t dailyIncome  = 0;       // Daily income (Cents)
+    int64_t dailyExpense = 0;       // Daily expense (Cents)
 
     // 디버그 정보
     DebugInfo debug;
