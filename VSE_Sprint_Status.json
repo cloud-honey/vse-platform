@@ -1,6 +1,6 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-26T18:44:00+09:00",
+  "updated_at": "2026-03-26T19:50:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
@@ -20,9 +20,10 @@
       "title": "경제 루프 활성화 (임대료 자동 수집, 건설 비용 차감)",
       "assignee": "붐2",
       "layer": "Layer 1",
-      "status": "pending",
+      "status": "done",
       "difficulty": 3,
-      "notes": "collectRent/payMaintenance Bootstrapper 연결, 잔액 부족 시 거부"
+      "notes": "경제 루프 활성화 완료. 3모델 교차검증 Fail→수정→290/290. 커밋 008707a",
+      "qa_status": "pass"
     },
     {
       "id": "TASK-04-002",
