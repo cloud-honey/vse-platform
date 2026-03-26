@@ -151,10 +151,11 @@ TEST_CASE("TenantSystem - onDayChanged collects rent for all tenants", "[TenantS
     GameTime time{1, 0, 0}; // day 1, 00:00
     f.tenantSystem->onDayChanged(f.reg, time);
     
-    // Office: $5.00, Residential: $3.00, Commercial: $8.00 = 총 $16.00
-    // Maintenance: Office $1.00, Residential $0.50, Commercial $2.00 = 총 $3.50
-    // Net change: $16.00 - $3.50 = $12.50 = 1250 cents
-    int64_t expectedNetChange = (500 + 300 + 800) - (100 + 50 + 200);
+    // EconomyEngine.collectRent: rentPerTilePerDay * width
+    // office: 500*4=2000, residential: 300*3=900, commercial: 800*5=4000 = 총 6900
+    // TenantSystem 유지비: 100 + 50 + 200 = 350
+    // Net: 6900 - 350 = 6550
+    int64_t expectedNetChange = (500*4 + 300*3 + 800*5) - (100 + 50 + 200);
     REQUIRE(f.economy->getBalance() == initialBalance + expectedNetChange);
 }
 
@@ -169,9 +170,11 @@ TEST_CASE("TenantSystem - onDayChanged pays maintenance", "[TenantSystem]") {
     GameTime time{1, 0, 0};
     f.tenantSystem->onDayChanged(f.reg, time);
     
-    // Office: $1.00, Residential: $0.50, Commercial: $2.00 = 총 $3.50 유지비
-    int64_t expectedMaintenance = 100 + 50 + 200; // $3.50
-    int64_t expectedNet = (500 + 300 + 800) - expectedMaintenance; // $16.00 - $3.50 = $12.50
+    // EconomyEngine.collectRent: 500*4 + 300*3 + 800*5 = 6900
+    // TenantSystem 유지비: 100 + 50 + 200 = 350
+    // Net: 6550
+    int64_t expectedMaintenance = 100 + 50 + 200;
+    int64_t expectedNet = (500*4 + 300*3 + 800*5) - expectedMaintenance;
     
     REQUIRE(f.economy->getBalance() == initialBalance + expectedNet);
 }

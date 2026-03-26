@@ -134,42 +134,34 @@ void TenantSystem::removeTenant(entt::registry& reg, EntityId id)
 
 void TenantSystem::onDayChanged(entt::registry& reg, const GameTime& time)
 {
+    // 임대료: IEconomyEngine::collectRent에 위임 (GridSystem 기반 계산)
+    economy_.collectRent(grid_, time);
+
+    // 엘리베이터 유지비: IEconomyEngine::payMaintenance에 위임
+    economy_.payMaintenance(grid_, time);
+
+    // 테넌트별 유지비: TenantComponent 기반으로 직접 처리 (EconomyEngine은 엘리베이터만 처리)
     auto view = reg.view<TenantComponent>();
     int tenantCount = 0;
-    int64_t totalRent = 0;
-    int64_t totalMaintenance = 0;
 
     for (auto entity : view) {
-        auto& tenant = view.get<TenantComponent>(entity);
+        const auto& tenant = view.get<TenantComponent>(entity);
+        if (tenant.isEvicted || tenant.evictionCountdown > 0) continue;
 
-        // 퇴거 중인 테넌트는 임대료/유지비 처리 안 함
-        if (tenant.isEvicted || tenant.evictionCountdown > 0) {
-            continue;
-        }
-
-        // 임대료 수령
-        if (tenant.rentPerDay > 0) {
-            economy_.addIncome(entity, tenant.type, tenant.rentPerDay, time);
-            totalRent += tenant.rentPerDay;
-            Event ev;
-            ev.type = EventType::RentCollected;
-            ev.source = entity;
-            bus_.publish(ev);
-        }
-
-        // 유지비 지불
         if (tenant.maintenanceCost > 0) {
             economy_.addExpense("tenant_maintenance", tenant.maintenanceCost, time);
-            totalMaintenance += tenant.maintenanceCost;
         }
 
+        Event ev;
+        ev.type   = EventType::RentCollected;
+        ev.source = entity;
+        bus_.publish(ev);
         tenantCount++;
     }
 
     if (tenantCount > 0) {
-        spdlog::debug("TenantSystem::onDayChanged: day={}, tenants={}, rent=${:.2f}, maintenance=${:.2f}",
-                      time.day, tenantCount,
-                      totalRent / 100.0, totalMaintenance / 100.0);
+        spdlog::debug("TenantSystem::onDayChanged: day={}, tenants={} (rent/maintenance delegated to EconomyEngine)",
+                      time.day, tenantCount);
     }
 }
 
@@ -185,32 +177,35 @@ void TenantSystem::update(entt::registry& reg, const GameTime& time)
             continue;
         }
 
-        // 퇴거 카운트다운 중인 경우
-        if (tenant.evictionCountdown > 0) {
-            tenant.evictionCountdown--;
-
-            // 카운트다운 종료 → 테넌트 제거
-            if (tenant.evictionCountdown == 0) {
-                tenant.isEvicted = true;
-                spdlog::info("TenantSystem::update: tenant {} evicted (satisfaction too low)",
-                             static_cast<uint32_t>(entity));
-                removeTenant(reg, entity);
-            }
-            continue;
-        }
-
-        // 퇴거 조건 확인 (해당 테넌트에서 일하는 NPC 평균 만족도)
         // commercial 테넌트는 점유자가 없으므로 퇴거 조건 확인 안 함
         if (tenant.type == TenantType::Commercial || tenant.maxOccupants == 0) {
             continue;
         }
 
         float avgSatisfaction = computeAverageSatisfactionForTenant(reg, entity);
-        if (avgSatisfaction < evictionThreshold_) {
-            // 퇴거 카운트다운 시작 (60틱 = ~6초 at 10TPS, ~1 게임 시간)
-            tenant.evictionCountdown = 60;
-            spdlog::info("TenantSystem::update: tenant {} eviction countdown started (avg satisfaction={:.1f})",
-                         static_cast<uint32_t>(entity), avgSatisfaction);
+
+        if (tenant.evictionCountdown > 0) {
+            // 카운트다운 중 — 만족도 회복 시 리셋
+            if (avgSatisfaction >= evictionThreshold_) {
+                tenant.evictionCountdown = 0;
+                spdlog::info("TenantSystem::update: tenant {} eviction cancelled (satisfaction recovered to {:.1f})",
+                             static_cast<uint32_t>(entity), avgSatisfaction);
+            } else {
+                tenant.evictionCountdown--;
+                if (tenant.evictionCountdown == 0) {
+                    tenant.isEvicted = true;
+                    spdlog::info("TenantSystem::update: tenant {} evicted (satisfaction too low)",
+                                 static_cast<uint32_t>(entity));
+                    removeTenant(reg, entity);
+                }
+            }
+        } else {
+            // 퇴거 조건 확인
+            if (avgSatisfaction < evictionThreshold_) {
+                tenant.evictionCountdown = 60;
+                spdlog::info("TenantSystem::update: tenant {} eviction countdown started (avg satisfaction={:.1f})",
+                             static_cast<uint32_t>(entity), avgSatisfaction);
+            }
         }
     }
 }
