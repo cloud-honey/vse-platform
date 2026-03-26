@@ -330,6 +330,13 @@ struct StarRatingChangedPayload {
     int newRating;   // New star rating (1-5)
 };
 
+// Sprint 4: Insufficient funds notification
+struct InsufficientFundsPayload {
+    std::string action;      // "buildFloor", "placeTenant", "placeElevator"
+    int64_t required;        // Cents needed
+    int64_t available;       // Current balance
+};
+
 // ── Constants ───────────────────────────────
 // Role: fallback values when game_config.json fails to load.
 // Runtime values always come from ConfigManager.
@@ -812,11 +819,12 @@ struct PositionComponent {
 };
 
 struct AgentComponent {
-    AgentState state = AgentState::Idle;
-    TenantType workplace = TenantType::COUNT;
-    EntityId homeTenant = INVALID_ENTITY;
-    float satisfaction = 100.0f;        // 0-100
-    float moveSpeed = 1.0f;             // tiles per second
+    AgentState state            = AgentState::Idle;
+    EntityId   homeTenant       = INVALID_ENTITY;   // 거주지 테넌트
+    EntityId   workplaceTenant  = INVALID_ENTITY;   // 직장 테넌트 (목적지 특정용)
+    float      satisfaction     = 100.0f;           // 0-100
+    float      moveSpeed        = 1.0f;             // tiles/sec
+    float      stress           = 0.0f;             // 0-100, increases on wait/no-elevator
 };
 
 struct AgentScheduleComponent {
@@ -1301,9 +1309,13 @@ struct RenderFrame {
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
 #include "core/SimClock.h"
+#include "core/ContentRegistry.h"
 #include "domain/GridSystem.h"
 #include "domain/AgentSystem.h"
 #include "domain/TransportSystem.h"
+#include "domain/EconomyEngine.h"
+#include "domain/StarRatingSystem.h"
+#include "domain/TenantSystem.h" // Added TenantSystem
 #include "renderer/SDLRenderer.h"
 #include "renderer/Camera.h"
 #include "renderer/InputMapper.h"
@@ -1348,15 +1360,19 @@ private:
     int  accumulator_ = 0;     // Bootstrapper 소유 (SimClock에 없음)
 
     // Core Runtime (선언 순서 = 초기화 순서)
-    ConfigManager config_;
-    EventBus      eventBus_;
-    SimClock      simClock_{eventBus_};  // 시간 진행 단일 소유자
-    entt::registry registry_;
+    ConfigManager   config_;
+    ContentRegistry content_; // Added content_
+    EventBus        eventBus_;
+    SimClock        simClock_{eventBus_};  // 시간 진행의 단일 소유자
+    entt::registry  registry_;
 
     // Domain (Layer 1)
     std::unique_ptr<GridSystem>      grid_;
     std::unique_ptr<AgentSystem>     agents_;
     std::unique_ptr<TransportSystem> transport_;
+    std::unique_ptr<EconomyEngine>   economy_;    // Added economy_
+    std::unique_ptr<StarRatingSystem> starRating_; // Added starRating_
+    std::unique_ptr<TenantSystem>    tenantSystem_; // Added tenantSystem_
 
     // Renderer (Layer 3)
     SDLRenderer   sdlRenderer_;
@@ -1616,11 +1632,11 @@ struct TenantComponent {
 | Component | Fields | Used By |
 |---|---|---|
 | `PositionComponent` | tile, pixel, facing | AgentSystem, Renderer |
-| `AgentComponent` | state, workplace, homeTenant, satisfaction, moveSpeed | AgentSystem, Economy |
+| `AgentComponent` | state, homeTenant, workplaceTenant, satisfaction, moveSpeed, stress | AgentSystem, Economy |
 | `AgentScheduleComponent` | workStartHour, workEndHour, lunchHour | AgentSystem |
 | `AgentPathComponent` | path[], currentIndex, destination | AgentSystem |
 | `ElevatorPassengerComponent` | targetFloor, waiting | TransportSystem |
-| `TenantComponent` | type, anchorTile, width, rentPerDay, maintenanceCost, occupantCount, maxOccupants, buildCost, satisfactionDecayRate, isEvicted, evictionCountdown | EconomyEngine, GridSystem, TenantSystem |
+| `TenantComponent` | type, anchorTile, width, rentPerDay, maintenanceCost, maxOccupants, occupantCount, buildCost, satisfactionDecayRate, isEvicted, evictionCountdown | EconomyEngine, GridSystem, TenantSystem |
 | `ElevatorComponent` | shaftX, bottomFloor, topFloor, capacity, currentFloor, interpolatedFloor, state, direction, callQueue, passengers | TransportSystem |
 | `StarRatingComponent` (singleton) | currentRating, avgSatisfaction, totalPopulation | StarRatingSystem |
 | `BuildingComponent` (singleton) | name, builtFloors, totalTenants | GridSystem |
@@ -1629,13 +1645,17 @@ struct TenantComponent {
 
 ```cpp
 struct TenantComponent {
-    TenantType type;
-    TileCoord position;         // Anchor tile
-    int width;
-    int rentAmount;
-    int maintenanceCost;
-    int occupantCount;
-    int maxOccupants;
+    TenantType  type            = TenantType::COUNT;
+    TileCoord   anchorTile      = {0, 0};
+    int         width           = 1;
+    int64_t     rentPerDay      = 0;      // Cents
+    int64_t     maintenanceCost = 0;      // Cents per day
+    int         maxOccupants    = 0;
+    int         occupantCount   = 0;      // Current occupant NPC count
+    int64_t     buildCost       = 0;      // Cents (one-time)
+    float       satisfactionDecayRate = 0.0f; // Per-tick rate for NPC satisfaction
+    bool        isEvicted       = false;
+    int         evictionCountdown = 0;    // Ticks remaining before despawn (0 = not evicting)
 };
 
 struct ElevatorComponent {
@@ -1671,13 +1691,14 @@ struct BuildingComponent {
 1. eventBus_->flush()                — Deliver events from previous tick (tick N-1 → subscribers)
 2. processCommands()                 — Drain GameCommand queue (first tick of frame only)
 3. simClock_->advanceTick()          — Advance one fixed tick, emit TickAdvanced (queued for N+1)
-4. agentSystem_->update(reg, time)   — NPC AI decisions, pathfinding, movement
+4. agentSystem_->update(reg, time)   — NPC AI decisions, pathfinding, movement, stress/satisfaction
 5. transportSystem_->update(reg, time) — Elevator FSM + LOOK algorithm
-6. economyEngine_->update(reg, time) — Rent/maintenance on DayChanged
-7. starRatingSystem_->update(reg, time) — Recalculate satisfaction average
-8. contentRegistry_->checkAndReload()   — Hot-reload (every N ticks, not every tick)
+6. tenantSystem_->update(reg, time)  — Eviction countdown, satisfaction checks
+7. economyEngine_->update(reg, time) — Rent/maintenance on DayChanged, periodic settlements
+8. starRatingSystem_->update(reg, time) — Recalculate satisfaction average
+9. contentRegistry_->checkAndReload()   — Hot-reload (every N ticks, not every tick)
 --- (outside tick loop) ---
-9. render()                          — Collect RenderFrame → SDLRenderer (1x per frame)
+10. render()                          — Collect RenderFrame → SDLRenderer (1x per frame)
 ```
 
 > Changed from v1.0: EventBus::flush() moved to **start** of tick (was after SimClock). This ensures deferred delivery rule is respected: tick N events → flush at tick N+1 start.
@@ -1705,6 +1726,9 @@ struct BuildingComponent {
     │                │                     │
     └────────┬───────┴─────────────────────┘
              ▼
+        TenantSystem
+             │
+             ▼
         EconomyEngine
              │
              ▼
@@ -1723,12 +1747,13 @@ struct BuildingComponent {
 
 ### Dependency Rules (enforced):
 - **EventBus**: depended on by ALL systems. No deps itself.
-- **ConfigManager**: depended on by GridSystem, AgentSystem, Transport, Economy. No deps.
+- **ConfigManager**: depended on by GridSystem, AgentSystem, Transport, TenantSystem, Economy. No deps.
 - **SimClock** → EventBus only
 - **GridSystem** → EventBus, ConfigManager
 - **AgentSystem** → EventBus, ConfigManager, GridSystem (read-only), TransportSystem (call elevator)
 - **TransportSystem** → EventBus, ConfigManager
-- **EconomyEngine** → EventBus, ConfigManager, GridSystem (read tenant info)
+- **TenantSystem** → EventBus, ConfigManager, GridSystem, IEconomyEngine
+- **EconomyEngine** → EventBus, ConfigManager, GridSystem (read tenant info), TenantSystem
 - **StarRatingSystem** → EventBus, AgentSystem (read satisfaction)
 - **InputMapper** → SDL2 only. Produces GameCommand. No domain access.
 - **SDLRenderer** → RenderFrame only. No domain system access.
@@ -1746,14 +1771,15 @@ struct BuildingComponent {
  6. GridSystem        — Needs EventBus, ConfigManager
  7. TransportSystem   — Needs EventBus, ConfigManager
  8. AgentSystem       — Needs EventBus, ConfigManager, GridSystem, TransportSystem
- 9. EconomyEngine     — Needs EventBus, ConfigManager, GridSystem
-10. StarRatingSystem  — Needs EventBus, AgentSystem
-11. SaveLoad          — Needs all above (serializes everything)
-12. SDLRenderer       — Needs ConfigManager (window size). SDL_Init here.
-13. InputMapper       — Needs SDLRenderer context
-14. DebugPanel        — Needs SDLRenderer (ImGui context)
+ 9. TenantSystem      — Needs EventBus, ConfigManager, GridSystem, IEconomyEngine
+10. EconomyEngine     — Needs EventBus, ConfigManager, GridSystem, TenantSystem
+11. StarRatingSystem  — Needs EventBus, AgentSystem
+12. SaveLoad          — Needs all above (serializes everything)
+13. SDLRenderer       — Needs ConfigManager (window size). SDL_Init here.
+14. InputMapper       — Needs SDLRenderer context
+15. DebugPanel        — Needs SDLRenderer (ImGui context)
 
-Shutdown: reverse order (14 → 1)
+Shutdown: reverse order (15 → 1)
 
 Initialize failure at any step: log error, shutdown already-initialized systems in reverse, return false.
 ```
@@ -2082,8 +2108,8 @@ public:
 | 2026-03-24 | 1.2 | Final review 6 items: (1) true fixed-tick loop with accumulator + maxTicksPerFrame spiral-of-death guard, (2) CLAUDE.md synced to Core API/Runtime split — now v1.2, (3) EnTT snapshot-based save/restore confirmed, (4) Bootstrapper = composition root documented, (5) tickMs/ticksPerGameMinute immutable in Phase 1 — config mismatch = warn + hard-code, (6) JSON reader rule tightened, hot-reload interval = 600 ticks constant. |
 | 2026-03-24 | 1.3 | Self-review 9 fixes: **[Critical]** (C-1) speed multiplier now `accumulator += dt * speed` instead of tick cap, (C-2) accumulator ownership moved from SimClock to Bootstrapper — SimClock is pure tick counter; **[Important]** (I-1) Core API header rule clarified (I*.h = pure virtual, others = runtime declarations), (I-2) processCommands() drain-once-per-frame rule, (I-3) system update() signatures unified to `(registry&, GameTime&)` — no dt param, (I-4) SaveLoad: non-ECS state (Grid floors_, Economy balance) requires custom serialization alongside EnTT snapshot; **[Minor]** PixelPos config ref, GameCommandIssued = post-process notification, TileCoord std::hash added. |
 | 2026-03-24 | 1.4 | External review (DeepSeek R1 + GPT-5.4): (3.2) SaveLoad entity cross-reference safety — removed "automatically safe" assertion, added round-trip test requirements, clarified restore sequence (ECS first → non-ECS → derived caches); (3.3) spawnAgent() redesigned to `(reg, homeTenantId, workplaceId, optional spawnPos)` — EntityId-based; (3.4) TransportSystem internal separation guide added (ElevatorCarFSM + LookScheduler); (3.5) PixelPos x conversion formula added; (3.6) CLAUDE.md version synced to v1.3. |
-| 2026-03-26 | 2.0 | Sprint 3 implementation sync + Sprint 4 planned systems: **(1) §5.16 NPC Stress System** — AgentComponent.stress field, satisfaction decay, AgentSatisfactionChanged event, leave threshold; **(2) §5.17 TenantSystem** — TenantComponent fields (anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown), onDayChanged(), eviction reset logic; **(3) §5.18 Economy Loop** — buildFloor cost deduction, collectRent/payMaintenance auto-call, InsufficientFundsEvent; **(4) §5.19 Stair Movement System** — ≤4 floor stair preference, 2 ticks/floor speed, elevator wait fallback; **(5) §5.20 Periodic Settlement** — daily/weekly/quarterly settlement schedule, ImGui toast; **(6) §5.21 Game Over + Victory** — bankruptcy 30-day rule, TOWER achievement conditions; **(7) §5.22 Main Menu + State Machine** — Menu/Playing/Paused/GameOver states; **(8) §5.23 DI-005 Resolution** — MockGridSystem elevator anchor mismatch fix. |
 | 2026-03-26 | 1.5 | Sprint 2 구현 반영 동기화: **(1) Bootstrapper §5.15** — API 시그니처 실제 구현으로 전면 교체 (`initialize` → `init/run/shutdown/initDomainOnly`, `unique_ptr<I*>` 소유 → 직접 멤버, `#ifdef VSE_TESTING` 접근자 가드, `setupInitialScene()` 공용 헬퍼, `accumulator_` Bootstrapper 소유 명시); **(2) ISaveLoad §5.8** — `SaveMetadata.balance` `int` → `int64_t` (TASK-02-003 Cents 단위 통일); **(3) Types.h §2** — `StarRatingChangedPayload` struct 추가 (TASK-02-009: StarRatingSystem.h에서 이동, 레이어 결합 감소); **(4) SaveLoad 직렬화 전략** — EnTT snapshot → 수동 JSON + MessagePack 2-pass remap으로 확정 반영 (이미 §5.8에 있었으나 이유 보강); **(5) SimClock §5.1** — 주석/설계 메모 실제 구현과 일치 확인 (변경 없음). |
+| 2026-03-26 | 2.0 | Sprint 3 implementation sync + Sprint 4 planned systems: **(1) §5.16 NPC Stress System** — AgentComponent.stress field (0-100), satisfaction decay when stress > 50, AgentSatisfactionChanged event, leave threshold satisfaction < 10; **(2) §5.17 TenantSystem** — TenantComponent fields (anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown), onDayChanged() rent/maintenance, eviction reset logic; **(3) §5.18 Economy Loop** — buildFloor cost deduction, collectRent/payMaintenance auto-call, InsufficientFundsEvent payload; **(4) §5.19 Stair Movement System** — ≤4 floor stair preference, 2 ticks/floor speed, elevator wait fallback; **(5) §5.20 Periodic Settlement** — daily/weekly/quarterly settlement schedule, tax deduction, ImGui toast; **(6) §5.21 Game Over + Victory** — bankruptcy 30-day rule, TOWER achievement (★5 + 100 floors + 300 NPCs); **(7) §5.22 Main Menu + State Machine** — Menu/Playing/Paused/GameOver states, ImGui fullscreen menu; **(8) §5.23 DI-005 Resolution** — MockGridSystem elevator anchor mismatch fix; **(9) Types.h updates** — InsufficientFunds event type, InsufficientFundsPayload struct, AgentComponent.stress field, TenantComponent full definition. |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*
