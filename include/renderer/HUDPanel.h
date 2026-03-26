@@ -37,12 +37,12 @@ public:
     void setVisible(bool v){ visible_ = v; }
     bool isVisible() const { return visible_; }
 
+    // 포맷팅 헬퍼 (테스트 접근 가능하도록 public static)
+    static std::string formatBalance(int64_t balance); // e.g. "₩1,234,567"
+    static std::string formatStars(float rating);      // e.g. "★★★☆☆ (3.2)"
+
 private:
     bool visible_ = true;
-
-    // 포맷팅 헬퍼
-    std::string formatBalance(int64_t balance) const; // e.g. "₩1,234,567"
-    std::string formatStars(float rating) const;      // e.g. "★★★☆☆ (3.2)"
 };
 
 } // namespace vse

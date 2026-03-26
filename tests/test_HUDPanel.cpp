@@ -58,59 +58,47 @@ TEST_CASE("RenderFrame HUD 필드 기본값 검증", "[RenderFrame][HUD]")
 
 TEST_CASE("HUDPanel::formatBalance 포맷팅 테스트", "[HUDPanel][formatBalance]")
 {
-    HUDPanel panel;
-    
-    // 0원
-    REQUIRE(panel.isVisible() == true); // 컴파일러 경고 방지를 위해 호출
-    // 실제 formatBalance는 private이므로 테스트할 수 없음
-    // 대신 RenderFrame 필드 테스트로 대체
-    
-    SECTION("RenderFrame HUD 데이터 검증") {
-        RenderFrame frame;
-        
-        // 다양한 잔액 테스트
-        frame.balance = 0;
-        REQUIRE(frame.balance == 0);
-        
-        frame.balance = 1234567;
-        REQUIRE(frame.balance == 1234567);
-        
-        frame.balance = -500000;
-        REQUIRE(frame.balance == -500000);
-        
-        frame.balance = 999;
-        REQUIRE(frame.balance == 999);
-        
-        frame.balance = 1000;
-        REQUIRE(frame.balance == 1000);
-        
-        frame.balance = 1000000;
-        REQUIRE(frame.balance == 1000000);
+    SECTION("0원") {
+        REQUIRE(HUDPanel::formatBalance(0) == "₩0");
+    }
+    SECTION("999원 (천단위 없음)") {
+        REQUIRE(HUDPanel::formatBalance(999) == "₩999");
+    }
+    SECTION("1,000원") {
+        REQUIRE(HUDPanel::formatBalance(1000) == "₩1,000");
+    }
+    SECTION("1,234,567원") {
+        REQUIRE(HUDPanel::formatBalance(1234567) == "₩1,234,567");
+    }
+    SECTION("음수 잔액") {
+        REQUIRE(HUDPanel::formatBalance(-500000) == "₩-500,000");
+    }
+    SECTION("1,000,000원") {
+        REQUIRE(HUDPanel::formatBalance(1000000) == "₩1,000,000");
+    }
+    SECTION("대형 금액 (10억)") {
+        REQUIRE(HUDPanel::formatBalance(1000000000LL) == "₩1,000,000,000");
     }
 }
 
 TEST_CASE("HUDPanel::formatStars 포맷팅 테스트", "[HUDPanel][formatStars]")
 {
-    HUDPanel panel;
-    
-    SECTION("RenderFrame 별점 데이터 검증") {
-        RenderFrame frame;
-        
-        // 다양한 별점 테스트
-        frame.starRating = 0.0f;
-        REQUIRE(float_eq(frame.starRating, 0.0f));
-        
-        frame.starRating = 2.5f;
-        REQUIRE(float_eq(frame.starRating, 2.5f));
-        
-        frame.starRating = 5.0f;
-        REQUIRE(float_eq(frame.starRating, 5.0f));
-        
-        frame.starRating = -1.0f;  // 클램핑 테스트를 위한 음수
-        REQUIRE(float_eq(frame.starRating, -1.0f));
-        
-        frame.starRating = 6.0f;   // 클램핑 테스트를 위한 초과값
-        REQUIRE(float_eq(frame.starRating, 6.0f));
+    SECTION("별점 0.0") {
+        std::string s = HUDPanel::formatStars(0.0f);
+        REQUIRE(s.find("☆☆☆☆☆") != std::string::npos);
+    }
+    SECTION("별점 5.0 (최대)") {
+        std::string s = HUDPanel::formatStars(5.0f);
+        REQUIRE(s.find("★★★★★") != std::string::npos);
+    }
+    SECTION("별점 2.5 (혼합)") {
+        std::string s = HUDPanel::formatStars(2.5f);
+        REQUIRE(s.find("2.5") != std::string::npos);
+    }
+    SECTION("별점 음수 → 클램프") {
+        std::string s = HUDPanel::formatStars(-1.0f);
+        // 음수는 0으로 클램프되거나 빈 별 표시
+        REQUIRE(!s.empty());
     }
 }
 

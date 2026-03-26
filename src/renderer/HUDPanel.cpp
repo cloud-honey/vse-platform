@@ -49,36 +49,25 @@ void HUDPanel::draw(const RenderFrame& frame)
     ImGui::End();
 }
 
-std::string HUDPanel::formatBalance(int64_t balance) const
+std::string HUDPanel::formatBalance(int64_t balance)
 {
-    std::stringstream ss;
-    
-    // Add Korean Won symbol
-    ss << "₩";
-    
-    // Handle negative balance
-    if (balance < 0) {
-        ss << "-";
-        balance = -balance;
+    bool negative = (balance < 0);
+    uint64_t val = negative ? static_cast<uint64_t>(-balance) : static_cast<uint64_t>(balance);
+
+    // Build digits in groups of 3 from right
+    std::string digits = std::to_string(val);
+    std::string result;
+    int count = 0;
+    for (int i = static_cast<int>(digits.size()) - 1; i >= 0; --i) {
+        if (count > 0 && count % 3 == 0) result = "," + result;
+        result = digits[i] + result;
+        ++count;
     }
-    
-    // Format with thousands separators
-    if (balance >= 1000000) {
-        ss << (balance / 1000000) << ",";
-        balance %= 1000000;
-        ss << std::setw(6) << std::setfill('0') << balance;
-    } else if (balance >= 1000) {
-        ss << (balance / 1000) << ",";
-        balance %= 1000;
-        ss << std::setw(3) << std::setfill('0') << balance;
-    } else {
-        ss << balance;
-    }
-    
-    return ss.str();
+
+    return std::string("₩") + (negative ? "-" : "") + result;
 }
 
-std::string HUDPanel::formatStars(float rating) const
+std::string HUDPanel::formatStars(float rating)
 {
     // Clamp rating to 0.0-5.0 range
     rating = std::max(0.0f, std::min(5.0f, rating));
