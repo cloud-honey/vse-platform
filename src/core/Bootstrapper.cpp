@@ -319,71 +319,31 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
 
         // ── 도메인 커맨드 ──────────────────────────────
         case CommandType::BuildFloor: {
+            // 잔액 확인 → 건설 시도 → 성공 시에만 비용 차감
             int64_t balance = economy_->getBalance();
             int64_t floorBuildCost = economyConfig_.floorBuildCost;
-            
-            if (balance >= floorBuildCost) {
+
+            if (balance < floorBuildCost) {
+                Event ev;
+                ev.type = EventType::InsufficientFunds;
+                ev.payload = InsufficientFundsPayload{"buildFloor", floorBuildCost, balance};
+                eventBus_.publish(ev);
+                spdlog::warn("Insufficient funds to build floor: required={}, available={}",
+                             floorBuildCost, balance);
+                break;
+            }
+
+            auto result = grid_->buildFloor(cmd.buildFloor.floor);
+            if (result.ok()) {
                 economy_->addExpense("floor_build", floorBuildCost, simClock_.currentGameTime());
-                grid_->buildFloor(cmd.buildFloor.floor);
-            } else {
-                // Publish InsufficientFunds event
-                Event insufficientFundsEvent;
-                insufficientFundsEvent.type = EventType::InsufficientFunds;
-                insufficientFundsEvent.payload = InsufficientFundsPayload{
-                    "buildFloor",
-                    floorBuildCost,
-                    balance
-                };
-                eventBus_.publish(insufficientFundsEvent);
-                spdlog::warn("Insufficient funds to build floor: required ${}, available ${}", 
-                    floorBuildCost / 100.0, balance / 100.0);
             }
             break;
         }
         case CommandType::PlaceTenant: {
+            // 비용 확인 + 엔티티 생성 + 그리드 배치를 TenantSystem에 위임
             TenantType tenantType = static_cast<TenantType>(cmd.placeTenant.tenantType);
-            
-            // Get build cost from balance.json
-            int64_t buildCost = 0;
-            const auto& balanceData = content_.getBalanceData();
-            
-            switch (tenantType) {
-                case TenantType::Office:
-                    buildCost = balanceData.value("tenants.office.buildCost", 5000LL);
-                    break;
-                case TenantType::Residential:
-                    buildCost = balanceData.value("tenants.residential.buildCost", 3000LL);
-                    break;
-                case TenantType::Commercial:
-                    buildCost = balanceData.value("tenants.commercial.buildCost", 8000LL);
-                    break;
-                default:
-                    spdlog::error("Unknown tenant type: {}", static_cast<int>(tenantType));
-                    break;
-            }
-            
-            int64_t balance = economy_->getBalance();
-            
-            if (balance >= buildCost) {
-                economy_->addExpense("tenant_build", buildCost, simClock_.currentGameTime());
-                grid_->placeTenant(
-                    TileCoord{cmd.placeTenant.x, cmd.placeTenant.floor},
-                    tenantType,
-                    cmd.placeTenant.width,
-                    INVALID_ENTITY);
-            } else {
-                // Publish InsufficientFunds event
-                Event insufficientFundsEvent;
-                insufficientFundsEvent.type = EventType::InsufficientFunds;
-                insufficientFundsEvent.payload = InsufficientFundsPayload{
-                    "placeTenant",
-                    buildCost,
-                    balance
-                };
-                eventBus_.publish(insufficientFundsEvent);
-                spdlog::warn("Insufficient funds to place tenant: required ${}, available ${}", 
-                    buildCost / 100.0, balance / 100.0);
-            }
+            TileCoord anchor{cmd.placeTenant.x, cmd.placeTenant.floor};
+            tenantSystem_->placeTenant(registry_, tenantType, anchor, content_);
             break;
         }
         case CommandType::PlaceElevatorShaft:

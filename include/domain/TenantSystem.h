@@ -30,7 +30,8 @@ public:
     Result<EntityId> placeTenant(entt::registry& reg,
                                  TenantType type,
                                  TileCoord anchor,
-                                 const ContentRegistry& content);
+                                 const ContentRegistry& content,
+                                 const GameTime& time = GameTime{});
 
     /**
      * 테넌트 제거.

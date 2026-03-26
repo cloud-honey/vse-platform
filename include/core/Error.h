@@ -12,7 +12,8 @@ enum class ErrorCode {
     InvalidArgument,
     OutOfRange,
     SystemError,
-    FloorNotBuilt
+    FloorNotBuilt,
+    InsufficientFunds
 };
 
 template<typename T>

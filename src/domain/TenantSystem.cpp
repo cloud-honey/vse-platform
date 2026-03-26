@@ -16,11 +16,11 @@ TenantSystem::TenantSystem(IGridSystem& grid, EventBus& bus, IEconomyEngine& eco
 Result<EntityId> TenantSystem::placeTenant(entt::registry& reg,
                                            TenantType type,
                                            TileCoord anchor,
-                                           const ContentRegistry& content)
+                                           const ContentRegistry& content,
+                                           const GameTime& time)
 {
     // 1. balance.json에서 테넌트 속성 읽기
-    // TODO: ContentRegistry에서 읽어오기 구현
-    // 현재는 하드코딩된 값 사용
+    const auto& bd = content.getBalanceData();
     int64_t rentPerDay = 0;
     int64_t maintenanceCost = 0;
     int maxOccupants = 0;
@@ -30,37 +30,48 @@ Result<EntityId> TenantSystem::placeTenant(entt::registry& reg,
 
     switch (type) {
         case TenantType::Office:
-            rentPerDay = 500;          // $5.00
-            maintenanceCost = 100;     // $1.00
-            maxOccupants = 6;
-            width = 4;
-            buildCost = 5000;          // $50.00
-            satisfactionDecayRate = 0.1f;
+            rentPerDay          = bd.value("tenants.office.rent",                   500LL);
+            maintenanceCost     = bd.value("tenants.office.maintenance",            100LL);
+            maxOccupants        = bd.value("tenants.office.maxOccupants",           6);
+            width               = bd.value("tenants.office.width",                  4);
+            buildCost           = bd.value("tenants.office.buildCost",              5000LL);
+            satisfactionDecayRate = bd.value("tenants.office.satisfactionDecayRate", 0.1f);
             break;
         case TenantType::Residential:
-            rentPerDay = 300;          // $3.00
-            maintenanceCost = 50;      // $0.50
-            maxOccupants = 3;
-            width = 3;
-            buildCost = 3000;          // $30.00
-            satisfactionDecayRate = 0.05f;
+            rentPerDay          = bd.value("tenants.residential.rent",              300LL);
+            maintenanceCost     = bd.value("tenants.residential.maintenance",       50LL);
+            maxOccupants        = bd.value("tenants.residential.maxOccupants",      3);
+            width               = bd.value("tenants.residential.width",             3);
+            buildCost           = bd.value("tenants.residential.buildCost",         3000LL);
+            satisfactionDecayRate = bd.value("tenants.residential.satisfactionDecayRate", 0.05f);
             break;
         case TenantType::Commercial:
-            rentPerDay = 800;          // $8.00
-            maintenanceCost = 200;     // $2.00
-            maxOccupants = 0;
-            width = 5;
-            buildCost = 8000;          // $80.00
-            satisfactionDecayRate = 0.15f;
+            rentPerDay          = bd.value("tenants.commercial.rent",               800LL);
+            maintenanceCost     = bd.value("tenants.commercial.maintenance",        200LL);
+            maxOccupants        = bd.value("tenants.commercial.maxOccupants",       0);
+            width               = bd.value("tenants.commercial.width",              5);
+            buildCost           = bd.value("tenants.commercial.buildCost",          8000LL);
+            satisfactionDecayRate = bd.value("tenants.commercial.satisfactionDecayRate", 0.15f);
             break;
         default:
             return Result<EntityId>::failure(ErrorCode::InvalidArgument);
     }
 
-    // 2. 엔티티 생성
+    // 2. 잔액 확인 — 부족하면 InsufficientFunds 이벤트 발행 후 실패
+    int64_t balance = economy_.getBalance();
+    if (balance < buildCost) {
+        Event ev;
+        ev.type = EventType::InsufficientFunds;
+        ev.payload = InsufficientFundsPayload{"placeTenant", buildCost, balance};
+        bus_.publish(ev);
+        spdlog::warn("TenantSystem::placeTenant: insufficient funds (required={}, available={})",
+                     buildCost, balance);
+        return Result<EntityId>::failure(ErrorCode::InsufficientFunds);
+    }
+
+    // 3. 엔티티 생성 + TenantComponent 부착
     EntityId entity = reg.create();
 
-    // 3. TenantComponent 부착
     TenantComponent& tenant = reg.emplace<TenantComponent>(entity);
     tenant.type = type;
     tenant.anchorTile = anchor;
@@ -81,15 +92,18 @@ Result<EntityId> TenantSystem::placeTenant(entt::registry& reg,
         return Result<EntityId>::failure(result.error);
     }
 
-    // 5. 이벤트 발행 (지연)
+    // 5. 배치 성공 후 비용 차감 (성공 확인 후에만 차감)
+    economy_.addExpense("tenant_build", buildCost, time);
+
+    // 6. 이벤트 발행 (지연)
     Event ev;
     ev.type = EventType::TenantPlaced;
     ev.source = entity;
     bus_.publish(ev);
 
-    spdlog::debug("TenantSystem::placeTenant: type={}, anchor=({},{}), width={}, entity={}",
+    spdlog::debug("TenantSystem::placeTenant: type={}, anchor=({},{}), width={}, entity={}, cost={}",
                   static_cast<int>(type), anchor.x, anchor.floor, width,
-                  static_cast<uint32_t>(entity));
+                  static_cast<uint32_t>(entity), buildCost);
 
     return Result<EntityId>::success(entity);
 }
