@@ -95,7 +95,40 @@
     }
   ],
   "escalations": [],
-  "design_issues": [],
+  "design_issues": [
+    {
+      "id": "DI-001",
+      "title": "HUD 데이터 미연결 — balance/starRating/tick/tenant/npc 항상 0",
+      "severity": "high",
+      "source": "TASK-03-005 GPT+Gemini",
+      "status": "03-007 처리 중",
+      "detail": "RenderFrameCollector가 HUD 필드를 채우지 않음. SimClock/EconomyEngine/TenantSystem/AgentSystem 연결 필요."
+    },
+    {
+      "id": "DI-002",
+      "title": "HUD 텍스트 중복 — T:가 tick/tenant 둘 다 사용",
+      "severity": "low",
+      "source": "TASK-03-005 GPT",
+      "status": "03-007 처리 예정",
+      "detail": "T:%d(tick), T:%d NPC:%d(tenant+npc) → Tick:%d / Tenants:%d NPC:%d 로 변경 필요"
+    },
+    {
+      "id": "DI-003",
+      "title": "Windows/MSVC 빌드 미검증",
+      "severity": "medium",
+      "source": "TASK-03-006 GPT+Gemini",
+      "status": "03-007 처리 중",
+      "detail": "SDL/ImGui 이벤트 통합 및 렌더링 수학이 Windows에서 미검증. mingw 크로스 빌드 필요."
+    },
+    {
+      "id": "DI-004",
+      "title": "마우스 좌표 RenderFrame 미연결",
+      "severity": "medium",
+      "source": "TASK-03-006",
+      "status": "03-007 처리 중",
+      "detail": "frame.mouseX/mouseY가 항상 0. Bootstrapper 게임 루프에서 SDL_GetMouseState() 연결 필요."
+    }
+  ],
   "open_questions": [
     "라이선스 분리 (Layer 0 MIT / Layer 1 상업)",
     "스트레스 정확한 수치 임계값 (YootTower 소스 공개 대기)",
