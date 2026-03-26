@@ -1394,7 +1394,7 @@ private:
 | `AgentScheduleComponent` | workStartHour, workEndHour, lunchHour | AgentSystem |
 | `AgentPathComponent` | path[], currentIndex, destination | AgentSystem |
 | `ElevatorPassengerComponent` | targetFloor, waiting | TransportSystem |
-| `TenantComponent` | type, position(anchor), width, rentAmount, maintenanceCost, occupantCount, maxOccupants | EconomyEngine, GridSystem |
+| `TenantComponent` | type, anchorTile, width, rentPerDay, maintenanceCost, occupantCount, maxOccupants, buildCost, satisfactionDecayRate, isEvicted, evictionCountdown | EconomyEngine, GridSystem, TenantSystem |
 | `ElevatorComponent` | shaftX, bottomFloor, topFloor, capacity, currentFloor, interpolatedFloor, state, direction, callQueue, passengers | TransportSystem |
 | `StarRatingComponent` (singleton) | currentRating, avgSatisfaction, totalPopulation | StarRatingSystem |
 | `BuildingComponent` (singleton) | name, builtFloors, totalTenants | GridSystem |
