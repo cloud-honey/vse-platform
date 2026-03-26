@@ -1,8 +1,8 @@
 {
-  "sprint": 3,
-  "updated_at": "2026-03-26T18:20:00+09:00",
+  "sprint": 4,
+  "updated_at": "2026-03-26T18:24:00+09:00",
   "phase": "Phase 1",
-  "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
+  "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
   "tasks": [
     {

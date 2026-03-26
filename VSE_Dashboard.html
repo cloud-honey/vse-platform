@@ -528,17 +528,18 @@ function render(d){
       planned: d.sprint < 3
     },
     {
-      id: 's4', label: 'S4 🚀', title: 'Sprint 4 — Steam 출시 준비',
-      cls: 'plan-tab',
-      goal: d.sprint4_plan ? d.sprint4_plan.goal : '계획 중',
-      tasks: d.sprint4_plan ? d.sprint4_plan.tasks : [],
-      planned: true
+      id: 's4', label: d.sprint >= 4 ? 'S4 🔥' : 'S4 🚀', title: 'Sprint 4 — 게임 루프 완성',
+      cls: d.sprint >= 4 ? '' : 'plan-tab',
+      goal: d.sprint >= 4 ? d.sprint_goal : (d.sprint4_plan ? d.sprint4_plan.goal : '계획 중'),
+      tasks: d.sprint >= 4 ? tasks : (d.sprint4_plan ? d.sprint4_plan.tasks : []),
+      active: d.sprint >= 4,
+      planned: d.sprint < 4
     }
   ];
 
   /* 탭 렌더 함수 */
   window._sprintDefs = sprintDefs;
-  window._activeTab = window._activeTab || (d.sprint >= 3 ? 's3' : 's2');  // 기본값: 현재 스프린트
+  window._activeTab = window._activeTab || (d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');  // 기본값: 현재 스프린트
 
   function renderTabs() {
     const tabBar = document.getElementById('sprintTabs');
