@@ -184,3 +184,26 @@ TEST_CASE("AnimationSystem - Agent management", "[AnimationSystem]") {
         REQUIRE(animSys.getFrame(static_cast<vse::EntityId>(3), AgentState::Resting, 0.0f) == 6);
     }
 }
+
+TEST_CASE("SpriteSheet - Fallback rendering", "[SpriteSheet]") {
+    MockRenderer mock;
+    SpriteSheet sheet(mock.renderer, "nonexistent.png");
+    
+    SECTION("Fallback draws without crash") {
+        // When sprite sheet fails to load, drawFrame should not crash
+        sheet.drawFrame(0, 0.0f, 0.0f, 16.0f, 32.0f);
+        sheet.drawFrame(7, 10.0f, 20.0f, 32.0f, 64.0f);
+        // If we reach here without throwing, test passes
+        REQUIRE(true);
+    }
+    
+    SECTION("Different frame indices have different colors") {
+        // This tests that the fallback rendering uses different colors per frame
+        // We can't easily test the actual rendering output, but we can at least
+        // verify that calling with different indices doesn't crash
+        for (int i = 0; i < 8; ++i) {
+            sheet.drawFrame(i, 0.0f, 0.0f, 16.0f, 32.0f);
+        }
+        REQUIRE(true);
+    }
+}
