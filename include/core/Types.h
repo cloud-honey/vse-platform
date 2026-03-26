@@ -157,6 +157,21 @@ struct QuarterlySettlementPayload {
     int64_t balance;
 };
 
+/** Payload for GameOver event. */
+struct GameOverPayload {
+    std::string reason;  // "bankruptcy", "mass_exodus"
+    int day;
+    int64_t finalBalance;
+};
+
+/** Payload for TowerAchieved event. */
+struct TowerAchievedPayload {
+    int day;
+    int starRating;
+    int floorCount;
+    int npcCount;
+};
+
 // ── Event Types ─────────────────────────────
 enum class EventType : uint16_t {
     // SimClock
@@ -195,6 +210,11 @@ enum class EventType : uint16_t {
     TenantPlaced = 600,
     TenantRemoved,
     StarRatingChanged,
+
+    // Game State
+    GameOver = 610,      // Bankruptcy triggered
+    TowerAchieved = 611, // Victory condition met
+    GameStateChanged = 612,
 
     // Input/Command — notification AFTER command is processed (for UI feedback/logging, not for command delivery)
     GameCommandIssued = 700,

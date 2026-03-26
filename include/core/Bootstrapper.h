@@ -27,6 +27,7 @@
 #include "domain/EconomyEngine.h"
 #include "domain/StarRatingSystem.h"
 #include "domain/TenantSystem.h"
+#include "domain/GameOverSystem.h"
 #include "renderer/SDLRenderer.h"
 #include "renderer/Camera.h"
 #include "renderer/InputMapper.h"
@@ -116,6 +117,7 @@ private:
     std::unique_ptr<EconomyEngine>  economy_;
     std::unique_ptr<StarRatingSystem> starRating_;
     std::unique_ptr<TenantSystem>   tenantSystem_;
+    std::unique_ptr<GameOverSystem> gameOver_;
 
     // ── Renderer (Layer 3) ──────────────────────────────
     SDLRenderer  sdlRenderer_;

@@ -24,6 +24,7 @@ add_executable(TowerTycoonTests
     test_EconomyLoop.cpp
     test_StairMovement.cpp
     test_Settlement.cpp
+    test_GameOver.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -52,6 +53,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/StarRatingSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/SaveLoadSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/TenantSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/domain/GameOverSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/Camera.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/RenderFrameCollector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SDLRenderer.cpp

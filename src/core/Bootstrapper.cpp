@@ -93,6 +93,19 @@ bool Bootstrapper::init() {
     starRating_ = std::make_unique<StarRatingSystem>(eventBus_, starCfg);
     starRating_->initRegistry(registry_);
 
+    // GameOverSystem 초기화
+    gameOver_ = std::make_unique<GameOverSystem>(*grid_, *agents_, eventBus_);
+    
+    // Wire GameOverSystem to DayChanged event
+    eventBus_.subscribe(EventType::DayChanged, [this](const Event& e) {
+        if (gameOver_) {
+            int64_t balance = economy_->getBalance();
+            StarRating rating = starRating_->getCurrentRating(registry_);
+            int starRating = static_cast<int>(rating);
+            gameOver_->update(simClock_.currentGameTime(), registry_, balance, starRating);
+        }
+    });
+
     setupInitialScene();
 
     // ── Layer 3 초기화 (Config 기반) ────────────────────
@@ -174,6 +187,19 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
     }
     starRating_ = std::make_unique<StarRatingSystem>(eventBus_, starCfg);
     starRating_->initRegistry(registry_);
+
+    // GameOverSystem 초기화
+    gameOver_ = std::make_unique<GameOverSystem>(*grid_, *agents_, eventBus_);
+    
+    // Wire GameOverSystem to DayChanged event
+    eventBus_.subscribe(EventType::DayChanged, [this](const Event& e) {
+        if (gameOver_) {
+            int64_t balance = economy_->getBalance();
+            StarRating rating = starRating_->getCurrentRating(registry_);
+            int starRating = static_cast<int>(rating);
+            gameOver_->update(simClock_.currentGameTime(), registry_, balance, starRating);
+        }
+    });
 
     setupInitialScene();
 
