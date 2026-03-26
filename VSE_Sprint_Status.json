@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T13:35:00+09:00",
+  "updated_at": "2026-03-26T13:45:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -47,7 +47,7 @@
       "qa_status": "pass",
       "confirmed_by_human": true,
       "difficulty": 3,
-      "notes": "251/251 tests, commit 43de0f1"
+      "notes": "252/252 tests, commit 53666df"
     },
     {
       "id": "TASK-03-004",
@@ -352,6 +352,12 @@
       "time": "13:35",
       "title": "TASK-03-003 스프라이트 시트 렌더링 전환 완료",
       "detail": "SpriteSheet 클래스, AnimationSystem (상태별 프레임 애니메이션), 폴백 컬러박스 유지. 붐2 구현 + 붐 버그픽스. 251/251 통과. commit 43de0f1"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "13:45",
+      "title": "TASK-03-003 교차 검증 완료 (GPT+DeepSeek Conditional Pass → 수정 후 Pass)",
+      "detail": "Resting 프레임을 Elevator(7)와 분리(6 단독), dt>frameDuration 멀티프레임 스킵 수정. 252/252 통과. commit 53666df"
     }
   ],
   "references": [
@@ -841,11 +847,14 @@
       "id": "TASK-03-003",
       "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
       "status": "completed",
-      "commit": "43de0f1",
-      "tests": "251/251",
+      "commit": "53666df",
+      "tests": "252/252",
       "difficulty": 3,
-      "reviewer": {},
-      "reviewer_note": "3모델 교차 검증 예정",
+      "reviewer": {
+        "deepseek": "Conditional Pass",
+        "gpt": "Conditional Pass"
+      },
+      "reviewer_note": "수정 반영: Resting/Elevator 프레임 분리, dt 멀티프레임 스킵 수정",
       "date": "2026-03-26"
     }
   ]
