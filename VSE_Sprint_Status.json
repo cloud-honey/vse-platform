@@ -1,6 +1,6 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-26T21:22:00+09:00",
+  "updated_at": "2026-03-27T00:10:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "sprint3_complete",
@@ -42,8 +42,8 @@
       "layer": "Layer 1",
       "status": "done",
       "difficulty": 2,
-      "notes": "정기 결산 완료. 303/303 테스트. 교차검증 대기.",
-      "qa_status": "pending"
+      "notes": "3모델 검증 완료. GPT P1 수정: balance*taxRate 세금, 별점재평가 이벤트. 303/303.",
+      "qa_status": "pass"
     },
     {
       "id": "TASK-04-004",
