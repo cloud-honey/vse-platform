@@ -1,6 +1,6 @@
 {
   "sprint": 3,
-  "updated_at": "2026-03-26T14:05:00+09:00",
+  "updated_at": "2026-03-26T14:08:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "NPC AI 고도화 + 렌더링 품질 + 멀티 테넌트 + 게임 루프 완성",
   "overall_status": "in_progress",
@@ -364,6 +364,12 @@
       "time": "14:05",
       "title": "TASK-03-004 카메라 개선 완료",
       "detail": "FontManager (SDL2_ttf, 폴백 지원), drawFloorLabels() 층 라벨 구현, 건물 외관 지브라 패턴. 붐2 구현 + 붐 버그픽스(CMakeLists FontManager.cpp 등록). 263/263 통과. commit 66ebb74"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "14:08",
+      "title": "TASK-03-004 교차 검증 완료 (GPT+DeepSeek Conditional Pass → 수정 후 Pass)",
+      "detail": "라벨 텍스처 매 프레임 생성 → 캐시 전환, screenX 고정값 → 건물 왼쪽 기준, TTF 라이프사이클 중복 초기화 정리, zoom 히스테리시스 추가. 263/263. commit f857b61"
     }
   ],
   "references": [
@@ -867,11 +873,14 @@
       "id": "TASK-03-004",
       "title": "카메라 개선 (건물 외관, 층 라벨, FontManager + SDL2_ttf)",
       "status": "completed",
-      "commit": "66ebb74",
+      "commit": "f857b61",
       "tests": "263/263",
       "difficulty": 2,
-      "reviewer": {},
-      "reviewer_note": "교차 검증 예정",
+      "reviewer": {
+        "deepseek": "Conditional Pass",
+        "gpt": "Conditional Pass"
+      },
+      "reviewer_note": "수정: 텍스처 캐시, screenX 건물기준, TTF 라이프사이클 정리",
       "date": "2026-03-26"
     }
   ]
