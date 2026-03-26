@@ -102,7 +102,7 @@ bool Bootstrapper::init() {
             int64_t balance = economy_->getBalance();
             StarRating rating = starRating_->getCurrentRating(registry_);
             int starRating = static_cast<int>(rating);
-            gameOver_->update(simClock_.currentGameTime(), registry_, balance, starRating);
+            gameOver_->update(simClock_.currentGameTime(), balance, starRating);
         }
     });
 
@@ -197,7 +197,7 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
             int64_t balance = economy_->getBalance();
             StarRating rating = starRating_->getCurrentRating(registry_);
             int starRating = static_cast<int>(rating);
-            gameOver_->update(simClock_.currentGameTime(), registry_, balance, starRating);
+            gameOver_->update(simClock_.currentGameTime(), balance, starRating);
         }
     });
 

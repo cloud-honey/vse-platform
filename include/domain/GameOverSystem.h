@@ -33,7 +33,7 @@ public:
      * @param balance Current player balance
      * @param starRating Current star rating (0-5)
      */
-    void update(const GameTime& time, const entt::registry& reg, int64_t balance, int starRating);
+    void update(const GameTime& time, int64_t balance, int starRating);
     
     /**
      * @brief Check if game over has been triggered.
@@ -58,9 +58,13 @@ private:
     // Bankruptcy tracking
     int consecutiveNegativeDays_ = 0;
     bool gameOverFired_ = false;
-    
+
+    // Mass Exodus tracking
+    int massExodusDays_ = 0;            // consecutive days NPC < 10% capacity
+
     // Victory tracking
     bool victoryFired_ = false;
+    int consecutivePositiveDays_ = 0;   // consecutive days with positive balance (90 required)
     
     /**
      * @brief Check bankruptcy condition.
@@ -70,17 +74,15 @@ private:
     
     /**
      * @brief Check TOWER victory condition.
-     *        Victory requires:
-     *        - Star rating >= 5
-     *        - At least 100 floors built
-     *        - At least 300 active NPCs
+     *        Victory requires: ★5 + 100 floors + 300 NPCs + 90 consecutive positive-balance days.
      */
-    void checkVictory(const GameTime& time, const entt::registry& reg, int starRating);
-    
+    void checkVictory(const GameTime& time, int starRating, int64_t balance);
+
     /**
-     * @brief Count active NPCs in registry.
+     * @brief Check Mass Exodus game over condition.
+     *        Game over if active NPC < 10% of capacity for 7 consecutive days.
      */
-    int countActiveNPCs(const entt::registry& reg) const;
+    void checkMassExodus(const GameTime& time);
 };
 
 } // namespace vse

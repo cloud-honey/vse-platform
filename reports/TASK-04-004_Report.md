@@ -70,7 +70,8 @@ Implemented Game Over and Victory Conditions system for VSE Platform as specifie
 8. `CMakeLists.txt` - Added GameOverSystem.cpp to main executable
 
 ### Commit Hash:
-To be filled after git commit.
+- Implementation: `2bc5d1643d6073d94b445aa3e0bb35fc8b766765`
+- Report: `ce286269c36102a3d19fd3998ec23376f69ac6c6`
 
 ### Issues/Notes:
 - None. All tests pass and implementation matches design specification.

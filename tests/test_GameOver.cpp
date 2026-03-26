@@ -147,7 +147,7 @@ TEST_CASE("GameOverSystem - No game over before 30 days of negative balance", "[
     // Test 29 days of negative balance
     for (int day = 0; day < 29; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1); // Negative balance
+        gameOver.update(time, -1000, 1); // Negative balance
         REQUIRE_FALSE(gameOver.isGameOver());
     }
 }
@@ -174,7 +174,7 @@ TEST_CASE("GameOverSystem - Game over fires exactly at 30th consecutive negative
     // 30 days of negative balance
     for (int day = 0; day < 30; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
         bus.flush(); // Flush events after each update
     }
     
@@ -194,17 +194,17 @@ TEST_CASE("GameOverSystem - Counter resets when balance goes positive", "[GameOv
     // 15 days negative
     for (int day = 0; day < 15; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
     }
     
     // 1 day positive (should reset counter)
     time.day = 15;
-    gameOver.update(time, reg, 1000, 1);
+    gameOver.update(time, 1000, 1);
     
     // 15 more days negative (total 30, but counter was reset)
     for (int day = 16; day < 31; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
         REQUIRE_FALSE(gameOver.isGameOver());
     }
 }
@@ -226,7 +226,7 @@ TEST_CASE("GameOverSystem - Game over fires only once (guard)", "[GameOverSystem
     // Trigger game over
     for (int day = 0; day < 30; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
         bus.flush(); // Flush events after each update
     }
     
@@ -235,7 +235,7 @@ TEST_CASE("GameOverSystem - Game over fires only once (guard)", "[GameOverSystem
     // Try to trigger again (should not fire)
     for (int day = 30; day < 60; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
         bus.flush(); // Flush events after each update
     }
     
@@ -260,16 +260,20 @@ TEST_CASE("GameOverSystem - TOWER victory fires when all 3 conditions met", "[Ga
         victoryFired = true;
         REQUIRE(e.payload.has_value());
         auto payload = std::any_cast<TowerAchievedPayload>(e.payload);
-        REQUIRE(payload.day == 0);
+        REQUIRE(payload.day >= 89); // fires after 90 consecutive positive days
         REQUIRE(payload.starRating == 5);
         REQUIRE(payload.floorCount == 100);
         REQUIRE(payload.npcCount == 300);
     });
     
-    // Update with all victory conditions met
-    gameOver.update(time, reg, 1000000, 5); // Positive balance, 5 stars
-    bus.flush(); // Flush events
-    
+    // Must have 90 consecutive positive-balance days — spec §5.21
+    for (int day = 0; day <= 90; ++day) {
+        GameTime t{day, 0, 0};
+        gameOver.update(t, 1000000, 5);
+        bus.flush();
+        if (victoryFired) break;
+    }
+
     REQUIRE(victoryFired);
     REQUIRE(gameOver.isVictoryAchieved());
 }
@@ -292,7 +296,7 @@ TEST_CASE("GameOverSystem - TOWER victory does NOT fire if any condition missing
     SECTION("Star rating < 5") {
         grid.setBuiltFloorCount(100);
         agents.setActiveAgentCount(300);
-        gameOver.update(time, reg, 1000000, 4); // Only 4 stars
+        gameOver.update(time, 1000000, 4); // Only 4 stars
         REQUIRE(victoryCount == 0);
         REQUIRE_FALSE(gameOver.isVictoryAchieved());
     }
@@ -301,7 +305,7 @@ TEST_CASE("GameOverSystem - TOWER victory does NOT fire if any condition missing
     SECTION("Floors < 100") {
         grid.setBuiltFloorCount(99);
         agents.setActiveAgentCount(300);
-        gameOver.update(time, reg, 1000000, 5);
+        gameOver.update(time, 1000000, 5);
         REQUIRE(victoryCount == 0);
         REQUIRE_FALSE(gameOver.isVictoryAchieved());
     }
@@ -310,7 +314,7 @@ TEST_CASE("GameOverSystem - TOWER victory does NOT fire if any condition missing
     SECTION("NPCs < 300") {
         grid.setBuiltFloorCount(100);
         agents.setActiveAgentCount(299);
-        gameOver.update(time, reg, 1000000, 5);
+        gameOver.update(time, 1000000, 5);
         REQUIRE(victoryCount == 0);
         REQUIRE_FALSE(gameOver.isVictoryAchieved());
     }
@@ -328,7 +332,7 @@ TEST_CASE("GameOverSystem - Reset functionality", "[GameOverSystem]") {
     // Trigger game over
     for (int day = 0; day < 30; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
     }
     
     REQUIRE(gameOver.isGameOver());
@@ -342,7 +346,7 @@ TEST_CASE("GameOverSystem - Reset functionality", "[GameOverSystem]") {
     // Should be able to trigger again after reset
     for (int day = 0; day < 30; ++day) {
         time.day = day;
-        gameOver.update(time, reg, -1000, 1);
+        gameOver.update(time, -1000, 1);
         bus.flush(); // Flush events after each update
     }
     
