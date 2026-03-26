@@ -20,9 +20,12 @@
 #include "core/EventBus.h"
 #include "core/ConfigManager.h"
 #include "core/SimClock.h"
+#include "core/ContentRegistry.h"
 #include "domain/GridSystem.h"
 #include "domain/AgentSystem.h"
 #include "domain/TransportSystem.h"
+#include "domain/EconomyEngine.h"
+#include "domain/StarRatingSystem.h"
 #include "renderer/SDLRenderer.h"
 #include "renderer/Camera.h"
 #include "renderer/InputMapper.h"
@@ -99,15 +102,18 @@ private:
 
     // ── Core Runtime ────────────────────────────────────
     // 선언 순서 = 초기화 순서 (simClock_은 eventBus_ 이후)
-    ConfigManager config_;
-    EventBus      eventBus_;
-    SimClock      simClock_{eventBus_};  // 시간 진행의 단일 소유자
-    entt::registry registry_;
+    ConfigManager   config_;
+    ContentRegistry content_;
+    EventBus        eventBus_;
+    SimClock        simClock_{eventBus_};  // 시간 진행의 단일 소유자
+    entt::registry  registry_;
 
     // ── Domain (Layer 1) ────────────────────────────────
     std::unique_ptr<GridSystem>     grid_;
     std::unique_ptr<AgentSystem>    agents_;
     std::unique_ptr<TransportSystem> transport_;
+    std::unique_ptr<EconomyEngine>  economy_;
+    std::unique_ptr<StarRatingSystem> starRating_;
 
     // ── Renderer (Layer 3) ──────────────────────────────
     SDLRenderer  sdlRenderer_;

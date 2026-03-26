@@ -425,4 +425,17 @@ void GridSystem::remapEntityIds(const std::unordered_map<uint32_t, EntityId>& re
     spdlog::debug("GridSystem::remapEntityIds: remapped {} tile references", remapped);
 }
 
+int GridSystem::getTenantCount() const {
+    int count = 0;
+    for (const auto& [floorNum, floor] : floors_) {
+        if (!floor.built) continue;
+        for (const auto& tile : floor.tiles) {
+            if (tile.tenantType != TenantType::COUNT && tile.isAnchor) {
+                ++count;
+            }
+        }
+    }
+    return count;
+}
+
 } // namespace vse

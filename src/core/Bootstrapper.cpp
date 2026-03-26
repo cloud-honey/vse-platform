@@ -49,10 +49,38 @@ bool Bootstrapper::init() {
         return false;
     }
 
+    // ── Content 로딩 (balance.json) ─────────────────────
+    auto contentResult = content_.loadContentPack(std::string(VSE_PROJECT_ROOT) + "/assets");
+    if (!contentResult.ok()) {
+        spdlog::error("Failed to load content pack: {}", static_cast<int>(contentResult.error));
+        return false;
+    }
+
     // ── Domain 시스템 조립 ──────────────────────────────
     grid_      = std::make_unique<GridSystem>(eventBus_, config_);
     agents_    = std::make_unique<AgentSystem>(*grid_, eventBus_);
     transport_ = std::make_unique<TransportSystem>(*grid_, eventBus_, config_);
+
+    // EconomyEngine 초기화
+    const auto& balanceData = content_.getBalanceData();
+    EconomyConfig econCfg;
+    econCfg.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
+    econCfg.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
+    econCfg.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
+    econCfg.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
+    econCfg.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
+    economy_ = std::make_unique<EconomyEngine>(econCfg);
+
+    // StarRatingSystem 초기화
+    StarRatingSystem::Config starCfg;
+    const auto& thresholds = balanceData["starRating"]["thresholds"];
+    if (thresholds.is_array() && thresholds.size() >= 5) {
+        for (size_t i = 0; i < 5; ++i) {
+            starCfg.satisfactionThresholds[i] = thresholds[i].get<float>();
+        }
+    }
+    starRating_ = std::make_unique<StarRatingSystem>(eventBus_, starCfg);
+    starRating_->initRegistry(registry_);
 
     setupInitialScene();
 
@@ -93,9 +121,37 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
     tileSizePx_ = config_.getInt("grid.tileSizePx",       32);
     tickMs_     = config_.getInt("simulation.tickRateMs", 100);
 
+    // ── Content 로딩 (balance.json) ─────────────────────
+    auto contentResult = content_.loadContentPack(std::string(VSE_PROJECT_ROOT) + "/assets");
+    if (!contentResult.ok()) {
+        spdlog::error("Failed to load content pack: {}", static_cast<int>(contentResult.error));
+        return false;
+    }
+
     grid_      = std::make_unique<GridSystem>(eventBus_, config_);
     agents_    = std::make_unique<AgentSystem>(*grid_, eventBus_);
     transport_ = std::make_unique<TransportSystem>(*grid_, eventBus_, config_);
+
+    // EconomyEngine 초기화
+    const auto& balanceData = content_.getBalanceData();
+    EconomyConfig econCfg;
+    econCfg.startingBalance = balanceData.value("economy.startingBalance", 1000000LL);
+    econCfg.officeRentPerTilePerDay = balanceData.value("tenants.office.rent", 500LL);
+    econCfg.residentialRentPerTilePerDay = balanceData.value("tenants.residential.rent", 300LL);
+    econCfg.commercialRentPerTilePerDay = balanceData.value("tenants.commercial.rent", 800LL);
+    econCfg.elevatorMaintenancePerDay = balanceData.value("economy.elevatorMaintenancePerDay", 1000LL);
+    economy_ = std::make_unique<EconomyEngine>(econCfg);
+
+    // StarRatingSystem 초기화
+    StarRatingSystem::Config starCfg;
+    const auto& thresholds = balanceData["starRating"]["thresholds"];
+    if (thresholds.is_array() && thresholds.size() >= 5) {
+        for (size_t i = 0; i < 5; ++i) {
+            starCfg.satisfactionThresholds[i] = thresholds[i].get<float>();
+        }
+    }
+    starRating_ = std::make_unique<StarRatingSystem>(eventBus_, starCfg);
+    starRating_->initRegistry(registry_);
 
     setupInitialScene();
 
@@ -179,6 +235,8 @@ void Bootstrapper::run() {
 
                 agents_->update(registry_, time);
                 transport_->update(time);
+                economy_->update(time);
+                starRating_->update(registry_, *agents_, time);
             }
 
             // spiral-of-death 방지: 누적 과다 시 리셋 (디버거 중단 재개 등 대비)
@@ -293,6 +351,14 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
     d.npcIdle    = static_cast<int>(agents_->getAgentsInState(registry_, AgentState::Idle).size());
     d.npcWorking = static_cast<int>(agents_->getAgentsInState(registry_, AgentState::Working).size());
     d.npcResting = static_cast<int>(agents_->getAgentsInState(registry_, AgentState::Resting).size());
+
+    // TASK-03-007: HUD 필드 채우기
+    frame.balance = economy_->getBalance();
+    StarRating rating = starRating_->getCurrentRating(registry_);
+    frame.starRating = static_cast<float>(static_cast<uint8_t>(rating)); // Convert Star0=0.0, Star1=1.0, ..., Star5=5.0
+    frame.currentTick = static_cast<int>(simClock_.currentTick());
+    frame.tenantCount = grid_->getTenantCount();
+    frame.npcCount = agents_->activeAgentCount();
 }
 
 // ──────────────────────────────────────────────────────────

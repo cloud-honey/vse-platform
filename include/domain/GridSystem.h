@@ -25,6 +25,7 @@ public:
     Result<bool> placeElevatorShaft(int x, int bottomFloor, int topFloor) override;
     bool isElevatorShaft(TileCoord pos) const override;
     std::optional<TileCoord> findNearestEmpty(TileCoord from, int searchRadius) const override;
+    int getTenantCount() const override;
 
     // ── SaveLoad support ───────────────────────────────────────────────────
     /** Export all floor/tile state to JSON (for MessagePack serialization) */
