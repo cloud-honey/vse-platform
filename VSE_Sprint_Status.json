@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T18:23:00+09:00",
+  "updated_at": "2026-03-27T18:55:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -68,9 +68,16 @@
       "title": "HUD 고도화",
       "assignee": "붐2",
       "layer": "UI",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 2,
-      "notes": "건설 툴바, 별점, 수익 표시, 토스트, 배속"
+      "notes": "건설 툴바, 별점, 수익 표시, 토스트, 배속",
+      "commit": "17816fb",
+      "tests": "365/365",
+      "reviewer": {
+        "GPT": "Fail→수정 후 Pass",
+        "Gemini": "Fail→수정 후 Pass",
+        "DeepSeek": "Conditional Pass"
+      }
     },
     {
       "id": "TASK-05-005",
