@@ -157,10 +157,12 @@ struct GameCommand {
 enum class BuildAction { None, BuildFloor, PlaceTenant };
 
 struct BuildModeState {
-    BuildAction action     = BuildAction::None;
-    int         tenantType  = 0;   // 0=Office, 1=Residential, 2=Commercial
+    BuildAction action      = BuildAction::None;
+    int         tenantType  = 0;       // 0=Office, 1=Residential, 2=Commercial
     int         tenantWidth = 1;
     bool        active      = false;
+    bool        isValidPlacement = true;    // NEW: false = red highlight
+    int64_t     previewCost = 0;           // NEW: build cost in Cents for tooltip
 };
 
 } // namespace vse

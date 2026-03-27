@@ -80,10 +80,10 @@ void InputMapper::processEvent(const SDL_Event& event,
             }
             break;
         case SDLK_t:
-            // T 키: PlaceTenant 모드 토글
+            // T 키: PlaceTenant 모드 토글 또는 팝업 열기
             if (buildMode_.action == BuildAction::PlaceTenant) {
-                // 이미 PlaceTenant 모드면 tenantType 사이클
-                buildMode_.tenantType = (buildMode_.tenantType + 1) % 3;
+                // 이미 PlaceTenant 모드면 팝업 열기
+                openTenantPopup_ = true;
             } else {
                 buildMode_.action = BuildAction::PlaceTenant;
                 buildMode_.active = true;

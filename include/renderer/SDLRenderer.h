@@ -51,6 +51,10 @@ public:
     
     // HUDPanel 접근
     HUDPanel& hudPanel() { return hudPanel_; }
+    
+    // Tenant selection handling (TASK-05-001)
+    bool checkTenantSelection(int& outTenantType);
+    void setShouldOpenTenantPopup(bool open);
 
 private:
     // 그리드 렌더링
@@ -81,6 +85,10 @@ private:
 
     // Frame time tracking for animation
     float lastFrameTime_ = 0.0f;
+    
+    // Tenant selection state (TASK-05-001)
+    bool shouldOpenTenantPopup_ = false;
+    int pendingTenantSelection_ = -1; // -1 means no selection pending
 };
 
 } // namespace vse

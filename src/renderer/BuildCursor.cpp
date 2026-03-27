@@ -1,4 +1,8 @@
 #include "renderer/BuildCursor.h"
+#include "imgui.h"
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 namespace vse {
 
@@ -20,23 +24,33 @@ void BuildCursor::draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouse
 
     switch (mode.action) {
     case BuildAction::BuildFloor:
-        drawFloorHighlight(r, cam, floor, tileSize);
+        drawFloorHighlight(r, cam, floor, tileSize, mode.isValidPlacement);
         break;
     case BuildAction::PlaceTenant:
-        drawTenantHighlight(r, cam, tileX, floor, mode.tenantWidth, tileSize);
+        drawTenantHighlight(r, cam, tileX, floor, mode.tenantWidth, tileSize, mode.isValidPlacement);
         break;
     case BuildAction::None:
     default:
         break;
     }
+
+    // Draw cost tooltip if preview cost > 0 or placement is invalid
+    if (mode.previewCost > 0 || !mode.isValidPlacement) {
+        drawCostTooltip(mouseX, mouseY, mode.previewCost, mode.isValidPlacement);
+    }
 }
 
-void BuildCursor::drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor, int tileSize)
+void BuildCursor::drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor,
+                                     int tileSize, bool isValid)
 {
-    // 전체 층 너비 하이라이트 (파랑, alpha 100)
-    SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(r, 0, 120, 255, 100);
+    // Color based on validity: green when valid, red when invalid
+    if (isValid) {
+        SDL_SetRenderDrawColor(r, 0, 180, 80, 120);  // Green for valid
+    } else {
+        SDL_SetRenderDrawColor(r, 220, 50, 50, 120); // Red for invalid
+    }
 
+    SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
     float zoom = cam.zoomLevel();
     float scaledTile = tileSize * zoom;
     // zoom 적용된 타일 크기 기준으로 가시 타일 수 계산
@@ -54,10 +68,14 @@ void BuildCursor::drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int flo
 }
 
 void BuildCursor::drawTenantHighlight(SDL_Renderer* r, const Camera& cam, int tileX, int floor,
-                                      int width, int tileSize)
+                                      int width, int tileSize, bool isValid)
 {
-    // tenantWidth 타일 하이라이트 (초록, alpha 100)
-    SDL_SetRenderDrawColor(r, 0, 255, 120, 100);
+    // Color based on validity: green when valid, red when invalid
+    if (isValid) {
+        SDL_SetRenderDrawColor(r, 0, 180, 80, 120);  // Green for valid
+    } else {
+        SDL_SetRenderDrawColor(r, 220, 50, 50, 120); // Red for invalid
+    }
     
     // 시작 타일 위치 계산 (중앙 정렬)
     int startX = tileX - width / 2;
@@ -77,6 +95,82 @@ void BuildCursor::drawTenantHighlight(SDL_Renderer* r, const Camera& cam, int ti
         SDL_FRect rect = {screenX, screenY, scaledTile, scaledTile};
         SDL_RenderFillRectF(r, &rect);
     }
+}
+
+void BuildCursor::drawCostTooltip(int mouseX, int mouseY, int64_t previewCost, bool isValid)
+{
+    // Set tooltip position near cursor
+    ImGui::SetNextWindowPos(ImVec2(mouseX + 20, mouseY + 20), ImGuiCond_Always);
+    ImGui::SetNextWindowBgAlpha(0.8f);
+    
+    ImGui::BeginTooltip();
+    
+    if (!isValid) {
+        ImGui::TextColored(ImVec4(1.0f, 0.3f, 0.3f, 1.0f), "Cannot build here");
+    } else if (previewCost > 0) {
+        // Format cost with thousand separator
+        std::stringstream ss;
+        ss.imbue(std::locale(""));
+        ss << "₩" << std::fixed << std::setprecision(0) << (previewCost / 100.0);
+        ImGui::Text("%s", ss.str().c_str());
+    }
+    
+    ImGui::EndTooltip();
+}
+
+bool BuildCursor::drawTenantSelectPopup(int& outTenantType)
+{
+    bool selected = false;
+    
+    if (popupOpen_) {
+        ImGui::OpenPopup("Select Tenant Type");
+        popupOpen_ = false;
+    }
+    
+    // Center the popup
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    if (ImGui::BeginPopupModal("Select Tenant Type", nullptr, 
+                               ImGuiWindowFlags_AlwaysAutoResize | 
+                               ImGuiWindowFlags_NoMove)) {
+        
+        ImGui::Text("Choose tenant type to build:");
+        ImGui::Separator();
+        
+        if (ImGui::Button("Office (₩5,000)")) {
+            outTenantType = 0; // Office
+            selected = true;
+            ImGui::CloseCurrentPopup();
+        }
+        
+        if (ImGui::Button("Residential (₩3,000)")) {
+            outTenantType = 1; // Residential
+            selected = true;
+            ImGui::CloseCurrentPopup();
+        }
+        
+        if (ImGui::Button("Commercial (₩8,000)")) {
+            outTenantType = 2; // Commercial
+            selected = true;
+            ImGui::CloseCurrentPopup();
+        }
+        
+        ImGui::Separator();
+        
+        if (ImGui::Button("Cancel")) {
+            ImGui::CloseCurrentPopup();
+        }
+        
+        ImGui::EndPopup();
+    }
+    
+    return selected;
+}
+
+void BuildCursor::openTenantSelectPopup()
+{
+    popupOpen_ = true;
 }
 
 } // namespace vse

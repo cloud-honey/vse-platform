@@ -154,6 +154,17 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
+    // TASK-05-001: Tenant selection popup
+    if (shouldOpenTenantPopup_) {
+        buildCursor_.openTenantSelectPopup();
+        shouldOpenTenantPopup_ = false;
+    }
+    
+    int selectedTenantType = -1;
+    if (buildCursor_.drawTenantSelectPopup(selectedTenantType)) {
+        pendingTenantSelection_ = selectedTenantType;
+    }
+
     // DebugPanel::draw() — 별도 구성요소에 위임 (Design Spec 구조)
     // drawDebugInfo=false 또는 debugPanel_.isVisible()=false 시 패널 숨김
     if (frame.drawDebugInfo) {
@@ -709,6 +720,22 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
     }
     
     ImGui::End();
+}
+
+// TASK-05-001: Tenant selection handling methods
+bool SDLRenderer::checkTenantSelection(int& outTenantType)
+{
+    if (pendingTenantSelection_ >= 0) {
+        outTenantType = pendingTenantSelection_;
+        pendingTenantSelection_ = -1;
+        return true;
+    }
+    return false;
+}
+
+void SDLRenderer::setShouldOpenTenantPopup(bool open)
+{
+    shouldOpenTenantPopup_ = open;
 }
 
 } // namespace vse

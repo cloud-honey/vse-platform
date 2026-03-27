@@ -326,6 +326,97 @@ void Bootstrapper::run() {
         frame.mouseY = mouseY;
         frame.buildMode = inputMapper_.getBuildMode();
         
+        // TASK-05-001: Compute placement validity and preview cost
+        if (frame.buildMode.active) {
+            // Get hover tile coordinates
+            int tileX = camera_.screenToTileX(mouseX);
+            int floor = camera_.screenToTileFloor(mouseY);
+            
+            if (tileX >= 0 && floor >= 0) {
+                // Compute placement validity
+                if (frame.buildMode.action == BuildAction::BuildFloor) {
+                    // For BuildFloor: valid if floor is not already built
+                    frame.buildMode.isValidPlacement = !grid_->isFloorBuilt(floor);
+                } else if (frame.buildMode.action == BuildAction::PlaceTenant) {
+                    // For PlaceTenant: valid if floor is built and tiles are empty
+                    if (grid_->isFloorBuilt(floor)) {
+                        // Calculate start position (center-aligned)
+                        int startX = tileX - frame.buildMode.tenantWidth / 2;
+                        bool allEmpty = true;
+                        
+                        // Check all tiles in the tenant width
+                        for (int i = 0; i < frame.buildMode.tenantWidth; ++i) {
+                            int checkX = startX + i;
+                            if (checkX < 0 || checkX >= frame.floorWidth) {
+                                allEmpty = false;
+                                break;
+                            }
+                            if (!grid_->isTileEmpty({checkX, floor})) {
+                                allEmpty = false;
+                                break;
+                            }
+                        }
+                        frame.buildMode.isValidPlacement = allEmpty;
+                    } else {
+                        frame.buildMode.isValidPlacement = false;
+                    }
+                }
+                
+                // Compute preview cost
+                if (frame.buildMode.action == BuildAction::BuildFloor) {
+                    // Floor build cost from config
+                    frame.buildMode.previewCost = config_.getInt("economy.floorBuildCost", 10000);
+                } else if (frame.buildMode.action == BuildAction::PlaceTenant) {
+                    // Tenant build cost from balance data
+                    const auto& balanceData = content_.getBalanceData();
+                    std::string tenantKey;
+                    
+                    switch (frame.buildMode.tenantType) {
+                        case 0: tenantKey = "office"; break;
+                        case 1: tenantKey = "residential"; break;
+                        case 2: tenantKey = "commercial"; break;
+                        default: tenantKey = "office"; break;
+                    }
+                    
+                    // Get build cost from balance.json
+                    if (balanceData.contains("tenants") && 
+                        balanceData["tenants"].contains(tenantKey) &&
+                        balanceData["tenants"][tenantKey].contains("buildCost")) {
+                        frame.buildMode.previewCost = balanceData["tenants"][tenantKey]["buildCost"].get<int64_t>();
+                    } else {
+                        // Fallback values if balance data not available
+                        switch (frame.buildMode.tenantType) {
+                            case 0: frame.buildMode.previewCost = 5000; break;  // Office
+                            case 1: frame.buildMode.previewCost = 3000; break;  // Residential
+                            case 2: frame.buildMode.previewCost = 8000; break;  // Commercial
+                            default: frame.buildMode.previewCost = 5000; break;
+                        }
+                    }
+                }
+            } else {
+                // Invalid tile coordinates
+                frame.buildMode.isValidPlacement = false;
+                frame.buildMode.previewCost = 0;
+            }
+        }
+        
+        // TASK-05-001: Check if InputMapper wants to open tenant popup
+        if (inputMapper_.shouldOpenTenantPopup()) {
+            sdlRenderer_.setShouldOpenTenantPopup(true);
+            inputMapper_.clearTenantPopupFlag();
+        }
+        
+        // TASK-05-001: Check for tenant selection from popup
+        int selectedTenantType = -1;
+        if (sdlRenderer_.checkTenantSelection(selectedTenantType)) {
+            // Update InputMapper's build mode with selected tenant type
+            BuildModeState currentMode = inputMapper_.getBuildMode();
+            if (currentMode.action == BuildAction::PlaceTenant) {
+                currentMode.tenantType = selectedTenantType;
+                inputMapper_.setBuildMode(currentMode);
+            }
+        }
+        
         sdlRenderer_.render(frame, camera_);
     }
 }

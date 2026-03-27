@@ -40,11 +40,16 @@ public:
     void setCamera(const Camera* cam) { camera_ = cam; }
     void setBuildMode(BuildModeState state) { buildMode_ = state; }
     BuildModeState getBuildMode() const { return buildMode_; }
+    
+    // Popup control
+    bool shouldOpenTenantPopup() const { return openTenantPopup_; }
+    void clearTenantPopupFlag() { openTenantPopup_ = false; }
 
 private:
     float panSpeed_ = 8.0f;
     const Camera* camera_ = nullptr;
     BuildModeState buildMode_;
+    bool openTenantPopup_ = false;
 };
 
 } // namespace vse

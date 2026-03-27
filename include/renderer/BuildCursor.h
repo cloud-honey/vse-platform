@@ -15,13 +15,25 @@ namespace vse {
  */
 class BuildCursor {
 public:
+    /// Draw cursor overlay and ImGui tooltip. Called every frame.
     void draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouseY,
               const BuildModeState& mode, int tileSize);
 
+    /// Draw ImGui tenant selection popup (call after ImGui::NewFrame()).
+    /// Returns true if a tenant type was selected; outTenantType is set.
+    bool drawTenantSelectPopup(int& outTenantType);
+
+    /// Open the tenant selection popup.
+    void openTenantSelectPopup();
+
 private:
-    void drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor, int tileSize);
+    bool popupOpen_ = false;  ///< Pending popup open flag
+
+    void drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor,
+                            int tileSize, bool isValid);
     void drawTenantHighlight(SDL_Renderer* r, const Camera& cam, int tileX, int floor,
-                             int width, int tileSize);
+                             int width, int tileSize, bool isValid);
+    void drawCostTooltip(int mouseX, int mouseY, int64_t previewCost, bool isValid);
 };
 
 } // namespace vse
