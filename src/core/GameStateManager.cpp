@@ -18,24 +18,30 @@ GameStateManager::GameStateManager(EventBus& eventBus)
 }
 
 bool GameStateManager::canTransition(GameState from, GameState to) const {
-    // Define valid transitions
+    // Valid transitions per VSE_Design_Spec.md §5.22:
+    // MainMenu → Playing (New Game / Load Game)
+    // Playing  → Paused | GameOver | Victory
+    // Paused   → Playing (Resume) | MainMenu (Quit to menu)
+    // GameOver → MainMenu (reset)
+    // Victory  → MainMenu (reset)
     switch (from) {
         case GameState::MainMenu:
-            return to == GameState::Playing;  // MainMenu → Playing only
-        
+            return to == GameState::Playing;
+
         case GameState::Playing:
-            return to == GameState::Paused || 
-                   to == GameState::GameOver || 
+            return to == GameState::Paused   ||
+                   to == GameState::GameOver ||
                    to == GameState::Victory;
-        
+
         case GameState::Paused:
-            return to == GameState::Playing || 
+            return to == GameState::Playing  ||
                    to == GameState::MainMenu;
-        
+
         case GameState::GameOver:
         case GameState::Victory:
+            // Must go back to MainMenu first before starting a new game
             return to == GameState::MainMenu;
-        
+
         default:
             return false;
     }

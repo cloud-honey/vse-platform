@@ -354,7 +354,10 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 simClock_.resume();
                 spdlog::info("Game resumed");
             }
-            // Ignore in other states
+            // Ignore TogglePause in MainMenu/GameOver/Victory states
+            else {
+                spdlog::debug("TogglePause ignored in state {}", static_cast<int>(gameState_.getState()));
+            }
             break;
         case CommandType::SetSpeed:
             simClock_.setSpeed(cmd.setSpeed.speedMultiplier);
@@ -424,13 +427,16 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             if (gameState_.getState() == GameState::MainMenu || 
                 gameState_.getState() == GameState::GameOver ||
                 gameState_.getState() == GameState::Victory) {
-                // Reset and start new game
-                // Clear registry and reinitialize
+                // GameOver/Victory → MainMenu → Playing (2-step, per state machine spec)
+                if (gameState_.getState() != GameState::MainMenu) {
+                    gameState_.transition(GameState::MainMenu);
+                }
                 registry_.clear();
+                if (gameOver_) gameOver_->reset();
                 setupInitialScene();
-                gameState_.transition(GameState::Playing);
+                gameState_.transition(GameState::Playing);  // MainMenu → Playing
                 simClock_.resume();
-                spdlog::info("New game started");
+                spdlog::info("New game started from state reset");
             }
             break;
             

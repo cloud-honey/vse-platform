@@ -76,7 +76,7 @@ Implemented game state machine and main menu system as specified in VSE_Design_S
 - **Build successful**: Yes
 
 ### Commit Hash
-`git add -A && git commit -m "feat: TASK-04-005 main menu + game state machine"`
+`a5cdcdc` - feat: TASK-04-005 main menu + game state machine
 
 ### Issues / Notes
 
