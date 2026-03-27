@@ -1,6 +1,6 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-27T09:12:00+09:00",
+  "updated_at": "2026-03-27T09:22:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
   "overall_status": "in_progress",
@@ -70,7 +70,7 @@
       "title": "DI-005 해결 + 테스트 품질 개선",
       "assignee": "붐2",
       "layer": "테스트",
-      "status": "pending",
+      "status": "in_progress",
       "difficulty": 2,
       "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
     },
