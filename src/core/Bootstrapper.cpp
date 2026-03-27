@@ -43,6 +43,7 @@ bool Bootstrapper::init() {
     zoomMin_    = config_.getFloat("camera.zoomMin",    0.25f);
     zoomMax_    = config_.getFloat("camera.zoomMax",    4.0f);
     panSpeed_   = config_.getFloat("camera.panSpeed",   8.0f);
+    panMargin_  = config_.getFloat("camera.panMargin",  2.0f);  // cached — avoid per-frame string lookup
 
     // ── SDL2 + Renderer 초기화 ──────────────────────────
     if (!sdlRenderer_.init(windowW_, windowH_, "Tower Tycoon")) {
@@ -435,8 +436,7 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
         if (grid_) {
             float worldW = static_cast<float>(grid_->floorWidth() * tileSizePx_);
             float worldH = static_cast<float>(grid_->maxFloors() * tileSizePx_);
-            float margin = config_.getFloat("camera.panMargin", 2.0f);
-            camera_.clampToWorld(worldW, worldH, margin);
+            camera_.clampToWorld(worldW, worldH, panMargin_);  // panMargin_ cached at init
         }
     };
     

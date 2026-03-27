@@ -1,6 +1,10 @@
 #include "renderer/Camera.h"
+#include "core/InputTypes.h"
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <cmath>
+
+using Catch::Approx;
 
 using namespace vse;
 
@@ -328,25 +332,26 @@ TEST_CASE("Camera - zoomAt() clamps to minZoom/maxZoom", "[Camera][TASK-05-002]"
 }
 
 TEST_CASE("Camera - clampToWorld() prevents scrolling past right/top boundary", "[Camera][TASK-05-002]") {
+    // Use worldW/H larger than viewport so clamping (not centering) applies
     Camera cam(1280, 720, 32);
     cam.reset();
-    
-    float worldW = 1000.0f;
-    float worldH = 800.0f;
+
+    float worldW = 3000.0f;  // larger than viewport (1280)
+    float worldH = 2000.0f;  // larger than viewport (720)
     float margin = 2.0f;
-    
+
     // Try to scroll past right boundary
-    cam.pan(-2000.0f, 0.0f); // Drag left, camera moves right
+    cam.pan(-5000.0f, 0.0f);  // pan far right
     cam.clampToWorld(worldW, worldH, margin);
-    
+
     float visW = 1280.0f / cam.zoomLevel();
     REQUIRE(cam.x() <= worldW - visW + margin);
-    
+
     // Try to scroll past top boundary
     cam.reset();
-    cam.pan(0.0f, -2000.0f); // Drag up, camera moves down
+    cam.pan(0.0f, -5000.0f);  // pan far up
     cam.clampToWorld(worldW, worldH, margin);
-    
+
     float visH = 720.0f / cam.zoomLevel();
     REQUIRE(cam.y() <= worldH - visH + margin);
 }
@@ -409,3 +414,72 @@ TEST_CASE("Camera - clampToWorld() with zoom", "[Camera][TASK-05-002]") {
 
 // Note: Tests for InputMapper right-click pan and pivot zoom command emission
 // would require mocking SDL events and are better suited for integration tests.
+
+TEST_CASE("Camera - clampToWorld() centers when world smaller than viewport", "[Camera][TASK-05-002]") {
+    // P0 fix: when visW >= worldW, std::clamp(lo > hi) would be UB.
+    // Camera must center instead of clamping.
+    Camera cam(1280, 720, 32);  // viewport 1280x720
+    cam.reset();
+
+    // World smaller than viewport (e.g. 20 floors * 32px = 640px wide)
+    float worldW = 640.0f;
+    float worldH = 480.0f;
+    float margin = 2.0f;
+
+    cam.clampToWorld(worldW, worldH, margin);
+
+    // When world < viewport, camera should be centered (no UB, no crash)
+    float visW = 1280.0f / cam.zoomLevel();
+    float visH = 720.0f  / cam.zoomLevel();
+    float expectedX = -(visW - worldW) / 2.0f;
+    float expectedY = -(visH - worldH) / 2.0f;
+
+    const float epsilon = 0.001f;
+    REQUIRE(std::abs(cam.x() - expectedX) < epsilon);
+    REQUIRE(std::abs(cam.y() - expectedY) < epsilon);
+}
+
+TEST_CASE("Camera - zoomAt() with corner pivot (0, 0)", "[Camera][TASK-05-002]") {
+    // Pivot at top-left corner — edge case for coordinate math
+    Camera cam(1280, 720, 32);
+    cam.reset();
+
+    float pivotX = 0.0f;
+    float pivotY = 0.0f;
+
+    float worldXBefore = cam.screenToWorldX(pivotX);
+    float worldYBefore = cam.screenToWorldY(pivotY);
+
+    cam.zoomAt(0.5f, pivotX, pivotY);
+
+    float worldXAfter = cam.screenToWorldX(pivotX);
+    float worldYAfter = cam.screenToWorldY(pivotY);
+
+    const float epsilon = 0.001f;
+    REQUIRE(std::abs(worldXAfter - worldXBefore) < epsilon);
+    REQUIRE(std::abs(worldYAfter - worldYBefore) < epsilon);
+}
+
+TEST_CASE("Camera - makeCameraZoom backward compatibility (sentinel pivot)", "[Camera][TASK-05-002]") {
+    // Legacy makeCameraZoom(delta) must still produce a valid command
+    // with sentinel pivotX/Y = -1.0f
+    vse::GameCommand cmd = vse::GameCommand::makeCameraZoom(0.5f);
+    REQUIRE(cmd.type == vse::CommandType::CameraZoom);
+    REQUIRE(cmd.cameraZoom.zoomDelta == Approx(0.5f));
+    REQUIRE(cmd.cameraZoom.pivotX == Approx(-1.0f));
+    REQUIRE(cmd.cameraZoom.pivotY == Approx(-1.0f));
+}
+
+namespace {
+// Anonymous namespace: isolates any future mock helpers for Camera tests
+// from ODR violations across translation units.
+
+TEST_CASE("Camera - makeCameraZoomAt sets pivot correctly", "[Camera][TASK-05-002]") {
+    vse::GameCommand cmd = vse::GameCommand::makeCameraZoomAt(0.3f, 320.0f, 240.0f);
+    REQUIRE(cmd.type == vse::CommandType::CameraZoom);
+    REQUIRE(cmd.cameraZoom.zoomDelta == Approx(0.3f));
+    REQUIRE(cmd.cameraZoom.pivotX == Approx(320.0f));
+    REQUIRE(cmd.cameraZoom.pivotY == Approx(240.0f));
+}
+
+} // anonymous namespace

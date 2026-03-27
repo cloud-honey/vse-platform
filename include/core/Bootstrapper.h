@@ -136,9 +136,10 @@ public:
     int   windowH_   = 0;
     int   tileSizePx_ = 0;
     int   tickMs_    = 100;
-    float zoomMin_   = 0.25f;
-    float zoomMax_   = 4.0f;
-    float panSpeed_  = 8.0f;
+    float zoomMin_    = 0.25f;
+    float zoomMax_    = 4.0f;
+    float panSpeed_   = 8.0f;
+    float panMargin_  = 2.0f;  ///< World-boundary clamp margin (tiles), cached at init
     EconomyConfig economyConfig_;
 
     // ── 렌더링 상태 ─────────────────────────────────────

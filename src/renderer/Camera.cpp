@@ -43,9 +43,19 @@ void Camera::clampToWorld(float worldW, float worldH, float margin)
     float visW = viewportW_ / zoom_;
     float visH = viewportH_ / zoom_;
     
-    // Clamp camera position within world boundaries with margin
-    x_ = std::clamp(x_, -margin, worldW - visW + margin);
-    y_ = std::clamp(y_, -margin, worldH - visH + margin);
+    // When the visible area exceeds the world size (zoomed out / small grid),
+    // std::clamp(lo > hi) is undefined behavior — center the camera instead.
+    if (visW >= worldW) {
+        x_ = -(visW - worldW) / 2.0f;  // center horizontally
+    } else {
+        x_ = std::clamp(x_, -margin, worldW - visW + margin);
+    }
+
+    if (visH >= worldH) {
+        y_ = -(visH - worldH) / 2.0f;  // center vertically
+    } else {
+        y_ = std::clamp(y_, -margin, worldH - visH + margin);
+    }
 }
 
 void Camera::reset()
