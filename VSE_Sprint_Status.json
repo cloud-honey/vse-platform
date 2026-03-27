@@ -1,5 +1,5 @@
 {
-  "sprint": 4,
+  "sprint": 5,
   "updated_at": "2026-03-27T09:22:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설, 카메라 줌/팬, Save/Load UI, HUD 고도화",
@@ -1098,6 +1098,80 @@
       "sprint": "출시",
       "title": "Steam Early Access",
       "status": "planned"
+    }
+  ],
+  "sprint4_tasks": [
+    {
+      "id": "TASK-04-000",
+      "title": "Design Spec v2.0 동기화",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐",
+      "layer": "문서"
+    },
+    {
+      "id": "TASK-04-001",
+      "title": "경제 루프 활성화",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 3,
+      "assignee": "붐2",
+      "layer": "도메인"
+    },
+    {
+      "id": "TASK-04-002",
+      "title": "NPC 계단 이동",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 3,
+      "assignee": "붐2",
+      "layer": "도메인"
+    },
+    {
+      "id": "TASK-04-003",
+      "title": "정기 결산 시스템",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐2",
+      "layer": "도메인"
+    },
+    {
+      "id": "TASK-04-004",
+      "title": "게임 오버 + TOWER 달성 조건",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐2",
+      "layer": "도메인"
+    },
+    {
+      "id": "TASK-04-005",
+      "title": "메인 메뉴 + 상태 머신",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 3,
+      "assignee": "붐2",
+      "layer": "코어"
+    },
+    {
+      "id": "TASK-04-006",
+      "title": "DI-005 해결 + 테스트 품질",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐2",
+      "layer": "테스트"
+    },
+    {
+      "id": "TASK-04-007",
+      "title": "통합 + Sprint 4 Windows 빌드",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 4,
+      "assignee": "붐",
+      "layer": "전체"
     }
   ]
 }
