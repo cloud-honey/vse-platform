@@ -518,6 +518,12 @@
       "time": "12:07",
       "title": "TASK-04-007 3모델 교차 검증 완료",
       "detail": "GPT/Gemini/DeepSeek Conditional Pass 반영. 총 329/329, 1322 assertions. Sprint 4 완전 완료. 커밋 b4a092d"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "14:17",
+      "title": "대시보드 v2.0 안정화 완료",
+      "detail": "S5~S10 탭 동적 생성, Phase 1 전체 진행률(41%), Sprint Goal 탭 아래 이동, 알약 제거, 배지 태스크 상태 자동 연동(PLANNING/IN_PROGRESS/COMPLETED), 마지막 완료 스프린트 카드 자동 전환(현재 S4), S4 완료보고서 35개 + 히스토리 66개. 커밋 49b2eda"
     }
   ],
   "references": [
