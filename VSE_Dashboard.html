@@ -519,12 +519,13 @@ function render(d){
       completed: d.sprint >= 3
     },
     {
-      id: 's3', label: d.sprint >= 3 ? 'S3 🔥' : 'S3 📋',
+      id: 's3', label: d.sprint >= 4 ? 'S3 ✅' : (d.sprint === 3 ? 'S3 🔥' : 'S3 📋'),
       title: 'Sprint 3 — AI 고도화/스프라이트/UI',
-      cls: d.sprint >= 3 ? '' : 'plan-tab',
-      goal: d.sprint === 3 ? d.sprint_goal : (d.sprint3_tasks ? 'Sprint 3 완료' : d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
-      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks ? d.sprint3_tasks : d.sprint3_plan ? d.sprint3_plan.tasks : []),
-      active: d.sprint >= 3,
+      cls: d.sprint >= 4 ? 'done-tab' : (d.sprint === 3 ? '' : 'plan-tab'),
+      goal: d.sprint === 3 ? d.sprint_goal : 'NPC AI 고도화 + 테넌트 + 스프라이트 + HUD',
+      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks || []),
+      completed: d.sprint >= 4,
+      active: d.sprint === 3,
       planned: d.sprint < 3
     },
     {

@@ -957,92 +957,85 @@
   ],
   "sprint3_tasks": [
     {
-      "id": "TASK-03-000",
-      "title": "Design Spec v1.5 동기화 (Sprint 2 구현 반영)",
-      "assignee": "붐",
-      "layer": "문서",
-      "status": "done",
-      "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 2,
-      "notes": "Bootstrapper/SaveMetadata/StarRatingChangedPayload 반영. 커밋 db6d957"
-    },
-    {
       "id": "TASK-03-001",
-      "title": "NPC AI 고도화 — stress 시스템, 만족도 조건부 감소, leave threshold",
-      "assignee": "DeepSeek V3",
-      "layer": "Layer 1",
+      "title": "Design Spec v1.5 동기화",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 3,
-      "notes": "229/229 tests, 3모델 교차 검증 Pass. commit 7dfb3c2"
+      "difficulty": 2,
+      "assignee": "붐",
+      "layer": "문서"
     },
     {
       "id": "TASK-03-002",
-      "title": "테넌트 3종 완전 구현 (사무실/주거/상업 규칙)",
-      "assignee": "DeepSeek V3",
-      "layer": "Layer 1",
+      "title": "NPC AI 고도화 (스트레스/만족도)",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 3,
-      "notes": "244/244 tests, 3모델 교차 검증 Pass. commit eb28060"
+      "difficulty": 4,
+      "assignee": "붐2",
+      "layer": "도메인"
     },
     {
       "id": "TASK-03-003",
-      "title": "스프라이트 시트 렌더링 전환 (16×32 픽셀아트, 상태별 애니메이션)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
+      "title": "테넌트 3종 완전 구현",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
       "difficulty": 3,
-      "notes": "252/252 tests, commit 53666df"
+      "assignee": "붐2",
+      "layer": "도메인"
     },
     {
       "id": "TASK-03-004",
-      "title": "카메라 개선 (건물 외관, 층 라벨, SDL2_ttf 텍스트)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
+      "title": "스프라이트 시트 렌더링 전환",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 2,
-      "notes": "263/263 tests, commit 66ebb74"
+      "difficulty": 3,
+      "assignee": "붐2",
+      "layer": "렌더러"
     },
     {
       "id": "TASK-03-005",
-      "title": "게임 UI (잔액, 별점, 인게임 HUD — ImGui)",
-      "assignee": "붐2",
-      "layer": "Layer 3",
+      "title": "NPC 애니메이션 시스템",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 2,
-      "notes": "271/271 tests, 3모델 교차 검증 Pass"
+      "difficulty": 3,
+      "assignee": "붐2",
+      "layer": "렌더러"
     },
     {
       "id": "TASK-03-006",
-      "title": "건물 건설 인터랙션 (마우스 클릭 → BuildFloor/PlaceTenant)",
-      "assignee": "붐2+붐",
-      "layer": "Layer 3",
+      "title": "게임 UI — HUD + 마우스 좌표",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 3,
-      "notes": "279/279 tests, 3모델 교차 검증 Pass"
+      "difficulty": 2,
+      "assignee": "붐2",
+      "layer": "UI"
     },
     {
       "id": "TASK-03-007",
-      "title": "통합 + 알파 버전 확인 (Steam 빌드, macOS + Windows 패키지)",
-      "assignee": "붐2+붐",
-      "layer": "전체",
+      "title": "통합 + Sprint 3 Windows 빌드",
       "status": "done",
       "qa_status": "pass",
-      "confirmed_by_human": true,
-      "difficulty": 4,
-      "notes": "279/279, Windows 빌드 27MB, commit 66554b4"
+      "difficulty": 3,
+      "assignee": "붐",
+      "layer": "전체"
+    },
+    {
+      "id": "TASK-03-008",
+      "title": "ContentRegistry hot-reload",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐2",
+      "layer": "코어"
+    },
+    {
+      "id": "TASK-03-009",
+      "title": "통합 확인 + 교차 검증",
+      "status": "done",
+      "qa_status": "pass",
+      "difficulty": 2,
+      "assignee": "붐",
+      "layer": "전체"
     }
   ],
   "tech_debt": [
