@@ -1,9 +1,9 @@
 {
   "sprint": 4,
-  "updated_at": "2026-03-27T09:00:00+09:00",
+  "updated_at": "2026-03-27T09:05:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
-  "overall_status": "sprint3_complete",
+  "overall_status": "in_progress",
   "tasks": [
     {
       "id": "TASK-04-000",
@@ -60,7 +60,7 @@
       "title": "메인 메뉴 + 새 게임/불러오기/일시정지",
       "assignee": "붐2",
       "layer": "Layer 3",
-      "status": "done",
+      "status": "in_progress",
       "difficulty": 3,
       "notes": "상태머신 완료. 315/315. 교차검증 대기.",
       "qa_status": "pending"
