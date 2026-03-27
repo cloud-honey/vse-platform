@@ -302,8 +302,6 @@ h1 span{color:var(--accent);}
 
     <!-- Sprint 탭 + Task list -->
     <div class="sec">
-      <!-- 탭 네비게이션 -->
-      <div id="sprintTabs" style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;"></div>
       <div class="sec-hdr" style="margin-bottom:8px;">
         <div class="sec-ttl" id="activeTabTitle">Tasks</div>
         <div class="sec-cnt" id="taskCount">0 tasks</div>
@@ -554,11 +552,8 @@ function render(d){
   window._activeTab = window._activeTab || (d.sprint >= 5 ? 's5' : d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');  // 기본값: 현재 스프린트
 
   function renderTabs() {
-    const tabBar = document.getElementById('sprintTabs');
-    tabBar.innerHTML = sprintDefs.map(s => `
-      <button class="stab ${s.cls} ${window._activeTab === s.id ? 'active' : ''}"
-        onclick="selectTab('${s.id}')">${s.label}</button>
-    `).join('');
+    // Tabs are now rendered in sprintPills area (progress bar section)
+    // No separate tab bar needed
   }
 
   function renderTasksForTab(tabId) {
@@ -660,18 +655,36 @@ function render(d){
   document.getElementById('totalPctBar').style.width = totalPct + '%';
   document.getElementById('totalPctLabel').title = `${totalDone}/${totalAll} 태스크 완료 (Phase 1 전체)`;
 
-  /* Sprint 진행 알약 */
+  /* Sprint 탭 (진행률 바 아래) */
   const pills = document.getElementById('sprintPills');
   pills.innerHTML = '';
-  const pillStyle = (bg, fg, border) => `background:${bg};color:${fg};border:1px solid ${border};border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);`;
-  completedSprints.forEach(s => {
-    pills.innerHTML += `<span style="${pillStyle('rgba(46,204,138,.15)','var(--green)','rgba(46,204,138,.3)')}">${s.label} ${s.done}/${s.total} ✅</span>`;
+
+  // 탭 버튼 렌더링 — sprintDefs 기반
+  sprintDefs.forEach(s => {
+    const isActive = window._activeTab === s.id;
+    const sDone = s.tasks ? s.tasks.filter(t => t.status === 'done').length : 0;
+    const sTotal = s.tasks ? s.tasks.length : 0;
+    const isDone = s.completed;
+    const isCurrent = s.active && !s.completed;
+    const isFuture = s.planned;
+
+    let bg, fg, border;
+    if (isActive) { bg = 'rgba(79,142,247,.18)'; fg = 'var(--accent)'; border = 'var(--accent)'; }
+    else if (isDone) { bg = 'rgba(46,204,138,.1)'; fg = 'var(--green)'; border = 'rgba(46,204,138,.3)'; }
+    else if (isCurrent) { bg = 'rgba(79,142,247,.08)'; fg = 'var(--accent)'; border = 'rgba(79,142,247,.2)'; }
+    else { bg = 'rgba(100,100,120,.05)'; fg = 'var(--text2)'; border = 'var(--border)'; }
+
+    const icon = isDone ? '✅' : (isCurrent ? '🔥' : '📋');
+    const countText = sTotal > 0 ? ` ${sDone}/${sTotal}` : '';
+    pills.innerHTML += `<button onclick="selectTab('${s.id}')" style="cursor:pointer;background:${bg};color:${fg};border:1px solid ${border};border-radius:20px;padding:4px 12px;font-size:11px;font-family:var(--mono);font-weight:${isActive?'700':'400'};transition:all .2s;">${s.label}${countText} ${icon}</button>`;
   });
-  pills.innerHTML += `<span style="${pillStyle('rgba(79,142,247,.12)','var(--accent)','rgba(79,142,247,.25)')}">${currentSprint.label} ${currentSprint.done}/${currentSprint.total} 🔥</span>`;
+
+  // Future sprints (S6~S10) — 표시만
   futureSprints.forEach(s => {
-    pills.innerHTML += `<span style="${pillStyle('rgba(100,100,120,.06)','var(--text2)','var(--border)')}">${s.label} 📋</span>`;
+    pills.innerHTML += `<span style="background:rgba(100,100,120,.04);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);opacity:0.5;">${s.label} 📋</span>`;
   });
-  pills.innerHTML += `<span style="${pillStyle('rgba(100,100,120,.1)','var(--text2)','var(--border)')}">Phase 1: ${totalDone}/${totalAll}</span>`;
+
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.08);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);margin-left:auto;">Phase 1: ${totalDone}/${totalAll}</span>`;
 
   /* Sprint 1 이력 카드 */
   if (s1) {
