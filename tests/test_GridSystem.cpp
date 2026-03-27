@@ -323,7 +323,9 @@ TEST_CASE("GridSystem - getTenantCount: multi-tile tenant counts as one", "[Grid
     REQUIRE(grid.getTenantCount() == 1);
 }
 
-// TASK-05-005: TD-001 isAnchor Refactoring Tests
+// TASK-05-005: TD-001 isAnchor Refactoring Tests — wrapped in anonymous namespace per ODR rules
+namespace {
+
 TEST_CASE("GridSystem - Elevator shaft tile has isElevatorShaft=true and isAnchor=false", "[GridSystem][TASK-05-005]") {
     MAKE_GRID(grid);
     grid.buildFloor(1);
@@ -397,3 +399,5 @@ TEST_CASE("GridSystem - isAnchor and isElevatorShaft are mutually exclusive afte
         }
     }
 }
+
+} // anonymous namespace
