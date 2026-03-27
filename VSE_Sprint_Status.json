@@ -422,6 +422,102 @@
       "time": "17:52",
       "title": "TASK-03-007 3모델 교차 검증 완료 (GPT+Gemini+DeepSeek Conditional Pass)",
       "detail": "StarRating static_assert 추가. 엘리베이터 Mock 불일치 DI-005로 등록. 283/283."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "18:20",
+      "title": "Sprint 4 계획 확정",
+      "detail": "게임 루프 완성 목표 — 경제 루프, 계단 이동, 결산, 게임오버, 메인 메뉴 7개 태스크"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "18:38",
+      "title": "TASK-04-000 Design Spec v2.0 완료",
+      "detail": "Sprint 3 구현 반영 + Sprint 4 계획 섹션 추가. 커밋 99fa19b"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "19:51",
+      "title": "TASK-04-001 경제 루프 활성화 완료",
+      "detail": "collectRent/payMaintenance 자동 호출, buildFloor/placeTenant 비용 차감, InsufficientFunds 이벤트. 290/290. 커밋 008707a"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "19:51",
+      "title": "TASK-04-001 3모델 교차 검증 완료",
+      "detail": "GPT Fail→반영, Gemini Fail→반영, DeepSeek Conditional Pass. P1 수정 완료."
+    },
+    {
+      "date": "2026-03-26",
+      "time": "20:14",
+      "title": "TASK-04-002 NPC 계단 이동 완료",
+      "detail": "≤4층 계단 이동, ≥5층 엘리베이터, 2틱/층, 대기 타임아웃 계단 전환. 297/297. 커밋 ff95f18"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "20:56",
+      "title": "TASK-04-002 3모델 교차 검증 완료",
+      "detail": "GPT/Gemini/DeepSeek Conditional Pass. Gemini P1 — 엘리베이터 타임아웃 폴백 수정. 커밋 7afb53c"
+    },
+    {
+      "date": "2026-03-26",
+      "time": "21:24",
+      "title": "TASK-04-003 정기 결산 시스템 완료",
+      "detail": "일/주/분기 결산, balance*5% 세금, StarRatingReEvalRequested 이벤트. 303/303. 커밋 2d762f8"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "00:08",
+      "title": "TASK-04-003 3모델 교차 검증 완료",
+      "detail": "GPT Fail→반영(세금 계산 수정), Gemini Conditional Pass, DeepSeek Approved. 커밋 c12be8b"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "08:31",
+      "title": "TASK-04-004 게임 오버 + TOWER 달성 완료",
+      "detail": "파산 30일, Mass Exodus 7일, TOWER(★5+100층+300NPC+90일 흑자). 310/310. 커밋 2bc5d16"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "08:40",
+      "title": "TASK-04-004 3모델 교차 검증 완료",
+      "detail": "GPT Conditional Pass, Gemini Conditional Pass, DeepSeek Pass. P1 — 90일 흑자 조건/상호배제/Mass Exodus 추가. 커밋 b08a779"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "08:59",
+      "title": "TASK-04-005 메인 메뉴 + 상태 머신 완료",
+      "detail": "MainMenu/Playing/Paused/GameOver/Victory 상태, ImGui 메뉴, ESC 일시정지. 315/315. 커밋 e32e397"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "09:08",
+      "title": "TASK-04-005 3모델 교차 검증 완료",
+      "detail": "GPT Pass, Gemini Pass, DeepSeek Pass. P1 — NewGame 2단계 전환, TogglePause 가드 수정. 커밋 6fa4593"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "09:33",
+      "title": "TASK-04-006 DI-005 해결 + 테스트 품질 완료",
+      "detail": "MockGridSystem 엘리베이터 앵커 불일치 수정, getTenantCount 테스트 추가. 320/320. 커밋 1cfbbb5"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "10:58",
+      "title": "ODR 위반 수정 (vtable 버그)",
+      "detail": "여러 테스트 파일 동일 네임스페이스 Mock 클래스 → anonymous namespace로 분리. Release 빌드 정상화. 커밋 b051472"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "11:48",
+      "title": "TASK-04-007 통합 + Sprint 4 Windows 빌드 완료",
+      "detail": "Sprint 4 통합 테스트 9개 추가, 329/329. Windows 크로스 빌드 (MinGW posix). dist-win/TowerTycoon-Sprint4-Windows.zip. 커밋 67610c2"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "12:07",
+      "title": "TASK-04-007 3모델 교차 검증 완료",
+      "detail": "GPT/Gemini/DeepSeek Conditional Pass 반영. 총 329/329, 1322 assertions. Sprint 4 완전 완료. 커밋 b4a092d"
     }
   ],
   "references": [
