@@ -1051,5 +1051,22 @@
       "difficulty": 4,
       "notes": "279/279, Windows 빌드 27MB, commit 66554b4"
     }
+  ],
+  "tech_debt": [
+    {
+      "id": "TD-001",
+      "title": "isAnchor 플래그 의미 분리 (isElevatorShaft 추가)",
+      "severity": "MINOR",
+      "origin": "TASK-04-006 교차 검증 (GPT·Gemini 공통 지적)",
+      "description": "TileData.isAnchor가 테넌트 앵커와 엘리베이터 유지보수 과금 두 가지 의미로 혼용됨. isElevatorShaft 필드 분리 필요.",
+      "affected_files": [
+        "src/domain/GridSystem.cpp",
+        "src/domain/EconomyEngine.cpp",
+        "tests/test_EconomyEngine.cpp"
+      ],
+      "estimated_hours": 2,
+      "planned_sprint": "Sprint 5 시작 전",
+      "status": "pending"
+    }
   ]
 }
