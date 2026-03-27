@@ -1,9 +1,9 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T20:06:00+09:00",
+  "updated_at": "2026-03-27T20:11:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
-  "overall_status": "in_progress",
+  "overall_status": "completed",
   "tasks": [
     {
       "id": "TASK-05-000",
@@ -95,9 +95,11 @@
       "title": "통합 + Sprint 5 빌드",
       "assignee": "붐",
       "layer": "전체",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 3,
-      "notes": "통합 테스트 + Win 빌드 + 교차 검증"
+      "notes": "통합 테스트 + Win 빌드 + 교차 검증",
+      "commit": "da179bb",
+      "tests": "382/382"
     }
   ],
   "escalations": [],
@@ -585,6 +587,12 @@
       "time": "18:55",
       "title": "TASK-05-004 HUD 고도화 완료",
       "detail": "건설 툴바, ★☆ 별점 아이콘, 수익 ↑↓ 지표, 토스트 큐, ×1/×2/×3 배속. 3모델 교차검증(버튼 미연결/토스트 구독 수정). 365/365. 커밋 17816fb"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "20:11",
+      "title": "TASK-05-006 통합 + Sprint 5 Windows 빌드 완료",
+      "detail": "Sprint 5 통합 테스트 13개 추가(BuildCursor/Camera/SaveLoad/HUD/TD-001). 382/382. Windows 빌드 27MB. 커밋 da179bb"
     }
   ],
   "references": [
