@@ -52,7 +52,7 @@
       "title": "Save/Load UI",
       "assignee": "붐2",
       "layer": "UI",
-      "status": "pending",
+      "status": "in_progress",
       "difficulty": 2,
       "notes": "세이브 슬롯, 메타데이터, 자동세이브"
     },
