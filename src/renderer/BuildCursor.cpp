@@ -93,9 +93,11 @@ void BuildCursor::drawTenantHighlight(SDL_Renderer* r, const Camera& cam, int ti
         SDL_SetRenderDrawColor(r, 220, 50, 50, 120); // Red for invalid
     }
     
-    // 시작 타일 위치 계산 (중앙 정렬)
+    // Center-aligned start tile, clamped to left edge.
+    // Must match Bootstrapper and InputMapper clamp logic exactly.
     int startX = tileX - width / 2;
-    
+    if (startX < 0) startX = 0;  // clamp: mirrors InputMapper::PlaceTenant behavior
+
     SDL_SetRenderDrawBlendMode(r, SDL_BLENDMODE_BLEND);
     float zoom = cam.zoomLevel();
     float scaledTile = tileSize * zoom;
@@ -139,7 +141,7 @@ bool BuildCursor::drawTenantSelectPopup(int& outTenantType)
     bool selected = false;
     
     if (popupOpen_) {
-        ImGui::OpenPopup("Select Tenant Type");
+        ImGui::OpenPopup("Select Tenant Type##BuildCursor");
         popupOpen_ = false;
     }
     
@@ -147,7 +149,7 @@ bool BuildCursor::drawTenantSelectPopup(int& outTenantType)
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     
-    if (ImGui::BeginPopupModal("Select Tenant Type", nullptr, 
+    if (ImGui::BeginPopupModal("Select Tenant Type##BuildCursor", nullptr, 
                                ImGuiWindowFlags_AlwaysAutoResize | 
                                ImGuiWindowFlags_NoMove)) {
         

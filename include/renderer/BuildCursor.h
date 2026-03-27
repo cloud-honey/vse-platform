@@ -8,10 +8,10 @@ namespace vse {
 /**
  * BuildCursor — 건설 모드 시 마우스 커서 피드백을 그리는 클래스.
  *
- * 마우스가 호버링하는 타일에 반투명 오버레이를 그림:
- * - BuildFloor: 전체 층 너비 하이라이트 (valid=초록, invalid=빨강)
- * - PlaceTenant: tenantWidth 타일 하이라이트 (valid=초록, invalid=빨강)
- * - None: 오버레이 없음
+ * Draws a semi-transparent overlay on the hovered tile(s) based on build mode:
+ * - BuildFloor: full floor width highlight (green=valid, red=invalid)
+ * - PlaceTenant: tenantWidth tiles highlight, center-aligned and left-clamped (green=valid, red=invalid)
+ * - None: no overlay
  *
  * 렌더링 순서 필수:
  * 1. drawOverlay() — SDL BeginRender/EndRender 사이, ImGui::NewFrame() 전
