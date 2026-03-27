@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T17:20:00+09:00",
+  "updated_at": "2026-03-27T17:53:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -58,9 +58,9 @@
       "commit": "1f8f746",
       "tests": "355/355",
       "reviewer": {
-        "GPT": "pending",
-        "Gemini": "pending",
-        "DeepSeek": "pending"
+        "GPT": "Fail→수정 후 Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Fail→수정 후 Pass"
       }
     },
     {
