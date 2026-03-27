@@ -74,6 +74,7 @@ void SimClock::checkTimeBoundaries(SimTick oldTick, SimTick newTick) {
     if (oldHour != newHour) {
         Event hourEvent;
         hourEvent.type = EventType::HourChanged;
+        hourEvent.payload = newHour;  // 현재 시간(0-23)을 페이로드에 포함
         eventBus_.publish(hourEvent);
     }
     

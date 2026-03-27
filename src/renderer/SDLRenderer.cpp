@@ -23,7 +23,7 @@ SDLRenderer::~SDLRenderer()
     shutdown();
 }
 
-bool SDLRenderer::init(int windowW, int windowH, const char* title)
+bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bus)
 {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) != 0) {
         spdlog::error("SDL_Init failed: {}", SDL_GetError());
@@ -84,12 +84,24 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title)
     ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
     ImGui_ImplSDLRenderer2_Init(renderer_);
 
+    // AudioEngine 초기화 (비치명적 — 실패해도 계속 진행)
+    if (!audioEngine_.init()) {
+        spdlog::warn("AudioEngine initialization failed — continuing without audio");
+    }
+
+    // EventBus 참조 저장 및 DayNightCycle 초기화
+    bus_ = &bus;
+    dayNightCycle_ = std::make_unique<DayNightCycle>(bus);
+
     spdlog::info("SDLRenderer::init OK ({}x{})", windowW, windowH);
     return true;
 }
 
 void SDLRenderer::shutdown()
 {
+    // AudioEngine 정리
+    audioEngine_.shutdown();
+    
     // Dear ImGui 종료 (초기화된 경우에만)
     if (renderer_) {
         ImGui_ImplSDLRenderer2_Shutdown();
@@ -140,6 +152,16 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 
     // 에이전트 렌더링 (TASK-03-003: Sprite Sheet 시스템)
     drawAgents(frame, camera, dt);
+
+    // 주야간 오버레이 렌더링 (TASK-06-005)
+    if (dayNightCycle_) {
+        SDL_Color overlay = dayNightCycle_->getOverlayColor();
+        if (overlay.a > 0) {
+            SDL_SetRenderDrawColor(renderer_, overlay.r, overlay.g, overlay.b, overlay.a);
+            SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+            SDL_RenderFillRect(renderer_, nullptr);
+        }
+    }
 
     // 건설 모드 커서 SDL 오버레이 (TASK-05-001: SDL-only, ImGui tooltip은 NewFrame 이후에)
     buildCursor_.drawOverlay(renderer_, camera, frame.mouseX, frame.mouseY,

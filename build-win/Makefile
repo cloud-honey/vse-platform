@@ -1357,6 +1357,30 @@ src/renderer/SDLRenderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SDLRenderer.cpp.s
 .PHONY : src/renderer/SDLRenderer.cpp.s
 
+src/renderer/SaveLoadPanel.obj: src/renderer/SaveLoadPanel.cpp.obj
+.PHONY : src/renderer/SaveLoadPanel.obj
+
+# target to build an object file
+src/renderer/SaveLoadPanel.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SaveLoadPanel.cpp.obj
+.PHONY : src/renderer/SaveLoadPanel.cpp.obj
+
+src/renderer/SaveLoadPanel.i: src/renderer/SaveLoadPanel.cpp.i
+.PHONY : src/renderer/SaveLoadPanel.i
+
+# target to preprocess a source file
+src/renderer/SaveLoadPanel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SaveLoadPanel.cpp.i
+.PHONY : src/renderer/SaveLoadPanel.cpp.i
+
+src/renderer/SaveLoadPanel.s: src/renderer/SaveLoadPanel.cpp.s
+.PHONY : src/renderer/SaveLoadPanel.s
+
+# target to generate assembly for a file
+src/renderer/SaveLoadPanel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SaveLoadPanel.cpp.s
+.PHONY : src/renderer/SaveLoadPanel.cpp.s
+
 src/renderer/SpriteSheet.obj: src/renderer/SpriteSheet.cpp.obj
 .PHONY : src/renderer/SpriteSheet.obj
 
@@ -1521,6 +1545,9 @@ help:
 	@echo "... src/renderer/SDLRenderer.obj"
 	@echo "... src/renderer/SDLRenderer.i"
 	@echo "... src/renderer/SDLRenderer.s"
+	@echo "... src/renderer/SaveLoadPanel.obj"
+	@echo "... src/renderer/SaveLoadPanel.i"
+	@echo "... src/renderer/SaveLoadPanel.s"
 	@echo "... src/renderer/SpriteSheet.obj"
 	@echo "... src/renderer/SpriteSheet.i"
 	@echo "... src/renderer/SpriteSheet.s"

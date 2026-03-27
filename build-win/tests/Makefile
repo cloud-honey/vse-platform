@@ -1153,6 +1153,30 @@ __/src/renderer/SDLRenderer.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SDLRenderer.cpp.s
 .PHONY : __/src/renderer/SDLRenderer.cpp.s
 
+__/src/renderer/SaveLoadPanel.obj: __/src/renderer/SaveLoadPanel.cpp.obj
+.PHONY : __/src/renderer/SaveLoadPanel.obj
+
+# target to build an object file
+__/src/renderer/SaveLoadPanel.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.obj
+.PHONY : __/src/renderer/SaveLoadPanel.cpp.obj
+
+__/src/renderer/SaveLoadPanel.i: __/src/renderer/SaveLoadPanel.cpp.i
+.PHONY : __/src/renderer/SaveLoadPanel.i
+
+# target to preprocess a source file
+__/src/renderer/SaveLoadPanel.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.i
+.PHONY : __/src/renderer/SaveLoadPanel.cpp.i
+
+__/src/renderer/SaveLoadPanel.s: __/src/renderer/SaveLoadPanel.cpp.s
+.PHONY : __/src/renderer/SaveLoadPanel.s
+
+# target to generate assembly for a file
+__/src/renderer/SaveLoadPanel.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.s
+.PHONY : __/src/renderer/SaveLoadPanel.cpp.s
+
 __/src/renderer/SpriteSheet.obj: __/src/renderer/SpriteSheet.cpp.obj
 .PHONY : __/src/renderer/SpriteSheet.obj
 
@@ -1248,6 +1272,30 @@ test_Bootstrapper.s: test_Bootstrapper.cpp.s
 test_Bootstrapper.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Bootstrapper.cpp.s
 .PHONY : test_Bootstrapper.cpp.s
+
+test_BuildCursor.obj: test_BuildCursor.cpp.obj
+.PHONY : test_BuildCursor.obj
+
+# target to build an object file
+test_BuildCursor.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_BuildCursor.cpp.obj
+.PHONY : test_BuildCursor.cpp.obj
+
+test_BuildCursor.i: test_BuildCursor.cpp.i
+.PHONY : test_BuildCursor.i
+
+# target to preprocess a source file
+test_BuildCursor.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_BuildCursor.cpp.i
+.PHONY : test_BuildCursor.cpp.i
+
+test_BuildCursor.s: test_BuildCursor.cpp.s
+.PHONY : test_BuildCursor.s
+
+# target to generate assembly for a file
+test_BuildCursor.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_BuildCursor.cpp.s
+.PHONY : test_BuildCursor.cpp.s
 
 test_Camera.obj: test_Camera.cpp.obj
 .PHONY : test_Camera.obj
@@ -1633,6 +1681,30 @@ test_SaveLoad.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SaveLoad.cpp.s
 .PHONY : test_SaveLoad.cpp.s
 
+test_SaveLoadPanel.obj: test_SaveLoadPanel.cpp.obj
+.PHONY : test_SaveLoadPanel.obj
+
+# target to build an object file
+test_SaveLoadPanel.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SaveLoadPanel.cpp.obj
+.PHONY : test_SaveLoadPanel.cpp.obj
+
+test_SaveLoadPanel.i: test_SaveLoadPanel.cpp.i
+.PHONY : test_SaveLoadPanel.i
+
+# target to preprocess a source file
+test_SaveLoadPanel.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SaveLoadPanel.cpp.i
+.PHONY : test_SaveLoadPanel.cpp.i
+
+test_SaveLoadPanel.s: test_SaveLoadPanel.cpp.s
+.PHONY : test_SaveLoadPanel.s
+
+# target to generate assembly for a file
+test_SaveLoadPanel.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SaveLoadPanel.cpp.s
+.PHONY : test_SaveLoadPanel.cpp.s
+
 test_Settlement.obj: test_Settlement.cpp.obj
 .PHONY : test_Settlement.obj
 
@@ -1704,6 +1776,30 @@ test_Sprint4Integration.s: test_Sprint4Integration.cpp.s
 test_Sprint4Integration.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.s
 .PHONY : test_Sprint4Integration.cpp.s
+
+test_Sprint5Integration.obj: test_Sprint5Integration.cpp.obj
+.PHONY : test_Sprint5Integration.obj
+
+# target to build an object file
+test_Sprint5Integration.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint5Integration.cpp.obj
+.PHONY : test_Sprint5Integration.cpp.obj
+
+test_Sprint5Integration.i: test_Sprint5Integration.cpp.i
+.PHONY : test_Sprint5Integration.i
+
+# target to preprocess a source file
+test_Sprint5Integration.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint5Integration.cpp.i
+.PHONY : test_Sprint5Integration.cpp.i
+
+test_Sprint5Integration.s: test_Sprint5Integration.cpp.s
+.PHONY : test_Sprint5Integration.s
+
+# target to generate assembly for a file
+test_Sprint5Integration.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint5Integration.cpp.s
+.PHONY : test_Sprint5Integration.cpp.s
 
 test_SpriteSheet.obj: test_SpriteSheet.cpp.obj
 .PHONY : test_SpriteSheet.obj
@@ -1939,6 +2035,9 @@ help:
 	@echo "... __/src/renderer/SDLRenderer.obj"
 	@echo "... __/src/renderer/SDLRenderer.i"
 	@echo "... __/src/renderer/SDLRenderer.s"
+	@echo "... __/src/renderer/SaveLoadPanel.obj"
+	@echo "... __/src/renderer/SaveLoadPanel.i"
+	@echo "... __/src/renderer/SaveLoadPanel.s"
 	@echo "... __/src/renderer/SpriteSheet.obj"
 	@echo "... __/src/renderer/SpriteSheet.i"
 	@echo "... __/src/renderer/SpriteSheet.s"
@@ -1951,6 +2050,9 @@ help:
 	@echo "... test_Bootstrapper.obj"
 	@echo "... test_Bootstrapper.i"
 	@echo "... test_Bootstrapper.s"
+	@echo "... test_BuildCursor.obj"
+	@echo "... test_BuildCursor.i"
+	@echo "... test_BuildCursor.s"
 	@echo "... test_Camera.obj"
 	@echo "... test_Camera.i"
 	@echo "... test_Camera.s"
@@ -1999,6 +2101,9 @@ help:
 	@echo "... test_SaveLoad.obj"
 	@echo "... test_SaveLoad.i"
 	@echo "... test_SaveLoad.s"
+	@echo "... test_SaveLoadPanel.obj"
+	@echo "... test_SaveLoadPanel.i"
+	@echo "... test_SaveLoadPanel.s"
 	@echo "... test_Settlement.obj"
 	@echo "... test_Settlement.i"
 	@echo "... test_Settlement.s"
@@ -2008,6 +2113,9 @@ help:
 	@echo "... test_Sprint4Integration.obj"
 	@echo "... test_Sprint4Integration.i"
 	@echo "... test_Sprint4Integration.s"
+	@echo "... test_Sprint5Integration.obj"
+	@echo "... test_Sprint5Integration.i"
+	@echo "... test_Sprint5Integration.s"
 	@echo "... test_SpriteSheet.obj"
 	@echo "... test_SpriteSheet.i"
 	@echo "... test_SpriteSheet.s"

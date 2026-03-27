@@ -46,7 +46,7 @@ bool Bootstrapper::init() {
     panMargin_  = config_.getFloat("camera.panMargin",  2.0f);  // cached — avoid per-frame string lookup
 
     // ── SDL2 + Renderer 초기화 ──────────────────────────
-    if (!sdlRenderer_.init(windowW_, windowH_, "Tower Tycoon")) {
+    if (!sdlRenderer_.init(windowW_, windowH_, "Tower Tycoon", eventBus_)) {
         return false;
     }
 

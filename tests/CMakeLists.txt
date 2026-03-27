@@ -71,6 +71,8 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/FontManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/BuildCursor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SaveLoadPanel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AudioEngine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/DayNightCycle.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE
@@ -82,6 +84,7 @@ target_compile_options(TowerTycoonTests PRIVATE
 # 프로젝트 루트 경로를 매크로로 전달 (테스트에서 assets 파일 경로 사용)
 target_compile_definitions(TowerTycoonTests PRIVATE
     VSE_PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
+    VSE_HAS_AUDIO=0
 )
 
 include(CTest)

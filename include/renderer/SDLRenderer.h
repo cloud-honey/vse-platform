@@ -8,14 +8,18 @@
 #include "renderer/AnimationSystem.h"
 #include "renderer/FontManager.h"
 #include "renderer/BuildCursor.h"
+#include "renderer/AudioEngine.h"
+#include "renderer/DayNightCycle.h"
 #include <unordered_map>
 #include <cstdint>
+#include <memory>
 
 // Forward declarations — SDL2 타입 (include 금지 in headers)
 struct SDL_Window;
 struct SDL_Renderer;
 
 namespace vse {
+class EventBus;  // forward declaration
 
 /**
  * SDLRenderer — Layer 3 렌더러. RenderFrame을 SDL2로 그린다.
@@ -35,7 +39,7 @@ public:
     ~SDLRenderer();
 
     // 초기화/정리
-    bool init(int windowW, int windowH, const char* title);
+    bool init(int windowW, int windowH, const char* title, EventBus& bus);
     void shutdown();
 
     // 프레임 렌더링
@@ -70,6 +74,9 @@ public:
     // HUD interaction handling (TASK-05-004)
     bool checkPendingBuildAction(int& outBuildAction, int& outTenantType);
     bool checkPendingSpeedChange(int& outSpeedMultiplier);
+    
+    // AudioEngine 접근
+    AudioEngine& audioEngine() { return audioEngine_; }
 
 private:
     // 그리드 렌더링
@@ -87,6 +94,9 @@ private:
     HUDPanel      hudPanel_;                // 게임 HUD 패널
     SaveLoadPanel saveLoadPanel_;           // Save/Load UI 패널
     BuildCursor   buildCursor_;             // 건설 모드 커서 피드백
+    AudioEngine   audioEngine_;             // 오디오 엔진
+    std::unique_ptr<DayNightCycle> dayNightCycle_;  // 주야간 사이클
+    EventBus*     bus_         = nullptr;   // 이벤트 버스 참조 (DayNightCycle용)
     
     // Sprite sheet system
     std::unique_ptr<SpriteSheet> npcSheet_;

@@ -85,11 +85,19 @@ add_executable(TowerTycoon
     src/renderer/FontManager.cpp
     src/renderer/BuildCursor.cpp
     src/renderer/SaveLoadPanel.cpp
+    src/renderer/AudioEngine.cpp
+    src/renderer/DayNightCycle.cpp
 )
 
 target_compile_definitions(TowerTycoon PRIVATE
     VSE_PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
 )
+
+if(VSE_HAS_AUDIO)
+    target_compile_definitions(TowerTycoon PRIVATE VSE_HAS_AUDIO=1)
+else()
+    target_compile_definitions(TowerTycoon PRIVATE VSE_HAS_AUDIO=0)
+endif()
 
 target_link_libraries(TowerTycoon PRIVATE
     project_warnings
@@ -103,6 +111,10 @@ target_link_libraries(TowerTycoon PRIVATE
     msgpack-cxx
     spdlog::spdlog
 )
+
+if(VSE_HAS_AUDIO AND TARGET SDL2_mixer::SDL2_mixer)
+    target_link_libraries(TowerTycoon PRIVATE SDL2_mixer::SDL2_mixer)
+endif()
 
 # Windows (MinGW): SDL2main 링크 필수 (WinMain 리디렉션)
 if(WIN32)
