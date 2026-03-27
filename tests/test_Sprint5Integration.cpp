@@ -27,10 +27,12 @@
 using namespace vse;
 using Catch::Approx;
 
-// ── Helper: minimal config path ──────────────────────────────────────────────
-static std::string cfgPath() {
+// ── Helper: minimal config path (anonymous namespace for ODR safety) ─────────
+namespace {
+std::string cfgPath() {
     return std::string(VSE_PROJECT_ROOT) + "/assets/config/game_config.json";
 }
+} // anonymous namespace
 
 // ── 1. BuildModeState — TASK-05-001 ─────────────────────────────────────────
 
