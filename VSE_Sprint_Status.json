@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-26T18:44:00+09:00",
+  "updated_at": "2026-03-27T14:38:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -10,9 +10,10 @@
       "title": "Design Spec v2.5 동기화",
       "assignee": "붐",
       "layer": "문서",
-      "status": "pending",
+      "status": "done",
       "difficulty": 1,
-      "notes": "Sprint 4 반영 + Sprint 5~10 로드맵"
+      "notes": "Sprint 4 반영 + Sprint 5~10 로드맵",
+      "commit": "76b68e6"
     },
     {
       "id": "TASK-05-001",
