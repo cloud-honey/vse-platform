@@ -49,17 +49,13 @@ SpriteSheet::SpriteSheet(SDL_Renderer* renderer, const std::string& path)
         if (texture_) {
             spdlog::info("SpriteSheet loaded: {}", path);
             
-            // Get texture dimensions to verify
+            // Get texture dimensions and compute frame size dynamically
             int texW, texH;
             SDL_QueryTexture(texture_, nullptr, nullptr, &texW, &texH);
-            
-            // Verify dimensions match expected (128x32 for 8 frames of 16x32)
-            if (texW == 128 && texH == 32) {
-                spdlog::debug("SpriteSheet dimensions OK: {}x{}", texW, texH);
-            } else {
-                spdlog::warn("SpriteSheet dimensions unexpected: {}x{} (expected 128x32)", texW, texH);
-                // Still usable, but frames might not align correctly
-            }
+            frameWidth_  = texW / frameCount_;
+            frameHeight_ = texH;
+            spdlog::info("SpriteSheet dimensions: {}x{}, frameCount={}, frameSize={}x{}",
+                         texW, texH, frameCount_, frameWidth_, frameHeight_);
         } else {
             spdlog::warn("Failed to load sprite sheet {}: {}. Using fallback rendering.", 
                         path, IMG_GetError());

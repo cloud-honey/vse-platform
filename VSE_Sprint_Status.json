@@ -55,7 +55,7 @@
       "title": "낮/밤 비주얼 사이클",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 2,
       "notes": "GameTime.hour 기반 색상 오버레이 — 에셋 없이 선행 가능"
     },
@@ -73,7 +73,7 @@
       "title": "SDL2_mixer CMake 통합",
       "assignee": "붐2",
       "layer": "인프라",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 1,
       "notes": "optional dependency, VSE_NO_AUDIO fallback — 에셋 없이 선행 가능"
     },
