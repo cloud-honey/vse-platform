@@ -519,12 +519,14 @@ function render(d){
       completed: d.sprint >= 3
     },
     {
-      id: 's3', label: d.sprint >= 3 ? 'S3 🔥' : 'S3 📋',
+      id: 's3',
+      label: d.sprint > 3 ? 'S3 ✅' : (d.sprint === 3 ? 'S3 🔥' : 'S3 📋'),
       title: 'Sprint 3 — AI 고도화/스프라이트/UI',
-      cls: d.sprint >= 3 ? '' : 'plan-tab',
-      goal: d.sprint === 3 ? d.sprint_goal : (d.sprint3_tasks ? 'Sprint 3 완료' : d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
-      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks ? d.sprint3_tasks : d.sprint3_plan ? d.sprint3_plan.tasks : []),
-      active: d.sprint >= 3,
+      cls: d.sprint > 3 ? 'done-tab' : (d.sprint === 3 ? '' : 'plan-tab'),
+      goal: d.sprint === 3 ? d.sprint_goal : 'NPC AI + 테넌트 + 스프라이트 + HUD',
+      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks || []),
+      completed: d.sprint > 3,
+      active: d.sprint === 3,
       planned: d.sprint < 3
     },
     {
@@ -564,8 +566,10 @@ function render(d){
 
   /* 탭 렌더 함수 */
   window._sprintDefs = sprintDefs;
-  // 기본 탭: pending 태스크가 있는 가장 빠른 스프린트
-  const defaultTab = sprintDefs.find(s => (s.tasks||[]).some(t => t.status !== 'done')) || sprintDefs[sprintDefs.length-1];
+  // 기본 탭: 완료되지 않은 스프린트 중 pending 태스크가 있는 가장 빠른 것
+  const defaultTab = sprintDefs.find(s => !s.completed && (s.tasks||[]).some(t => t.status !== 'done'))
+                  || sprintDefs.find(s => s.active)
+                  || sprintDefs[sprintDefs.length-1];
   window._activeTab = window._activeTab || defaultTab.id;
 
   function renderTabs() {
