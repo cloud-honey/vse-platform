@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T15:35:00+09:00",
+  "updated_at": "2026-03-27T16:38:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -36,9 +36,16 @@
       "title": "Camera 줌/팬",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "pending",
+      "status": "done",
       "difficulty": 2,
-      "notes": "마우스 휠 줌, 우클릭 팬, WASD, 범위 제한"
+      "notes": "마우스 휠 줌, 우클릭 팬, WASD, 범위 제한",
+      "commit": "09549d8",
+      "tests": "346/346",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Fail→수정 후 Pass",
+        "DeepSeek": "Pass"
+      }
     },
     {
       "id": "TASK-05-003",
