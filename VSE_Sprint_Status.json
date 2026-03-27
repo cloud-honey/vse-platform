@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T14:38:00+09:00",
+  "updated_at": "2026-03-27T15:35:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -20,9 +20,16 @@
       "title": "마우스 건설 UI (BuildCursor 완성)",
       "assignee": "붐2",
       "layer": "렌더러/입력",
-      "status": "pending",
+      "status": "done",
       "difficulty": 3,
-      "notes": "hover 하이라이트, 클릭 건설, 테넌트 선택, 비용 tooltip"
+      "notes": "hover 하이라이트, 클릭 건설, 테넌트 선택, 비용 tooltip",
+      "commit": "02aea91",
+      "tests": "337/337",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Conditional Pass"
+      }
     },
     {
       "id": "TASK-05-002",
