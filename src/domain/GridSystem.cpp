@@ -235,7 +235,7 @@ Result<bool> GridSystem::placeElevatorShaft(int x, int bottomFloor, int topFloor
         auto& floorData = floors_[floor];
         TileData& tile = floorData.tiles[tileIndex(x)];
         tile.isElevatorShaft = true;
-        tile.isAnchor = true;  // Each elevator shaft tile is an anchor tile
+        tile.isAnchor = false;  // Elevator shafts are NOT anchor tiles
         
         // 이벤트 발행
         Event shaftEvent;

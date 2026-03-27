@@ -322,3 +322,78 @@ TEST_CASE("GridSystem - getTenantCount: multi-tile tenant counts as one", "[Grid
     // Should count as 1 tenant, not 3
     REQUIRE(grid.getTenantCount() == 1);
 }
+
+// TASK-05-005: TD-001 isAnchor Refactoring Tests
+TEST_CASE("GridSystem - Elevator shaft tile has isElevatorShaft=true and isAnchor=false", "[GridSystem][TASK-05-005]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    grid.buildFloor(2);
+    
+    // Place elevator shaft
+    auto result = grid.placeElevatorShaft(10, 0, 2);
+    REQUIRE(result.ok() == true);
+    
+    // Check elevator shaft tile properties
+    auto tile = grid.getTile({10, 1});
+    REQUIRE(tile.has_value() == true);
+    REQUIRE(tile->isElevatorShaft == true);
+    REQUIRE(tile->isAnchor == false);  // Elevator shafts are NOT anchor tiles
+}
+
+TEST_CASE("GridSystem - Tenant anchor tile has isAnchor=true and isElevatorShaft=false", "[GridSystem][TASK-05-005]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    
+    // Place a tenant
+    auto result = grid.placeTenant({5, 1}, TenantType::Office, 3, EntityId{100});
+    REQUIRE(result.ok() == true);
+    
+    // Check anchor tile properties
+    auto anchorTile = grid.getTile({5, 1});
+    REQUIRE(anchorTile.has_value() == true);
+    REQUIRE(anchorTile->isAnchor == true);
+    REQUIRE(anchorTile->isElevatorShaft == false);
+}
+
+TEST_CASE("GridSystem - Non-anchor tenant tile has isAnchor=false and isElevatorShaft=false", "[GridSystem][TASK-05-005]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    
+    // Place a multi-tile tenant
+    auto result = grid.placeTenant({5, 1}, TenantType::Office, 3, EntityId{100});
+    REQUIRE(result.ok() == true);
+    
+    // Check non-anchor tile properties
+    auto nonAnchorTile = grid.getTile({6, 1});  // Second tile of the tenant
+    REQUIRE(nonAnchorTile.has_value() == true);
+    REQUIRE(nonAnchorTile->isAnchor == false);
+    REQUIRE(nonAnchorTile->isElevatorShaft == false);
+}
+
+TEST_CASE("GridSystem - isAnchor and isElevatorShaft are mutually exclusive after mixed placement", "[GridSystem][TASK-05-005]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    grid.buildFloor(2);
+    
+    // Place an elevator shaft
+    auto shaftResult = grid.placeElevatorShaft(10, 0, 2);
+    REQUIRE(shaftResult.ok() == true);
+    
+    // Place a tenant on a different floor
+    auto tenantResult = grid.placeTenant({5, 2}, TenantType::Office, 2, EntityId{200});
+    REQUIRE(tenantResult.ok() == true);
+    
+    // Check all tiles to ensure mutual exclusion
+    for (int floor = 0; floor <= 2; ++floor) {
+        auto tiles = grid.getFloorTiles(floor);
+        for (const auto& [coord, tile] : tiles) {
+            // isAnchor and isElevatorShaft must be mutually exclusive
+            if (tile.isAnchor) {
+                REQUIRE(tile.isElevatorShaft == false);
+            }
+            if (tile.isElevatorShaft) {
+                REQUIRE(tile.isAnchor == false);
+            }
+        }
+    }
+}

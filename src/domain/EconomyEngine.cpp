@@ -138,11 +138,8 @@ void EconomyEngine::payMaintenance(const IGridSystem& grid, const GameTime& time
         for (int x = 0; x < grid.floorWidth(); ++x) {
             TileCoord coord{x, floor};
             if (grid.isElevatorShaft(coord)) {
-                // Check if this is an anchor tile (to avoid double-counting)
-                auto tileData = grid.getTile(coord);
-                if (tileData && tileData->isAnchor) {
-                    elevatorShaftCount++;
-                }
+                // Count all elevator shaft tiles
+                elevatorShaftCount++;
             }
         }
     }

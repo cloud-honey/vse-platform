@@ -82,7 +82,7 @@ public:
             if (pos.x == shaft.x && pos.floor == shaft.floor) {
                 TileData data;
                 data.isElevatorShaft = true;
-                data.isAnchor = true;  // Fixed: elevator shafts have isAnchor = true in production GridSystem
+                data.isAnchor = false;  // Elevator shafts are NOT anchor tiles
                 return data;
             }
         }
@@ -120,7 +120,7 @@ public:
                 TileCoord coord{shaft.x, floor};
                 TileData data;
                 data.isElevatorShaft = true;
-                data.isAnchor = true;  // Fixed: elevator shafts have isAnchor = true in production GridSystem
+                data.isAnchor = false;  // Elevator shafts are NOT anchor tiles
                 result.push_back({coord, data});
             }
         }
