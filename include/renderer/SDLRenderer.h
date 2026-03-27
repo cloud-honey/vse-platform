@@ -60,6 +60,9 @@ public:
     bool checkPendingSave(int& outSlotIndex);
     bool checkPendingLoad(int& outSlotIndex);
     
+    // Check if SaveLoadPanel is currently open
+    bool isSaveLoadPanelOpen() const { return saveLoadPanel_.isOpen(); }
+    
     // Tenant selection handling (TASK-05-001)
     bool checkTenantSelection(int& outTenantType);
     void setShouldOpenTenantPopup(bool open);

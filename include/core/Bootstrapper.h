@@ -136,7 +136,6 @@ public:
     Camera       camera_;
     InputMapper  inputMapper_;
     std::unique_ptr<RenderFrameCollector> collector_;
-    SaveLoadPanel saveLoadPanel_;
 
     // ── 설정 캐시 (init() 시 ConfigManager에서 읽음) ───
     int   windowW_   = 0;
@@ -153,6 +152,10 @@ public:
     int autoSaveDayInterval_ = 60;  ///< Auto-save every N game days (from config)
     int lastAutoSaveDay_     = 0;
     std::vector<SaveSlotInfo> saveSlotInfos_;  ///< Cached slot metadata (refreshed on open)
+    
+    // ── Save/Load UI state ──────────────────────────────
+    bool saveLoadPanelOpen_ = false;
+    bool saveLoadPanelSaveMode_ = true;
 
     // ── 렌더링 상태 ─────────────────────────────────────
     bool drawGrid_  = true;

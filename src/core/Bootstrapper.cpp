@@ -462,7 +462,7 @@ void Bootstrapper::run() {
         int pendingSaveSlot = -1;
         if (sdlRenderer_.checkPendingSave(pendingSaveSlot)) {
             if (saveLoad_ && pendingSaveSlot >= 0 && pendingSaveSlot < SaveLoadPanel::MAX_SLOTS) {
-                std::string path = "saves/slot_" + std::to_string(pendingSaveSlot) + ".vsesave";
+                std::string path = saveLoad_->getSavePath(pendingSaveSlot);
                 auto result = saveLoad_->save(path);
                 if (result.ok()) {
                     spdlog::info("Saved to slot {}", pendingSaveSlot);
@@ -471,18 +471,22 @@ void Bootstrapper::run() {
                 } else {
                     spdlog::warn("Save failed: {}", static_cast<int>(result.error));
                 }
+                // Close panel after save action
+                saveLoadPanelOpen_ = false;
             }
         }
         
         int pendingLoadSlot = -1;
         if (sdlRenderer_.checkPendingLoad(pendingLoadSlot)) {
             if (saveLoad_ && pendingLoadSlot >= 0 && pendingLoadSlot < SaveLoadPanel::MAX_SLOTS) {
-                std::string path = "saves/slot_" + std::to_string(pendingLoadSlot) + ".vsesave";
+                std::string path = saveLoad_->getSavePath(pendingLoadSlot);
                 auto result = saveLoad_->load(path);
                 if (result.ok()) {
                     spdlog::info("Loaded from slot {}", pendingLoadSlot);
                     gameState_.transition(GameState::Playing);
                     simClock_.resume();
+                    // Close panel after load action
+                    saveLoadPanelOpen_ = false;
                 } else {
                     spdlog::warn("Load failed: {}", static_cast<int>(result.error));
                 }
@@ -490,33 +494,17 @@ void Bootstrapper::run() {
         }
         
         // TASK-05-003: Set save/load UI state in RenderFrame
-        // Determine if we should show save/load panel based on game state and commands
-        frame.showSaveLoadPanel = false;
-        frame.saveLoadPanelSave = true;
+        frame.showSaveLoadPanel = saveLoadPanelOpen_;
+        frame.saveLoadPanelSave = saveLoadPanelSaveMode_;
         frame.saveSlotInfos = saveSlotInfos_;
         
-        // Check if we need to show save panel (from SaveGame command)
-        if (gameState_.getState() == GameState::Playing || 
-            gameState_.getState() == GameState::Paused) {
-            for (const auto& cmd : commands) {
-                if (cmd.type == CommandType::SaveGame) {
-                    frame.showSaveLoadPanel = true;
-                    frame.saveLoadPanelSave = true;
-                    break;
-                }
-            }
+        // Check if panel was closed by user (was open but now SDLRenderer reports it's closed)
+        static bool wasPanelOpenLastFrame = false;
+        if (wasPanelOpenLastFrame && !sdlRenderer_.isSaveLoadPanelOpen()) {
+            // Panel was closed by user (Cancel or X button)
+            saveLoadPanelOpen_ = false;
         }
-        
-        // Check if we need to show load panel (from LoadGame command)
-        if (gameState_.getState() == GameState::MainMenu) {
-            for (const auto& cmd : commands) {
-                if (cmd.type == CommandType::LoadGame) {
-                    frame.showSaveLoadPanel = true;
-                    frame.saveLoadPanelSave = false;
-                    break;
-                }
-            }
-        }
+        wasPanelOpenLastFrame = sdlRenderer_.isSaveLoadPanelOpen();
         
         sdlRenderer_.render(frame, camera_);
     }
@@ -658,7 +646,8 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             if (gameState_.getState() == GameState::MainMenu) {
                 // Refresh save slots and open load panel
                 refreshSaveSlots();
-                // The panel will be shown via RenderFrame in the next frame
+                saveLoadPanelOpen_ = true;
+                saveLoadPanelSaveMode_ = false;
             }
             break;
             
@@ -668,7 +657,8 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 gameState_.getState() == GameState::Paused) {
                 // Refresh save slots and open save panel
                 refreshSaveSlots();
-                // The panel will be shown via RenderFrame in the next frame
+                saveLoadPanelOpen_ = true;
+                saveLoadPanelSaveMode_ = true;
             }
             break;
             
