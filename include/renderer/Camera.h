@@ -23,6 +23,8 @@ public:
     // ── 카메라 이동 ──────────────────
     void pan(float dx, float dy);       // 픽셀 단위 이동
     void zoom(float delta);             // 확대/축소 (delta: +면 확대, -면 축소)
+    void zoomAt(float delta, float pivotScreenX, float pivotScreenY); // 마우스 피벗 줌
+    void clampToWorld(float worldW, float worldH, float margin = 2.0f); // 월드 경계 클램프
     void reset();                       // 초기 위치/줌으로 복원
     void centerOn(float worldX, float worldY);
 

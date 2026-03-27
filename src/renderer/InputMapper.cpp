@@ -116,8 +116,11 @@ void InputMapper::processEvent(const SDL_Event& event,
 
     case SDL_MOUSEWHEEL:
         if (event.wheel.y != 0) {
-            float delta = event.wheel.y > 0 ? 0.1f : -0.1f;
-            outCommands.push_back(GameCommand::makeCameraZoom(delta));
+            float delta = event.wheel.y > 0 ? zoomStep_ : -zoomStep_;
+            // Get current mouse position for pivot zoom
+            int mouseX, mouseY;
+            SDL_GetMouseState(&mouseX, &mouseY);
+            outCommands.push_back(GameCommand::makeCameraZoomAt(delta, static_cast<float>(mouseX), static_cast<float>(mouseY)));
         }
         break;
 
@@ -159,6 +162,41 @@ void InputMapper::processEvent(const SDL_Event& event,
                     outCommands.push_back(GameCommand::makeSelectTile(tx, tf));
                 }
                 break;
+            }
+        }
+        // Handle right mouse button down
+        else if (event.button.button == SDL_BUTTON_RIGHT) {
+            rightMouseDown_ = true;
+            lastMouseX_ = event.button.x;
+            lastMouseY_ = event.button.y;
+        }
+        // Handle middle mouse button down
+        else if (event.button.button == SDL_BUTTON_MIDDLE) {
+            middleMouseDown_ = true;
+            lastMouseX_ = event.button.x;
+            lastMouseY_ = event.button.y;
+        }
+        break;
+
+    case SDL_MOUSEBUTTONUP:
+        if (event.button.button == SDL_BUTTON_RIGHT) {
+            rightMouseDown_ = false;
+        }
+        else if (event.button.button == SDL_BUTTON_MIDDLE) {
+            middleMouseDown_ = false;
+        }
+        break;
+
+    case SDL_MOUSEMOTION:
+        // Handle right-click drag pan
+        if (rightMouseDown_ || middleMouseDown_) {
+            int dx = event.motion.x - lastMouseX_;
+            int dy = event.motion.y - lastMouseY_;
+            
+            if (dx != 0 || dy != 0) {
+                outCommands.push_back(GameCommand::makeCameraPan(static_cast<float>(dx), static_cast<float>(dy)));
+                lastMouseX_ = event.motion.x;
+                lastMouseY_ = event.motion.y;
             }
         }
         break;

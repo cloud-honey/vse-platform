@@ -40,9 +40,9 @@ bool Bootstrapper::init() {
     windowH_    = config_.getInt("rendering.windowHeight", 720);
     tileSizePx_ = config_.getInt("grid.tileSizePx",        32);
     tickMs_     = config_.getInt("simulation.tickRateMs",  100);
-    zoomMin_    = config_.getFloat("rendering.zoomMin",    0.25f);
-    zoomMax_    = config_.getFloat("rendering.zoomMax",    4.0f);
-    panSpeed_   = config_.getFloat("rendering.cameraPanSpeed", 8.0f);
+    zoomMin_    = config_.getFloat("camera.zoomMin",    0.25f);
+    zoomMax_    = config_.getFloat("camera.zoomMax",    4.0f);
+    panSpeed_   = config_.getFloat("camera.panSpeed",   8.0f);
 
     // ── SDL2 + Renderer 초기화 ──────────────────────────
     if (!sdlRenderer_.init(windowW_, windowH_, "Tower Tycoon")) {
@@ -124,6 +124,8 @@ bool Bootstrapper::init() {
         static_cast<float>(2 * tileSizePx_)
     );
     inputMapper_.setPanSpeed(panSpeed_);
+    float zoomStep = config_.getFloat("camera.zoomStep", 0.15f);
+    inputMapper_.setZoomStep(zoomStep);
     inputMapper_.setCamera(&camera_);  // TASK-03-006: 카메라 설정
     collector_ = std::make_unique<RenderFrameCollector>(*grid_, *transport_, tileSizePx_);
     collector_->setAgentSource(agents_.get(), &registry_);
@@ -428,6 +430,16 @@ void Bootstrapper::run() {
 // ──────────────────────────────────────────────────────────
 
 void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& running) {
+    // Helper lambda to clamp camera to world boundaries
+    auto clampCamera = [this]() {
+        if (grid_) {
+            float worldW = static_cast<float>(grid_->floorWidth() * tileSizePx_);
+            float worldH = static_cast<float>(grid_->maxFloors() * tileSizePx_);
+            float margin = config_.getFloat("camera.panMargin", 2.0f);
+            camera_.clampToWorld(worldW, worldH, margin);
+        }
+    };
+    
     for (const auto& cmd : cmds) {
         switch (cmd.type) {
         case CommandType::Quit:
@@ -458,12 +470,24 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             break;
         case CommandType::CameraPan:
             camera_.pan(cmd.cameraPan.deltaX, cmd.cameraPan.deltaY);
+            clampCamera();
             break;
-        case CommandType::CameraZoom:
-            camera_.zoom(cmd.cameraZoom.zoomDelta);
+        case CommandType::CameraZoom: {
+            float px = cmd.cameraZoom.pivotX;
+            float py = cmd.cameraZoom.pivotY;
+            float delta = cmd.cameraZoom.zoomDelta;
+            if (px < 0 || py < 0) {
+                camera_.zoom(delta);  // legacy: center zoom
+            } else {
+                camera_.zoomAt(delta, px, py);  // pivot zoom
+            }
+            // Clamp camera after zoom
+            clampCamera();
             break;
+        }
         case CommandType::CameraReset:
             camera_.reset();
+            clampCamera();
             break;
         case CommandType::ToggleDebugOverlay:
             drawDebug_ = !drawDebug_;

@@ -24,6 +24,30 @@ void Camera::zoom(float delta)
     zoom_ = std::clamp(zoom_ + delta, minZoom_, maxZoom_);
 }
 
+void Camera::zoomAt(float delta, float pivotScreenX, float pivotScreenY)
+{
+    // World position under pivot BEFORE zoom
+    float worldX = screenToWorldX(pivotScreenX);
+    float worldY = screenToWorldY(pivotScreenY);
+    
+    // Apply zoom
+    zoom_ = std::clamp(zoom_ + delta, minZoom_, maxZoom_);
+    
+    // Adjust camera offset so same world point stays under pivot
+    x_ = worldX - pivotScreenX / zoom_;
+    y_ = worldY - (viewportH_ - pivotScreenY) / zoom_;
+}
+
+void Camera::clampToWorld(float worldW, float worldH, float margin)
+{
+    float visW = viewportW_ / zoom_;
+    float visH = viewportH_ / zoom_;
+    
+    // Clamp camera position within world boundaries with margin
+    x_ = std::clamp(x_, -margin, worldW - visW + margin);
+    y_ = std::clamp(y_, -margin, worldH - visH + margin);
+}
+
 void Camera::reset()
 {
     x_    = 0.0f;

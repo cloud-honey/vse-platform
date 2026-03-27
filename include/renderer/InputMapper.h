@@ -35,6 +35,9 @@ public:
 
     // 카메라 팬 속도 (px/frame)
     void setPanSpeed(float speed) { panSpeed_ = speed; }
+    
+    // 줌 스텝 설정
+    void setZoomStep(float step) { zoomStep_ = step; }
 
     // Build mode management
     void setCamera(const Camera* cam) { camera_ = cam; }
@@ -47,9 +50,16 @@ public:
 
 private:
     float panSpeed_ = 8.0f;
+    float zoomStep_ = 0.15f;
     const Camera* camera_ = nullptr;
     BuildModeState buildMode_;
     bool openTenantPopup_ = false;
+    
+    // Mouse state tracking for drag pan
+    bool rightMouseDown_ = false;
+    bool middleMouseDown_ = false;
+    int lastMouseX_ = 0;
+    int lastMouseY_ = 0;
 };
 
 } // namespace vse

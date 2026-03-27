@@ -59,7 +59,7 @@ struct GameCommand {
         struct { int shaftX; int bottomFloor; int topFloor; }   placeShaft;
         struct { int shaftX; int bottomFloor; int topFloor; int capacity; } createElevator;
         struct { float deltaX; float deltaY; }          cameraPan;
-        struct { float zoomDelta; }                     cameraZoom;
+        struct { float zoomDelta; float pivotX; float pivotY; } cameraZoom;
         struct { int speedMultiplier; }                 setSpeed;
         struct { int tileX; int tileFloor; }            selectTile;
         struct { int targetState; }                     transitionState;
@@ -90,7 +90,14 @@ struct GameCommand {
     static GameCommand makeCameraZoom(float delta) {
         GameCommand cmd{};
         cmd.type = CommandType::CameraZoom;
-        cmd.cameraZoom = {delta};
+        cmd.cameraZoom = {delta, -1.0f, -1.0f}; // Sentinel values for center zoom
+        return cmd;
+    }
+
+    static GameCommand makeCameraZoomAt(float delta, float pivotX, float pivotY) {
+        GameCommand cmd{};
+        cmd.type = CommandType::CameraZoom;
+        cmd.cameraZoom = {delta, pivotX, pivotY};
         return cmd;
     }
 

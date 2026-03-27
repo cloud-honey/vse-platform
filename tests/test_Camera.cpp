@@ -283,3 +283,129 @@ TEST_CASE("Camera - 뷰포트 크기 변경 후 좌표 변환", "[Camera]") {
     REQUIRE(std::abs(roundtripWorldX - worldX) < epsilon);
     REQUIRE(std::abs(roundtripWorldY - worldY) < epsilon);
 }
+
+// ============================================================================
+// TASK-05-002: Camera Zoom & Pan Enhancement Tests
+// ============================================================================
+
+TEST_CASE("Camera - zoomAt() keeps world point under pivot fixed", "[Camera][TASK-05-002]") {
+    Camera cam(1280, 720, 32);
+    cam.reset();
+    
+    // Test pivot point at screen center
+    float pivotX = 640.0f;
+    float pivotY = 360.0f;
+    
+    // Get world position under pivot before zoom
+    float worldXBefore = cam.screenToWorldX(pivotX);
+    float worldYBefore = cam.screenToWorldY(pivotY);
+    
+    // Apply zoom at pivot
+    cam.zoomAt(0.5f, pivotX, pivotY); // Zoom in
+    
+    // Get world position under pivot after zoom
+    float worldXAfter = cam.screenToWorldX(pivotX);
+    float worldYAfter = cam.screenToWorldY(pivotY);
+    
+    // The world point under pivot should stay the same
+    const float epsilon = 0.001f;
+    REQUIRE(std::abs(worldXAfter - worldXBefore) < epsilon);
+    REQUIRE(std::abs(worldYAfter - worldYBefore) < epsilon);
+}
+
+TEST_CASE("Camera - zoomAt() clamps to minZoom/maxZoom", "[Camera][TASK-05-002]") {
+    Camera cam(1280, 720, 32, 0.25f, 4.0f);
+    cam.reset();
+    
+    // Try to zoom beyond max
+    cam.zoomAt(10.0f, 640.0f, 360.0f);
+    REQUIRE(cam.zoomLevel() <= 4.0f);
+    
+    // Try to zoom beyond min
+    cam.reset();
+    cam.zoomAt(-10.0f, 640.0f, 360.0f);
+    REQUIRE(cam.zoomLevel() >= 0.25f);
+}
+
+TEST_CASE("Camera - clampToWorld() prevents scrolling past right/top boundary", "[Camera][TASK-05-002]") {
+    Camera cam(1280, 720, 32);
+    cam.reset();
+    
+    float worldW = 1000.0f;
+    float worldH = 800.0f;
+    float margin = 2.0f;
+    
+    // Try to scroll past right boundary
+    cam.pan(-2000.0f, 0.0f); // Drag left, camera moves right
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    float visW = 1280.0f / cam.zoomLevel();
+    REQUIRE(cam.x() <= worldW - visW + margin);
+    
+    // Try to scroll past top boundary
+    cam.reset();
+    cam.pan(0.0f, -2000.0f); // Drag up, camera moves down
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    float visH = 720.0f / cam.zoomLevel();
+    REQUIRE(cam.y() <= worldH - visH + margin);
+}
+
+TEST_CASE("Camera - clampToWorld() allows scrolling within margin", "[Camera][TASK-05-002]") {
+    Camera cam(1280, 720, 32);
+    cam.reset();
+    
+    // World should be larger than viewport for scrolling to make sense
+    float worldW = 2000.0f;
+    float worldH = 1600.0f;
+    float margin = 2.0f;
+    
+    // Scroll to left boundary with margin (camera x negative)
+    cam.pan(500.0f, 0.0f); // Drag right, camera moves left (x decreases)
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    // Camera x should be >= -margin (can't go too far left)
+    REQUIRE(cam.x() >= -margin);
+    
+    // Scroll to bottom boundary with margin (camera y negative)
+    cam.reset();
+    cam.pan(0.0f, 500.0f); // Drag down, camera moves up (y increases)
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    // Camera y should be >= -margin (can't go too far down/up? Wait, need to check coordinate system)
+    // Actually, let me check: y increases when dragging down, so to test bottom boundary
+    // we need to drag up (negative dy) to make y decrease
+    cam.reset();
+    cam.pan(0.0f, -500.0f); // Drag up, camera moves down (y decreases)
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    REQUIRE(cam.y() >= -margin);
+}
+
+TEST_CASE("Camera - clampToWorld() with zoom", "[Camera][TASK-05-002]") {
+    Camera cam(1280, 720, 32);
+    cam.reset();
+    
+    // World should be larger than viewport even when zoomed in
+    float worldW = 2000.0f;
+    float worldH = 1600.0f;
+    float margin = 2.0f;
+    
+    // Zoom in so visible area is smaller than world
+    cam.zoomAt(1.0f, 640.0f, 360.0f); // Zoom to 2.0x
+    
+    // Try to scroll past boundary
+    cam.pan(-1000.0f, -1000.0f);
+    cam.clampToWorld(worldW, worldH, margin);
+    
+    float visW = 1280.0f / cam.zoomLevel();
+    float visH = 720.0f / cam.zoomLevel();
+    
+    REQUIRE(cam.x() >= -margin);
+    REQUIRE(cam.x() <= worldW - visW + margin);
+    REQUIRE(cam.y() >= -margin);
+    REQUIRE(cam.y() <= worldH - visH + margin);
+}
+
+// Note: Tests for InputMapper right-click pan and pivot zoom command emission
+// would require mocking SDL events and are better suited for integration tests.
