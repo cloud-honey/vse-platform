@@ -3,7 +3,7 @@
   "updated_at": "2026-03-27T09:22:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "게임 루프 완성 — 건설→수입→별점→NPC 반응이 실제로 돌아가는 첫 플레이어블 빌드",
-  "overall_status": "in_progress",
+  "overall_status": "done",
   "tasks": [
     {
       "id": "TASK-04-000",
@@ -70,18 +70,20 @@
       "title": "DI-005 해결 + 테스트 품질 개선",
       "assignee": "붐2",
       "layer": "테스트",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 2,
-      "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
+      "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트",
+      "qa_status": "pass"
     },
     {
       "id": "TASK-04-007",
-      "title": "통합 + Sprint 4 macOS + Windows 빌드",
+      "title": "통합 + Sprint 4 Windows 빌드",
       "assignee": "붐",
       "layer": "전체",
-      "status": "pending",
+      "status": "done",
       "difficulty": 4,
-      "notes": "맥미니 네이티브 빌드 포함"
+      "notes": "맥미니 네이티브 빌드 포함",
+      "qa_status": "pass"
     }
   ],
   "escalations": [],
@@ -437,6 +439,10 @@
       "time": "17:52",
       "title": "TASK-03-007 3모델 교차 검증 완료 (GPT+Gemini+DeepSeek Conditional Pass)",
       "detail": "StarRating static_assert 추가. 엘리베이터 Mock 불일치 DI-005로 등록. 283/283."
+    },
+    {
+      "date": "2026-03-27",
+      "event": "Sprint 4 완료 — 7/7 tasks done, 327 tests, Windows build"
     }
   ],
   "references": [
@@ -1068,5 +1074,6 @@
       "planned_sprint": "Sprint 5 시작 전",
       "status": "pending"
     }
-  ]
+  ],
+  "total_tests": 327
 }

@@ -26,6 +26,7 @@ add_executable(TowerTycoonTests
     test_Settlement.cpp
     test_GameOver.cpp
     test_GameStateManager.cpp
+    test_Sprint4Integration.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
