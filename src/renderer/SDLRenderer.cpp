@@ -177,6 +177,25 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // HUDPanel::draw() — 게임 HUD 렌더링
     // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
     hudPanel_.draw(frame);
+    
+    // Handle HUD interactions (TASK-05-004)
+    // Check for speed button clicks
+    int newSpeed = hudPanel_.drawSpeedButtons(frame.gameSpeed);
+    if (newSpeed != -1) {
+        pendingSpeedChange_ = newSpeed;
+    }
+    
+    // Check for construction toolbar clicks
+    int buildAction = hudPanel_.drawToolbar(frame.viewportH);
+    if (buildAction != 0) {
+        pendingBuildAction_ = buildAction;
+    }
+    
+    // Handle pending toast from Bootstrapper
+    if (!frame.pendingToast.empty()) {
+        hudPanel_.pushToast(frame.pendingToast, ToastMessage::Type::Info);
+        // Note: Toast is cleared by Bootstrapper after being added to frame
+    }
 
     // SaveLoadPanel::draw() — Save/Load UI 렌더링
     if (frame.showSaveLoadPanel) {
@@ -782,6 +801,38 @@ bool SDLRenderer::checkPendingLoad(int& outSlotIndex)
     if (pendingLoadSlot_ >= 0) {
         outSlotIndex = pendingLoadSlot_;
         pendingLoadSlot_ = -1;
+        return true;
+    }
+    return false;
+}
+
+bool SDLRenderer::checkPendingBuildAction(int& outBuildAction, int& outTenantType)
+{
+    if (pendingBuildAction_ != 0) {
+        outBuildAction = pendingBuildAction_;
+        outTenantType = 0; // Default, will be set based on action
+        
+        // Map toolbar action to tenant type
+        if (pendingBuildAction_ == 1) {
+            // Floor build
+            outTenantType = 0; // Not used for floor
+        } else if (pendingBuildAction_ >= 2 && pendingBuildAction_ <= 4) {
+            // Tenant types: 2=office, 3=residential, 4=commercial
+            // Map to tenant type: 0=office, 1=residential, 2=commercial
+            outTenantType = pendingBuildAction_ - 2;
+        }
+        
+        pendingBuildAction_ = 0;
+        return true;
+    }
+    return false;
+}
+
+bool SDLRenderer::checkPendingSpeedChange(int& outSpeedMultiplier)
+{
+    if (pendingSpeedChange_ != -1) {
+        outSpeedMultiplier = pendingSpeedChange_;
+        pendingSpeedChange_ = -1;
         return true;
     }
     return false;

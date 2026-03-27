@@ -151,6 +151,9 @@ struct RenderFrame {
     bool    showHUD      = true;    // Toggle HUD visibility
     int64_t dailyIncome  = 0;       // Daily income (Cents)
     int64_t dailyExpense = 0;       // Daily expense (Cents)
+    int     gameSpeed    = 1;       // Current speed multiplier (1, 2, 3)
+    int64_t dailyChange  = 0;       // Net daily change = dailyIncome - dailyExpense
+    std::string pendingToast;       // Toast message to show (cleared after draw)
 
     // 디버그 정보
     DebugInfo debug;

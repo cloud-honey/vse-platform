@@ -160,6 +160,9 @@ public:
     // ── 렌더링 상태 ─────────────────────────────────────
     bool drawGrid_  = true;
     bool drawDebug_ = true;
+    
+    // ── HUD 상태 (TASK-05-004) ──────────────────────────
+    std::string pendingToast_;  // Toast message to show on next render
 };
 
 } // namespace vse

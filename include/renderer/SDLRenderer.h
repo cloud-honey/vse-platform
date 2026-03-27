@@ -66,6 +66,10 @@ public:
     // Tenant selection handling (TASK-05-001)
     bool checkTenantSelection(int& outTenantType);
     void setShouldOpenTenantPopup(bool open);
+    
+    // HUD interaction handling (TASK-05-004)
+    bool checkPendingBuildAction(int& outBuildAction, int& outTenantType);
+    bool checkPendingSpeedChange(int& outSpeedMultiplier);
 
 private:
     // 그리드 렌더링
@@ -105,6 +109,10 @@ private:
     // Save/Load pending state
     int pendingSaveSlot_ = -1;  // -1 means no save pending
     int pendingLoadSlot_ = -1;  // -1 means no load pending
+    
+    // HUD interaction pending state (TASK-05-004)
+    int pendingBuildAction_ = 0;      // 0=none, 1=floor, 2=office, 3=residential, 4=commercial
+    int pendingSpeedChange_ = -1;     // -1 means no speed change pending
 };
 
 } // namespace vse

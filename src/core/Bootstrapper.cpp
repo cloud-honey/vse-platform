@@ -132,6 +132,23 @@ bool Bootstrapper::init() {
             if (currentTime.day - lastAutoSaveDay_ >= autoSaveDayInterval_) {
                 // Auto-save to slot 0 — use SaveLoadSystem::getSavePath for consistent naming
                 std::string path = saveLoad_->getSavePath(0);
+    
+    // Wire DailySettlement event for toast notifications (TASK-05-004)
+    eventBus_.subscribe(EventType::DailySettlement, [this](const Event& e) {
+        // Format toast message: "Day X settled: +₩Y"
+        if (auto* payload = std::any_cast<DailySettlementPayload>(&e.payload)) {
+            int64_t netIncome = payload->income - payload->expense;
+            std::string toastMsg = "Day " + std::to_string(payload->day) + 
+                                   " settled: " + (netIncome >= 0 ? "+" : "") + 
+                                   HUDPanel::formatBalance(netIncome);
+            pendingToast_ = toastMsg;
+        } else {
+            // If payload is missing or wrong type, use simple message
+            GameTime time = simClock_.currentGameTime();
+            std::string toastMsg = "Day " + std::to_string(time.day) + " settled";
+            pendingToast_ = toastMsg;
+        }
+    });
                 auto result = saveLoad_->save(path);
                 if (result.ok()) {
                     spdlog::info("Auto-saved to slot 0 (day {})", currentTime.day);
@@ -772,6 +789,7 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
     frame.balance = economy_->getBalance();
     frame.dailyIncome = economy_->getDailyIncome();
     frame.dailyExpense = economy_->getDailyExpense();
+    frame.dailyChange = frame.dailyIncome - frame.dailyExpense; // TASK-05-004
     StarRating rating = starRating_->getCurrentRating(registry_);
     // StarRating enum은 uint8_t 기반 순차값 (Star0=0 ... Star5=5) — static_assert로 보장
     static_assert(static_cast<uint8_t>(StarRating::Star0) == 0u, "StarRating enum order changed");
@@ -780,6 +798,11 @@ void Bootstrapper::fillDebugInfo(RenderFrame& frame, int realDeltaMs) {
     frame.currentTick = static_cast<int>(simClock_.currentTick());
     frame.tenantCount = grid_->getTenantCount();
     frame.npcCount = agents_->activeAgentCount();
+    frame.gameSpeed = simClock_.speed(); // TASK-05-004
+    
+    // TASK-05-004: Toast notification
+    frame.pendingToast = pendingToast_;
+    pendingToast_.clear(); // Clear after copying to frame
     
     // TASK-04-005: Game state
     frame.gameState = gameState_.getState();
