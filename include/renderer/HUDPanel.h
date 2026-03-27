@@ -53,6 +53,9 @@ public:
     /// Push a toast notification (max MAX_TOASTS; oldest dismissed on overflow)
     void pushToast(const std::string& text, ToastMessage::Type type = ToastMessage::Type::Info);
 
+    /// Returns current number of active toasts. Public for testability.
+    int toastCount() const { return static_cast<int>(toasts_.size()); }
+
     /// Draw speed control buttons. Returns speed multiplier if changed, -1 if unchanged.
     int drawSpeedButtons(int currentSpeed);
 

@@ -132,23 +132,6 @@ bool Bootstrapper::init() {
             if (currentTime.day - lastAutoSaveDay_ >= autoSaveDayInterval_) {
                 // Auto-save to slot 0 — use SaveLoadSystem::getSavePath for consistent naming
                 std::string path = saveLoad_->getSavePath(0);
-    
-    // Wire DailySettlement event for toast notifications (TASK-05-004)
-    eventBus_.subscribe(EventType::DailySettlement, [this](const Event& e) {
-        // Format toast message: "Day X settled: +₩Y"
-        if (auto* payload = std::any_cast<DailySettlementPayload>(&e.payload)) {
-            int64_t netIncome = payload->income - payload->expense;
-            std::string toastMsg = "Day " + std::to_string(payload->day) + 
-                                   " settled: " + (netIncome >= 0 ? "+" : "") + 
-                                   HUDPanel::formatBalance(netIncome);
-            pendingToast_ = toastMsg;
-        } else {
-            // If payload is missing or wrong type, use simple message
-            GameTime time = simClock_.currentGameTime();
-            std::string toastMsg = "Day " + std::to_string(time.day) + " settled";
-            pendingToast_ = toastMsg;
-        }
-    });
                 auto result = saveLoad_->save(path);
                 if (result.ok()) {
                     spdlog::info("Auto-saved to slot 0 (day {})", currentTime.day);
@@ -157,6 +140,20 @@ bool Bootstrapper::init() {
                     spdlog::warn("Auto-save failed: {}", static_cast<int>(result.error));
                 }
             }
+        }
+    });
+
+    // Wire DailySettlement event for toast notifications (TASK-05-004)
+    // Must be registered at top-level init, not nested inside another subscription.
+    eventBus_.subscribe(EventType::DailySettlement, [this](const Event& e) {
+        if (auto* payload = std::any_cast<DailySettlementPayload>(&e.payload)) {
+            int64_t netIncome = payload->income - payload->expense;
+            std::string sign = (netIncome >= 0) ? "+" : "";
+            pendingToast_ = "Day " + std::to_string(payload->day) +
+                            " settled: " + sign + HUDPanel::formatBalance(netIncome);
+        } else {
+            GameTime time = simClock_.currentGameTime();
+            pendingToast_ = "Day " + std::to_string(time.day) + " settled";
         }
     });
 
@@ -475,6 +472,36 @@ void Bootstrapper::run() {
             }
         }
         
+        // TASK-05-004: Check for speed change from HUD speed buttons
+        int pendingSpeed = -1;
+        if (sdlRenderer_.checkPendingSpeedChange(pendingSpeed) && pendingSpeed > 0) {
+            GameCommand speedCmd{};
+            speedCmd.type = CommandType::SetSpeed;
+            speedCmd.setSpeed = {pendingSpeed};
+            commands.push_back(speedCmd);
+            spdlog::info("HUD speed button: {}x", pendingSpeed);
+        }
+
+        // TASK-05-004: Check for build action from HUD toolbar
+        int pendingBuildAction = 0;
+        int pendingTenantType  = 0;
+        if (sdlRenderer_.checkPendingBuildAction(pendingBuildAction, pendingTenantType)) {
+            if (pendingBuildAction == 1) {
+                // Floor mode — update InputMapper build mode
+                BuildModeState mode = inputMapper_.getBuildMode();
+                mode.action = BuildAction::BuildFloor;
+                mode.active = true;
+                inputMapper_.setBuildMode(mode);
+            } else if (pendingBuildAction >= 2 && pendingBuildAction <= 4) {
+                // Tenant mode: 2=Office, 3=Residential, 4=Commercial
+                BuildModeState mode = inputMapper_.getBuildMode();
+                mode.action = BuildAction::PlaceTenant;
+                mode.tenantType = pendingBuildAction - 2;  // 0/1/2
+                mode.active = true;
+                inputMapper_.setBuildMode(mode);
+            }
+        }
+
         // TASK-05-003: Check for pending save/load slots
         int pendingSaveSlot = -1;
         if (sdlRenderer_.checkPendingSave(pendingSaveSlot)) {

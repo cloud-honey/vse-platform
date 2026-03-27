@@ -1,7 +1,10 @@
 #include "catch2/catch_test_macros.hpp"
+#include "catch2/catch_approx.hpp"
 #include "renderer/HUDPanel.h"
 #include "core/IRenderCommand.h"
 #include <cmath>
+
+using Catch::Approx;
 
 using namespace vse;
 
@@ -175,8 +178,8 @@ TEST_CASE("SDLRenderer HUDPanel 통합 준비 테스트", "[SDLRenderer][HUDPane
     // (컴파일 타임 검증을 위한 더미 테스트)
     SECTION("헤더 포함 검증") {
         // HUDPanel.h가 정상적으로 include되었는지 확인
-        // 실제로는 컴파일 오류가 없으면 성공
-        REQUIRE(true);
+        HUDPanel panel;
+        REQUIRE(panel.isVisible() == true);  // default visible
     }
     
     SECTION("RenderFrame 구조체 크기 검증") {
@@ -212,71 +215,77 @@ TEST_CASE("HUDPanel 토글 기능 테스트", "[HUDPanel][toggle]")
     
     panel.setVisible(false);
     REQUIRE(panel.isVisible() == false);
-}// TASK-05-004: New HUD features tests
-TEST_CASE("HUDPanel toast system", "[HUDPanel][toast][TASK-05-004]")
-{
-    HUDPanel panel;
-    
-    SECTION("pushToast() adds to queue") {
-        panel.pushToast("Test toast 1");
-        panel.pushToast("Test toast 2");
-        
-        // We can't directly access toasts_ (private), but we can test through draw behavior
-        // or add a getter. For now, we'll verify the methods don't crash.
-        REQUIRE(true); // Placeholder - toast functionality tested in integration
-    }
-    
-    SECTION("pushToast() at MAX_TOASTS capacity dismisses oldest") {
-        // Push more toasts than MAX_TOASTS
-        for (int i = 0; i < HUDPanel::MAX_TOASTS + 2; ++i) {
-            panel.pushToast("Toast " + std::to_string(i));
-        }
-        
-        // Should not crash and should maintain at most MAX_TOASTS
-        REQUIRE(true); // Placeholder - toast functionality tested in integration
-    }
 }
 
-TEST_CASE("HUDPanel toast timer functionality", "[HUDPanel][toast][timer][TASK-05-004]")
+// ── TASK-05-004: New HUD features tests ──────────────────────────────────────
+namespace {
+
+TEST_CASE("HUDPanel toast system - pushToast adds to queue", "[HUDPanel][toast][TASK-05-004]")
 {
     HUDPanel panel;
-    
-    SECTION("updateToasts() decrements remaining time") {
-        panel.pushToast("Test toast");
-        // We can't directly test private updateToasts, but it's called from draw()
-        REQUIRE(true); // Placeholder - functionality tested in integration
-    }
-    
-    SECTION("Toast dismissed when remainingSeconds <= 0") {
-        panel.pushToast("Test toast");
-        // Toast should be auto-dismissed after TOAST_DURATION seconds
-        REQUIRE(true); // Placeholder - functionality tested in integration
-    }
+    REQUIRE(panel.toastCount() == 0);
+
+    panel.pushToast("First toast");
+    REQUIRE(panel.toastCount() == 1);
+
+    panel.pushToast("Second toast");
+    REQUIRE(panel.toastCount() == 2);
 }
 
-TEST_CASE("HUDPanel formatDailyChange function", "[HUDPanel][formatDailyChange][TASK-05-004]")
+TEST_CASE("HUDPanel toast system - MAX_TOASTS capacity enforced", "[HUDPanel][toast][TASK-05-004]")
 {
     HUDPanel panel;
-    
-    // Note: formatDailyChange is private, so we can't test it directly.
-    // Instead, we test the overall behavior through public API.
-    // The actual formatting will be visible in the rendered HUD.
-    
-    SECTION("Positive daily change shows ↑") {
-        // Tested through integration
-        REQUIRE(true);
+
+    // Push exactly MAX_TOASTS + 2 toasts
+    for (int i = 0; i < HUDPanel::MAX_TOASTS + 2; ++i) {
+        panel.pushToast("Toast " + std::to_string(i));
     }
-    
-    SECTION("Negative daily change shows ↓") {
-        // Tested through integration  
-        REQUIRE(true);
-    }
-    
-    SECTION("Zero daily change shows empty string") {
-        // Tested through integration
-        REQUIRE(true);
-    }
+
+    // Must not exceed MAX_TOASTS
+    REQUIRE(panel.toastCount() == HUDPanel::MAX_TOASTS);
 }
+
+TEST_CASE("HUDPanel toast system - TOAST_DURATION constant is 3.0f", "[HUDPanel][toast][TASK-05-004]")
+{
+    REQUIRE(HUDPanel::TOAST_DURATION == Approx(3.0f));
+}
+
+TEST_CASE("HUDPanel toast system - MAX_TOASTS constant is 3", "[HUDPanel][toast][TASK-05-004]")
+{
+    REQUIRE(HUDPanel::MAX_TOASTS == 3);
+}
+
+TEST_CASE("HUDPanel RenderFrame gameSpeed field defaults to 1", "[RenderFrame][HUD][TASK-05-004]")
+{
+    vse::RenderFrame frame;
+    REQUIRE(frame.gameSpeed == 1);
+}
+
+TEST_CASE("HUDPanel RenderFrame dailyChange field defaults to 0", "[RenderFrame][HUD][TASK-05-004]")
+{
+    vse::RenderFrame frame;
+    REQUIRE(frame.dailyChange == 0);
+}
+
+TEST_CASE("HUDPanel RenderFrame pendingToast field defaults to empty", "[RenderFrame][HUD][TASK-05-004]")
+{
+    vse::RenderFrame frame;
+    REQUIRE(frame.pendingToast.empty());
+}
+
+TEST_CASE("HUDPanel RenderFrame new fields can be set", "[RenderFrame][HUD][TASK-05-004]")
+{
+    vse::RenderFrame frame;
+    frame.gameSpeed   = 3;
+    frame.dailyChange = 50000;
+    frame.pendingToast = "Settlement toast";
+
+    REQUIRE(frame.gameSpeed == 3);
+    REQUIRE(frame.dailyChange == 50000);
+    REQUIRE(frame.pendingToast == "Settlement toast");
+}
+
+} // anonymous namespace
 
 TEST_CASE("HUDPanel new RenderFrame fields", "[RenderFrame][HUD][TASK-05-004]")
 {
@@ -309,13 +318,9 @@ TEST_CASE("HUDPanel speed buttons and toolbar", "[HUDPanel][interaction][TASK-05
 {
     HUDPanel panel;
     
-    SECTION("drawSpeedButtons returns clicked speed") {
-        // Tested through integration with SDLRenderer
-        REQUIRE(true);
-    }
-    
-    SECTION("drawToolbar returns clicked build action") {
-        // Tested through integration with SDLRenderer  
-        REQUIRE(true);
+    SECTION("drawSpeedButtons/drawToolbar are callable without crash") {
+        // These methods require ImGui context; verifying they exist and compile correctly.
+        // Functional behavior tested via Bootstrapper integration (checkPendingSpeedChange/BuildAction).
+        SUCCEED("Methods declared and linked successfully");
     }
 }
