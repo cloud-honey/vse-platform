@@ -528,29 +528,18 @@ function render(d){
       planned: d.sprint < 3
     },
     {
-      id: 's4', label: d.sprint >= 5 ? 'S4 ✅' : (d.sprint >= 4 ? 'S4 🔥' : 'S4 🚀'),
-      title: 'Sprint 4 — 게임 루프 완성',
-      cls: d.sprint >= 5 ? 'done-tab' : (d.sprint >= 4 ? '' : 'plan-tab'),
-      goal: d.sprint >= 4 ? '게임 루프 완성 — 건설→수입→별점→NPC 반응' : '계획 중',
-      tasks: d.sprint >= 5 ? (d.sprint4_tasks || []) : (d.sprint >= 4 ? tasks : []),
-      completed: d.sprint >= 5,
-      active: d.sprint === 4,
+      id: 's4', label: d.sprint >= 4 ? 'S4 🔥' : 'S4 🚀', title: 'Sprint 4 — 게임 루프 완성',
+      cls: d.sprint >= 4 ? '' : 'plan-tab',
+      goal: d.sprint >= 4 ? d.sprint_goal : (d.sprint4_plan ? d.sprint4_plan.goal : '계획 중'),
+      tasks: d.sprint >= 4 ? tasks : (d.sprint4_plan ? d.sprint4_plan.tasks : []),
+      active: d.sprint >= 4,
       planned: d.sprint < 4
-    },
-    {
-      id: 's5', label: d.sprint >= 5 ? 'S5 🔥' : 'S5 📋',
-      title: 'Sprint 5 — 기능 완성',
-      cls: d.sprint >= 5 ? '' : 'plan-tab',
-      goal: d.sprint >= 5 ? d.sprint_goal : '건설 UI, 카메라, Save/Load, HUD',
-      tasks: d.sprint >= 5 ? tasks : [],
-      active: d.sprint >= 5,
-      planned: d.sprint < 5
     }
   ];
 
   /* 탭 렌더 함수 */
   window._sprintDefs = sprintDefs;
-  window._activeTab = window._activeTab || (d.sprint >= 5 ? 's5' : d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');
+  window._activeTab = window._activeTab || (d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');  // 기본값: 현재 스프린트
 
   function renderTabs() {
     const tabBar = document.getElementById('sprintTabs');
@@ -641,34 +630,29 @@ function render(d){
   const s3Tasks = d.sprint >= 3 ? tasks : ((d.sprint3_plan && d.sprint3_plan.tasks) || []);
   const s3Total = d.sprint >= 3 ? tasks.length : s3Tasks.length;
   const s3Done  = d.sprint >= 3 ? done : s3Tasks.filter(t => t.status === 'done').length;
-  // S4: sprint >= 5면 sprint4_tasks, sprint === 4면 현재 tasks
-  const s4TaskList = d.sprint >= 5 ? (d.sprint4_tasks || []) : (d.sprint === 4 ? tasks : []);
-  const s4Total = s4TaskList.length || 7;
-  const s4Done  = d.sprint >= 5 ? s4Total : s4TaskList.filter(t => t.status === 'done').length;
+  const s4Tasks = (d.sprint4_plan && d.sprint4_plan.tasks) || [];
+  const s4Total = s4Tasks.length;
+  const s4Done  = s4Tasks.filter(t => t.status === 'done').length;
 
-  // S5: 현재 스프린트 (sprint === 5)
-  const s5Total = d.sprint >= 5 ? tasks.length : 7;
-  const s5Done  = d.sprint >= 5 ? done : 0;
-
-  // Phase 1 전체: S1~S10 (S6~S10 예상치 고정)
-  const totalDone = s1Done + s2Done + s3Done + s4Done + s5Done;
-  const totalAll  = s1Total + s2Total + s3Total + s4Total + s5Total + 8 + 5 + 5 + 4 + 5;
+  const totalDone = s1Done + s2Done + s3Done + s4Done;
+  const totalAll  = s1Total + s2Total + s3Total + s4Total;
   const totalPct  = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
 
   document.getElementById('totalPctLabel').textContent = totalPct + '%';
   document.getElementById('totalPctBar').style.width = totalPct + '%';
-  document.getElementById('totalPctLabel').title = `${totalDone}/${totalAll} 태스크 완료 (Phase 1 전체 S1~S10)`;
+
+  // 라벨: "X/Y 태스크 완료"
+  const totalLabel = document.getElementById('totalPctLabel');
+  totalLabel.title = `${totalDone}/${totalAll} 태스크 완료`;
 
   /* Sprint 진행 알약 */
   const pills = document.getElementById('sprintPills');
   pills.innerHTML = '';
   pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S1 ${s1Total}/${s1Total} ✅</span>`;
-  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} ✅</span>`;
-  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S3 ${s3Done}/${s3Total} ✅</span>`;
-  pills.innerHTML += `<span style="${d.sprint>=5?'background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3)':'background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)'};border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S4 ${s4Done}/${s4Total} ${d.sprint>=5?'✅':'🔥'}</span>`;
-  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S5 ${s5Done}/${s5Total} 🔥</span>`;
-  pills.innerHTML += `<span style="background:rgba(100,100,120,.06);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);opacity:.6;">S6~S10 📋</span>`;
-  pills.innerHTML += `<span style="background:rgba(100,100,120,.1);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">Phase 1: ${totalDone}/${totalAll}</span>`;
+  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} 🔥</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S3 ${s3Done}/${s3Total} 📋</span>`;
+  pills.innerHTML += `<span style="background:rgba(240,180,41,.08);color:var(--yellow);border:1px solid rgba(240,180,41,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S4 ${s4Done}/${s4Total} 🚀</span>`;
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.1);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">전체 ${totalDone}/${totalAll}</span>`;
 
   /* Sprint 1 이력 카드 */
   if (s1) {
