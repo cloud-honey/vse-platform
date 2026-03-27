@@ -272,3 +272,53 @@ TEST_CASE("GridSystem - findNearestEmpty: searchRadius 경계", "[GridSystem]") 
     auto result = grid.findNearestEmpty({5, 1}, 0);
     REQUIRE(result.has_value() == false);
 }
+
+TEST_CASE("GridSystem - getTenantCount: empty grid returns 0", "[GridSystem]") {
+    MAKE_GRID(grid);
+    REQUIRE(grid.getTenantCount() == 0);
+}
+
+TEST_CASE("GridSystem - getTenantCount: after placing tenants returns correct count", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    grid.buildFloor(2);
+    
+    // Place 3 tenants
+    grid.placeTenant({5, 1}, TenantType::Office, 1, EntityId{100});
+    grid.placeTenant({7, 1}, TenantType::Residential, 2, EntityId{200});
+    grid.placeTenant({3, 2}, TenantType::Commercial, 1, EntityId{300});
+    
+    REQUIRE(grid.getTenantCount() == 3);
+}
+
+TEST_CASE("GridSystem - getTenantCount: after removing tenant decrements count", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    
+    // Place 2 tenants
+    grid.placeTenant({5, 1}, TenantType::Office, 1, EntityId{100});
+    grid.placeTenant({7, 1}, TenantType::Residential, 1, EntityId{200});
+    
+    REQUIRE(grid.getTenantCount() == 2);
+    
+    // Remove one tenant
+    grid.removeTenant({5, 1});
+    
+    REQUIRE(grid.getTenantCount() == 1);
+    
+    // Remove the other tenant
+    grid.removeTenant({7, 1});
+    
+    REQUIRE(grid.getTenantCount() == 0);
+}
+
+TEST_CASE("GridSystem - getTenantCount: multi-tile tenant counts as one", "[GridSystem]") {
+    MAKE_GRID(grid);
+    grid.buildFloor(1);
+    
+    // Place a 3-tile tenant
+    grid.placeTenant({5, 1}, TenantType::Office, 3, EntityId{100});
+    
+    // Should count as 1 tenant, not 3
+    REQUIRE(grid.getTenantCount() == 1);
+}

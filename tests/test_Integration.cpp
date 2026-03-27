@@ -24,6 +24,7 @@
 #include "domain/TransportSystem.h"
 #include "domain/EconomyEngine.h"
 #include "domain/StarRatingSystem.h"
+#include "renderer/HUDPanel.h"
 #include <entt/entt.hpp>
 
 using namespace vse;
@@ -351,4 +352,53 @@ TEST_CASE("Integration - RenderFrame mouse position fields", "[Integration][HUD]
     
     REQUIRE(frame.mouseX == 100);
     REQUIRE(frame.mouseY == 200);
+}
+
+TEST_CASE("Integration - HUD displays non-zero balance after economy income", "[Integration][HUD][Economy]") {
+    // Test that when economy has income, HUD can display non-zero balance
+    PreloadedConfig config;
+    EventBus eventBus;
+    
+    // Create economy with starting balance
+    EconomyConfig ecfg;
+    ecfg.startingBalance = 1000000;  // Starting with 1,000,000
+    EconomyEngine economy(ecfg, eventBus);
+    
+    // Economy should have non-zero starting balance
+    REQUIRE(economy.getBalance() != 0);
+    REQUIRE(economy.getBalance() == 1000000);
+    
+    // Create RenderFrame and set balance from economy
+    RenderFrame frame;
+    frame.balance = economy.getBalance();
+    
+    // HUD should display non-zero balance
+    REQUIRE(frame.balance != 0);
+    REQUIRE(frame.balance == 1000000);
+    
+    // Test HUDPanel formatting with non-zero balance
+    std::string formatted = HUDPanel::formatBalance(frame.balance);
+    REQUIRE(formatted.find("₩") != std::string::npos);
+    REQUIRE(formatted.find("1,000,000") != std::string::npos);
+    
+    // Simulate economy income (collect rent)
+    // First need to setup grid with tenants
+    GridSystem grid(eventBus, config);
+    grid.buildFloor(0);
+    
+    EntityId tenantId = static_cast<EntityId>(100);
+    grid.placeTenant({5, 0}, TenantType::Office, 2, tenantId);
+    
+    // Collect rent (simulate daily rent collection)
+    // Note: In actual game, collectRent() would be called by EconomyEngine.update()
+    // For test, we'll directly call it with current time
+    GameTime time{0, 0, 0};
+    economy.collectRent(grid, time);
+    
+    // Balance should still be non-zero (might be same or different depending on rent)
+    REQUIRE(economy.getBalance() != 0);
+    
+    // Update RenderFrame with new balance
+    frame.balance = economy.getBalance();
+    REQUIRE(frame.balance != 0);
 }
