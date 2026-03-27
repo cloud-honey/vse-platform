@@ -261,7 +261,7 @@ h1 span{color:var(--accent);}
     <div class="goal-txt" id="sprintGoal">Loading...</div>
   </div>
 
-  <!-- Phase 1 진행률 + Sprint 탭 -->
+  <!-- 전체 진행률 바 -->
   <div id="totalProgressBar" style="margin-bottom:18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 18px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
       <span style="font-family:var(--mono);font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;">📊 Phase 1 전체 진행률</span>
@@ -270,17 +270,7 @@ h1 span{color:var(--accent);}
     <div style="background:var(--border);border-radius:4px;height:8px;overflow:hidden;">
       <div id="totalPctBar" style="height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .6s ease;width:0%"></div>
     </div>
-    <div id="sprintPills" style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;align-items:center;"></div>
-    <!-- 선택된 스프린트 태스크 목록 (탭 바로 아래) -->
-    <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <div style="font-family:var(--display);font-size:14px;font-weight:700;color:var(--text1);" id="activeTabTitle">Tasks</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--text2);" id="taskCount">0 tasks</div>
-      </div>
-      <div class="tlist" id="taskList">
-        <div class="empty">Loading tasks...</div>
-      </div>
-    </div>
+    <div id="sprintPills" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;"></div>
   </div>
 
   <!-- STAT CARDS -->
@@ -310,7 +300,18 @@ h1 span{color:var(--accent);}
   <!-- MAIN GRID -->
   <div class="mgrid">
 
-    <!-- Task list moved to progress bar section above -->
+    <!-- Sprint 탭 + Task list -->
+    <div class="sec">
+      <!-- 탭 네비게이션 -->
+      <div id="sprintTabs" style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;"></div>
+      <div class="sec-hdr" style="margin-bottom:8px;">
+        <div class="sec-ttl" id="activeTabTitle">Tasks</div>
+        <div class="sec-cnt" id="taskCount">0 tasks</div>
+      </div>
+      <div class="tlist" id="taskList">
+        <div class="empty">Loading tasks...</div>
+      </div>
+    </div>
 
     <!-- Sidebar -->
     <div class="rcol">
@@ -459,11 +460,23 @@ function abClass(n){
 /* Main render function */
 function render(d){
   /* Header */
-  document.getElementById('sprintNum').textContent='S'+String(d.sprint||0).padStart(2,'0');
-  document.getElementById('sprintGoal').textContent=d.sprint_goal||'';
+  document.getElementById('sprintNum').textContent='S'+String(d.sprint).padStart(2,'0');
+  document.getElementById('sprintGoal').textContent=d.sprint_goal;
   const osEl=document.getElementById('overallStatus');
-  const osMap={'in_progress':'🟢 IN PROGRESS','planning':'🔵 PLANNING','completed':'✅ COMPLETED','blocked':'🔴 BLOCKED','paused':'⏸ PAUSED'};
-  const osStyle={'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);','planning':'color:#a78bfa;background:rgba(167,139,250,.12);','completed':'color:#34d399;background:rgba(52,211,153,.12);','blocked':'color:#f87171;background:rgba(248,113,113,.12);','paused':'color:#fbbf24;background:rgba(251,191,36,.12);'};
+  const osMap={
+    'in_progress':'🟢 IN PROGRESS',
+    'planning':'🔵 PLANNING',
+    'completed':'✅ COMPLETED',
+    'blocked':'🔴 BLOCKED',
+    'paused':'⏸ PAUSED'
+  };
+  const osStyle={
+    'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);',
+    'planning':'color:#a78bfa;background:rgba(167,139,250,.12);',
+    'completed':'color:#34d399;background:rgba(52,211,153,.12);',
+    'blocked':'color:#f87171;background:rgba(248,113,113,.12);',
+    'paused':'color:#fbbf24;background:rgba(251,191,36,.12);'
+  };
   const osKey=(d.overall_status||'').toLowerCase();
   osEl.textContent=osMap[osKey]||(d.overall_status||'—').toUpperCase();
   osEl.style.cssText=(osStyle[osKey]||'')+'border-radius:6px;padding:3px 8px;';
@@ -506,21 +519,20 @@ function render(d){
       completed: d.sprint >= 3
     },
     {
-      id: 's3', label: d.sprint >= 4 ? 'S3 ✅' : (d.sprint === 3 ? 'S3 🔥' : 'S3 📋'),
+      id: 's3', label: d.sprint >= 3 ? 'S3 🔥' : 'S3 📋',
       title: 'Sprint 3 — AI 고도화/스프라이트/UI',
-      cls: d.sprint >= 4 ? 'done-tab' : (d.sprint === 3 ? '' : 'plan-tab'),
-      goal: d.sprint === 3 ? d.sprint_goal : 'NPC AI 고도화 + 테넌트 + 스프라이트 + HUD',
-      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks || []),
-      completed: d.sprint >= 4,
-      active: d.sprint === 3,
+      cls: d.sprint >= 3 ? '' : 'plan-tab',
+      goal: d.sprint === 3 ? d.sprint_goal : (d.sprint3_tasks ? 'Sprint 3 완료' : d.sprint3_plan ? d.sprint3_plan.goal : '계획 중'),
+      tasks: d.sprint === 3 ? tasks : (d.sprint3_tasks ? d.sprint3_tasks : d.sprint3_plan ? d.sprint3_plan.tasks : []),
+      active: d.sprint >= 3,
       planned: d.sprint < 3
     },
     {
       id: 's4', label: d.sprint >= 5 ? 'S4 ✅' : (d.sprint >= 4 ? 'S4 🔥' : 'S4 🚀'),
       title: 'Sprint 4 — 게임 루프 완성',
       cls: d.sprint >= 5 ? 'done-tab' : (d.sprint >= 4 ? '' : 'plan-tab'),
-      goal: d.sprint >= 5 ? '게임 루프 완성 — 건설→수입→별점→NPC 반응' : (d.sprint >= 4 ? d.sprint_goal : '계획 중'),
-      tasks: d.sprint >= 5 ? (d.sprint4_tasks || []) : (d.sprint >= 4 ? tasks : (d.sprint4_plan ? d.sprint4_plan.tasks : [])),
+      goal: d.sprint >= 4 ? '게임 루프 완성 — 건설→수입→별점→NPC 반응' : '계획 중',
+      tasks: d.sprint >= 5 ? (d.sprint4_tasks || []) : (d.sprint >= 4 ? tasks : []),
       completed: d.sprint >= 5,
       active: d.sprint === 4,
       planned: d.sprint < 4
@@ -536,40 +548,32 @@ function render(d){
     }
   ];
 
-  /* 탭 + 태스크 렌더링 */
+  /* 탭 렌더 함수 */
   window._sprintDefs = sprintDefs;
-  window._activeTab = (d.sprint >= 5 ? 's5' : d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');
+  window._activeTab = window._activeTab || (d.sprint >= 5 ? 's5' : d.sprint >= 4 ? 's4' : d.sprint >= 3 ? 's3' : 's2');
 
-  function renderAll() {
-    const activeId = window._activeTab;
+  function renderTabs() {
+    const tabBar = document.getElementById('sprintTabs');
+    tabBar.innerHTML = sprintDefs.map(s => `
+      <button class="stab ${s.cls} ${window._activeTab === s.id ? 'active' : ''}"
+        onclick="selectTab('${s.id}')">${s.label}</button>
+    `).join('');
+  }
 
-    /* 1. pills 탭 버튼 렌더 */
-    const pills = document.getElementById('sprintPills');
-    pills.innerHTML = sprintDefs.map(s => {
-      const isActive = activeId === s.id;
-      const sDone = (s.tasks||[]).filter(t=>t.status==='done').length;
-      const sTotal = (s.tasks||[]).length;
-      const icon = s.completed ? '✅' : (s.active ? '🔥' : '📋');
-      const countText = sTotal > 0 ? ` ${sDone}/${sTotal}` : '';
-      let bg, fg, border;
-      if (isActive)       { bg='rgba(79,142,247,.2)';   fg='var(--accent)'; border='var(--accent)'; }
-      else if (s.completed){ bg='rgba(46,204,138,.1)';  fg='var(--green)';  border='rgba(46,204,138,.3)'; }
-      else if (s.active)  { bg='rgba(79,142,247,.07)';  fg='var(--accent)'; border='rgba(79,142,247,.2)'; }
-      else                { bg='rgba(100,100,120,.05)'; fg='var(--text2)';  border='var(--border)'; }
-      return `<button onclick="window.selectTab('${s.id}')" style="cursor:pointer;background:${bg};color:${fg};border:1px solid ${border};border-radius:20px;padding:4px 12px;font-size:11px;font-family:var(--mono);font-weight:${isActive?700:400};">${s.label}${countText} ${icon}</button>`;
-    }).join('');
-    pills.innerHTML += `<span style="background:rgba(100,100,120,.08);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);margin-left:auto;" id="phase1Count"></span>`;
-
-    /* 2. 태스크 목록 렌더 */
-    const def = sprintDefs.find(s => s.id === activeId);
+  function renderTasksForTab(tabId) {
+    const def = sprintDefs.find(s => s.id === tabId);
     if (!def) return;
-    document.getElementById('activeTabTitle').textContent = def.title;
-    document.getElementById('taskCount').textContent = (def.tasks||[]).length + ' tasks';
     const tl = document.getElementById('taskList');
-    if (!(def.tasks||[]).length) {
+    const tc = document.getElementById('taskCount');
+    const tt = document.getElementById('activeTabTitle');
+    tt.textContent = def.title;
+    tc.textContent = def.tasks.length + ' tasks';
+
+    if (!def.tasks.length) {
       tl.innerHTML = '<div class="empty">태스크 없음</div>';
       return;
     }
+
     tl.innerHTML = def.tasks.map(t => {
       const status = t.status || 'planned';
       const assignee = t.assignee || '—';
@@ -591,10 +595,12 @@ function render(d){
 
   window.selectTab = function(tabId) {
     window._activeTab = tabId;
-    renderAll();
+    renderTabs();
+    renderTasksForTab(tabId);
   };
 
-  renderAll();
+  renderTabs();
+  renderTasksForTab(window._activeTab);
 
   /* Escalations */
   const esc=d.escalations||[];
@@ -625,25 +631,46 @@ function render(d){
     ?iss.map(i=>`<div class="ac ac-yellow"><div class="ac-ttl" style="color:var(--yellow)">${i.title||''}</div><div class="ac-desc">${i.description||''}</div></div>`).join('')
     :'<div class="empty">No design issues ✓</div>';
 
-  /* 전체 진행률 — Phase 1 (Sprint 1~10) */
-  const phaseTotal = [10,9,9,7, tasks.length, 8,5,5,4,5];
-  const phaseDone  = [10,9,9,7, done,          0,0,0,0,0];
-  const totalAll   = phaseTotal.reduce((a,b)=>a+b,0);
-  const totalDone  = phaseDone.reduce((a,b)=>a+b,0);
-  const totalPct   = Math.round(totalDone/totalAll*100);
+  /* 전체 진행률 — Sprint 1~4 전체 합산 */
+  const s1      = d.sprint1_summary;
+  const s1Total = 10;
+  const s1Done  = s1 ? s1Total : 0;  // Sprint 1 완료 = 10/10
+  const s2Total = tasks.length;
+  const s2Done  = done;
+  // Sprint 3 = current tasks (when sprint >= 3)
+  const s3Tasks = d.sprint >= 3 ? tasks : ((d.sprint3_plan && d.sprint3_plan.tasks) || []);
+  const s3Total = d.sprint >= 3 ? tasks.length : s3Tasks.length;
+  const s3Done  = d.sprint >= 3 ? done : s3Tasks.filter(t => t.status === 'done').length;
+  // S4: sprint >= 5면 sprint4_tasks, sprint === 4면 현재 tasks
+  const s4TaskList = d.sprint >= 5 ? (d.sprint4_tasks || []) : (d.sprint === 4 ? tasks : []);
+  const s4Total = s4TaskList.length || 7;
+  const s4Done  = d.sprint >= 5 ? s4Total : s4TaskList.filter(t => t.status === 'done').length;
+
+  // S5: 현재 스프린트 (sprint === 5)
+  const s5Total = d.sprint >= 5 ? tasks.length : 7;
+  const s5Done  = d.sprint >= 5 ? done : 0;
+
+  // Phase 1 전체: S1~S10 (S6~S10 예상치 고정)
+  const totalDone = s1Done + s2Done + s3Done + s4Done + s5Done;
+  const totalAll  = s1Total + s2Total + s3Total + s4Total + s5Total + 8 + 5 + 5 + 4 + 5;
+  const totalPct  = totalAll ? Math.round(totalDone / totalAll * 100) : 0;
 
   document.getElementById('totalPctLabel').textContent = totalPct + '%';
   document.getElementById('totalPctBar').style.width = totalPct + '%';
+  document.getElementById('totalPctLabel').title = `${totalDone}/${totalAll} 태스크 완료 (Phase 1 전체 S1~S10)`;
 
-  // S6~S10 pills 뒤에 추가 (renderAll이 S1~S5 버튼을 그린 뒤)
-  const pillsEl = document.getElementById('sprintPills');
-  ['S6','S7','S8','S9','S10'].forEach(s => {
-    pillsEl.innerHTML += `<span style="background:rgba(100,100,120,.04);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);opacity:0.5;">${s} 📋</span>`;
-  });
-  pillsEl.innerHTML += `<span style="background:rgba(100,100,120,.08);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);margin-left:4px;">Phase 1: ${totalDone}/${totalAll}</span>`;
+  /* Sprint 진행 알약 */
+  const pills = document.getElementById('sprintPills');
+  pills.innerHTML = '';
+  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S1 ${s1Total}/${s1Total} ✅</span>`;
+  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S2 ${s2Done}/${s2Total} ✅</span>`;
+  pills.innerHTML += `<span style="background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S3 ${s3Done}/${s3Total} ✅</span>`;
+  pills.innerHTML += `<span style="${d.sprint>=5?'background:rgba(46,204,138,.15);color:var(--green);border:1px solid rgba(46,204,138,.3)':'background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25)'};border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S4 ${s4Done}/${s4Total} ${d.sprint>=5?'✅':'🔥'}</span>`;
+  pills.innerHTML += `<span style="background:rgba(79,142,247,.12);color:var(--accent);border:1px solid rgba(79,142,247,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">S5 ${s5Done}/${s5Total} 🔥</span>`;
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.06);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);opacity:.6;">S6~S10 📋</span>`;
+  pills.innerHTML += `<span style="background:rgba(100,100,120,.1);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;font-family:var(--mono);">Phase 1: ${totalDone}/${totalAll}</span>`;
 
   /* Sprint 1 이력 카드 */
-  const s1 = d.sprint1_summary;
   if (s1) {
     document.getElementById('sprint1Card').style.display = '';
     document.getElementById('sprint1Summary').innerHTML = `
