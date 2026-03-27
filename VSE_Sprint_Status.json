@@ -1,110 +1,90 @@
 {
-  "sprint": 5,
-  "updated_at": "2026-03-27T21:20:00+09:00",
+  "sprint": 6,
+  "updated_at": "2026-03-27T21:42:00+09:00",
   "phase": "Phase 1",
-  "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
-  "overall_status": "completed",
+  "sprint_goal": "비주얼 + 사운드 — 실제 픽셀아트 스프라이트 적용, SDL2_mixer 오디오, 낮/밤 사이클",
+  "overall_status": "in_progress",
   "tasks": [
     {
-      "id": "TASK-05-000",
-      "title": "Design Spec v2.5 동기화",
+      "id": "TASK-06-000",
+      "title": "Design Spec v3.0 동기화",
       "assignee": "붐",
       "layer": "문서",
       "status": "done",
-      "difficulty": 1,
-      "notes": "Sprint 4 반영 + Sprint 5~10 로드맵",
-      "commit": "76b68e6"
+      "difficulty": 2,
+      "notes": "Sprint 5 반영 + Sprint 6 §5.29~5.36 신설"
     },
     {
-      "id": "TASK-05-001",
-      "title": "마우스 건설 UI (BuildCursor 완성)",
-      "assignee": "붐2",
-      "layer": "렌더러/입력",
-      "status": "done",
-      "difficulty": 3,
-      "notes": "hover 하이라이트, 클릭 건설, 테넌트 선택, 비용 tooltip",
-      "commit": "02aea91",
-      "tests": "337/337",
-      "reviewer": {
-        "GPT": "Conditional Pass",
-        "Gemini": "Conditional Pass",
-        "DeepSeek": "Conditional Pass"
-      }
-    },
-    {
-      "id": "TASK-05-002",
-      "title": "Camera 줌/팬",
+      "id": "TASK-06-001",
+      "title": "타일 스프라이트 렌더링",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "done",
-      "difficulty": 2,
-      "notes": "마우스 휠 줌, 우클릭 팬, WASD, 범위 제한",
-      "commit": "09549d8",
-      "tests": "346/346",
-      "reviewer": {
-        "GPT": "Conditional Pass",
-        "Gemini": "Fail→수정 후 Pass",
-        "DeepSeek": "Pass"
-      }
+      "status": "pending",
+      "difficulty": 3,
+      "notes": "TileRenderer, office/residential/commercial/lobby PNG — 에셋 필요"
     },
     {
-      "id": "TASK-05-003",
-      "title": "Save/Load UI",
+      "id": "TASK-06-002",
+      "title": "엘리베이터 스프라이트 애니메이션",
       "assignee": "붐2",
-      "layer": "UI",
-      "status": "done",
+      "layer": "렌더러",
+      "status": "pending",
       "difficulty": 2,
-      "notes": "세이브 슬롯, 메타데이터, 자동세이브",
-      "commit": "1f8f746",
-      "tests": "355/355",
-      "reviewer": {
-        "GPT": "Fail→수정 후 Pass",
-        "Gemini": "Conditional Pass",
-        "DeepSeek": "Fail→수정 후 Pass"
-      }
+      "notes": "elevator_car.png, elevator_open.png — 에셋 필요"
     },
     {
-      "id": "TASK-05-004",
-      "title": "HUD 고도화",
+      "id": "TASK-06-003",
+      "title": "NPC 실제 스프라이트 연동",
       "assignee": "붐2",
-      "layer": "UI",
-      "status": "done",
-      "difficulty": 2,
-      "notes": "건설 툴바, 별점, 수익 표시, 토스트, 배속",
-      "commit": "17816fb",
-      "tests": "365/365",
-      "reviewer": {
-        "GPT": "Fail→수정 후 Pass",
-        "Gemini": "Fail→수정 후 Pass",
-        "DeepSeek": "Conditional Pass"
-      }
-    },
-    {
-      "id": "TASK-05-005",
-      "title": "TD-001 isAnchor 리팩토링",
-      "assignee": "붐2",
-      "layer": "도메인",
-      "status": "done",
+      "layer": "렌더러",
+      "status": "pending",
       "difficulty": 1,
-      "notes": "isElevatorShaft 분리, GridSystem/EconomyEngine 전환",
-      "commit": "d6083af",
-      "tests": "369/369"
+      "notes": "npc_sheet.png (128x32, 8프레임) — 에셋 필요"
     },
     {
-      "id": "TASK-05-006",
-      "title": "통합 + Sprint 5 빌드",
+      "id": "TASK-06-004",
+      "title": "AudioEngine (SDL2_mixer)",
+      "assignee": "붐2",
+      "layer": "렌더러",
+      "status": "pending",
+      "difficulty": 3,
+      "notes": "BGM/SFX, graceful degradation — 에셋 없이 선행 가능"
+    },
+    {
+      "id": "TASK-06-005",
+      "title": "낮/밤 비주얼 사이클",
+      "assignee": "붐2",
+      "layer": "렌더러",
+      "status": "pending",
+      "difficulty": 2,
+      "notes": "GameTime.hour 기반 색상 오버레이 — 에셋 없이 선행 가능"
+    },
+    {
+      "id": "TASK-06-006",
+      "title": "건물 외벽 렌더링",
+      "assignee": "붐2",
+      "layer": "렌더러",
+      "status": "pending",
+      "difficulty": 1,
+      "notes": "building_facade.png — 에셋 필요"
+    },
+    {
+      "id": "TASK-06-007",
+      "title": "SDL2_mixer CMake 통합",
+      "assignee": "붐2",
+      "layer": "인프라",
+      "status": "pending",
+      "difficulty": 1,
+      "notes": "optional dependency, VSE_NO_AUDIO fallback — 에셋 없이 선행 가능"
+    },
+    {
+      "id": "TASK-06-008",
+      "title": "통합 + Sprint 6 빌드",
       "assignee": "붐",
       "layer": "전체",
-      "status": "done",
+      "status": "pending",
       "difficulty": 3,
-      "notes": "통합 테스트 + Win 빌드 + 교차 검증",
-      "commit": "cff9bae",
-      "tests": "382/382",
-      "reviewer": {
-        "GPT": "Conditional Pass",
-        "Gemini": "Conditional Pass",
-        "DeepSeek": "Conditional Pass"
-      }
+      "notes": "통합 테스트 + Windows 빌드"
     }
   ],
   "escalations": [],
@@ -598,6 +578,12 @@
       "time": "20:11",
       "title": "TASK-05-006 통합 + Sprint 5 Windows 빌드 완료",
       "detail": "Sprint 5 통합 테스트 13개 추가(BuildCursor/Camera/SaveLoad/HUD/TD-001). 382/382. Windows 빌드 27MB. 커밋 da179bb"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "21:42",
+      "title": "Sprint 6 계획 확정 — Design Spec v3.0",
+      "detail": "비주얼(타일/엘리베이터/NPC 스프라이트) + 사운드(SDL2_mixer) + 낮밤 사이클. 9태스크. 에셋 없이 선행 가능: 04/05/07"
     }
   ],
   "references": [

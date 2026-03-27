@@ -1,5 +1,5 @@
 # VSE Design Specification — Phase 1
-> Version: 2.5 | Author: 붐 (PM) | Date: 2026-03-27
+> Version: 3.0 | Author: 붐 (PM) | Date: 2026-03-27
 > Source of truth: `CLAUDE.md` v1.3 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
@@ -7,6 +7,7 @@
 > v1.5: Sprint 2 implementation sync (Bootstrapper API, SaveMetadata balance int64_t, StarRatingChangedPayload, manual JSON+MessagePack save strategy)
 > v2.0: Sprint 3 implementation sync + Sprint 4 planned systems
 > v2.5: Sprint 4 implementation sync + Sprint 5 planned systems
+> v3.0: Sprint 5 implementation sync + Sprint 6 planned systems (visual + audio)
 
 ---
 
@@ -1837,6 +1838,221 @@ grep -rn "isElevatorShaft" src/ include/
 - `BuildCursor` (Sprint 5): highlight logic uses `isElevatorShaft` to block tenant placement
 - No behavior change — correctness already ensured by DI-005 fix; this is naming/intent clarity
 
+### 5.29 Tile Sprite Rendering (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-001):**
+> Replace colored rectangle tile rendering with actual sprite textures (SimTower style pixel art).
+> `SpriteSheet` already exists for NPCs — extend pattern to building tiles.
+
+**Tile Texture Map:**
+
+| TenantType | Sprite File | Size |
+|---|---|---|
+| `Office` | `content/sprites/office_floor.png` | 32×32 |
+| `Residential` | `content/sprites/residential_floor.png` | 32×32 |
+| `Commercial` | `content/sprites/commercial_floor.png` | 32×32 |
+| `Lobby` (floor 0) | `content/sprites/lobby_floor.png` | 32×32 |
+| `ElevatorShaft` | `content/sprites/elevator_shaft.png` | 32×32 |
+| `Empty` | *(no sprite, background color)* | — |
+| Building facade (wall) | `content/sprites/building_facade.png` | 32×32 |
+
+**TileRenderer class (Layer 3):**
+```cpp
+// include/renderer/TileRenderer.h
+class TileRenderer {
+public:
+    TileRenderer(SDL_Renderer* renderer);
+
+    /// Load all tile textures. Missing files fall back to colored rects.
+    bool loadTextures(const std::string& contentDir);
+
+    /// Draw a single tile at screen position.
+    void drawTile(const RenderTileCmd& cmd, float screenX, float screenY,
+                  float scaledSize, const Camera& cam);
+
+private:
+    SDL_Renderer* renderer_;
+    std::unordered_map<int, SDL_Texture*> textures_;  // key = TenantType (int)
+    SDL_Texture* facadeTexture_  = nullptr;
+    SDL_Texture* shaftTexture_   = nullptr;
+
+    void drawFallback(TenantType type, float x, float y, float size);
+};
+```
+
+**Fallback policy:** If a texture file is missing, draw the existing colored rect (no crash).
+**Layer boundary:** TileRenderer lives in `src/renderer/` — no domain headers.
+**SDLRenderer integration:** Replace `drawTiles()` colored rect logic with `tileRenderer_.drawTile()`.
+
+### 5.30 Elevator Sprite Animation (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-002):**
+> Animate elevator car movement and door open/close with sprites.
+
+**Elevator sprite files:**
+- `content/sprites/elevator_car.png` — 32×32, door closed
+- `content/sprites/elevator_open.png` — 32×32, door open
+
+**Animation states:**
+| `ElevatorState` | Sprite | Notes |
+|---|---|---|
+| `Idle` | `elevator_car.png` | Static at floor |
+| `MovingUp` / `MovingDown` | `elevator_car.png` | `interpolatedFloor` for smooth Y |
+| `DoorOpening` | Lerp car→open | Transition animation (2 frames) |
+| `Boarding` | `elevator_open.png` | Doors fully open |
+| `DoorClosing` | Lerp open→car | Transition animation (2 frames) |
+
+**Implementation:** `ElevatorRenderer` class (Layer 3), called from `SDLRenderer::drawElevators()`.
+
+### 5.31 NPC Sprite Sheet — Real Asset Integration (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-003):**
+> `SpriteSheet` class already implemented (Sprint 3). Sprint 6 provides the actual PNG asset
+> (`content/sprites/npc_sheet.png`, 128×32, 8 frames × 16px) to replace placeholder.
+> No code changes required if file is placed in correct path.
+> If asset is unavailable, `SpriteSheet` falls back to colored rects automatically.
+
+**Frame mapping (already implemented):**
+| Frame | AgentState |
+|---|---|
+| 0–3 | `Walking` (walk cycle) |
+| 4 | `Idle` / `Working` |
+| 5 | `InElevator` |
+| 6 | `Resting` |
+| 7 | `UsingStairs` |
+
+### 5.32 Audio Engine — IAudioCommand Implementation (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-004):**
+> Implement `AudioEngine` (Layer 3) that consumes `IAudioCommand` structs.
+> Backend: SDL2_mixer. IAudioCommand already defined in `include/core/IAudioCommand.h`.
+
+**AudioEngine class:**
+```cpp
+// include/renderer/AudioEngine.h
+#pragma once
+#include "core/IAudioCommand.h"
+#include <string>
+#include <unordered_map>
+
+namespace vse {
+
+class AudioEngine {
+public:
+    AudioEngine() = default;
+    ~AudioEngine();
+
+    /// Initialize SDL2_mixer. Returns false if unavailable (graceful degradation).
+    bool init(int frequency = 44100, int channels = 2, int chunkSize = 2048);
+    void shutdown();
+
+    /// Load audio assets from content directory.
+    void loadAssets(const std::string& contentDir);
+
+    /// Execute audio commands (call every frame from Bootstrapper).
+    void process(const PlayBGMCmd& cmd);
+    void process(const PlaySFXCmd& cmd);
+    void process(const StopBGMCmd& cmd);
+
+    bool isAvailable() const { return available_; }
+
+private:
+    bool available_ = false;
+    // Mix_Music* bgmTrack_ = nullptr;  // SDL2_mixer type (forward-declared)
+    std::unordered_map<std::string, void*> sfxCache_;  // sfxId → Mix_Chunk*
+
+    void playBGM(const std::string& trackId, float volume, bool loop);
+    void playSFX(const std::string& sfxId, float volume);
+};
+
+} // namespace vse
+```
+
+**Graceful degradation:** If SDL2_mixer is unavailable or audio file missing, `AudioEngine::init()` returns false and all `process()` calls are no-ops. Game runs silently without crash.
+
+**Audio assets (content/audio/):**
+| File | Type | Trigger |
+|---|---|---|
+| `bgm_daytime.ogg` | BGM | Game hour 6–20 |
+| `bgm_night.ogg` | BGM | Game hour 20–6 |
+| `sfx_elevator_ding.wav` | SFX | `ElevatorArrived` event |
+| `sfx_build.wav` | SFX | `BuildFloor` command |
+| `sfx_tenant_in.wav` | SFX | `TenantPlaced` event |
+
+**Bootstrapper integration:**
+- `AudioEngine audioEngine_` added as member
+- `init()` calls `audioEngine_.init()` + `audioEngine_.loadAssets()`
+- Main loop: check `pendingBGM_` / `pendingSFX_` from RenderFrame or event subscriptions
+
+**EventBus subscriptions (in Bootstrapper::init()):**
+```cpp
+eventBus_.subscribe(EventType::ElevatorArrived, [this](const Event&) {
+    pendingSFX_ = "sfx_elevator_ding";
+});
+// Day/Night BGM switch via HourChanged event
+```
+
+### 5.33 Day/Night Visual Cycle (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-005):**
+> Render the game world with a day/night color overlay based on `GameTime.hour`.
+
+**Color overlay rules:**
+| Hour | Overlay | Notes |
+|---|---|---|
+| 6–8 | Warm orange tint (dawn) | Alpha 40 |
+| 8–18 | No overlay (daytime) | Clear |
+| 18–20 | Warm orange tint (dusk) | Alpha 40 |
+| 20–6 | Dark blue overlay (night) | Alpha 60 |
+
+**Implementation:** `SDLRenderer` applies `SDL_SetRenderDrawColor + SDL_RenderFillRect` overlay
+after drawing tiles/agents, before ImGui.
+`RenderFrame` carries `frame.gameHour` (int) for renderer to compute overlay.
+
+### 5.34 Building Facade Rendering (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-006):**
+> Draw building exterior walls (left/right sides) using `building_facade.png` tile.
+> Currently: plain gray rectangles.
+
+**Facade rules:**
+- Left wall: X=0, every built floor — `building_facade.png` drawn at left edge
+- Right wall: X=floorWidth-1, every built floor
+- Unbuilt floors: no facade (dark/empty)
+
+### 5.35 SDL2_mixer CMake Integration (Sprint 6 Planned)
+
+> **Sprint 6 Planned System (TASK-06-007):**
+> Add `SDL2_mixer` as optional dependency in `cmake/FetchDependencies.cmake`.
+> If not found, define `VSE_NO_AUDIO` and compile with stub AudioEngine.
+
+```cmake
+# cmake/FetchDependencies.cmake addition
+find_package(SDL2_mixer QUIET)
+if(SDL2_mixer_FOUND)
+    target_link_libraries(TowerTycoon PRIVATE SDL2_mixer::SDL2_mixer)
+    target_compile_definitions(TowerTycoon PRIVATE VSE_HAS_AUDIO)
+else()
+    message(STATUS "SDL2_mixer not found — audio disabled")
+endif()
+```
+
+### 5.36 Sprint 6 Task List
+
+| Task | Title | Assignee | Difficulty |
+|---|---|---|---|
+| TASK-06-000 | Design Spec v3.0 동기화 | 붐 | ⭐⭐ |
+| TASK-06-001 | 타일 스프라이트 렌더링 | 붐2 | ⭐⭐⭐ |
+| TASK-06-002 | 엘리베이터 애니메이션 | 붐2 | ⭐⭐ |
+| TASK-06-003 | NPC 실제 스프라이트 연동 | 붐2 | ⭐ |
+| TASK-06-004 | AudioEngine (SDL2_mixer) | 붐2 | ⭐⭐⭐ |
+| TASK-06-005 | 낮/밤 비주얼 사이클 | 붐2 | ⭐⭐ |
+| TASK-06-006 | 건물 외벽 렌더링 | 붐2 | ⭐ |
+| TASK-06-007 | SDL2_mixer CMake 통합 | 붐2 | ⭐ |
+| TASK-06-008 | 통합 + Sprint 6 빌드 | 붐 | ⭐⭐⭐ |
+
+**전제 조건:** 마스터가 픽셀아트 에셋 (`content/sprites/*.png`, `content/audio/*.ogg/*.wav`) 준비 완료 후 TASK-06-001~003 시작 가능. TASK-06-004~007은 에셋 없이 코드 먼저 구현 가능.
+
 ---
 
 ## 6. ECS Component & System Map
@@ -2325,6 +2541,7 @@ public:
 | 2026-03-26 | 1.5 | Sprint 2 구현 반영 동기화: **(1) Bootstrapper §5.15** — API 시그니처 실제 구현으로 전면 교체 (`initialize` → `init/run/shutdown/initDomainOnly`, `unique_ptr<I*>` 소유 → 직접 멤버, `#ifdef VSE_TESTING` 접근자 가드, `setupInitialScene()` 공용 헬퍼, `accumulator_` Bootstrapper 소유 명시); **(2) ISaveLoad §5.8** — `SaveMetadata.balance` `int` → `int64_t` (TASK-02-003 Cents 단위 통일); **(3) Types.h §2** — `StarRatingChangedPayload` struct 추가 (TASK-02-009: StarRatingSystem.h에서 이동, 레이어 결합 감소); **(4) SaveLoad 직렬화 전략** — EnTT snapshot → 수동 JSON + MessagePack 2-pass remap으로 확정 반영 (이미 §5.8에 있었으나 이유 보강); **(5) SimClock §5.1** — 주석/설계 메모 실제 구현과 일치 확인 (변경 없음). |
 | 2026-03-26 | 2.0 | Sprint 3 implementation sync + Sprint 4 planned systems: **(1) §5.16 NPC Stress System** — AgentComponent.stress field (0-100), satisfaction decay when stress > 50, AgentSatisfactionChanged event, leave threshold satisfaction < 10; **(2) §5.17 TenantSystem** — TenantComponent fields (anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown), onDayChanged() rent/maintenance, eviction reset logic; **(3) §5.18 Economy Loop** — buildFloor cost deduction, collectRent/payMaintenance auto-call, InsufficientFundsEvent payload; **(4) §5.19 Stair Movement System** — ≤4 floor stair preference, 2 ticks/floor speed, elevator wait fallback; **(5) §5.20 Periodic Settlement** — daily/weekly/quarterly settlement schedule, tax deduction, ImGui toast; **(6) §5.21 Game Over + Victory** — bankruptcy 30-day rule, TOWER achievement (★5 + 100 floors + 300 NPCs); **(7) §5.22 Main Menu + State Machine** — Menu/Playing/Paused/GameOver states, ImGui fullscreen menu; **(8) §5.23 DI-005 Resolution** — MockGridSystem elevator anchor mismatch fix; **(9) Types.h updates** — InsufficientFunds event type, InsufficientFundsPayload struct, AgentComponent.stress field, TenantComponent full definition. |
 | 2026-03-27 | 2.5 | Sprint 4 구현 반영 동기화 + Sprint 5 계획 섹션 추가: **(1) §5.18 Economy Loop** — 실제 구현 반영 (TenantSystem.onDayChanged→collectRent/payMaintenance, EconomyConfig.quarterlyTaxRate 필드 추가); **(2) §5.19 Stair Movement System** — UsingStairs 전용 AgentState, 2 ticks/floor, elevatorWaitTimeout 폴백, orange 렌더링 확정; **(3) §5.20 Periodic Settlement** — EconomyConfig.quarterlyTaxRate, EventType 550~553 확정, 페이로드 구조체 동기화; **(4) §5.21 Game Over + Victory** — GameOverSystem (Layer 1) 구현 반영, consecutiveNegativeDays/massExodusDays/consecutivePositiveDays 추적, 상호배제 플래그; **(5) §5.22 Main Menu + State Machine** — GameStateManager Core Runtime 확정, canTransition() guard, 2-step NewGame 전환; **(6) §5.23 DI-005** — anonymous namespace ODR 필수화 (b051472), isElevatorShaft→isAnchor=false 확정; **(7) §5.15 Bootstrapper** — GameOverSystem + GameStateManager 멤버 추가; **(8) §5.24~5.28 Sprint 5 계획** — BuildCursor, Camera Zoom/Pan, Save/Load UI, HUD 고도화 (toolbar/toast/속도제어), TD-001 isAnchor 리팩토링 신설. |
+| 2026-03-27 | 3.0 | Sprint 5 구현 반영 동기화 + Sprint 6 계획 섹션 추가: **(1) §5.24 BuildCursor** — drawOverlay/drawImGui 분리(ImGui lifecycle 수정), startX clamp 일관성 확정; **(2) §5.25 Camera Zoom/Pan** — zoomAt pivot 알고리즘, clampToWorld UB 수정(world<viewport 시 centering), panMargin_ 캐시; **(3) §5.26 Save/Load UI** — SaveSlotInfo Layer 0(IRenderCommand.h) 확정, getSavePath() API 일관성, openSave() 매 프레임 재호출 방지; **(4) §5.27 HUD 고도화** — 툴바/토스트/배속 버튼 Bootstrapper 연결 확정, DailySettlement 구독 위치 수정; **(5) §5.28 TD-001** — isAnchor/isElevatorShaft 상호배제 전 코드베이스 적용 완료; **(6) §5.29~5.35 Sprint 6 계획 신설** — TileRenderer(타일 스프라이트), 엘리베이터 애니메이션, NPC 실제 스프라이트 연동, AudioEngine(SDL2_mixer), 낮/밤 비주얼 사이클, 건물 외벽 렌더링, SDL2_mixer CMake 통합; **(7) §5.36 Sprint 6 태스크 목록** — 9개 태스크 정의(에셋 없이 선행 가능 태스크 포함). |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*
