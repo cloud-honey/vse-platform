@@ -34,6 +34,7 @@ static EconomyEngine createTestEngine(const EconomyConfig& config) {
     return EconomyEngine(config, mockEventBus);
 }
 
+namespace {
 // Mock GridSystem for testing
 class MockGridSystem : public IGridSystem {
 public:
@@ -157,6 +158,7 @@ private:
     std::vector<TenantInfo> tenants_;
     std::vector<TileCoord> elevatorShafts_;
 };
+} // anonymous namespace
 
 TEST_CASE("EconomyEngine - Initial balance equals config.startingBalance", "[EconomyEngine]") {
     auto config = makeTestConfig();

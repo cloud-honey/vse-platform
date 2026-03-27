@@ -19,6 +19,7 @@
 using Catch::Matchers::Equals;
 
 namespace vse {
+namespace {
 
 // Mock IGridSystem for testing
 class MockGridSystem : public IGridSystem {
@@ -134,6 +135,8 @@ public:
 private:
     int activeCount_ = 0;
 };
+
+} // anonymous namespace
 
 TEST_CASE("GameOverSystem - No game over before 30 days of negative balance", "[GameOverSystem]") {
     EventBus bus;

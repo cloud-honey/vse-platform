@@ -19,6 +19,7 @@
 using Catch::Matchers::WithinRel;
 
 namespace vse {
+namespace {
 
 // Mock IAgentSystem for testing
 class MockAgentSystem : public IAgentSystem {
@@ -83,6 +84,8 @@ private:
     float avgSatisfaction_ = 50.0f;
     int activeCount_ = 0;
 };
+
+} // anonymous namespace
 
 TEST_CASE("StarRatingSystem basic initialization", "[StarRatingSystem]") {
     EventBus eventBus;
