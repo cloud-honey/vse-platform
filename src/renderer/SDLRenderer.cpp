@@ -188,11 +188,14 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
             pendingLoadSlot_ = slotIndex;
         };
         
-        // Open panel if needed
-        if (frame.saveLoadPanelSave) {
-            saveLoadPanel_.openSave();
-        } else {
-            saveLoadPanel_.openLoad();
+        // Open panel only on the first frame (not every frame) to preserve overwrite state.
+        // If panel is already open, do not call open again — it resets pendingOverwriteSlot_.
+        if (!saveLoadPanel_.isOpen()) {
+            if (frame.saveLoadPanelSave) {
+                saveLoadPanel_.openSave();
+            } else {
+                saveLoadPanel_.openLoad();
+            }
         }
         
         // Draw panel

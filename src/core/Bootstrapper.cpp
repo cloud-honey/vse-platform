@@ -130,8 +130,8 @@ bool Bootstrapper::init() {
         if (saveLoad_) {
             GameTime currentTime = simClock_.currentGameTime();
             if (currentTime.day - lastAutoSaveDay_ >= autoSaveDayInterval_) {
-                // Auto-save to slot 0
-                std::string path = "saves/slot_" + std::to_string(0) + ".vsesave";
+                // Auto-save to slot 0 — use SaveLoadSystem::getSavePath for consistent naming
+                std::string path = saveLoad_->getSavePath(0);
                 auto result = saveLoad_->save(path);
                 if (result.ok()) {
                     spdlog::info("Auto-saved to slot 0 (day {})", currentTime.day);
@@ -699,7 +699,7 @@ void Bootstrapper::refreshSaveSlots() {
         SaveSlotInfo info;
         info.slotIndex = i;
         
-        std::string path = "saves/slot_" + std::to_string(i) + ".vsesave";
+        std::string path = saveLoad_->getSavePath(i);  // consistent with save/load paths
         auto metadataResult = saveLoad_->readMetadata(path);
         
         if (metadataResult.ok()) {
