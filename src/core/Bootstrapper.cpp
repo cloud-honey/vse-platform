@@ -340,14 +340,16 @@ void Bootstrapper::run() {
                 } else if (frame.buildMode.action == BuildAction::PlaceTenant) {
                     // For PlaceTenant: valid if floor is built and tiles are empty
                     if (grid_->isFloorBuilt(floor)) {
-                        // Calculate start position (center-aligned)
+                        // Calculate start position (center-aligned), clamped to left edge.
+                        // Must match InputMapper::PlaceTenant clamp logic exactly.
                         int startX = tileX - frame.buildMode.tenantWidth / 2;
+                        if (startX < 0) startX = 0;  // clamp: mirrors InputMapper behavior
                         bool allEmpty = true;
                         
                         // Check all tiles in the tenant width
                         for (int i = 0; i < frame.buildMode.tenantWidth; ++i) {
                             int checkX = startX + i;
-                            if (checkX < 0 || checkX >= frame.floorWidth) {
+                            if (checkX >= frame.floorWidth) {
                                 allEmpty = false;
                                 break;
                             }

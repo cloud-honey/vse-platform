@@ -6,18 +6,19 @@
 
 namespace vse {
 
-void BuildCursor::draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouseY,
-                       const BuildModeState& mode, int tileSize)
+void BuildCursor::drawOverlay(SDL_Renderer* r, const Camera& cam, int mouseX, int mouseY,
+                              const BuildModeState& mode, int tileSize)
 {
+    // SDL-only rendering: tile highlight. No ImGui calls here.
     if (!mode.active || mode.action == BuildAction::None) {
         return;
     }
 
-    // 화면 좌표를 타일 좌표로 변환
+    // Convert screen coordinates to tile coordinates
     int tileX = cam.screenToTileX(mouseX);
     int floor = cam.screenToTileFloor(mouseY);
 
-    // 타일 좌표가 유효한 범위인지 확인
+    // Skip rendering if tile is out of bounds
     if (tileX < 0 || floor < 0) {
         return;
     }
@@ -33,11 +34,26 @@ void BuildCursor::draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouse
     default:
         break;
     }
+}
 
-    // Draw cost tooltip if preview cost > 0 or placement is invalid
+void BuildCursor::drawImGui(int mouseX, int mouseY, const BuildModeState& mode)
+{
+    // ImGui-only rendering: tooltip. Must be called inside ImGui::NewFrame()...ImGui::Render().
+    if (!mode.active || mode.action == BuildAction::None) {
+        return;
+    }
+
+    // Show tooltip when there is a cost to display or placement is invalid
     if (mode.previewCost > 0 || !mode.isValidPlacement) {
         drawCostTooltip(mouseX, mouseY, mode.previewCost, mode.isValidPlacement);
     }
+}
+
+void BuildCursor::draw(SDL_Renderer* r, const Camera& cam, int mouseX, int mouseY,
+                       const BuildModeState& mode, int tileSize)
+{
+    // Legacy combined call — SDL overlay only (no ImGui). Use drawOverlay+drawImGui instead.
+    drawOverlay(r, cam, mouseX, mouseY, mode, tileSize);
 }
 
 void BuildCursor::drawFloorHighlight(SDL_Renderer* r, const Camera& cam, int floor,

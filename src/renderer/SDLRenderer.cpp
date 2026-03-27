@@ -141,9 +141,9 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // 에이전트 렌더링 (TASK-03-003: Sprite Sheet 시스템)
     drawAgents(frame, camera, dt);
 
-    // 건설 모드 커서 피드백 (TASK-03-006)
-    buildCursor_.draw(renderer_, camera, frame.mouseX, frame.mouseY, 
-                      frame.buildMode, frame.tileSize);
+    // 건설 모드 커서 SDL 오버레이 (TASK-05-001: SDL-only, ImGui tooltip은 NewFrame 이후에)
+    buildCursor_.drawOverlay(renderer_, camera, frame.mouseX, frame.mouseY,
+                             frame.buildMode, frame.tileSize);
 
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
@@ -153,6 +153,9 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
+
+    // TASK-05-001: BuildCursor ImGui tooltip (must be inside NewFrame/Render)
+    buildCursor_.drawImGui(frame.mouseX, frame.mouseY, frame.buildMode);
 
     // TASK-05-001: Tenant selection popup
     if (shouldOpenTenantPopup_) {
