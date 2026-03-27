@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T16:38:00+09:00",
+  "updated_at": "2026-03-27T17:20:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -52,9 +52,16 @@
       "title": "Save/Load UI",
       "assignee": "붐2",
       "layer": "UI",
-      "status": "in_progress",
+      "status": "done",
       "difficulty": 2,
-      "notes": "세이브 슬롯, 메타데이터, 자동세이브"
+      "notes": "세이브 슬롯, 메타데이터, 자동세이브",
+      "commit": "1f8f746",
+      "tests": "355/355",
+      "reviewer": {
+        "GPT": "pending",
+        "Gemini": "pending",
+        "DeepSeek": "pending"
+      }
     },
     {
       "id": "TASK-05-004",
