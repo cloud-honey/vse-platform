@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Types.h"
 #include "core/InputTypes.h"
+#include "core/ISaveLoad.h"
 #include <vector>
 #include <cstdint>
 #include <string>
@@ -105,6 +106,15 @@ struct DebugInfo {
 };
 
 // ── 프레임 데이터 ─────────────────────────────────────────
+
+/// Save slot metadata for UI display (Layer 0 data contract).
+struct SaveSlotInfo {
+    int          slotIndex  = 0;
+    bool         isEmpty    = true;
+    SaveMetadata meta;
+    std::string  displayName;  ///< e.g. "Day 45  ★3  ₩1,234,567"
+};
+
 /**
  * RenderFrame — 1 프레임에 그려야 할 전체 데이터.
  * Domain → RenderFrame 수집 → SDLRenderer 소비.
@@ -154,6 +164,13 @@ struct RenderFrame {
 
     // Game state (for UI menus)
     GameState gameState = GameState::MainMenu;
+    
+    // Save/Load UI state
+    bool showSaveLoadPanel = false;
+    bool saveLoadPanelSave = true;   // true=save mode, false=load mode
+    std::vector<SaveSlotInfo> saveSlotInfos;
+    int pendingSaveSlot = -1;        // set by SDLRenderer when user confirms save
+    int pendingLoadSlot = -1;        // set by SDLRenderer when user confirms load
 };
 
 } // namespace vse

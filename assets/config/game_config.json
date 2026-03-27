@@ -57,5 +57,10 @@
         "zoomMax": 4.0,
         "panSpeed": 8.0,
         "panMargin": 2.0
+    },
+    "saveload": {
+        "autoSaveDays": 60,
+        "saveDir": "saves/",
+        "maxSlots": 5
     }
 }

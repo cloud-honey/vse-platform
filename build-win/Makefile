@@ -877,6 +877,30 @@ src/core/EventBus.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/EventBus.cpp.s
 .PHONY : src/core/EventBus.cpp.s
 
+src/core/GameStateManager.obj: src/core/GameStateManager.cpp.obj
+.PHONY : src/core/GameStateManager.obj
+
+# target to build an object file
+src/core/GameStateManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/GameStateManager.cpp.obj
+.PHONY : src/core/GameStateManager.cpp.obj
+
+src/core/GameStateManager.i: src/core/GameStateManager.cpp.i
+.PHONY : src/core/GameStateManager.i
+
+# target to preprocess a source file
+src/core/GameStateManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/GameStateManager.cpp.i
+.PHONY : src/core/GameStateManager.cpp.i
+
+src/core/GameStateManager.s: src/core/GameStateManager.cpp.s
+.PHONY : src/core/GameStateManager.s
+
+# target to generate assembly for a file
+src/core/GameStateManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/core/GameStateManager.cpp.s
+.PHONY : src/core/GameStateManager.cpp.s
+
 src/core/SimClock.obj: src/core/SimClock.cpp.obj
 .PHONY : src/core/SimClock.obj
 
@@ -948,6 +972,30 @@ src/domain/EconomyEngine.s: src/domain/EconomyEngine.cpp.s
 src/domain/EconomyEngine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/EconomyEngine.cpp.s
 .PHONY : src/domain/EconomyEngine.cpp.s
+
+src/domain/GameOverSystem.obj: src/domain/GameOverSystem.cpp.obj
+.PHONY : src/domain/GameOverSystem.obj
+
+# target to build an object file
+src/domain/GameOverSystem.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/GameOverSystem.cpp.obj
+.PHONY : src/domain/GameOverSystem.cpp.obj
+
+src/domain/GameOverSystem.i: src/domain/GameOverSystem.cpp.i
+.PHONY : src/domain/GameOverSystem.i
+
+# target to preprocess a source file
+src/domain/GameOverSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/GameOverSystem.cpp.i
+.PHONY : src/domain/GameOverSystem.cpp.i
+
+src/domain/GameOverSystem.s: src/domain/GameOverSystem.cpp.s
+.PHONY : src/domain/GameOverSystem.s
+
+# target to generate assembly for a file
+src/domain/GameOverSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/GameOverSystem.cpp.s
+.PHONY : src/domain/GameOverSystem.cpp.s
 
 src/domain/GridSystem.obj: src/domain/GridSystem.cpp.obj
 .PHONY : src/domain/GridSystem.obj
@@ -1021,6 +1069,30 @@ src/domain/StarRatingSystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/StarRatingSystem.cpp.s
 .PHONY : src/domain/StarRatingSystem.cpp.s
 
+src/domain/TenantSystem.obj: src/domain/TenantSystem.cpp.obj
+.PHONY : src/domain/TenantSystem.obj
+
+# target to build an object file
+src/domain/TenantSystem.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/TenantSystem.cpp.obj
+.PHONY : src/domain/TenantSystem.cpp.obj
+
+src/domain/TenantSystem.i: src/domain/TenantSystem.cpp.i
+.PHONY : src/domain/TenantSystem.i
+
+# target to preprocess a source file
+src/domain/TenantSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/TenantSystem.cpp.i
+.PHONY : src/domain/TenantSystem.cpp.i
+
+src/domain/TenantSystem.s: src/domain/TenantSystem.cpp.s
+.PHONY : src/domain/TenantSystem.s
+
+# target to generate assembly for a file
+src/domain/TenantSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/domain/TenantSystem.cpp.s
+.PHONY : src/domain/TenantSystem.cpp.s
+
 src/domain/TransportSystem.obj: src/domain/TransportSystem.cpp.obj
 .PHONY : src/domain/TransportSystem.obj
 
@@ -1069,6 +1141,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/renderer/AnimationSystem.obj: src/renderer/AnimationSystem.cpp.obj
+.PHONY : src/renderer/AnimationSystem.obj
+
+# target to build an object file
+src/renderer/AnimationSystem.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.obj
+.PHONY : src/renderer/AnimationSystem.cpp.obj
+
+src/renderer/AnimationSystem.i: src/renderer/AnimationSystem.cpp.i
+.PHONY : src/renderer/AnimationSystem.i
+
+# target to preprocess a source file
+src/renderer/AnimationSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.i
+.PHONY : src/renderer/AnimationSystem.cpp.i
+
+src/renderer/AnimationSystem.s: src/renderer/AnimationSystem.cpp.s
+.PHONY : src/renderer/AnimationSystem.s
+
+# target to generate assembly for a file
+src/renderer/AnimationSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.s
+.PHONY : src/renderer/AnimationSystem.cpp.s
+
+src/renderer/BuildCursor.obj: src/renderer/BuildCursor.cpp.obj
+.PHONY : src/renderer/BuildCursor.obj
+
+# target to build an object file
+src/renderer/BuildCursor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/BuildCursor.cpp.obj
+.PHONY : src/renderer/BuildCursor.cpp.obj
+
+src/renderer/BuildCursor.i: src/renderer/BuildCursor.cpp.i
+.PHONY : src/renderer/BuildCursor.i
+
+# target to preprocess a source file
+src/renderer/BuildCursor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/BuildCursor.cpp.i
+.PHONY : src/renderer/BuildCursor.cpp.i
+
+src/renderer/BuildCursor.s: src/renderer/BuildCursor.cpp.s
+.PHONY : src/renderer/BuildCursor.s
+
+# target to generate assembly for a file
+src/renderer/BuildCursor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/BuildCursor.cpp.s
+.PHONY : src/renderer/BuildCursor.cpp.s
+
 src/renderer/Camera.obj: src/renderer/Camera.cpp.obj
 .PHONY : src/renderer/Camera.obj
 
@@ -1116,6 +1236,54 @@ src/renderer/DebugPanel.s: src/renderer/DebugPanel.cpp.s
 src/renderer/DebugPanel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.s
 .PHONY : src/renderer/DebugPanel.cpp.s
+
+src/renderer/FontManager.obj: src/renderer/FontManager.cpp.obj
+.PHONY : src/renderer/FontManager.obj
+
+# target to build an object file
+src/renderer/FontManager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/FontManager.cpp.obj
+.PHONY : src/renderer/FontManager.cpp.obj
+
+src/renderer/FontManager.i: src/renderer/FontManager.cpp.i
+.PHONY : src/renderer/FontManager.i
+
+# target to preprocess a source file
+src/renderer/FontManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/FontManager.cpp.i
+.PHONY : src/renderer/FontManager.cpp.i
+
+src/renderer/FontManager.s: src/renderer/FontManager.cpp.s
+.PHONY : src/renderer/FontManager.s
+
+# target to generate assembly for a file
+src/renderer/FontManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/FontManager.cpp.s
+.PHONY : src/renderer/FontManager.cpp.s
+
+src/renderer/HUDPanel.obj: src/renderer/HUDPanel.cpp.obj
+.PHONY : src/renderer/HUDPanel.obj
+
+# target to build an object file
+src/renderer/HUDPanel.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/HUDPanel.cpp.obj
+.PHONY : src/renderer/HUDPanel.cpp.obj
+
+src/renderer/HUDPanel.i: src/renderer/HUDPanel.cpp.i
+.PHONY : src/renderer/HUDPanel.i
+
+# target to preprocess a source file
+src/renderer/HUDPanel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/HUDPanel.cpp.i
+.PHONY : src/renderer/HUDPanel.cpp.i
+
+src/renderer/HUDPanel.s: src/renderer/HUDPanel.cpp.s
+.PHONY : src/renderer/HUDPanel.s
+
+# target to generate assembly for a file
+src/renderer/HUDPanel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/HUDPanel.cpp.s
+.PHONY : src/renderer/HUDPanel.cpp.s
 
 src/renderer/InputMapper.obj: src/renderer/InputMapper.cpp.obj
 .PHONY : src/renderer/InputMapper.obj
@@ -1188,6 +1356,30 @@ src/renderer/SDLRenderer.s: src/renderer/SDLRenderer.cpp.s
 src/renderer/SDLRenderer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SDLRenderer.cpp.s
 .PHONY : src/renderer/SDLRenderer.cpp.s
+
+src/renderer/SpriteSheet.obj: src/renderer/SpriteSheet.cpp.obj
+.PHONY : src/renderer/SpriteSheet.obj
+
+# target to build an object file
+src/renderer/SpriteSheet.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.obj
+.PHONY : src/renderer/SpriteSheet.cpp.obj
+
+src/renderer/SpriteSheet.i: src/renderer/SpriteSheet.cpp.i
+.PHONY : src/renderer/SpriteSheet.i
+
+# target to preprocess a source file
+src/renderer/SpriteSheet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.i
+.PHONY : src/renderer/SpriteSheet.cpp.i
+
+src/renderer/SpriteSheet.s: src/renderer/SpriteSheet.cpp.s
+.PHONY : src/renderer/SpriteSheet.s
+
+# target to generate assembly for a file
+src/renderer/SpriteSheet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.s
+.PHONY : src/renderer/SpriteSheet.cpp.s
 
 # Help Target
 help:
@@ -1269,6 +1461,9 @@ help:
 	@echo "... src/core/EventBus.obj"
 	@echo "... src/core/EventBus.i"
 	@echo "... src/core/EventBus.s"
+	@echo "... src/core/GameStateManager.obj"
+	@echo "... src/core/GameStateManager.i"
+	@echo "... src/core/GameStateManager.s"
 	@echo "... src/core/SimClock.obj"
 	@echo "... src/core/SimClock.i"
 	@echo "... src/core/SimClock.s"
@@ -1278,6 +1473,9 @@ help:
 	@echo "... src/domain/EconomyEngine.obj"
 	@echo "... src/domain/EconomyEngine.i"
 	@echo "... src/domain/EconomyEngine.s"
+	@echo "... src/domain/GameOverSystem.obj"
+	@echo "... src/domain/GameOverSystem.i"
+	@echo "... src/domain/GameOverSystem.s"
 	@echo "... src/domain/GridSystem.obj"
 	@echo "... src/domain/GridSystem.i"
 	@echo "... src/domain/GridSystem.s"
@@ -1287,18 +1485,33 @@ help:
 	@echo "... src/domain/StarRatingSystem.obj"
 	@echo "... src/domain/StarRatingSystem.i"
 	@echo "... src/domain/StarRatingSystem.s"
+	@echo "... src/domain/TenantSystem.obj"
+	@echo "... src/domain/TenantSystem.i"
+	@echo "... src/domain/TenantSystem.s"
 	@echo "... src/domain/TransportSystem.obj"
 	@echo "... src/domain/TransportSystem.i"
 	@echo "... src/domain/TransportSystem.s"
 	@echo "... src/main.obj"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/renderer/AnimationSystem.obj"
+	@echo "... src/renderer/AnimationSystem.i"
+	@echo "... src/renderer/AnimationSystem.s"
+	@echo "... src/renderer/BuildCursor.obj"
+	@echo "... src/renderer/BuildCursor.i"
+	@echo "... src/renderer/BuildCursor.s"
 	@echo "... src/renderer/Camera.obj"
 	@echo "... src/renderer/Camera.i"
 	@echo "... src/renderer/Camera.s"
 	@echo "... src/renderer/DebugPanel.obj"
 	@echo "... src/renderer/DebugPanel.i"
 	@echo "... src/renderer/DebugPanel.s"
+	@echo "... src/renderer/FontManager.obj"
+	@echo "... src/renderer/FontManager.i"
+	@echo "... src/renderer/FontManager.s"
+	@echo "... src/renderer/HUDPanel.obj"
+	@echo "... src/renderer/HUDPanel.i"
+	@echo "... src/renderer/HUDPanel.s"
 	@echo "... src/renderer/InputMapper.obj"
 	@echo "... src/renderer/InputMapper.i"
 	@echo "... src/renderer/InputMapper.s"
@@ -1308,6 +1521,9 @@ help:
 	@echo "... src/renderer/SDLRenderer.obj"
 	@echo "... src/renderer/SDLRenderer.i"
 	@echo "... src/renderer/SDLRenderer.s"
+	@echo "... src/renderer/SpriteSheet.obj"
+	@echo "... src/renderer/SpriteSheet.i"
+	@echo "... src/renderer/SpriteSheet.s"
 .PHONY : help
 
 

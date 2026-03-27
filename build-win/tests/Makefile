@@ -697,6 +697,30 @@ __/src/core/EventBus.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/EventBus.cpp.s
 .PHONY : __/src/core/EventBus.cpp.s
 
+__/src/core/GameStateManager.obj: __/src/core/GameStateManager.cpp.obj
+.PHONY : __/src/core/GameStateManager.obj
+
+# target to build an object file
+__/src/core/GameStateManager.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/GameStateManager.cpp.obj
+.PHONY : __/src/core/GameStateManager.cpp.obj
+
+__/src/core/GameStateManager.i: __/src/core/GameStateManager.cpp.i
+.PHONY : __/src/core/GameStateManager.i
+
+# target to preprocess a source file
+__/src/core/GameStateManager.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/GameStateManager.cpp.i
+.PHONY : __/src/core/GameStateManager.cpp.i
+
+__/src/core/GameStateManager.s: __/src/core/GameStateManager.cpp.s
+.PHONY : __/src/core/GameStateManager.s
+
+# target to generate assembly for a file
+__/src/core/GameStateManager.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/GameStateManager.cpp.s
+.PHONY : __/src/core/GameStateManager.cpp.s
+
 __/src/core/SimClock.obj: __/src/core/SimClock.cpp.obj
 .PHONY : __/src/core/SimClock.obj
 
@@ -768,6 +792,30 @@ __/src/domain/EconomyEngine.s: __/src/domain/EconomyEngine.cpp.s
 __/src/domain/EconomyEngine.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/EconomyEngine.cpp.s
 .PHONY : __/src/domain/EconomyEngine.cpp.s
+
+__/src/domain/GameOverSystem.obj: __/src/domain/GameOverSystem.cpp.obj
+.PHONY : __/src/domain/GameOverSystem.obj
+
+# target to build an object file
+__/src/domain/GameOverSystem.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/GameOverSystem.cpp.obj
+.PHONY : __/src/domain/GameOverSystem.cpp.obj
+
+__/src/domain/GameOverSystem.i: __/src/domain/GameOverSystem.cpp.i
+.PHONY : __/src/domain/GameOverSystem.i
+
+# target to preprocess a source file
+__/src/domain/GameOverSystem.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/GameOverSystem.cpp.i
+.PHONY : __/src/domain/GameOverSystem.cpp.i
+
+__/src/domain/GameOverSystem.s: __/src/domain/GameOverSystem.cpp.s
+.PHONY : __/src/domain/GameOverSystem.s
+
+# target to generate assembly for a file
+__/src/domain/GameOverSystem.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/GameOverSystem.cpp.s
+.PHONY : __/src/domain/GameOverSystem.cpp.s
 
 __/src/domain/GridSystem.obj: __/src/domain/GridSystem.cpp.obj
 .PHONY : __/src/domain/GridSystem.obj
@@ -841,6 +889,30 @@ __/src/domain/StarRatingSystem.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/StarRatingSystem.cpp.s
 .PHONY : __/src/domain/StarRatingSystem.cpp.s
 
+__/src/domain/TenantSystem.obj: __/src/domain/TenantSystem.cpp.obj
+.PHONY : __/src/domain/TenantSystem.obj
+
+# target to build an object file
+__/src/domain/TenantSystem.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TenantSystem.cpp.obj
+.PHONY : __/src/domain/TenantSystem.cpp.obj
+
+__/src/domain/TenantSystem.i: __/src/domain/TenantSystem.cpp.i
+.PHONY : __/src/domain/TenantSystem.i
+
+# target to preprocess a source file
+__/src/domain/TenantSystem.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TenantSystem.cpp.i
+.PHONY : __/src/domain/TenantSystem.cpp.i
+
+__/src/domain/TenantSystem.s: __/src/domain/TenantSystem.cpp.s
+.PHONY : __/src/domain/TenantSystem.s
+
+# target to generate assembly for a file
+__/src/domain/TenantSystem.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TenantSystem.cpp.s
+.PHONY : __/src/domain/TenantSystem.cpp.s
+
 __/src/domain/TransportSystem.obj: __/src/domain/TransportSystem.cpp.obj
 .PHONY : __/src/domain/TransportSystem.obj
 
@@ -864,6 +936,54 @@ __/src/domain/TransportSystem.s: __/src/domain/TransportSystem.cpp.s
 __/src/domain/TransportSystem.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TransportSystem.cpp.s
 .PHONY : __/src/domain/TransportSystem.cpp.s
+
+__/src/renderer/AnimationSystem.obj: __/src/renderer/AnimationSystem.cpp.obj
+.PHONY : __/src/renderer/AnimationSystem.obj
+
+# target to build an object file
+__/src/renderer/AnimationSystem.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.obj
+.PHONY : __/src/renderer/AnimationSystem.cpp.obj
+
+__/src/renderer/AnimationSystem.i: __/src/renderer/AnimationSystem.cpp.i
+.PHONY : __/src/renderer/AnimationSystem.i
+
+# target to preprocess a source file
+__/src/renderer/AnimationSystem.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.i
+.PHONY : __/src/renderer/AnimationSystem.cpp.i
+
+__/src/renderer/AnimationSystem.s: __/src/renderer/AnimationSystem.cpp.s
+.PHONY : __/src/renderer/AnimationSystem.s
+
+# target to generate assembly for a file
+__/src/renderer/AnimationSystem.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.s
+.PHONY : __/src/renderer/AnimationSystem.cpp.s
+
+__/src/renderer/BuildCursor.obj: __/src/renderer/BuildCursor.cpp.obj
+.PHONY : __/src/renderer/BuildCursor.obj
+
+# target to build an object file
+__/src/renderer/BuildCursor.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.obj
+.PHONY : __/src/renderer/BuildCursor.cpp.obj
+
+__/src/renderer/BuildCursor.i: __/src/renderer/BuildCursor.cpp.i
+.PHONY : __/src/renderer/BuildCursor.i
+
+# target to preprocess a source file
+__/src/renderer/BuildCursor.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.i
+.PHONY : __/src/renderer/BuildCursor.cpp.i
+
+__/src/renderer/BuildCursor.s: __/src/renderer/BuildCursor.cpp.s
+.PHONY : __/src/renderer/BuildCursor.s
+
+# target to generate assembly for a file
+__/src/renderer/BuildCursor.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.s
+.PHONY : __/src/renderer/BuildCursor.cpp.s
 
 __/src/renderer/Camera.obj: __/src/renderer/Camera.cpp.obj
 .PHONY : __/src/renderer/Camera.obj
@@ -912,6 +1032,54 @@ __/src/renderer/DebugPanel.s: __/src/renderer/DebugPanel.cpp.s
 __/src/renderer/DebugPanel.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DebugPanel.cpp.s
 .PHONY : __/src/renderer/DebugPanel.cpp.s
+
+__/src/renderer/FontManager.obj: __/src/renderer/FontManager.cpp.obj
+.PHONY : __/src/renderer/FontManager.obj
+
+# target to build an object file
+__/src/renderer/FontManager.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.obj
+.PHONY : __/src/renderer/FontManager.cpp.obj
+
+__/src/renderer/FontManager.i: __/src/renderer/FontManager.cpp.i
+.PHONY : __/src/renderer/FontManager.i
+
+# target to preprocess a source file
+__/src/renderer/FontManager.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.i
+.PHONY : __/src/renderer/FontManager.cpp.i
+
+__/src/renderer/FontManager.s: __/src/renderer/FontManager.cpp.s
+.PHONY : __/src/renderer/FontManager.s
+
+# target to generate assembly for a file
+__/src/renderer/FontManager.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.s
+.PHONY : __/src/renderer/FontManager.cpp.s
+
+__/src/renderer/HUDPanel.obj: __/src/renderer/HUDPanel.cpp.obj
+.PHONY : __/src/renderer/HUDPanel.obj
+
+# target to build an object file
+__/src/renderer/HUDPanel.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/HUDPanel.cpp.obj
+.PHONY : __/src/renderer/HUDPanel.cpp.obj
+
+__/src/renderer/HUDPanel.i: __/src/renderer/HUDPanel.cpp.i
+.PHONY : __/src/renderer/HUDPanel.i
+
+# target to preprocess a source file
+__/src/renderer/HUDPanel.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/HUDPanel.cpp.i
+.PHONY : __/src/renderer/HUDPanel.cpp.i
+
+__/src/renderer/HUDPanel.s: __/src/renderer/HUDPanel.cpp.s
+.PHONY : __/src/renderer/HUDPanel.s
+
+# target to generate assembly for a file
+__/src/renderer/HUDPanel.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/HUDPanel.cpp.s
+.PHONY : __/src/renderer/HUDPanel.cpp.s
 
 __/src/renderer/InputMapper.obj: __/src/renderer/InputMapper.cpp.obj
 .PHONY : __/src/renderer/InputMapper.obj
@@ -984,6 +1152,30 @@ __/src/renderer/SDLRenderer.s: __/src/renderer/SDLRenderer.cpp.s
 __/src/renderer/SDLRenderer.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SDLRenderer.cpp.s
 .PHONY : __/src/renderer/SDLRenderer.cpp.s
+
+__/src/renderer/SpriteSheet.obj: __/src/renderer/SpriteSheet.cpp.obj
+.PHONY : __/src/renderer/SpriteSheet.obj
+
+# target to build an object file
+__/src/renderer/SpriteSheet.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.obj
+.PHONY : __/src/renderer/SpriteSheet.cpp.obj
+
+__/src/renderer/SpriteSheet.i: __/src/renderer/SpriteSheet.cpp.i
+.PHONY : __/src/renderer/SpriteSheet.i
+
+# target to preprocess a source file
+__/src/renderer/SpriteSheet.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.i
+.PHONY : __/src/renderer/SpriteSheet.cpp.i
+
+__/src/renderer/SpriteSheet.s: __/src/renderer/SpriteSheet.cpp.s
+.PHONY : __/src/renderer/SpriteSheet.s
+
+# target to generate assembly for a file
+__/src/renderer/SpriteSheet.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.s
+.PHONY : __/src/renderer/SpriteSheet.cpp.s
 
 test_AgentElevator.obj: test_AgentElevator.cpp.obj
 .PHONY : test_AgentElevator.obj
@@ -1177,6 +1369,102 @@ test_EconomyEngine.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_EconomyEngine.cpp.s
 .PHONY : test_EconomyEngine.cpp.s
 
+test_EconomyLoop.obj: test_EconomyLoop.cpp.obj
+.PHONY : test_EconomyLoop.obj
+
+# target to build an object file
+test_EconomyLoop.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_EconomyLoop.cpp.obj
+.PHONY : test_EconomyLoop.cpp.obj
+
+test_EconomyLoop.i: test_EconomyLoop.cpp.i
+.PHONY : test_EconomyLoop.i
+
+# target to preprocess a source file
+test_EconomyLoop.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_EconomyLoop.cpp.i
+.PHONY : test_EconomyLoop.cpp.i
+
+test_EconomyLoop.s: test_EconomyLoop.cpp.s
+.PHONY : test_EconomyLoop.s
+
+# target to generate assembly for a file
+test_EconomyLoop.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_EconomyLoop.cpp.s
+.PHONY : test_EconomyLoop.cpp.s
+
+test_FontManager.obj: test_FontManager.cpp.obj
+.PHONY : test_FontManager.obj
+
+# target to build an object file
+test_FontManager.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_FontManager.cpp.obj
+.PHONY : test_FontManager.cpp.obj
+
+test_FontManager.i: test_FontManager.cpp.i
+.PHONY : test_FontManager.i
+
+# target to preprocess a source file
+test_FontManager.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_FontManager.cpp.i
+.PHONY : test_FontManager.cpp.i
+
+test_FontManager.s: test_FontManager.cpp.s
+.PHONY : test_FontManager.s
+
+# target to generate assembly for a file
+test_FontManager.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_FontManager.cpp.s
+.PHONY : test_FontManager.cpp.s
+
+test_GameOver.obj: test_GameOver.cpp.obj
+.PHONY : test_GameOver.obj
+
+# target to build an object file
+test_GameOver.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameOver.cpp.obj
+.PHONY : test_GameOver.cpp.obj
+
+test_GameOver.i: test_GameOver.cpp.i
+.PHONY : test_GameOver.i
+
+# target to preprocess a source file
+test_GameOver.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameOver.cpp.i
+.PHONY : test_GameOver.cpp.i
+
+test_GameOver.s: test_GameOver.cpp.s
+.PHONY : test_GameOver.s
+
+# target to generate assembly for a file
+test_GameOver.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameOver.cpp.s
+.PHONY : test_GameOver.cpp.s
+
+test_GameStateManager.obj: test_GameStateManager.cpp.obj
+.PHONY : test_GameStateManager.obj
+
+# target to build an object file
+test_GameStateManager.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameStateManager.cpp.obj
+.PHONY : test_GameStateManager.cpp.obj
+
+test_GameStateManager.i: test_GameStateManager.cpp.i
+.PHONY : test_GameStateManager.i
+
+# target to preprocess a source file
+test_GameStateManager.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameStateManager.cpp.i
+.PHONY : test_GameStateManager.cpp.i
+
+test_GameStateManager.s: test_GameStateManager.cpp.s
+.PHONY : test_GameStateManager.s
+
+# target to generate assembly for a file
+test_GameStateManager.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GameStateManager.cpp.s
+.PHONY : test_GameStateManager.cpp.s
+
 test_GridSystem.obj: test_GridSystem.cpp.obj
 .PHONY : test_GridSystem.obj
 
@@ -1200,6 +1488,30 @@ test_GridSystem.s: test_GridSystem.cpp.s
 test_GridSystem.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_GridSystem.cpp.s
 .PHONY : test_GridSystem.cpp.s
+
+test_HUDPanel.obj: test_HUDPanel.cpp.obj
+.PHONY : test_HUDPanel.obj
+
+# target to build an object file
+test_HUDPanel.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_HUDPanel.cpp.obj
+.PHONY : test_HUDPanel.cpp.obj
+
+test_HUDPanel.i: test_HUDPanel.cpp.i
+.PHONY : test_HUDPanel.i
+
+# target to preprocess a source file
+test_HUDPanel.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_HUDPanel.cpp.i
+.PHONY : test_HUDPanel.cpp.i
+
+test_HUDPanel.s: test_HUDPanel.cpp.s
+.PHONY : test_HUDPanel.s
+
+# target to generate assembly for a file
+test_HUDPanel.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_HUDPanel.cpp.s
+.PHONY : test_HUDPanel.cpp.s
 
 test_InputMapper.obj: test_InputMapper.cpp.obj
 .PHONY : test_InputMapper.obj
@@ -1321,6 +1633,30 @@ test_SaveLoad.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SaveLoad.cpp.s
 .PHONY : test_SaveLoad.cpp.s
 
+test_Settlement.obj: test_Settlement.cpp.obj
+.PHONY : test_Settlement.obj
+
+# target to build an object file
+test_Settlement.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Settlement.cpp.obj
+.PHONY : test_Settlement.cpp.obj
+
+test_Settlement.i: test_Settlement.cpp.i
+.PHONY : test_Settlement.i
+
+# target to preprocess a source file
+test_Settlement.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Settlement.cpp.i
+.PHONY : test_Settlement.cpp.i
+
+test_Settlement.s: test_Settlement.cpp.s
+.PHONY : test_Settlement.s
+
+# target to generate assembly for a file
+test_Settlement.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Settlement.cpp.s
+.PHONY : test_Settlement.cpp.s
+
 test_SimClock.obj: test_SimClock.cpp.obj
 .PHONY : test_SimClock.obj
 
@@ -1345,6 +1681,78 @@ test_SimClock.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SimClock.cpp.s
 .PHONY : test_SimClock.cpp.s
 
+test_Sprint4Integration.obj: test_Sprint4Integration.cpp.obj
+.PHONY : test_Sprint4Integration.obj
+
+# target to build an object file
+test_Sprint4Integration.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.obj
+.PHONY : test_Sprint4Integration.cpp.obj
+
+test_Sprint4Integration.i: test_Sprint4Integration.cpp.i
+.PHONY : test_Sprint4Integration.i
+
+# target to preprocess a source file
+test_Sprint4Integration.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.i
+.PHONY : test_Sprint4Integration.cpp.i
+
+test_Sprint4Integration.s: test_Sprint4Integration.cpp.s
+.PHONY : test_Sprint4Integration.s
+
+# target to generate assembly for a file
+test_Sprint4Integration.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.s
+.PHONY : test_Sprint4Integration.cpp.s
+
+test_SpriteSheet.obj: test_SpriteSheet.cpp.obj
+.PHONY : test_SpriteSheet.obj
+
+# target to build an object file
+test_SpriteSheet.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SpriteSheet.cpp.obj
+.PHONY : test_SpriteSheet.cpp.obj
+
+test_SpriteSheet.i: test_SpriteSheet.cpp.i
+.PHONY : test_SpriteSheet.i
+
+# target to preprocess a source file
+test_SpriteSheet.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SpriteSheet.cpp.i
+.PHONY : test_SpriteSheet.cpp.i
+
+test_SpriteSheet.s: test_SpriteSheet.cpp.s
+.PHONY : test_SpriteSheet.s
+
+# target to generate assembly for a file
+test_SpriteSheet.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_SpriteSheet.cpp.s
+.PHONY : test_SpriteSheet.cpp.s
+
+test_StairMovement.obj: test_StairMovement.cpp.obj
+.PHONY : test_StairMovement.obj
+
+# target to build an object file
+test_StairMovement.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_StairMovement.cpp.obj
+.PHONY : test_StairMovement.cpp.obj
+
+test_StairMovement.i: test_StairMovement.cpp.i
+.PHONY : test_StairMovement.i
+
+# target to preprocess a source file
+test_StairMovement.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_StairMovement.cpp.i
+.PHONY : test_StairMovement.cpp.i
+
+test_StairMovement.s: test_StairMovement.cpp.s
+.PHONY : test_StairMovement.s
+
+# target to generate assembly for a file
+test_StairMovement.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_StairMovement.cpp.s
+.PHONY : test_StairMovement.cpp.s
+
 test_StarRatingSystem.obj: test_StarRatingSystem.cpp.obj
 .PHONY : test_StarRatingSystem.obj
 
@@ -1368,6 +1776,30 @@ test_StarRatingSystem.s: test_StarRatingSystem.cpp.s
 test_StarRatingSystem.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_StarRatingSystem.cpp.s
 .PHONY : test_StarRatingSystem.cpp.s
+
+test_TenantSystem.obj: test_TenantSystem.cpp.obj
+.PHONY : test_TenantSystem.obj
+
+# target to build an object file
+test_TenantSystem.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_TenantSystem.cpp.obj
+.PHONY : test_TenantSystem.cpp.obj
+
+test_TenantSystem.i: test_TenantSystem.cpp.i
+.PHONY : test_TenantSystem.i
+
+# target to preprocess a source file
+test_TenantSystem.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_TenantSystem.cpp.i
+.PHONY : test_TenantSystem.cpp.i
+
+test_TenantSystem.s: test_TenantSystem.cpp.s
+.PHONY : test_TenantSystem.s
+
+# target to generate assembly for a file
+test_TenantSystem.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/test_TenantSystem.cpp.s
+.PHONY : test_TenantSystem.cpp.s
 
 test_TransportSystem.obj: test_TransportSystem.cpp.obj
 .PHONY : test_TransportSystem.obj
@@ -1450,6 +1882,9 @@ help:
 	@echo "... __/src/core/EventBus.obj"
 	@echo "... __/src/core/EventBus.i"
 	@echo "... __/src/core/EventBus.s"
+	@echo "... __/src/core/GameStateManager.obj"
+	@echo "... __/src/core/GameStateManager.i"
+	@echo "... __/src/core/GameStateManager.s"
 	@echo "... __/src/core/SimClock.obj"
 	@echo "... __/src/core/SimClock.i"
 	@echo "... __/src/core/SimClock.s"
@@ -1459,6 +1894,9 @@ help:
 	@echo "... __/src/domain/EconomyEngine.obj"
 	@echo "... __/src/domain/EconomyEngine.i"
 	@echo "... __/src/domain/EconomyEngine.s"
+	@echo "... __/src/domain/GameOverSystem.obj"
+	@echo "... __/src/domain/GameOverSystem.i"
+	@echo "... __/src/domain/GameOverSystem.s"
 	@echo "... __/src/domain/GridSystem.obj"
 	@echo "... __/src/domain/GridSystem.i"
 	@echo "... __/src/domain/GridSystem.s"
@@ -1468,15 +1906,30 @@ help:
 	@echo "... __/src/domain/StarRatingSystem.obj"
 	@echo "... __/src/domain/StarRatingSystem.i"
 	@echo "... __/src/domain/StarRatingSystem.s"
+	@echo "... __/src/domain/TenantSystem.obj"
+	@echo "... __/src/domain/TenantSystem.i"
+	@echo "... __/src/domain/TenantSystem.s"
 	@echo "... __/src/domain/TransportSystem.obj"
 	@echo "... __/src/domain/TransportSystem.i"
 	@echo "... __/src/domain/TransportSystem.s"
+	@echo "... __/src/renderer/AnimationSystem.obj"
+	@echo "... __/src/renderer/AnimationSystem.i"
+	@echo "... __/src/renderer/AnimationSystem.s"
+	@echo "... __/src/renderer/BuildCursor.obj"
+	@echo "... __/src/renderer/BuildCursor.i"
+	@echo "... __/src/renderer/BuildCursor.s"
 	@echo "... __/src/renderer/Camera.obj"
 	@echo "... __/src/renderer/Camera.i"
 	@echo "... __/src/renderer/Camera.s"
 	@echo "... __/src/renderer/DebugPanel.obj"
 	@echo "... __/src/renderer/DebugPanel.i"
 	@echo "... __/src/renderer/DebugPanel.s"
+	@echo "... __/src/renderer/FontManager.obj"
+	@echo "... __/src/renderer/FontManager.i"
+	@echo "... __/src/renderer/FontManager.s"
+	@echo "... __/src/renderer/HUDPanel.obj"
+	@echo "... __/src/renderer/HUDPanel.i"
+	@echo "... __/src/renderer/HUDPanel.s"
 	@echo "... __/src/renderer/InputMapper.obj"
 	@echo "... __/src/renderer/InputMapper.i"
 	@echo "... __/src/renderer/InputMapper.s"
@@ -1486,6 +1939,9 @@ help:
 	@echo "... __/src/renderer/SDLRenderer.obj"
 	@echo "... __/src/renderer/SDLRenderer.i"
 	@echo "... __/src/renderer/SDLRenderer.s"
+	@echo "... __/src/renderer/SpriteSheet.obj"
+	@echo "... __/src/renderer/SpriteSheet.i"
+	@echo "... __/src/renderer/SpriteSheet.s"
 	@echo "... test_AgentElevator.obj"
 	@echo "... test_AgentElevator.i"
 	@echo "... test_AgentElevator.s"
@@ -1510,9 +1966,24 @@ help:
 	@echo "... test_EconomyEngine.obj"
 	@echo "... test_EconomyEngine.i"
 	@echo "... test_EconomyEngine.s"
+	@echo "... test_EconomyLoop.obj"
+	@echo "... test_EconomyLoop.i"
+	@echo "... test_EconomyLoop.s"
+	@echo "... test_FontManager.obj"
+	@echo "... test_FontManager.i"
+	@echo "... test_FontManager.s"
+	@echo "... test_GameOver.obj"
+	@echo "... test_GameOver.i"
+	@echo "... test_GameOver.s"
+	@echo "... test_GameStateManager.obj"
+	@echo "... test_GameStateManager.i"
+	@echo "... test_GameStateManager.s"
 	@echo "... test_GridSystem.obj"
 	@echo "... test_GridSystem.i"
 	@echo "... test_GridSystem.s"
+	@echo "... test_HUDPanel.obj"
+	@echo "... test_HUDPanel.i"
+	@echo "... test_HUDPanel.s"
 	@echo "... test_InputMapper.obj"
 	@echo "... test_InputMapper.i"
 	@echo "... test_InputMapper.s"
@@ -1528,12 +1999,27 @@ help:
 	@echo "... test_SaveLoad.obj"
 	@echo "... test_SaveLoad.i"
 	@echo "... test_SaveLoad.s"
+	@echo "... test_Settlement.obj"
+	@echo "... test_Settlement.i"
+	@echo "... test_Settlement.s"
 	@echo "... test_SimClock.obj"
 	@echo "... test_SimClock.i"
 	@echo "... test_SimClock.s"
+	@echo "... test_Sprint4Integration.obj"
+	@echo "... test_Sprint4Integration.i"
+	@echo "... test_Sprint4Integration.s"
+	@echo "... test_SpriteSheet.obj"
+	@echo "... test_SpriteSheet.i"
+	@echo "... test_SpriteSheet.s"
+	@echo "... test_StairMovement.obj"
+	@echo "... test_StairMovement.i"
+	@echo "... test_StairMovement.s"
 	@echo "... test_StarRatingSystem.obj"
 	@echo "... test_StarRatingSystem.i"
 	@echo "... test_StarRatingSystem.s"
+	@echo "... test_TenantSystem.obj"
+	@echo "... test_TenantSystem.i"
+	@echo "... test_TenantSystem.s"
 	@echo "... test_TransportSystem.obj"
 	@echo "... test_TransportSystem.i"
 	@echo "... test_TransportSystem.s"

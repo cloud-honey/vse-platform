@@ -143,6 +143,20 @@ Result<bool> SaveLoadSystem::quickLoad() {
     return load(p.string());
 }
 
+// ── Save path generation ────────────────────────────────────────────────────
+
+std::string SaveLoadSystem::getSavePath(int slotIndex) const {
+    if (slotIndex == 0) {
+        // Slot 0 is auto-save
+        fs::path p = fs::path(saveDir_) / "autosave.vsesave";
+        return p.string();
+    } else {
+        // Manual save slots 1-4
+        fs::path p = fs::path(saveDir_) / ("save" + std::to_string(slotIndex) + ".vsesave");
+        return p.string();
+    }
+}
+
 // ── Metadata ────────────────────────────────────────────────────────────────
 
 Result<SaveMetadata> SaveLoadSystem::readMetadata(const std::string& filepath) const {

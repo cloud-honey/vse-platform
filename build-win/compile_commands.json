@@ -61,6 +61,12 @@
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/core/GameStateManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/GameStateManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/GameStateManager.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/core/GameStateManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GridSystem.cpp",
   "output": "CMakeFiles/TowerTycoon.dir/src/domain/GridSystem.cpp.obj"
@@ -94,6 +100,18 @@
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/SaveLoadSystem.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/SaveLoadSystem.cpp",
   "output": "CMakeFiles/TowerTycoon.dir/src/domain/SaveLoadSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/TenantSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/TenantSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/TenantSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/domain/TenantSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/domain/GameOverSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/GameOverSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GameOverSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/domain/GameOverSystem.cpp.obj"
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
@@ -142,6 +160,36 @@
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
   "output": "CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/HUDPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/HUDPanel.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/HUDPanel.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/HUDPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/SpriteSheet.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/SpriteSheet.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AnimationSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/AnimationSystem.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/FontManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/FontManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/FontManager.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/FontManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DMSGPACK_DEFAULT_API_VERSION=3 -DMSGPACK_NO_BOOST -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoon.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -Wpedantic -fno-exceptions -o CMakeFiles/TowerTycoon.dir/src/renderer/BuildCursor.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/BuildCursor.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/BuildCursor.cpp",
+  "output": "CMakeFiles/TowerTycoon.dir/src/renderer/BuildCursor.cpp.obj"
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/spdlog-build",
@@ -889,6 +937,12 @@
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_FontManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_FontManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_FontManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_FontManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_RenderFrame.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderFrame.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_RenderFrame.cpp",
   "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_RenderFrame.cpp.obj"
@@ -937,6 +991,60 @@
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_TenantSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_TenantSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_TenantSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_TenantSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_SpriteSheet.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_SpriteSheet.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_SpriteSheet.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_SpriteSheet.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_HUDPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_HUDPanel.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_HUDPanel.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_HUDPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_EconomyLoop.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_EconomyLoop.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_EconomyLoop.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_EconomyLoop.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_StairMovement.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_StairMovement.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_StairMovement.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_StairMovement.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_Settlement.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_Settlement.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_Settlement.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_Settlement.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_GameOver.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_GameOver.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_GameOver.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_GameOver.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_GameStateManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_GameStateManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_GameStateManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_GameStateManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/tests/test_Sprint4Integration.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/tests/test_Sprint4Integration.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/test_Sprint4Integration.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/SimClock.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/SimClock.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/SimClock.cpp",
   "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/SimClock.cpp.obj"
@@ -964,6 +1072,12 @@
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/ContentRegistry.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/ContentRegistry.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/ContentRegistry.cpp",
   "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/ContentRegistry.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/core/GameStateManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/core/GameStateManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/core/GameStateManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/core/GameStateManager.cpp.obj"
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
@@ -1003,6 +1117,18 @@
 },
 {
   "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/domain/TenantSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/TenantSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/TenantSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/TenantSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/domain/GameOverSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/domain/GameOverSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/domain/GameOverSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/domain/GameOverSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/Camera.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/Camera.cpp",
   "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/Camera.cpp.obj"
@@ -1030,5 +1156,35 @@
   "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DebugPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
   "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/DebugPanel.cpp",
   "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DebugPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/HUDPanel.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/HUDPanel.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/HUDPanel.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/HUDPanel.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/SpriteSheet.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/SpriteSheet.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AnimationSystem.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/AnimationSystem.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/FontManager.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/FontManager.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.obj"
+},
+{
+  "directory": "/home/sykim/.openclaw/workspace/vse-platform/build-win/tests",
+  "command": "/usr/bin/x86_64-w64-mingw32-g++-posix -DSPDLOG_COMPILED_LIB -DSPDLOG_NO_EXCEPTIONS -DVSE_PROJECT_ROOT=\\\"/home/sykim/.openclaw/workspace/vse-platform\\\" @CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -fno-exceptions -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/BuildCursor.cpp",
+  "file": "/home/sykim/.openclaw/workspace/vse-platform/src/renderer/BuildCursor.cpp",
+  "output": "tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.obj"
 }
 ]

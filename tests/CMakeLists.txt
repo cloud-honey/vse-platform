@@ -28,6 +28,7 @@ add_executable(TowerTycoonTests
     test_GameStateManager.cpp
     test_Sprint4Integration.cpp
     test_BuildCursor.cpp
+    test_SaveLoadPanel.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
@@ -68,6 +69,7 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AnimationSystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/FontManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/BuildCursor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SaveLoadPanel.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

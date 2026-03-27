@@ -116,6 +116,33 @@ bool Bootstrapper::init() {
         gameState_.transition(GameState::Victory);
     });
 
+    // SaveLoadSystem 초기화
+    std::string saveDir = config_.getString("saveload.saveDir", "saves/");
+    saveLoad_ = std::make_unique<SaveLoadSystem>(
+        registry_, simClock_, *grid_, *economy_, *starRating_, *transport_, *agents_, saveDir
+    );
+    
+    // Auto-save configuration
+    autoSaveDayInterval_ = config_.getInt("saveload.autoSaveDays", 60);
+    
+    // Wire auto-save to DayChanged event
+    eventBus_.subscribe(EventType::DayChanged, [this](const Event& e) {
+        if (saveLoad_) {
+            GameTime currentTime = simClock_.currentGameTime();
+            if (currentTime.day - lastAutoSaveDay_ >= autoSaveDayInterval_) {
+                // Auto-save to slot 0
+                std::string path = "saves/slot_" + std::to_string(0) + ".vsesave";
+                auto result = saveLoad_->save(path);
+                if (result.ok()) {
+                    spdlog::info("Auto-saved to slot 0 (day {})", currentTime.day);
+                    lastAutoSaveDay_ = currentTime.day;
+                } else {
+                    spdlog::warn("Auto-save failed: {}", static_cast<int>(result.error));
+                }
+            }
+        }
+    });
+
     setupInitialScene();
 
     // ── Layer 3 초기화 (Config 기반) ────────────────────
@@ -221,6 +248,15 @@ bool Bootstrapper::initDomainOnly(const std::string& configPath) {
     eventBus_.subscribe(EventType::TowerAchieved, [this](const Event& e) {
         gameState_.transition(GameState::Victory);
     });
+
+    // SaveLoadSystem 초기화 (headless 테스트용)
+    std::string saveDir = config_.getString("saveload.saveDir", "saves/");
+    saveLoad_ = std::make_unique<SaveLoadSystem>(
+        registry_, simClock_, *grid_, *economy_, *starRating_, *transport_, *agents_, saveDir
+    );
+    
+    // Auto-save configuration
+    autoSaveDayInterval_ = config_.getInt("saveload.autoSaveDays", 60);
 
     setupInitialScene();
     // initDomainOnly는 테스트/헤드리스 모드 — 바로 Playing 상태로 진입
@@ -422,6 +458,66 @@ void Bootstrapper::run() {
             }
         }
         
+        // TASK-05-003: Check for pending save/load slots
+        int pendingSaveSlot = -1;
+        if (sdlRenderer_.checkPendingSave(pendingSaveSlot)) {
+            if (saveLoad_ && pendingSaveSlot >= 0 && pendingSaveSlot < SaveLoadPanel::MAX_SLOTS) {
+                std::string path = "saves/slot_" + std::to_string(pendingSaveSlot) + ".vsesave";
+                auto result = saveLoad_->save(path);
+                if (result.ok()) {
+                    spdlog::info("Saved to slot {}", pendingSaveSlot);
+                    // Refresh slots after save
+                    refreshSaveSlots();
+                } else {
+                    spdlog::warn("Save failed: {}", static_cast<int>(result.error));
+                }
+            }
+        }
+        
+        int pendingLoadSlot = -1;
+        if (sdlRenderer_.checkPendingLoad(pendingLoadSlot)) {
+            if (saveLoad_ && pendingLoadSlot >= 0 && pendingLoadSlot < SaveLoadPanel::MAX_SLOTS) {
+                std::string path = "saves/slot_" + std::to_string(pendingLoadSlot) + ".vsesave";
+                auto result = saveLoad_->load(path);
+                if (result.ok()) {
+                    spdlog::info("Loaded from slot {}", pendingLoadSlot);
+                    gameState_.transition(GameState::Playing);
+                    simClock_.resume();
+                } else {
+                    spdlog::warn("Load failed: {}", static_cast<int>(result.error));
+                }
+            }
+        }
+        
+        // TASK-05-003: Set save/load UI state in RenderFrame
+        // Determine if we should show save/load panel based on game state and commands
+        frame.showSaveLoadPanel = false;
+        frame.saveLoadPanelSave = true;
+        frame.saveSlotInfos = saveSlotInfos_;
+        
+        // Check if we need to show save panel (from SaveGame command)
+        if (gameState_.getState() == GameState::Playing || 
+            gameState_.getState() == GameState::Paused) {
+            for (const auto& cmd : commands) {
+                if (cmd.type == CommandType::SaveGame) {
+                    frame.showSaveLoadPanel = true;
+                    frame.saveLoadPanelSave = true;
+                    break;
+                }
+            }
+        }
+        
+        // Check if we need to show load panel (from LoadGame command)
+        if (gameState_.getState() == GameState::MainMenu) {
+            for (const auto& cmd : commands) {
+                if (cmd.type == CommandType::LoadGame) {
+                    frame.showSaveLoadPanel = true;
+                    frame.saveLoadPanelSave = false;
+                    break;
+                }
+            }
+        }
+        
         sdlRenderer_.render(frame, camera_);
     }
 }
@@ -559,17 +655,21 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             
         case CommandType::LoadGame:
             spdlog::info("Load Game command received");
-            // TODO: Implement SaveLoadSystem::load()
-            // For now, just transition to Playing
             if (gameState_.getState() == GameState::MainMenu) {
-                gameState_.transition(GameState::Playing);
-                simClock_.resume();
+                // Refresh save slots and open load panel
+                refreshSaveSlots();
+                // The panel will be shown via RenderFrame in the next frame
             }
             break;
             
         case CommandType::SaveGame:
             spdlog::info("Save Game command received");
-            // TODO: Implement SaveLoadSystem::save()
+            if (gameState_.getState() == GameState::Playing || 
+                gameState_.getState() == GameState::Paused) {
+                // Refresh save slots and open save panel
+                refreshSaveSlots();
+                // The panel will be shown via RenderFrame in the next frame
+            }
             break;
             
         case CommandType::TransitionState:
@@ -594,6 +694,63 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
         default:
             break;
         }
+    }
+}
+
+// ──────────────────────────────────────────────────────────
+// refreshSaveSlots — Save slot metadata 갱신
+// ──────────────────────────────────────────────────────────
+
+void Bootstrapper::refreshSaveSlots() {
+    saveSlotInfos_.clear();
+    saveSlotInfos_.reserve(SaveLoadPanel::MAX_SLOTS);
+    
+    for (int i = 0; i < SaveLoadPanel::MAX_SLOTS; ++i) {
+        SaveSlotInfo info;
+        info.slotIndex = i;
+        
+        std::string path = "saves/slot_" + std::to_string(i) + ".vsesave";
+        auto metadataResult = saveLoad_->readMetadata(path);
+        
+        if (metadataResult.ok()) {
+            info.isEmpty = false;
+            info.meta = metadataResult.value;
+            
+            // Format display name
+            std::stringstream ss;
+            ss << "Day " << (info.meta.gameTime.day + 1);
+            
+            int stars = info.meta.starRating;
+            if (stars >= 1 && stars <= 5) {
+                ss << "  ★" << stars;
+            }
+            
+            // Format balance with thousand separator
+            int64_t balance = info.meta.balance;
+            bool negative = (balance < 0);
+            uint64_t val = negative
+                ? (balance == INT64_MIN
+                    ? static_cast<uint64_t>(INT64_MAX) + 1ULL
+                    : static_cast<uint64_t>(-balance))
+                : static_cast<uint64_t>(balance);
+            
+            std::string digits = std::to_string(val);
+            std::string formatted;
+            int count = 0;
+            for (int j = static_cast<int>(digits.size()) - 1; j >= 0; --j) {
+                if (count > 0 && count % 3 == 0) formatted = "," + formatted;
+                formatted = digits[j] + formatted;
+                ++count;
+            }
+            
+            ss << "  ₩" << (negative ? "-" : "") << formatted;
+            info.displayName = ss.str();
+        } else {
+            info.isEmpty = true;
+            info.displayName = "(Empty)";
+        }
+        
+        saveSlotInfos_.push_back(info);
     }
 }
 

@@ -3,6 +3,7 @@
 #include "renderer/Camera.h"
 #include "renderer/DebugPanel.h"
 #include "renderer/HUDPanel.h"
+#include "renderer/SaveLoadPanel.h"
 #include "renderer/SpriteSheet.h"
 #include "renderer/AnimationSystem.h"
 #include "renderer/FontManager.h"
@@ -52,6 +53,13 @@ public:
     // HUDPanel 접근
     HUDPanel& hudPanel() { return hudPanel_; }
     
+    // SaveLoadPanel 접근
+    SaveLoadPanel& saveLoadPanel() { return saveLoadPanel_; }
+    
+    // Save/Load slot handling
+    bool checkPendingSave(int& outSlotIndex);
+    bool checkPendingLoad(int& outSlotIndex);
+    
     // Tenant selection handling (TASK-05-001)
     bool checkTenantSelection(int& outTenantType);
     void setShouldOpenTenantPopup(bool open);
@@ -70,6 +78,7 @@ private:
     SDL_Renderer* renderer_    = nullptr;
     DebugPanel    debugPanel_;              // Design Spec: 별도 구성요소로 분리
     HUDPanel      hudPanel_;                // 게임 HUD 패널
+    SaveLoadPanel saveLoadPanel_;           // Save/Load UI 패널
     BuildCursor   buildCursor_;             // 건설 모드 커서 피드백
     
     // Sprite sheet system
@@ -89,6 +98,10 @@ private:
     // Tenant selection state (TASK-05-001)
     bool shouldOpenTenantPopup_ = false;
     int pendingTenantSelection_ = -1; // -1 means no selection pending
+    
+    // Save/Load pending state
+    int pendingSaveSlot_ = -1;  // -1 means no save pending
+    int pendingLoadSlot_ = -1;  // -1 means no load pending
 };
 
 } // namespace vse

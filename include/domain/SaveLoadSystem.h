@@ -57,6 +57,9 @@ public:
     Result<bool> quickLoad() override;
     Result<SaveMetadata> readMetadata(const std::string& filepath) const override;
     std::vector<std::string> listSaves() const override;
+    
+    // Get save file path for a slot index
+    std::string getSavePath(int slotIndex) const;
 
 private:
     entt::registry&   reg_;

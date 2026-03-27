@@ -20,6 +20,15 @@ events:
     names:
       - "uname"
     candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
       - "/usr/local/bin/"
       - "/home/sykim/.local/bin/"
       - "/home/sykim/.local/share/pnpm/"
@@ -33,11 +42,24 @@ events:
       - "/home/sykim/.bun/bin/"
       - "/home/sykim/.fnm/current/bin/"
     searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/uname"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/uname"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/uname"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/uname"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/uname"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/uname"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/uname"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/uname"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/uname"
       - "/usr/local/bin/uname"
       - "/home/sykim/.local/bin/uname"
       - "/home/sykim/.local/share/pnpm/uname"
     found: "/usr/bin/uname"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -51,13 +73,15 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "message-v1"
     backtrace:
-      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:207 (message)"
       - "CMakeLists.txt:4 (project)"
     message: |
-      The system is: Linux - 6.17.0-19-generic - x86_64
+      The target system is: Windows -  - 
+      The host system is: Linux - 6.17.0-19-generic - x86_64
   -
     kind: "find-v1"
     backtrace:
@@ -79,6 +103,15 @@ events:
       - "make"
       - "smake"
     candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
       - "/usr/local/bin/"
       - "/home/sykim/.local/bin/"
       - "/home/sykim/.local/share/pnpm/"
@@ -92,11 +125,24 @@ events:
       - "/home/sykim/.bun/bin/"
       - "/home/sykim/.fnm/current/bin/"
     searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/gmake"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/gmake"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/gmake"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/gmake"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/gmake"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/gmake"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/gmake"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/gmake"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/gmake"
       - "/usr/local/bin/gmake"
       - "/home/sykim/.local/bin/gmake"
       - "/home/sykim/.local/share/pnpm/gmake"
     found: "/usr/bin/gmake"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -110,6 +156,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -128,8 +175,17 @@ events:
       CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
       CMAKE_FIND_USE_INSTALL_PREFIX: true
     names:
-      - "x86_64-w64-mingw32-g++"
+      - "x86_64-w64-mingw32-g++-posix"
     candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
       - "/usr/local/bin/"
       - "/home/sykim/.local/bin/"
       - "/home/sykim/.local/share/pnpm/"
@@ -143,11 +199,24 @@ events:
       - "/home/sykim/.bun/bin/"
       - "/home/sykim/.fnm/current/bin/"
     searched_directories:
-      - "/usr/local/bin/x86_64-w64-mingw32-g++"
-      - "/home/sykim/.local/bin/x86_64-w64-mingw32-g++"
-      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-g++"
-    found: "/usr/bin/x86_64-w64-mingw32-g++"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-g++-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/x86_64-w64-mingw32-g++-posix"
+      - "/usr/local/bin/x86_64-w64-mingw32-g++-posix"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-g++-posix"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-g++-posix"
+    found: "/usr/bin/x86_64-w64-mingw32-g++-posix"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -161,6 +230,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -187,6 +257,10 @@ events:
       - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/"
     found: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerId.cpp.in"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -200,6 +274,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "message-v1"
     backtrace:
@@ -209,7 +284,7 @@ events:
       - "CMakeLists.txt:4 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /usr/bin/x86_64-w64-mingw32-g++ 
+      Compiler: /usr/bin/x86_64-w64-mingw32-g++-posix 
       Build flags: 
       Id flags:  
       
@@ -257,6 +332,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-ar"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -270,6 +349,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -305,6 +385,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-ranlib"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -318,6 +402,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -353,6 +438,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-strip"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -366,6 +455,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -401,6 +491,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-ld"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -414,6 +508,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -449,6 +544,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-nm"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -462,6 +561,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -497,6 +597,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-objdump"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -510,6 +614,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -545,6 +650,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-objcopy"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -558,6 +667,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -593,6 +703,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-readelf"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -606,6 +720,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -641,6 +756,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-dlltool"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -654,6 +773,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -689,6 +809,10 @@ events:
       - "/home/sykim/.fnm/current/bin/"
     found: "/usr/bin/x86_64-w64-mingw32-addr2line"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -702,6 +826,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -762,6 +887,10 @@ events:
       - "/home/sykim/.fnm/current/bin/tapi"
     found: false
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -775,6 +904,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -796,7 +926,7 @@ events:
       - "x86_64-w64-mingw32-gcc-ar-13.0"
       - "x86_64-w64-mingw32-gcc-ar-13"
       - "x86_64-w64-mingw32-gcc-ar13"
-      - "x86_64-w64-mingw32-gcc-ar"
+      - "x86_64-w64-mingw32-gcc-ar-posix"
     candidate_directories:
       - "/usr/bin/"
       - "/usr/local/bin/"
@@ -847,8 +977,12 @@ events:
       - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ar13"
       - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ar13"
       - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ar13"
-    found: "/usr/bin/x86_64-w64-mingw32-gcc-ar"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ar-posix"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -862,6 +996,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "find-v1"
     backtrace:
@@ -883,7 +1018,7 @@ events:
       - "x86_64-w64-mingw32-gcc-ranlib-13.0"
       - "x86_64-w64-mingw32-gcc-ranlib-13"
       - "x86_64-w64-mingw32-gcc-ranlib13"
-      - "x86_64-w64-mingw32-gcc-ranlib"
+      - "x86_64-w64-mingw32-gcc-ranlib-posix"
     candidate_directories:
       - "/usr/bin/"
       - "/usr/local/bin/"
@@ -934,8 +1069,12 @@ events:
       - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ranlib13"
       - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ranlib13"
       - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ranlib13"
-    found: "/usr/bin/x86_64-w64-mingw32-gcc-ranlib"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-posix"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -949,6 +1088,7 @@ events:
         - "/home/sykim/.asdf/shims"
         - "/home/sykim/.bun/bin"
         - "/home/sykim/.fnm/current/bin"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -958,8 +1098,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-fEbnVX"
-      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-fEbnVX"
+      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto"
+      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -970,98 +1110,239 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-fEbnVX'
+        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto'
         
-        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_49d05/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_49d05.dir/build.make CMakeFiles/cmTC_49d05.dir/build
-        gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-fEbnVX'
-        Building CXX object CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj
-        /usr/bin/x86_64-w64-mingw32-g++   -v -o CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj -c /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b3fbc/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b3fbc.dir/build.make CMakeFiles/cmTC_b3fbc.dir/build
+        gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto'
+        Building CXX object CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj
+        /usr/bin/x86_64-w64-mingw32-g++-posix   -v -o CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj -c /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix
         Target: x86_64-w64-mingw32
-        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
-        Thread model: win32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
         Supported LTO compression algorithms: zlib zstd
-        gcc version 13-win32 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_49d05.dir/'
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/cc1plus -quiet -v -U_REENTRANT /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_49d05.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccv9Di2s.s
-        GNU C++17 (GCC) version 13-win32 (x86_64-w64-mingw32)
+        gcc version 13-posix (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/cc1plus -quiet -v -D_REENTRANT /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_b3fbc.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccvkzhdw.s
+        GNU C++17 (GCC) version 13-posix (x86_64-w64-mingw32)
         	compiled by GNU C version 13.2.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
         
         GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
-        ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/sys-include"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/sys-include"
         #include "..." search starts here:
         #include <...> search starts here:
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/x86_64-w64-mingw32
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include/c++/backward
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/include-fixed
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/include
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include
         End of search list.
-        Compiler executable checksum: d9aa912102515005505aa1bbf0e5f800
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_49d05.dir/'
-         /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccv9Di2s.s
+        Compiler executable checksum: 425d1830ee362e3b4145b7d0ceaf5889
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/'
+         /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccvkzhdw.s
         GNU assembler version 2.41.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.41.90.20240122
-        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_49d05
-        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_49d05.dir/link.txt --verbose=1
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_b3fbc.exe
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b3fbc.dir/link.txt --verbose=1
         Using built-in specs.
-        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++
-        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix
+        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper
         Target: x86_64-w64-mingw32
-        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=win32 --program-suffix=-win32 --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
-        Thread model: win32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
         Supported LTO compression algorithms: zlib zstd
-        gcc version 13-win32 (GCC) 
-        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/bin/
-        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/:/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_49d05.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_49d05.'
-         /usr/lib/gcc/x86_64-w64-mingw32/13-win32/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccg8y3gV.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_49d05.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o
-        collect2 version 13-win32
-        /usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-win32/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-win32/lto-wrapper -plugin-opt=-fresolution=/tmp/ccg8y3gV.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_49d05.exe /usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32 -L/usr/lib/gcc/x86_64-w64-mingw32/13-win32/../../../../x86_64-w64-mingw32/lib -v CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-win32/crtend.o
+        gcc version 13-posix (GCC) 
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b3fbc.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b3fbc.'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cciNSqtN.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_b3fbc.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a --no-whole-archive --out-implib libcmTC_b3fbc.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o
+        collect2 version 13-posix
+        /usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cciNSqtN.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_b3fbc.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a --no-whole-archive --out-implib libcmTC_b3fbc.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o
         GNU ld (GNU Binutils) 2.41.90.20240122
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_49d05.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_49d05.'
-        /usr/bin/x86_64-w64-mingw32-g++  -v -Wl,-v CMakeFiles/cmTC_49d05.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_49d05
-        gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-fEbnVX'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b3fbc.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b3fbc.'
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_b3fbc.dir/objects.a
+        /usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_b3fbc.dir/objects.a @CMakeFiles/cmTC_b3fbc.dir/objects1.rsp
+        /usr/bin/x86_64-w64-mingw32-g++-posix  -v -Wl,-v -Wl,--whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a -Wl,--no-whole-archive -o cmTC_b3fbc.exe -Wl,--out-implib,libcmTC_b3fbc.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto'
         
       exitCode: 0
   -
-    kind: "try_compile-v1"
+    kind: "message-v1"
     backtrace:
-      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:56 (try_compile)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:4 (project)"
-    checks:
-      - "Check for working CXX compiler: /usr/bin/x86_64-w64-mingw32-g++"
-    directories:
-      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF"
-      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF"
-    cmakeVariables:
-      CMAKE_CXX_FLAGS: ""
-      CMAKE_CXX_FLAGS_DEBUG: "-g"
-      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
-      CMAKE_CXX_STDLIB_MODULES_JSON: ""
-      CMAKE_EXE_LINKER_FLAGS: ""
-    buildResult:
-      variable: "CMAKE_CXX_COMPILER_WORKS"
-      cached: true
-      stdout: |
-        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF'
-        
-        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9c819/fast
-        /usr/bin/gmake  -f CMakeFiles/cmTC_9c819.dir/build.make CMakeFiles/cmTC_9c819.dir/build
-        gmake[1]: 디렉터리 '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF' 들어감
-        Building CXX object CMakeFiles/cmTC_9c819.dir/testCXXCompiler.cxx.obj
-        /usr/bin/x86_64-w64-mingw32-g++    -o CMakeFiles/cmTC_9c819.dir/testCXXCompiler.cxx.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF/testCXXCompiler.cxx
-        Linking CXX executable cmTC_9c819
-        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c819.dir/link.txt --verbose=1
-        /usr/bin/x86_64-w64-mingw32-g++ CMakeFiles/cmTC_9c819.dir/testCXXCompiler.cxx.obj -o cmTC_9c819
-        gmake[1]: 디렉터리 '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-Rb1fnF' 나감
-        
-      exitCode: 0
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include] ==> [/usr/x86_64-w64-mingw32/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed;/usr/x86_64-w64-mingw32/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:4 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto']
+        ignore line: []
+        ignore line: [Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b3fbc/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_b3fbc.dir/build.make CMakeFiles/cmTC_b3fbc.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto']
+        ignore line: [Building CXX object CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-g++-posix   -v -o CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj -c /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-posix (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/cc1plus -quiet -v -D_REENTRANT /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_b3fbc.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccvkzhdw.s]
+        ignore line: [GNU C++17 (GCC) version 13-posix (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/sys-include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 425d1830ee362e3b4145b7d0ceaf5889]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/']
+        ignore line: [ /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccvkzhdw.s]
+        ignore line: [GNU assembler version 2.41.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.41.90.20240122]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b3fbc.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_b3fbc.exe]
+        ignore line: [/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b3fbc.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-g++-posix]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-posix (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b3fbc.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b3fbc.']
+        link line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cciNSqtN.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_b3fbc.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a --no-whole-archive --out-implib libcmTC_b3fbc.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cciNSqtN.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_b3fbc.exe] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-posix] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles/cmTC_b3fbc.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_b3fbc.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        ignore line: [collect2 version 13-posix]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cciNSqtN.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_b3fbc.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a --no-whole-archive --out-implib libcmTC_b3fbc.dll.a --major-image-version 0 --minor-image-version 0 -lstdc++ -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc_s -lgcc -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        ignore line: [GNU ld (GNU Binutils) 2.41.90.20240122]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b3fbc.exe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b3fbc.']
+        ignore line: [/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_b3fbc.dir/objects.a]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_b3fbc.dir/objects.a @CMakeFiles/cmTC_b3fbc.dir/objects1.rsp]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-g++-posix  -v -Wl -v -Wl --whole-archive CMakeFiles/cmTC_b3fbc.dir/objects.a -Wl --no-whole-archive -o cmTC_b3fbc.exe -Wl --out-implib libcmTC_b3fbc.dll.a -Wl --major-image-version 0 --minor-image-version 0]
+        ignore line: [gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-X0hNto']
+        ignore line: []
+        ignore line: []
+        remove lib [msvcrt]
+        remove lib [msvcrt]
+        collapse obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> [/usr/x86_64-w64-mingw32/lib/crt2.o]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib] ==> [/usr/x86_64-w64-mingw32/lib]
+        implicit libs: [stdc++;mingw32;gcc_s;gcc;moldname;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc_s;gcc;moldname;mingwex;kernel32]
+        implicit objs: [/usr/x86_64-w64-mingw32/lib/crt2.o;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix;/usr/x86_64-w64-mingw32/lib]
+        implicit fwks: []
+      
+      
   -
     kind: "find_package-v1"
     backtrace:
@@ -1105,247 +1386,42 @@ events:
         CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
     candidates:
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/SDL2Config.cmake"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2Config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/sdl2-config.cmake"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2-config.cmake"
         mode: "config"
         reason: "no_exist"
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/lib/cps/SDL2.cps"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2.cps"
         mode: "cps"
         reason: "no_exist"
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/lib/cps/sdl2.cps"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2.cps"
         mode: "cps"
         reason: "no_exist"
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/share/cps/SDL2.cps"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2.cps"
         mode: "cps"
         reason: "no_exist"
       -
-        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/share/cps/sdl2.cps"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2.cps"
         mode: "cps"
         reason: "no_exist"
       -
-        path: "/usr/local/SDL2Config.cmake"
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cmake/SDL2/SDL2Config.cmake"
         mode: "config"
         reason: "no_exist"
-      -
-        path: "/usr/local/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/local/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/local/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/local/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/local/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/share/pnpm/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/usr/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/usr/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.npm-global/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/opt/SDL2Config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/opt/sdl2-config.cmake"
-        mode: "config"
-        reason: "no_exist"
-      -
-        path: "/opt/lib/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/opt/lib/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/opt/share/cps/SDL2.cps"
-        mode: "cps"
-        reason: "no_exist"
-      -
-        path: "/opt/share/cps/sdl2.cps"
-        mode: "cps"
-        reason: "no_exist"
-    found: null
+    found:
+      path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cmake/SDL2/sdl2-config.cmake"
+      mode: "config"
+      version: "2.30.10"
     search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       ENV{PATH}:
         - "/usr/local/bin"
         - "/home/sykim/.local/bin"
@@ -1361,14 +1437,1754 @@ events:
         - "/home/sykim/.fnm/current/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
-        - "/usr/local"
-        - "/usr"
-        - "/"
         - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
         - "/usr/local"
-        - "/usr/X11R6"
-        - "/usr/pkg"
-        - "/opt"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
       CMAKE_MODULE_PATH:
         - "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "cmake/FetchDependencies.cmake:7 (find_package)"
+      - "CMakeLists.txt:34 (include)"
+    name: "SDL2_image"
+    configs:
+      -
+        filename: "SDL2_image.cps"
+        kind: "cps"
+      -
+        filename: "sdl2_image.cps"
+        kind: "cps"
+      -
+        filename: "SDL2_imageConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "sdl2_image-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "SDL2_image"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_imageConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_image-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_imageConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_image-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_imageConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_image-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_image.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cmake/SDL2_image/SDL2_imageConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cmake/SDL2_image/sdl2_image-config.cmake"
+      mode: "config"
+      version: "2.8.4"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      CMAKE_MODULE_PATH:
+        - "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "cmake/FetchDependencies.cmake:10 (find_package)"
+      - "CMakeLists.txt:34 (include)"
+    name: "SDL2_ttf"
+    configs:
+      -
+        filename: "SDL2_ttf.cps"
+        kind: "cps"
+      -
+        filename: "sdl2_ttf.cps"
+        kind: "cps"
+      -
+        filename: "SDL2_ttfConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "sdl2_ttf-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "SDL2_ttf"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_ttf-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_ttf-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_ttf-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_ttf-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sdl2_ttf-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/SDL2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/sdl2_ttf.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cmake/SDL2_ttf/SDL2_ttfConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cmake/SDL2_ttf/sdl2_ttf-config.cmake"
+      mode: "config"
+      version: "2.22.0"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      CMAKE_MODULE_PATH:
+        - "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindGit.cmake:111 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FetchContent.cmake:1887 (find_package)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FetchContent.cmake:1622 (__FetchContent_populateSubbuild)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FetchContent.cmake:2158:EVAL:2 (__FetchContent_doPopulation)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FetchContent.cmake:2158 (cmake_language)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FetchContent.cmake:2399 (__FetchContent_Populate)"
+      - "cmake/FetchDependencies.cmake:32 (FetchContent_MakeAvailable)"
+      - "CMakeLists.txt:34 (include)"
+    mode: "program"
+    variable: "GIT_EXECUTABLE"
+    description: "Git command line client"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "git"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/git"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/git"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/git"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/git"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/git"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/git"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/git"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/git"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/git"
+      - "/usr/local/bin/git"
+      - "/home/sykim/.local/bin/git"
+      - "/home/sykim/.local/share/pnpm/git"
+    found: "/usr/bin/git"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompiler.cmake:115 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:67 (_cmake_find_compiler_path)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-posix"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/x86_64-w64-mingw32-gcc-posix"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/x86_64-w64-mingw32-gcc-posix"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-posix"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-posix"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-posix"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-posix"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/"
+      - "/home/sykim/.openclaw/workspace/vse-platform/cmake/"
+    found: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/x86_64-w64-mingw32-gcc-posix 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+      
+      The C compiler identification is GNU, found in:
+        /home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/4.3.0/CompilerIdC/a.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ar-13.0"
+      - "x86_64-w64-mingw32-gcc-ar-13"
+      - "x86_64-w64-mingw32-gcc-ar13"
+      - "x86_64-w64-mingw32-gcc-ar-posix"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-13.0"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ar-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ar-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar-13"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ar13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ar13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ar13"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ar13"
+      - "/bin/x86_64-w64-mingw32-gcc-ar13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ar13"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ar-posix"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "x86_64-w64-mingw32-gcc-ranlib-13"
+      - "x86_64-w64-mingw32-gcc-ranlib13"
+      - "x86_64-w64-mingw32-gcc-ranlib-posix"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-13.0"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib-13"
+      - "/usr/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.local/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.local/share/pnpm/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.nvm/current/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.npm-global/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.volta/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.asdf/shims/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.bun/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.fnm/current/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/usr/local/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/bin/x86_64-w64-mingw32-gcc-ranlib13"
+      - "/sbin/x86_64-w64-mingw32-gcc-ranlib13"
+    found: "/usr/bin/x86_64-w64-mingw32-gcc-ranlib-posix"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw"
+      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw'
+        
+        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fee90/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_fee90.dir/build.make CMakeFiles/cmTC_fee90.dir/build
+        gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw'
+        Building C object CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj
+        /usr/bin/x86_64-w64-mingw32-gcc-posix   -v -o CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj -c /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-gcc-posix
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-posix (GCC) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/cc1 -quiet -v -D_REENTRANT /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fee90.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccdzdKOv.s
+        GNU C17 (GCC) version 13-posix (x86_64-w64-mingw32)
+        	compiled by GNU C version 13.2.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/sys-include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include
+        End of search list.
+        Compiler executable checksum: e237ca0381f45c96d0d69631768af47f
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/'
+         /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj /tmp/ccdzdKOv.s
+        GNU assembler version 2.41.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.41.90.20240122
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_fee90.exe
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fee90.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-gcc-posix
+        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper
+        Target: x86_64-w64-mingw32
+        Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13-posix (GCC) 
+        COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fee90.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fee90.'
+         /usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cclX4wss.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fee90.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_fee90.dir/objects.a --no-whole-archive --out-implib libcmTC_fee90.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o
+        collect2 version 13-posix
+        /usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cclX4wss.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fee90.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_fee90.dir/objects.a --no-whole-archive --out-implib libcmTC_fee90.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o
+        GNU ld (GNU Binutils) 2.41.90.20240122
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fee90.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fee90.'
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_fee90.dir/objects.a
+        /usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_fee90.dir/objects.a @CMakeFiles/cmTC_fee90.dir/objects1.rsp
+        /usr/bin/x86_64-w64-mingw32-gcc-posix  -v -Wl,-v -Wl,--whole-archive CMakeFiles/cmTC_fee90.dir/objects.a -Wl,--no-whole-archive -o cmTC_fee90.exe -Wl,--out-implib,libcmTC_fee90.dll.a -Wl,--major-image-version,0,--minor-image-version,0
+        gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+          add: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+        collapse include dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include] ==> [/usr/x86_64-w64-mingw32/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed;/usr/x86_64-w64-mingw32/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-win/_deps/entt-src/CMakeLists.txt:14 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw']
+        ignore line: []
+        ignore line: [Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_fee90/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_fee90.dir/build.make CMakeFiles/cmTC_fee90.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw']
+        ignore line: [Building C object CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-gcc-posix   -v -o CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj -c /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-gcc-posix]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-posix (GCC) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/cc1 -quiet -v -D_REENTRANT /home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fee90.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccdzdKOv.s]
+        ignore line: [GNU C17 (GCC) version 13-posix (x86_64-w64-mingw32)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/sys-include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed]
+        ignore line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: e237ca0381f45c96d0d69631768af47f]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/']
+        ignore line: [ /usr/bin/x86_64-w64-mingw32-as -v -o CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj /tmp/ccdzdKOv.s]
+        ignore line: [GNU assembler version 2.41.90 (x86_64-w64-mingw32) using BFD version (GNU Binutils) 2.41.90.20240122]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.obj' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fee90.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_fee90.exe]
+        ignore line: [/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fee90.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/x86_64-w64-mingw32-gcc-posix]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper]
+        ignore line: [Target: x86_64-w64-mingw32]
+        ignore line: [Configured with: ../../src/configure --build=x86_64-linux-gnu --prefix=/usr --includedir='/usr/include' --mandir='/usr/share/man' --infodir='/usr/share/info' --sysconfdir=/etc --localstatedir=/var --disable-option-checking --disable-silent-rules --libdir='/usr/lib/x86_64-linux-gnu' --libexecdir='/usr/lib/x86_64-linux-gnu' --disable-maintainer-mode --disable-dependency-tracking --prefix=/usr --enable-shared --enable-static --disable-multilib --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --libdir=/usr/lib --enable-libstdcxx-time=yes --with-tune=generic --with-headers --enable-version-specific-runtime-libs --enable-fully-dynamic-string --enable-libgomp --enable-languages=c,c++,fortran,objc,obj-c++,ada --enable-lto --enable-threads=posix --program-suffix=-posix --program-prefix=x86_64-w64-mingw32- --target=x86_64-w64-mingw32 --with-as=/usr/bin/x86_64-w64-mingw32-as --with-ld=/usr/bin/x86_64-w64-mingw32-ld --enable-libatomic --enable-libstdcxx-filesystem-ts=yes --enable-dependency-tracking SED=/bin/sed]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13-posix (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/bin/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/:/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fee90.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fee90.']
+        link line: [ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2 -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cclX4wss.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fee90.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_fee90.dir/objects.a --no-whole-archive --out-implib libcmTC_fee90.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cclX4wss.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-ladvapi32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lshell32] ==> ignore
+          arg [-plugin-opt=-pass-through=-luser32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingw32] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_eh] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmoldname] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmingwex] ==> ignore
+          arg [-plugin-opt=-pass-through=-lmsvcrt] ==> ignore
+          arg [-plugin-opt=-pass-through=-lkernel32] ==> ignore
+          arg [-m] ==> ignore
+          arg [i386pep] ==> ignore
+          arg [-Bdynamic] ==> search dynamic
+          arg [-o] ==> ignore
+          arg [cmTC_fee90.exe] ==> ignore
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-posix] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix]
+          arg [-L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib] ==> dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib]
+          arg [-v] ==> ignore
+          arg [--whole-archive] ==> ignore
+          arg [CMakeFiles/cmTC_fee90.dir/objects.a] ==> ignore
+          arg [--no-whole-archive] ==> ignore
+          arg [--out-implib] ==> ignore
+          arg [libcmTC_fee90.dll.a] ==> ignore
+          arg [--major-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [--minor-image-version] ==> ignore
+          arg [0] ==> ignore
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-ladvapi32] ==> lib [advapi32]
+          arg [-lshell32] ==> lib [shell32]
+          arg [-luser32] ==> lib [user32]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [-lmingw32] ==> lib [mingw32]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lgcc_eh] ==> lib [gcc_eh]
+          arg [-lmoldname] ==> lib [moldname]
+          arg [-lmingwex] ==> lib [mingwex]
+          arg [-lmsvcrt] ==> lib [msvcrt]
+          arg [-lkernel32] ==> lib [kernel32]
+          arg [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o] ==> obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        ignore line: [collect2 version 13-posix]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ld -plugin /usr/lib/gcc/x86_64-w64-mingw32/13-posix/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-w64-mingw32/13-posix/lto-wrapper -plugin-opt=-fresolution=/tmp/cclX4wss.res -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-ladvapi32 -plugin-opt=-pass-through=-lshell32 -plugin-opt=-pass-through=-luser32 -plugin-opt=-pass-through=-lkernel32 -plugin-opt=-pass-through=-lmingw32 -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lmoldname -plugin-opt=-pass-through=-lmingwex -plugin-opt=-pass-through=-lmsvcrt -plugin-opt=-pass-through=-lkernel32 -m i386pep -Bdynamic -o cmTC_fee90.exe /usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix -L/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib -v --whole-archive CMakeFiles/cmTC_fee90.dir/objects.a --no-whole-archive --out-implib libcmTC_fee90.dll.a --major-image-version 0 --minor-image-version 0 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 -lpthread -ladvapi32 -lshell32 -luser32 -lkernel32 -lmingw32 -lgcc -lgcc_eh -lmoldname -lmingwex -lmsvcrt -lkernel32 /usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        ignore line: [GNU ld (GNU Binutils) 2.41.90.20240122]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fee90.exe' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fee90.']
+        ignore line: [/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_fee90.dir/objects.a]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_fee90.dir/objects.a @CMakeFiles/cmTC_fee90.dir/objects1.rsp]
+        ignore line: [/usr/bin/x86_64-w64-mingw32-gcc-posix  -v -Wl -v -Wl --whole-archive CMakeFiles/cmTC_fee90.dir/objects.a -Wl --no-whole-archive -o cmTC_fee90.exe -Wl --out-implib libcmTC_fee90.dll.a -Wl --major-image-version 0 --minor-image-version 0]
+        ignore line: [gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ivjsjw']
+        ignore line: []
+        ignore line: []
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        remove lib [gcc_eh]
+        remove lib [msvcrt]
+        collapse obj [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib/crt2.o] ==> [/usr/x86_64-w64-mingw32/lib/crt2.o]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix] ==> [/usr/lib/gcc/x86_64-w64-mingw32/13-posix]
+        collapse library dir [/usr/lib/gcc/x86_64-w64-mingw32/13-posix/../../../../x86_64-w64-mingw32/lib] ==> [/usr/x86_64-w64-mingw32/lib]
+        implicit libs: [mingw32;gcc;moldname;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc;moldname;mingwex;kernel32]
+        implicit objs: [/usr/x86_64-w64-mingw32/lib/crt2.o;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtbegin.o;/usr/lib/gcc/x86_64-w64-mingw32/13-posix/crtend.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-w64-mingw32/13-posix;/usr/x86_64-w64-mingw32/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindDoxygen.cmake:770 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindDoxygen.cmake:955 (_Doxygen_find_doxygen)"
+      - "build-win/_deps/msgpack-src/CMakeLists.txt:173 (FIND_PACKAGE)"
+    mode: "program"
+    variable: "DOXYGEN_EXECUTABLE"
+    description: "Doxygen documentation generation tool (https://www.doxygen.nl)"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "doxygen"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+      - "/Applications/Doxygen.app/Contents/Resources/"
+      - "/Applications/Doxygen.app/Contents/MacOS/"
+      - "/Applications/Utilities/Doxygen.app/Contents/Resources/"
+      - "/Applications/Utilities/Doxygen.app/Contents/MacOS/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/doxygen"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/doxygen"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/doxygen"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/doxygen"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/doxygen"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/doxygen"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/doxygen"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/doxygen"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/doxygen"
+      - "/usr/local/bin/doxygen"
+      - "/home/sykim/.local/bin/doxygen"
+      - "/home/sykim/.local/share/pnpm/doxygen"
+      - "/usr/bin/doxygen"
+      - "/bin/doxygen"
+      - "/home/sykim/.nvm/current/bin/doxygen"
+      - "/home/sykim/.npm-global/bin/doxygen"
+      - "/home/sykim/bin/doxygen"
+      - "/home/sykim/.volta/bin/doxygen"
+      - "/home/sykim/.asdf/shims/doxygen"
+      - "/home/sykim/.bun/bin/doxygen"
+      - "/home/sykim/.fnm/current/bin/doxygen"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/doxygen"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/doxygen"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/doxygen"
+      - "/usr/local/bin/doxygen"
+      - "/usr/local/sbin/doxygen"
+      - "/usr/local/doxygen"
+      - "/bin/doxygen"
+      - "/sbin/doxygen"
+      - "/Applications/Doxygen.app/Contents/Resources/doxygen"
+      - "/Applications/Doxygen.app/Contents/MacOS/doxygen"
+      - "/Applications/Utilities/Doxygen.app/Contents/Resources/doxygen"
+      - "/Applications/Utilities/Doxygen.app/Contents/MacOS/doxygen"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindDoxygen.cmake:858 (find_program)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindDoxygen.cmake:959 (_Doxygen_find_dot)"
+      - "build-win/_deps/msgpack-src/CMakeLists.txt:173 (FIND_PACKAGE)"
+    mode: "program"
+    variable: "DOXYGEN_DOT_EXECUTABLE"
+    description: "Dot tool for use with Doxygen"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dot"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+      - "/ATT/Graphviz/bin/"
+      - "C:/Program Files/ATT/Graphviz/bin/"
+      - "/Applications/Graphviz.app/Contents/MacOS/"
+      - "/Applications/Utilities/Graphviz.app/Contents/MacOS/"
+      - "/Applications/Doxygen.app/Contents/Resources/"
+      - "/Applications/Doxygen.app/Contents/MacOS/"
+      - "/Applications/Utilities/Doxygen.app/Contents/Resources/"
+      - "/Applications/Utilities/Doxygen.app/Contents/MacOS/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/dot"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/dot"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/dot"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/dot"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/dot"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/dot"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/dot"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/dot"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/dot"
+      - "/usr/local/bin/dot"
+      - "/home/sykim/.local/bin/dot"
+      - "/home/sykim/.local/share/pnpm/dot"
+      - "/usr/bin/dot"
+      - "/bin/dot"
+      - "/home/sykim/.nvm/current/bin/dot"
+      - "/home/sykim/.npm-global/bin/dot"
+      - "/home/sykim/bin/dot"
+      - "/home/sykim/.volta/bin/dot"
+      - "/home/sykim/.asdf/shims/dot"
+      - "/home/sykim/.bun/bin/dot"
+      - "/home/sykim/.fnm/current/bin/dot"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/dot"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/dot"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/dot"
+      - "/usr/local/bin/dot"
+      - "/usr/local/sbin/dot"
+      - "/usr/local/dot"
+      - "/bin/dot"
+      - "/sbin/dot"
+      - "/ATT/Graphviz/bin/dot"
+      - "C:/Program Files/ATT/Graphviz/bin/dot"
+      - "/Applications/Graphviz.app/Contents/MacOS/dot"
+      - "/Applications/Utilities/Graphviz.app/Contents/MacOS/dot"
+      - "/Applications/Doxygen.app/Contents/Resources/dot"
+      - "/Applications/Doxygen.app/Contents/MacOS/dot"
+      - "/Applications/Utilities/Doxygen.app/Contents/Resources/dot"
+      - "/Applications/Utilities/Doxygen.app/Contents/MacOS/dot"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CheckCXXSourceCompiles.cmake:103 (cmake_check_source_compiles)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindThreads.cmake:162 (check_cxx_source_compiles)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindThreads.cmake:226 (_threads_check_libc)"
+      - "build-win/_deps/spdlog-src/CMakeLists.txt:144 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO"
+      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO'
+        
+        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f2379/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f2379.dir/build.make CMakeFiles/cmTC_f2379.dir/build
+        gmake[1]: 디렉터리 '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO' 들어감
+        Building CXX object CMakeFiles/cmTC_f2379.dir/src.cxx.obj
+        /usr/bin/x86_64-w64-mingw32-g++-posix -DCMAKE_HAVE_LIBC_PTHREAD  -std=c++17 -o CMakeFiles/cmTC_f2379.dir/src.cxx.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO/src.cxx
+        Linking CXX executable cmTC_f2379.exe
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f2379.dir/link.txt --verbose=1
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_f2379.dir/objects.a
+        /usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_f2379.dir/objects.a @CMakeFiles/cmTC_f2379.dir/objects1.rsp
+        /usr/bin/x86_64-w64-mingw32-g++-posix -Wl,--whole-archive CMakeFiles/cmTC_f2379.dir/objects.a -Wl,--no-whole-archive -o cmTC_f2379.exe -Wl,--out-implib,libcmTC_f2379.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_f2379.dir/linkLibs.rsp
+        gmake[1]: 디렉터리 '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-ysyyrO' 나감
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CheckCXXCompilerFlag.cmake:103 (cmake_check_compiler_flag)"
+      - "build-win/_deps/catch2-src/CMake/CatchMiscFunctions.cmake:12 (check_cxx_compiler_flag)"
+      - "build-win/_deps/catch2-src/CMake/CatchMiscFunctions.cmake:120 (add_cxx_flag_if_supported_to_targets)"
+      - "build-win/_deps/catch2-src/src/CMakeLists.txt:352 (add_build_reproducibility_settings)"
+    checks:
+      - "Performing Test HAVE_FLAG__ffile_prefix_map__home_sykim__openclaw_workspace_vse_platform_build_win__deps_catch2_src__"
+    directories:
+      source: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q"
+      binary: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/sykim/.openclaw/workspace/vse-platform/cmake;/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/extras;/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/CMake"
+    buildResult:
+      variable: "HAVE_FLAG__ffile_prefix_map__home_sykim__openclaw_workspace_vse_platform_build_win__deps_catch2_src__"
+      cached: true
+      stdout: |
+        Change Dir: '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q'
+        
+        Run Build Command(s): /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_39689/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_39689.dir/build.make CMakeFiles/cmTC_39689.dir/build
+        gmake[1]: Entering directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q'
+        Building CXX object CMakeFiles/cmTC_39689.dir/src.cxx.obj
+        /usr/bin/x86_64-w64-mingw32-g++-posix -DHAVE_FLAG__ffile_prefix_map__home_sykim__openclaw_workspace_vse_platform_build_win__deps_catch2_src__  -std=c++17   -ffile-prefix-map=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/= -o CMakeFiles/cmTC_39689.dir/src.cxx.obj -c /home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q/src.cxx
+        Linking CXX executable cmTC_39689.exe
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39689.dir/link.txt --verbose=1
+        /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -E rm -f CMakeFiles/cmTC_39689.dir/objects.a
+        /usr/bin/x86_64-w64-mingw32-ar qc CMakeFiles/cmTC_39689.dir/objects.a @CMakeFiles/cmTC_39689.dir/objects1.rsp
+        /usr/bin/x86_64-w64-mingw32-g++-posix -Wl,--whole-archive CMakeFiles/cmTC_39689.dir/objects.a -Wl,--no-whole-archive -o cmTC_39689.exe -Wl,--out-implib,libcmTC_39689.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_39689.dir/linkLibs.rsp
+        gmake[1]: Leaving directory '/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/CMakeScratch/TryCompile-gAaN2q'
+        
+      exitCode: 0
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CTest.cmake:188 (find_program)"
+      - "tests/CMakeLists.txt:83 (include)"
+    mode: "program"
+    variable: "MEMORYCHECK_COMMAND"
+    description: "Path to the memory checking command, used for memory error detection."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "purify"
+      - "valgrind"
+      - "boundscheck"
+      - "drmemory"
+      - "cuda-memcheck"
+      - "compute-sanitizer"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/purify"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/purify"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/purify"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/purify"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/purify"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/purify"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/purify"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/purify"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/purify"
+      - "/usr/local/bin/purify"
+      - "/home/sykim/.local/bin/purify"
+      - "/home/sykim/.local/share/pnpm/purify"
+      - "/usr/bin/purify"
+      - "/bin/purify"
+      - "/home/sykim/.nvm/current/bin/purify"
+      - "/home/sykim/.npm-global/bin/purify"
+      - "/home/sykim/bin/purify"
+      - "/home/sykim/.volta/bin/purify"
+      - "/home/sykim/.asdf/shims/purify"
+      - "/home/sykim/.bun/bin/purify"
+      - "/home/sykim/.fnm/current/bin/purify"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/purify"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/purify"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/purify"
+      - "/usr/local/bin/purify"
+      - "/usr/local/sbin/purify"
+      - "/usr/local/purify"
+      - "/bin/purify"
+      - "/sbin/purify"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/valgrind"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/valgrind"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/valgrind"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/valgrind"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/valgrind"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/valgrind"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/valgrind"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/valgrind"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/valgrind"
+      - "/usr/local/bin/valgrind"
+      - "/home/sykim/.local/bin/valgrind"
+      - "/home/sykim/.local/share/pnpm/valgrind"
+      - "/usr/bin/valgrind"
+      - "/bin/valgrind"
+      - "/home/sykim/.nvm/current/bin/valgrind"
+      - "/home/sykim/.npm-global/bin/valgrind"
+      - "/home/sykim/bin/valgrind"
+      - "/home/sykim/.volta/bin/valgrind"
+      - "/home/sykim/.asdf/shims/valgrind"
+      - "/home/sykim/.bun/bin/valgrind"
+      - "/home/sykim/.fnm/current/bin/valgrind"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/valgrind"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/valgrind"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/valgrind"
+      - "/usr/local/bin/valgrind"
+      - "/usr/local/sbin/valgrind"
+      - "/usr/local/valgrind"
+      - "/bin/valgrind"
+      - "/sbin/valgrind"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/boundscheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/boundscheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/boundscheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/boundscheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/boundscheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/boundscheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/boundscheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/boundscheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/boundscheck"
+      - "/usr/local/bin/boundscheck"
+      - "/home/sykim/.local/bin/boundscheck"
+      - "/home/sykim/.local/share/pnpm/boundscheck"
+      - "/usr/bin/boundscheck"
+      - "/bin/boundscheck"
+      - "/home/sykim/.nvm/current/bin/boundscheck"
+      - "/home/sykim/.npm-global/bin/boundscheck"
+      - "/home/sykim/bin/boundscheck"
+      - "/home/sykim/.volta/bin/boundscheck"
+      - "/home/sykim/.asdf/shims/boundscheck"
+      - "/home/sykim/.bun/bin/boundscheck"
+      - "/home/sykim/.fnm/current/bin/boundscheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/boundscheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/boundscheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/boundscheck"
+      - "/usr/local/bin/boundscheck"
+      - "/usr/local/sbin/boundscheck"
+      - "/usr/local/boundscheck"
+      - "/bin/boundscheck"
+      - "/sbin/boundscheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/drmemory"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/drmemory"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/drmemory"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/drmemory"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/drmemory"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/drmemory"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/drmemory"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/drmemory"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/drmemory"
+      - "/usr/local/bin/drmemory"
+      - "/home/sykim/.local/bin/drmemory"
+      - "/home/sykim/.local/share/pnpm/drmemory"
+      - "/usr/bin/drmemory"
+      - "/bin/drmemory"
+      - "/home/sykim/.nvm/current/bin/drmemory"
+      - "/home/sykim/.npm-global/bin/drmemory"
+      - "/home/sykim/bin/drmemory"
+      - "/home/sykim/.volta/bin/drmemory"
+      - "/home/sykim/.asdf/shims/drmemory"
+      - "/home/sykim/.bun/bin/drmemory"
+      - "/home/sykim/.fnm/current/bin/drmemory"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/drmemory"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/drmemory"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/drmemory"
+      - "/usr/local/bin/drmemory"
+      - "/usr/local/sbin/drmemory"
+      - "/usr/local/drmemory"
+      - "/bin/drmemory"
+      - "/sbin/drmemory"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/cuda-memcheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/cuda-memcheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/cuda-memcheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/cuda-memcheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/cuda-memcheck"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/cuda-memcheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/cuda-memcheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/cuda-memcheck"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/cuda-memcheck"
+      - "/usr/local/bin/cuda-memcheck"
+      - "/home/sykim/.local/bin/cuda-memcheck"
+      - "/home/sykim/.local/share/pnpm/cuda-memcheck"
+      - "/usr/bin/cuda-memcheck"
+      - "/bin/cuda-memcheck"
+      - "/home/sykim/.nvm/current/bin/cuda-memcheck"
+      - "/home/sykim/.npm-global/bin/cuda-memcheck"
+      - "/home/sykim/bin/cuda-memcheck"
+      - "/home/sykim/.volta/bin/cuda-memcheck"
+      - "/home/sykim/.asdf/shims/cuda-memcheck"
+      - "/home/sykim/.bun/bin/cuda-memcheck"
+      - "/home/sykim/.fnm/current/bin/cuda-memcheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cuda-memcheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/cuda-memcheck"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/cuda-memcheck"
+      - "/usr/local/bin/cuda-memcheck"
+      - "/usr/local/sbin/cuda-memcheck"
+      - "/usr/local/cuda-memcheck"
+      - "/bin/cuda-memcheck"
+      - "/sbin/cuda-memcheck"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/compute-sanitizer"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/compute-sanitizer"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/compute-sanitizer"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/compute-sanitizer"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/compute-sanitizer"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/compute-sanitizer"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/compute-sanitizer"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/compute-sanitizer"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/compute-sanitizer"
+      - "/usr/local/bin/compute-sanitizer"
+      - "/home/sykim/.local/bin/compute-sanitizer"
+      - "/home/sykim/.local/share/pnpm/compute-sanitizer"
+      - "/usr/bin/compute-sanitizer"
+      - "/bin/compute-sanitizer"
+      - "/home/sykim/.nvm/current/bin/compute-sanitizer"
+      - "/home/sykim/.npm-global/bin/compute-sanitizer"
+      - "/home/sykim/bin/compute-sanitizer"
+      - "/home/sykim/.volta/bin/compute-sanitizer"
+      - "/home/sykim/.asdf/shims/compute-sanitizer"
+      - "/home/sykim/.bun/bin/compute-sanitizer"
+      - "/home/sykim/.fnm/current/bin/compute-sanitizer"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/compute-sanitizer"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/compute-sanitizer"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/compute-sanitizer"
+      - "/usr/local/bin/compute-sanitizer"
+      - "/usr/local/sbin/compute-sanitizer"
+      - "/usr/local/compute-sanitizer"
+      - "/bin/compute-sanitizer"
+      - "/sbin/compute-sanitizer"
+    found: false
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/CTest.cmake:196 (find_program)"
+      - "tests/CMakeLists.txt:83 (include)"
+    mode: "program"
+    variable: "COVERAGE_COMMAND"
+    description: "Path to the coverage program that CTest uses for performing coverage inspection"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcov"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/gcov"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/gcov"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/gcov"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/gcov"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/gcov"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/gcov"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/gcov"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/gcov"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/gcov"
+      - "/usr/local/bin/gcov"
+      - "/home/sykim/.local/bin/gcov"
+      - "/home/sykim/.local/share/pnpm/gcov"
+    found: "/usr/bin/gcov"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
 ...

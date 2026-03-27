@@ -29,10 +29,12 @@
 #include "domain/StarRatingSystem.h"
 #include "domain/TenantSystem.h"
 #include "domain/GameOverSystem.h"
+#include "domain/SaveLoadSystem.h"
 #include "renderer/SDLRenderer.h"
 #include "renderer/Camera.h"
 #include "renderer/InputMapper.h"
 #include "renderer/RenderFrameCollector.h"
+#include "renderer/SaveLoadPanel.h"
 #include "core/InputTypes.h"
 #include <entt/entt.hpp>
 #include <memory>
@@ -98,6 +100,9 @@ private:
     // ── 초기 씬 설정 헬퍼 (init/initDomainOnly 공용) ───
     // 프로토타입 씬: 5층 건물 + 엘리베이터 1축 2대 + NPC 5명
     void setupInitialScene();
+    
+    // ── Save/Load helpers ───────────────────────────────
+    void refreshSaveSlots();
 
     // ── 실행 상태 ───────────────────────────────────────
     bool running_     = false;
@@ -124,12 +129,14 @@ public:
     std::unique_ptr<StarRatingSystem> starRating_;
     std::unique_ptr<TenantSystem>   tenantSystem_;
     std::unique_ptr<GameOverSystem> gameOver_;
+    std::unique_ptr<SaveLoadSystem> saveLoad_;
 
     // ── Renderer (Layer 3) ──────────────────────────────
     SDLRenderer  sdlRenderer_;
     Camera       camera_;
     InputMapper  inputMapper_;
     std::unique_ptr<RenderFrameCollector> collector_;
+    SaveLoadPanel saveLoadPanel_;
 
     // ── 설정 캐시 (init() 시 ConfigManager에서 읽음) ───
     int   windowW_   = 0;
@@ -141,6 +148,11 @@ public:
     float panSpeed_   = 8.0f;
     float panMargin_  = 2.0f;  ///< World-boundary clamp margin (tiles), cached at init
     EconomyConfig economyConfig_;
+    
+    // ── Save/Load configuration ─────────────────────────
+    int autoSaveDayInterval_ = 60;  ///< Auto-save every N game days (from config)
+    int lastAutoSaveDay_     = 0;
+    std::vector<SaveSlotInfo> saveSlotInfos_;  ///< Cached slot metadata (refreshed on open)
 
     // ── 렌더링 상태 ─────────────────────────────────────
     bool drawGrid_  = true;

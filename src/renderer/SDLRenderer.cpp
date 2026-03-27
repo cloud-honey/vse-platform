@@ -178,6 +178,29 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
     hudPanel_.draw(frame);
 
+    // SaveLoadPanel::draw() — Save/Load UI 렌더링
+    if (frame.showSaveLoadPanel) {
+        // Set up callbacks
+        saveLoadPanel_.onSaveRequested = [this](int slotIndex) {
+            pendingSaveSlot_ = slotIndex;
+        };
+        saveLoadPanel_.onLoadRequested = [this](int slotIndex) {
+            pendingLoadSlot_ = slotIndex;
+        };
+        
+        // Open panel if needed
+        if (frame.saveLoadPanelSave) {
+            saveLoadPanel_.openSave();
+        } else {
+            saveLoadPanel_.openLoad();
+        }
+        
+        // Draw panel
+        saveLoadPanel_.draw(frame.saveSlotInfos);
+    } else {
+        saveLoadPanel_.close();
+    }
+
     // Game state UI menus (TASK-04-005)
     drawGameStateUI(frame);
 
@@ -739,6 +762,26 @@ bool SDLRenderer::checkTenantSelection(int& outTenantType)
 void SDLRenderer::setShouldOpenTenantPopup(bool open)
 {
     shouldOpenTenantPopup_ = open;
+}
+
+bool SDLRenderer::checkPendingSave(int& outSlotIndex)
+{
+    if (pendingSaveSlot_ >= 0) {
+        outSlotIndex = pendingSaveSlot_;
+        pendingSaveSlot_ = -1;
+        return true;
+    }
+    return false;
+}
+
+bool SDLRenderer::checkPendingLoad(int& outSlotIndex)
+{
+    if (pendingLoadSlot_ >= 0) {
+        outSlotIndex = pendingLoadSlot_;
+        pendingLoadSlot_ = -1;
+        return true;
+    }
+    return false;
 }
 
 } // namespace vse
