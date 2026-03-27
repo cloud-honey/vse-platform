@@ -1,6 +1,6 @@
 {
   "sprint": 5,
-  "updated_at": "2026-03-27T18:55:00+09:00",
+  "updated_at": "2026-03-27T18:59:00+09:00",
   "phase": "Phase 1",
   "sprint_goal": "기능 완성 — 마우스 건설 UI, 카메라 줌/팬, Save/Load UI, HUD 고도화",
   "overall_status": "in_progress",
@@ -553,6 +553,36 @@
       "time": "14:17",
       "title": "대시보드 v2.0 안정화 완료",
       "detail": "S5~S10 탭 동적 생성, Phase 1 전체 진행률(41%), Sprint Goal 탭 아래 이동, 알약 제거, 배지 태스크 상태 자동 연동(PLANNING/IN_PROGRESS/COMPLETED), 마지막 완료 스프린트 카드 자동 전환(현재 S4), S4 완료보고서 35개 + 히스토리 66개. 커밋 49b2eda"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "14:38",
+      "title": "TASK-05-000 Design Spec v2.5 동기화 완료",
+      "detail": "Sprint 4 구현 반영 + Sprint 5 계획 섹션 추가 (§5.24~5.28). 커밋 76b68e6"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "14:59",
+      "title": "TASK-05-001 BuildCursor 완성 완료",
+      "detail": "유효/무효 하이라이트(초록/빨강), 비용 tooltip, 테넌트 선택 ImGui 팝업. 3모델 교차검증. 337/337. 커밋 02aea91"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "16:38",
+      "title": "TASK-05-002 Camera 줌/팬 완료",
+      "detail": "zoomAt pivot, 우클릭/중간클릭 팬, clampToWorld(UB 수정). 3모델 교차검증. 346/346. 커밋 09549d8"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "17:20",
+      "title": "TASK-05-003 Save/Load UI 완료",
+      "detail": "SaveLoadPanel, 슬롯 메타데이터, 자동저장, 오버라이트 확인. 3모델 교차검증(경로 불일치/매프레임 재호출 수정). 355/355. 커밋 bf8fa2a"
+    },
+    {
+      "date": "2026-03-27",
+      "time": "18:55",
+      "title": "TASK-05-004 HUD 고도화 완료",
+      "detail": "건설 툴바, ★☆ 별점 아이콘, 수익 ↑↓ 지표, 토스트 큐, ×1/×2/×3 배속. 3모델 교차검증(버튼 미연결/토스트 구독 수정). 365/365. 커밋 17816fb"
     }
   ],
   "references": [
