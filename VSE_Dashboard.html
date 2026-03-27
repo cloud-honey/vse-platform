@@ -459,23 +459,11 @@ function abClass(n){
 /* Main render function */
 function render(d){
   /* Header */
-  document.getElementById('sprintNum').textContent='S'+String(d.sprint).padStart(2,'0');
-  document.getElementById('sprintGoal').textContent=d.sprint_goal;
+  document.getElementById('sprintNum').textContent='S'+String(d.sprint||0).padStart(2,'0');
+  document.getElementById('sprintGoal').textContent=d.sprint_goal||'';
   const osEl=document.getElementById('overallStatus');
-  const osMap={
-    'in_progress':'🟢 IN PROGRESS',
-    'planning':'🔵 PLANNING',
-    'completed':'✅ COMPLETED',
-    'blocked':'🔴 BLOCKED',
-    'paused':'⏸ PAUSED'
-  };
-  const osStyle={
-    'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);',
-    'planning':'color:#a78bfa;background:rgba(167,139,250,.12);',
-    'completed':'color:#34d399;background:rgba(52,211,153,.12);',
-    'blocked':'color:#f87171;background:rgba(248,113,113,.12);',
-    'paused':'color:#fbbf24;background:rgba(251,191,36,.12);'
-  };
+  const osMap={'in_progress':'🟢 IN PROGRESS','planning':'🔵 PLANNING','completed':'✅ COMPLETED','blocked':'🔴 BLOCKED','paused':'⏸ PAUSED'};
+  const osStyle={'in_progress':'color:#4f8ef7;background:rgba(79,142,247,.12);','planning':'color:#a78bfa;background:rgba(167,139,250,.12);','completed':'color:#34d399;background:rgba(52,211,153,.12);','blocked':'color:#f87171;background:rgba(248,113,113,.12);','paused':'color:#fbbf24;background:rgba(251,191,36,.12);'};
   const osKey=(d.overall_status||'').toLowerCase();
   osEl.textContent=osMap[osKey]||(d.overall_status||'—').toUpperCase();
   osEl.style.cssText=(osStyle[osKey]||'')+'border-radius:6px;padding:3px 8px;';
@@ -638,7 +626,7 @@ function render(d){
     :'<div class="empty">No design issues ✓</div>';
 
   /* 전체 진행률 — Phase 1 (Sprint 1~10) */
-  const phaseTotal = [10,9,9,7, tasks.length, 8,5,5,4,5]; // S1~S10
+  const phaseTotal = [10,9,9,7, tasks.length, 8,5,5,4,5];
   const phaseDone  = [10,9,9,7, done,          0,0,0,0,0];
   const totalAll   = phaseTotal.reduce((a,b)=>a+b,0);
   const totalDone  = phaseDone.reduce((a,b)=>a+b,0);
@@ -647,19 +635,15 @@ function render(d){
   document.getElementById('totalPctLabel').textContent = totalPct + '%';
   document.getElementById('totalPctBar').style.width = totalPct + '%';
 
-  // Phase 1 카운트 업데이트 (pills 안에 추가됨)
-  const p1el = document.getElementById('phase1Count');
-  if (p1el) p1el.textContent = `Phase 1: ${totalDone}/${totalAll}`;
-
-  // S6~S10 future 탭 뒤에 붙이기 (renderAll 이후 pills에 추가)
-  const futureSprints = ['S6','S7','S8','S9','S10'];
-  const pills = document.getElementById('sprintPills');
-  futureSprints.forEach(s => {
-    pills.innerHTML += `<span style="background:rgba(100,100,120,.04);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);opacity:0.5;">${s} 📋</span>`;
+  // S6~S10 pills 뒤에 추가 (renderAll이 S1~S5 버튼을 그린 뒤)
+  const pillsEl = document.getElementById('sprintPills');
+  ['S6','S7','S8','S9','S10'].forEach(s => {
+    pillsEl.innerHTML += `<span style="background:rgba(100,100,120,.04);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);opacity:0.5;">${s} 📋</span>`;
   });
-  pills.innerHTML += `<span style="background:rgba(100,100,120,.08);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);margin-left:auto;">Phase 1: ${totalDone}/${totalAll}</span>`;
+  pillsEl.innerHTML += `<span style="background:rgba(100,100,120,.08);color:var(--text2);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:var(--mono);margin-left:4px;">Phase 1: ${totalDone}/${totalAll}</span>`;
 
   /* Sprint 1 이력 카드 */
+  const s1 = d.sprint1_summary;
   if (s1) {
     document.getElementById('sprint1Card').style.display = '';
     document.getElementById('sprint1Summary').innerHTML = `
