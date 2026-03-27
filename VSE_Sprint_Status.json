@@ -37,7 +37,7 @@
       "title": "NPC 실제 스프라이트 연동",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "pending",
+      "status": "done",
       "difficulty": 1,
       "notes": "npc_sheet.png (128x32, 8프레임) — 에셋 필요"
     },
