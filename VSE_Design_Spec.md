@@ -1,11 +1,12 @@
 # VSE Design Specification — Phase 1
-> Version: 2.0 | Author: 붐 (PM) | Date: 2026-03-26
+> Version: 2.5 | Author: 붐 (PM) | Date: 2026-03-27
 > Source of truth: `CLAUDE.md` v1.3 | This document details HOW to implement what CLAUDE.md defines.
 > CLAUDE.md = WHAT (rules, constraints) | This doc = HOW (signatures, data flow, init order)
 > v1.1: Cross-review 11 items applied (Layer 0 split, EntityId=entt, tick-time rules, deferred EventBus, GameCommand, grid occupancy, elevator FSM, save/load scope, consistency fixes, defaults policy, test coverage)
 > v1.2: Final review 6 items — true fixed-tick loop, CLAUDE.md sync, EnTT snapshot save/restore, Bootstrapper=composition root, config immutable ticks, document consistency
 > v1.5: Sprint 2 implementation sync (Bootstrapper API, SaveMetadata balance int64_t, StarRatingChangedPayload, manual JSON+MessagePack save strategy)
 > v2.0: Sprint 3 implementation sync + Sprint 4 planned systems
+> v2.5: Sprint 4 implementation sync + Sprint 5 planned systems
 
 ---
 
@@ -1373,6 +1374,8 @@ private:
     std::unique_ptr<EconomyEngine>   economy_;    // Added economy_
     std::unique_ptr<StarRatingSystem> starRating_; // Added starRating_
     std::unique_ptr<TenantSystem>    tenantSystem_; // Added tenantSystem_
+    std::unique_ptr<GameOverSystem>  gameOver_;     // Added Sprint 4
+    GameStateManager gameState_{eventBus_};        // Added Sprint 4
 
     // Renderer (Layer 3)
     SDLRenderer   sdlRenderer_;
@@ -1464,164 +1467,375 @@ struct TenantComponent {
 
 ### 5.18 Economy Loop
 
-> **Sprint 4 Planned System:**
-> - Bootstrapper tick loop calls `collectRent()` and `payMaintenance()` each game day (every 24 ticks)
-> - `buildFloor()` deducts cost from balance; rejects if balance insufficient
-> - `placeTenant()` deducts initial interior cost
-> - HUD shows daily income/expense
-> - Events: `InsufficientFundsEvent{action, required, available}`
+> **Sprint 4 Implementation (2026-03-26, TASK-04-001):**
+> - `TenantSystem::onDayChanged()` → calls `EconomyEngine.collectRent()` / `EconomyEngine.payMaintenance()` per tenant
+> - `buildFloor()` deducts cost from balance; rejects with `ErrorCode::InsufficientFunds` if balance < cost
+> - `placeTenant()` deducts `buildCost` (from balance.json) at placement time
+> - `InsufficientFunds` event payload: `{action, requiredAmount, availableAmount}`
+> - Elevator maintenance paid daily via `EconomyEngine::payMaintenance()`
 
 **Daily Economy Cycle:**
-- **Midnight (tick % 24 == 0)**: Rent collection from all tenants
-- **Midnight + 1 tick**: Maintenance payments for all tenants and elevators
-- **Real-time**: Construction costs deducted immediately when action executed
+- **Midnight (day changes)**: `TenantSystem::onDayChanged()` → rent collection + maintenance per tenant
+- **Real-time**: Construction costs deducted immediately (`buildFloor`, `placeTenant`)
+- **Elevator**: Fixed maintenance cost per day from `balance.json` `economy.elevatorMaintenancePerDay`
 
 **Funds Validation:**
-- `GridSystem::buildFloor()` checks balance before construction
-- `TenantSystem::placeTenant()` checks balance before tenant placement
-- Insufficient funds → `InsufficientFundsEvent` with action details
-- UI shows red balance warning when funds low
+- `EconomyEngine::buildFloor()` / `placeTenant()` check balance before executing
+- Insufficient funds → `InsufficientFunds` event (EventType 800), action blocked
+- `InsufficientFundsPayload.action` carries string description of blocked action
 
 **HUD Integration:**
-- Daily income/expense display in top-right HUD
-- Running balance with color coding (green=positive, red=negative)
-- Toast notifications for large transactions
+- `HUDPanel` (ImGui) displays balance with thousand-separator formatting (e.g., ₩1,234,567)
+- Balance color: green when positive, red when negative
+- DailySettlement event triggers ImGui toast notification
 
 ### 5.19 Stair Movement System
 
-> **Sprint 4 Planned System:**
-> - AgentSystem stair logic: if `|targetFloor - currentFloor| <= 4` → use stairs
-> - Stair speed: 2 ticks per floor (slower than elevator)
-> - State during stair movement: `UsingStairs` (dedicated state for clear state machine separation; rendered as orange NPC)
-> - Priority: stairs preferred for ≤4 floors; elevator required for ≥5 floors
-> - Elevator wait timeout: if waiting > threshold AND distance ≤ 4 → switch to stairs
+> **Sprint 4 Implementation (2026-03-26, TASK-04-002):**
+> - `AgentSystem` stair logic: `|targetFloor - currentFloor| <= 4` → use stairs directly
+> - Stair speed: 2 ticks per floor (`stairTicksRemaining = abs(delta) * 2`)
+> - State: `AgentState::UsingStairs` — dedicated enum value (not `Walking`) for clear FSM separation; rendered orange in `AgentRenderer`
+> - Elevator wait timeout fallback: if NPC has been `WaitingElevator` > threshold ticks AND floor distance ≤ 4 → switch to `UsingStairs`
+> - Direction agnostic: stairs used for both ascent and descent ≤4 floors
 
 **Stair Mechanics:**
-- **Distance Threshold**: 4 floors or less → stairs, 5+ floors → elevator required
-- **Movement Speed**: 2 ticks per floor transition (vs elevator 1 tick per floor)
-- **Pathfinding**: Stairwell tiles at fixed X positions on each floor
-- **State Management**: `AgentState::Walking` during stair movement, special stair animation frame
+- **Distance Threshold**: `|delta| <= 4` → stairs preferred; `>= 5` → elevator required
+- **Speed**: 2 ticks/floor (vs elevator: LOOK algorithm, variable)
+- **Intermediate floors**: NPC floor advances 1 per 2 ticks until `stairTargetFloor` reached
+- **State guard**: `UsingStairs` with `stairTargetFloor = -1` or `stairTicksRemaining = 0` → reset to `Idle` (defensive)
 
 **Fallback Logic:**
-- NPC calls elevator for 5+ floor distance
-- If elevator wait exceeds configurable timeout (e.g., 30 ticks)
-- AND floor distance ≤ 4 → switch to stairs
-- Prevents NPCs stuck waiting for busy elevators on short trips
+- 5+ floor NPC calls elevator; if wait > `elevatorWaitTimeout` ticks AND distance ≤ 4 → override to stairs
+- Timeout threshold configurable via `balance.json` (default from `AgentSystem` constant)
+- Prevents NPCs stuck on busy elevators for short-distance trips
 
-**Implementation:**
-- Stairwell tiles marked in GridSystem (non-tenantable)
-- AgentSystem pathfinding includes stairwell routing
-- TransportSystem updated to handle stair-based floor transitions
+**Rendering:**
+- `UsingStairs` NPC color: orange rectangle in `AgentRenderer`
+- Position interpolates toward target floor during movement
 
 ### 5.20 Periodic Settlement System
 
-> **Sprint 4 Planned System:**
-> - `EconomyEngine::update()` daily settlement at midnight (tick % 24 == 0)
-> - Weekly report event on Sunday (tick % 168 == 0)
-> - Quarterly settlement every 90 days: tax deduction + star rating re-evaluation
-> - Settlement events → HUD ImGui toast notification
+> **Sprint 4 Implementation (2026-03-26, TASK-04-003):**
+> - `EconomyEngine::onDayChanged()` fires `DailySettlement` event every day
+> - Weekly report: `DailySettlement` + `WeeklyReport` event every 7 days
+> - Quarterly settlement: every 90 days — tax deduction + `StarRatingReEvalRequested` event
+> - Tax formula: `tax = balance * quarterlyTaxRate` (from `EconomyConfig.quarterlyTaxRate`, default 5%)
+> - Events fired: `DailySettlement` (EventType 550), `WeeklyReport` (551), `QuarterlySettlement` (552), `StarRatingReEvalRequested` (553)
 
 **Settlement Schedule:**
-- **Daily**: Rent collection, maintenance payments (already in §5.18)
-- **Weekly (Sunday)**: Financial summary, NPC satisfaction report
-- **Quarterly (90 days)**: Tax payment (percentage of balance), star rating review
+- **Daily**: `DailySettlement` event — payload: `{day, income, expense, balance}`
+- **Weekly (day % 7 == 0)**: `WeeklyReport` event alongside DailySettlement
+- **Quarterly (day % 90 == 0)**: `QuarterlySettlement` event — `{quarter, taxAmount, balance}`, then `StarRatingReEvalRequested`
 
 **Quarterly Settlement:**
-1. Tax calculation: `balance * taxRate` (configurable, e.g., 5%)
-2. Tax deduction from balance
-3. Star rating re-evaluation based on:
-   - Average NPC satisfaction
-   - Building occupancy rate
-   - Financial stability (profit/loss history)
-4. Rating change events with UI notifications
+1. Tax calculation: `tax = static_cast<int64_t>(balance_ * config_.quarterlyTaxRate)`
+2. Tax deducted via `EconomyEngine::addExpense(tax, "quarterly_tax")`
+3. `StarRatingReEvalRequested` event fired → `StarRatingSystem` re-evaluates on next update
+4. `QuarterlySettlement` event with quarter index (day / 90)
+
+**EconomyConfig fields (from balance.json):**
+```cpp
+struct EconomyConfig {
+    int64_t startingBalance;
+    int64_t elevatorMaintenancePerDay;
+    float   quarterlyTaxRate;           // 0.05 = 5%
+};
+```
 
 **UI Integration:**
-- ImGui toast notifications for settlement events
-- Detailed settlement report in pause menu
-- Historical settlement records accessible via UI
+- `HUDPanel` receives `DailySettlement` via EventBus → updates toast queue
+- ImGui toast: settlement summary shown for 3 seconds
 
 ### 5.21 Game Over + Victory Conditions
 
-> **Sprint 4 Planned System:**
-> - Bankruptcy: balance < 0 for 30 consecutive days → GameOver
-> - TOWER achievement: ★5 + 100 floors + 300 NPCs
-> - GameOver/TOWER screen: ImGui modal
+> **Sprint 4 Implementation (2026-03-26~27, TASK-04-004):**
+> - `GameOverSystem` — Layer 1 domain class, listens to `DayChanged` event
+> - **Bankruptcy**: balance < 0 for 30 consecutive days → `GameOver` event (`reason: "bankruptcy"`)
+> - **Mass Exodus**: activeAgentCount < 10% of `maxNpc` capacity for 7 consecutive days → `GameOver` event (`reason: "mass_exodus"`)
+> - **TOWER Victory**: ★5 + 100 built floors + 300 active NPCs + 90 consecutive positive-balance days → `TowerAchieved` event
+> - Both conditions mutually exclusive: once fired, `gameOverFired_` / `victoryFired_` = true, no further checks
 
 **Game Over Conditions:**
-- **Bankruptcy**: Negative balance for 30 consecutive game days
-- **Mass Exodus**: NPC count drops below 10% of capacity for 7 days
-- **Critical System Failure**: Unrecoverable save corruption
+| Condition | Trigger | Threshold |
+|---|---|---|
+| Bankruptcy | `consecutiveNegativeDays_ >= 30` | 30 days |
+| Mass Exodus | `massExodusDays_ >= 7` | 7 days, NPC < 10% capacity |
 
-**Victory Conditions:**
-- **TOWER Achievement**: 
-  - ★5 star rating
-  - 100 floors built
-  - 300 active NPCs
-  - Positive balance for 90 consecutive days
-- **Master Tycoon**: All tenant types at max occupancy, perfect satisfaction
+**Victory Condition (TOWER):**
+| Requirement | Value |
+|---|---|
+| Star rating | ★5 (`StarRating::Star5`) |
+| Built floors | `grid_.builtFloorCount() >= 100` |
+| Active NPCs | `agents_.activeAgentCount() >= 300` |
+| Positive balance streak | `consecutivePositiveDays_ >= 90` |
 
-**Endgame UI:**
-- Fullscreen ImGui modal with victory/defeat message
-- Statistics summary (play time, total revenue, NPC count, etc.)
-- Options: New Game, Return to Main Menu, Quit
-- Achievement unlock notifications
+**Event Payloads:**
+```cpp
+struct GameOverPayload {
+    std::string reason;   // "bankruptcy" or "mass_exodus"
+    int day;
+    int64_t finalBalance;
+};
+struct TowerAchievedPayload {
+    int day;
+    int starRating;
+    int floorCount;
+    int npcCount;
+};
+```
+
+**Bootstrapper Integration:**
+- `GameOverSystem::update()` called on `DayChanged` event subscription
+- `GameStateManager::transition(GameState::GameOver)` on GameOver event
+- `GameStateManager::transition(GameState::Victory)` on TowerAchieved event
 
 ### 5.22 Main Menu + Game State Machine
 
-> **Sprint 4 Planned System:**
-> - States: Menu → Playing → Paused → GameOver
-> - Main menu (ImGui fullscreen): New Game, Load Game, Settings, Quit
-> - ESC → pause menu: Continue / Save / Main Menu
-> - New Game calls `setupInitialScene()`
-> - Load Game connects to SaveLoadSystem
+> **Sprint 4 Implementation (2026-03-27, TASK-04-005):**
+> - `GameStateManager` — Core Runtime class, owns `currentState_` (init: `MainMenu`)
+> - States: `MainMenu / Playing / Paused / GameOver / Victory`
+> - Transition guard: `canTransition(from, to)` — only valid edges allowed
+> - `GameStateChanged` event (EventType 612) fired on every valid transition
+> - ESC key → `TogglePause` command → `Playing↔Paused`
+> - New Game: `MainMenu → Playing` (2-step: reset state → `setupInitialScene()`)
 
-**State Machine:**
+**State Machine (authoritative):**
 ```
-[Main Menu]
-  ├─ New Game → [Playing] (calls setupInitialScene())
-  ├─ Load Game → [Playing] (SaveLoadSystem::load())
-  ├─ Settings → [Settings Menu]
-  └─ Quit → Exit
+MainMenu → Playing    (NewGame / LoadGame)
+Playing  → Paused     (ESC / TogglePause)
+Playing  → GameOver   (GameOver event)
+Playing  → Victory    (TowerAchieved event)
+Paused   → Playing    (Resume / TogglePause)
+Paused   → MainMenu   (QuitToMenu)
+GameOver → MainMenu   (NewGame)
+Victory  → MainMenu   (NewGame)
+```
 
-[Playing]
-  ├─ ESC → [Paused]
-  ├─ GameOver condition → [GameOver]
-  └─ TOWER achievement → [Victory]
-
-[Paused]
-  ├─ Continue → [Playing]
-  ├─ Save → QuickSave → [Paused]
-  ├─ Main Menu → [Main Menu] (with save prompt)
-  └─ Quit → Exit (with save prompt)
+**GameStateManager API:**
+```cpp
+class GameStateManager {
+public:
+    GameStateManager(EventBus& eventBus);
+    GameState getState() const;
+    bool transition(GameState newState);   // Returns false if invalid transition
+    bool canTransition(GameState from, GameState to) const;
+private:
+    EventBus& eventBus_;
+    GameState currentState_ = GameState::MainMenu;
+};
 ```
 
 **UI Implementation:**
-- Main menu: Fullscreen ImGui with background art
-- Pause menu: Semi-transparent overlay with game view visible
-- Settings: Graphics, audio, controls, game options
-- Save/Load: Integrated with SaveLoadSystem file browser
+- Main menu: Fullscreen ImGui overlay (game world not rendered)
+- Pause menu: Semi-transparent ImGui modal, game view visible behind
+- GameOver/Victory: Fullscreen ImGui modal with stats summary
+- Bootstrapper checks `gameState_.getState()` each frame to determine render mode
 
 ### 5.23 DI-005 Resolution
 
-> **Sprint 4 Planned System:**
-> - MockGridSystem elevator anchor mismatch fix
-> - Document what DI-005 was and how it's resolved in Sprint 4
-
-**DI-005 Issue:**
-- MockGridSystem test utility had incorrect elevator anchor positioning
-- Elevator shaft placement coordinates mismatched between test and production
-- Caused elevator rendering and NPC boarding failures in integration tests
+> **Sprint 4 Implementation (2026-03-27, TASK-04-006):**
+> - `MockGridSystem` used in tests treated elevator shaft tiles as anchor tiles (`isAnchor = true`)
+> - Production `GridSystem` does NOT set `isAnchor` on elevator shaft tiles — shaft tiles have `isElevatorShaft = true`, `isAnchor = false`
+> - Mismatch caused `EconomyEngine::payMaintenance()` to double-count elevator maintenance in tests
 
 **Resolution:**
-1. **Anchor Standardization**: Unified elevator anchor tile calculation
-2. **Test Fix**: Updated MockGridSystem to match production GridSystem behavior
-3. **Validation**: Added comprehensive elevator placement tests
-4. **Documentation**: Clear anchor coordinate rules in GridSystem spec
+1. **MockGridSystem fix**: `isElevatorShaft` tiles now return `isAnchor = false` (matches production)
+2. **Test isolation**: Each test file's `MockGridSystem` wrapped in `anonymous namespace` — resolves ODR violation causing vtable corruption in Release builds
+3. **getTenantCount() test**: Added explicit test for `IGridSystem::getTenantCount()` (previously only tested implicitly)
+4. **ODR fix commit**: `b051472` — anonymous namespace wrapping eliminated Release-mode test failures
+
+**ODR Rule (mandatory for all test files):**
+```cpp
+// tests/test_*.cpp — ALL mock classes must be in anonymous namespace
+namespace {
+class MockGridSystem : public vse::IGridSystem { ... };
+class MockAgentSystem : public vse::IAgentSystem { ... };
+} // anonymous namespace
+```
 
 **Impact:**
 - Eliminates elevator rendering glitches
 - Ensures consistent NPC boarding behavior
 - Improves test reliability for elevator-related features
+
+### 5.24 BuildCursor (Sprint 5 Planned)
+
+> **Sprint 5 Planned System (TASK-05-001):**
+> - `BuildCursor` — Layer 3 renderer-side construct, tracks mouse hover tile and selected build mode
+> - Hover highlight: tile under mouse cursor rendered with semi-transparent overlay
+> - Left-click executes: `BuildFloor` or `PlaceTenant` command depending on selected mode
+> - Tenant selection UI: B key → floor mode; T key → tenant selection popup (Office/Residential/Commercial)
+> - Cost tooltip: shows build cost at cursor position
+> - Invalid placement: red highlight when tile is occupied or floor not built
+
+**BuildCursor State:**
+```cpp
+enum class BuildMode { None, Floor, Office, Residential, Commercial };
+
+struct BuildCursorState {
+    TileCoord hoverTile;
+    BuildMode mode = BuildMode::None;
+    bool isValidPlacement = false;
+    int64_t previewCost = 0;
+};
+```
+
+**Rendering:**
+- Valid placement: semi-transparent green overlay on hovered tile
+- Invalid: semi-transparent red overlay
+- Tooltip: `"₩{cost}"` shown near cursor via ImGui
+
+**Input → Command flow:**
+- `InputMapper` → `GameCommand::SelectTile` carries `TileCoord`
+- `BuildCursor` converts to `BuildFloor` / `PlaceTenant` command based on `BuildMode`
+- Layer boundary: `BuildCursor` lives in `renderer/` — never calls domain directly; emits `GameCommand`
+
+**Integration:**
+- `RenderFrame` carries `BuildCursorState` from domain/Bootstrapper
+- `SDLRenderer` draws cursor overlay before ImGui layer
+
+### 5.25 Camera Zoom & Pan (Sprint 5 Planned)
+
+> **Sprint 5 Planned System (TASK-05-002):**
+> - Mouse wheel → zoom (in/out), min/max zoom clamped (configurable: `camera.zoomMin`, `camera.zoomMax`)
+> - Right-click drag → pan (pan speed configurable: `camera.panSpeed`)
+> - WASD keys → pan
+> - Pan boundary: camera cannot scroll past building extents + margin
+> - Zoom pivot: zoom centered on mouse cursor position (not screen center)
+
+**Camera State (extends existing `Camera` class):**
+```cpp
+class Camera {
+public:
+    void zoomAt(float delta, PixelPos mousePos);    // Zoom centered on mouse
+    void pan(float dx, float dy);                   // Pan in screen units
+    void clampToWorld(int worldW, int worldH);      // Enforce boundary
+    float zoom() const;
+    PixelPos offset() const;
+    TileCoord screenToTile(PixelPos screen, int tileSize) const;
+    PixelPos tileToScreen(TileCoord tile, int tileSize) const;
+};
+```
+
+**Input Mapping:**
+| Input | Action |
+|---|---|
+| Mouse wheel up/down | `ZoomIn` / `ZoomOut` command |
+| Right-click drag | `PanCamera{dx, dy}` command |
+| W/A/S/D | `PanCamera` per-frame |
+| Middle-click drag | Alternative pan |
+
+**Config (game_config.json):**
+```json
+"camera": {
+    "zoomMin": 0.25,
+    "zoomMax": 4.0,
+    "panSpeed": 8.0,
+    "zoomStep": 0.1
+}
+```
+
+### 5.26 Save/Load UI (Sprint 5 Planned)
+
+> **Sprint 5 Planned System (TASK-05-003):**
+> - Save slot list: up to N slots, each showing metadata (day, balance, star rating, timestamp)
+> - Manual save: pause menu → "Save" → slot selection popup
+> - Manual load: main menu "Load Game" → slot selection → `SaveLoadSystem::load(slotIndex)`
+> - Auto-save: every 60 game days, slot 0 reserved
+> - Overwrite confirmation modal when saving to existing slot
+
+**Save Slot Metadata (displayed in UI):**
+```cpp
+struct SaveSlotInfo {
+    int slotIndex;
+    bool isEmpty;
+    SaveMetadata meta;    // day, balance, starRating, timestamp (ISO 8601)
+    std::string displayName;  // e.g., "Day 45 ★3 ₩1,234,567"
+};
+```
+
+**UI Flow:**
+```
+Pause Menu → [Save]
+  → SlotList popup (ImGui)
+    → Select slot → OverwriteConfirm? → SaveLoadSystem::save(slot)
+  → Toast: "Game Saved (Slot {n})"
+
+Main Menu → [Load Game]
+  → SlotList popup
+    → Select slot → SaveLoadSystem::load(slot)
+    → GameStateManager::transition(Playing)
+```
+
+**Auto-save:**
+- Bootstrapper subscribes to `DayChanged` → every 60 days calls `SaveLoadSystem::save(0)` (auto-save slot)
+- Silent (no modal), toast notification only
+
+### 5.27 HUD 고도화 (Sprint 5 Planned)
+
+> **Sprint 5 Planned System (TASK-05-004):**
+> - Construction toolbar: bottom HUD with Floor / Office / Residential / Commercial buttons
+> - Star rating: animated ★☆ icons in top bar
+> - Daily profit/loss indicator: green ↑ / red ↓ next to balance
+> - Toast queue: up to 3 simultaneous toasts (settlement, build, error), auto-dismiss 3s
+> - Game speed control: ×1 / ×2 / ×3 buttons in HUD
+
+**HUD Layout (ImGui):**
+```
+┌─────────────────────────────────────────────────────┐
+│ [Day 45]  ★★★☆☆   ₩1,234,567 ↑₩12,000   [⏸][×1][×2][×3] │ ← Top bar
+│                                                           │
+│              (game world)                                 │
+│                                                           │
+│  [🏢Floor] [🏢Office] [🏠Residential] [🏪Commercial]      │ ← Bottom toolbar
+└─────────────────────────────────────────────────────┘
+```
+
+**Toast System:**
+```cpp
+struct ToastMessage {
+    std::string text;
+    float remainingSeconds;
+    ToastType type;   // Info / Warning / Error
+};
+// Max 3 toasts stacked; oldest dismissed first on overflow
+```
+
+**Speed Control:**
+- `×1 / ×2 / ×3` buttons → `GameCommand::SetSpeed{n}` → `SimClock::setSpeed(n)`
+- Current speed button highlighted
+
+**Toolbar → BuildCursor integration:**
+- Clicking toolbar button sets `BuildMode` in `BuildCursor`
+- Active mode button highlighted
+
+### 5.28 TD-001 isAnchor Refactoring (Sprint 5 Planned)
+
+> **Sprint 5 Planned System (TASK-05-005):**
+> - Tech debt: `TileData.isAnchor` is overloaded — used for both tenant anchor AND elevator shaft identification
+> - Separation: `isElevatorShaft` already exists on `TileData`; ensure no code uses `isAnchor` to identify elevator shafts
+> - `GridSystem`, `EconomyEngine` audit: replace `isAnchor` elevator-shaft checks with `isElevatorShaft`
+> - `MockGridSystem` in tests: verify anchor/shaft fields consistent post-DI-005 fix
+
+**Refactoring Rules:**
+| Field | Semantics |
+|---|---|
+| `TileData.isAnchor` | True ONLY for leftmost tile of a multi-tile tenant |
+| `TileData.isElevatorShaft` | True ONLY for elevator shaft tiles |
+| These are MUTUALLY EXCLUSIVE | Elevator shaft tiles must NEVER have `isAnchor = true` |
+
+**Audit Checklist:**
+```bash
+# Any isAnchor usage near elevator-related logic = bug
+grep -rn "isAnchor" src/ include/ | grep -v "test_"
+# Cross-check with isElevatorShaft usage
+grep -rn "isElevatorShaft" src/ include/
+```
+
+**Expected changes:**
+- `EconomyEngine::payMaintenance()`: iterate elevator shafts by `isElevatorShaft`, not `isAnchor`
+- `BuildCursor` (Sprint 5): highlight logic uses `isElevatorShaft` to block tenant placement
+- No behavior change — correctness already ensured by DI-005 fix; this is naming/intent clarity
 
 ---
 
@@ -2110,6 +2324,7 @@ public:
 | 2026-03-24 | 1.4 | External review (DeepSeek R1 + GPT-5.4): (3.2) SaveLoad entity cross-reference safety — removed "automatically safe" assertion, added round-trip test requirements, clarified restore sequence (ECS first → non-ECS → derived caches); (3.3) spawnAgent() redesigned to `(reg, homeTenantId, workplaceId, optional spawnPos)` — EntityId-based; (3.4) TransportSystem internal separation guide added (ElevatorCarFSM + LookScheduler); (3.5) PixelPos x conversion formula added; (3.6) CLAUDE.md version synced to v1.3. |
 | 2026-03-26 | 1.5 | Sprint 2 구현 반영 동기화: **(1) Bootstrapper §5.15** — API 시그니처 실제 구현으로 전면 교체 (`initialize` → `init/run/shutdown/initDomainOnly`, `unique_ptr<I*>` 소유 → 직접 멤버, `#ifdef VSE_TESTING` 접근자 가드, `setupInitialScene()` 공용 헬퍼, `accumulator_` Bootstrapper 소유 명시); **(2) ISaveLoad §5.8** — `SaveMetadata.balance` `int` → `int64_t` (TASK-02-003 Cents 단위 통일); **(3) Types.h §2** — `StarRatingChangedPayload` struct 추가 (TASK-02-009: StarRatingSystem.h에서 이동, 레이어 결합 감소); **(4) SaveLoad 직렬화 전략** — EnTT snapshot → 수동 JSON + MessagePack 2-pass remap으로 확정 반영 (이미 §5.8에 있었으나 이유 보강); **(5) SimClock §5.1** — 주석/설계 메모 실제 구현과 일치 확인 (변경 없음). |
 | 2026-03-26 | 2.0 | Sprint 3 implementation sync + Sprint 4 planned systems: **(1) §5.16 NPC Stress System** — AgentComponent.stress field (0-100), satisfaction decay when stress > 50, AgentSatisfactionChanged event, leave threshold satisfaction < 10; **(2) §5.17 TenantSystem** — TenantComponent fields (anchorTile, rentPerDay, maintenanceCostPerDay, evictionCountdown), onDayChanged() rent/maintenance, eviction reset logic; **(3) §5.18 Economy Loop** — buildFloor cost deduction, collectRent/payMaintenance auto-call, InsufficientFundsEvent payload; **(4) §5.19 Stair Movement System** — ≤4 floor stair preference, 2 ticks/floor speed, elevator wait fallback; **(5) §5.20 Periodic Settlement** — daily/weekly/quarterly settlement schedule, tax deduction, ImGui toast; **(6) §5.21 Game Over + Victory** — bankruptcy 30-day rule, TOWER achievement (★5 + 100 floors + 300 NPCs); **(7) §5.22 Main Menu + State Machine** — Menu/Playing/Paused/GameOver states, ImGui fullscreen menu; **(8) §5.23 DI-005 Resolution** — MockGridSystem elevator anchor mismatch fix; **(9) Types.h updates** — InsufficientFunds event type, InsufficientFundsPayload struct, AgentComponent.stress field, TenantComponent full definition. |
+| 2026-03-27 | 2.5 | Sprint 4 구현 반영 동기화 + Sprint 5 계획 섹션 추가: **(1) §5.18 Economy Loop** — 실제 구현 반영 (TenantSystem.onDayChanged→collectRent/payMaintenance, EconomyConfig.quarterlyTaxRate 필드 추가); **(2) §5.19 Stair Movement System** — UsingStairs 전용 AgentState, 2 ticks/floor, elevatorWaitTimeout 폴백, orange 렌더링 확정; **(3) §5.20 Periodic Settlement** — EconomyConfig.quarterlyTaxRate, EventType 550~553 확정, 페이로드 구조체 동기화; **(4) §5.21 Game Over + Victory** — GameOverSystem (Layer 1) 구현 반영, consecutiveNegativeDays/massExodusDays/consecutivePositiveDays 추적, 상호배제 플래그; **(5) §5.22 Main Menu + State Machine** — GameStateManager Core Runtime 확정, canTransition() guard, 2-step NewGame 전환; **(6) §5.23 DI-005** — anonymous namespace ODR 필수화 (b051472), isElevatorShaft→isAnchor=false 확정; **(7) §5.15 Bootstrapper** — GameOverSystem + GameStateManager 멤버 추가; **(8) §5.24~5.28 Sprint 5 계획** — BuildCursor, Camera Zoom/Pan, Save/Load UI, HUD 고도화 (toolbar/toast/속도제어), TD-001 isAnchor 리팩토링 신설. |
 
 ---
 *This document is maintained by 붐 (PM). Changes require Human approval.*
