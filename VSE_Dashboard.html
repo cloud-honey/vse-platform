@@ -333,12 +333,12 @@ h1 span{color:var(--accent);}
       </div>
 
       <!-- Sprint 1 이력 카드 -->
-      <div class="sec" id="sprint1Card" style="display:none">
+      <div class="sec" id="lastSprintCard" style="display:none">
         <div class="sec-hdr">
-          <div class="sec-ttl">✅ Sprint 1 완료</div>
-          <div class="sec-cnt" id="s1Badge">S01</div>
+          <div class="sec-ttl" id="lastSprintTitle">✅ Sprint 완료</div>
+          <div class="sec-cnt" id="lastSprintBadge">—</div>
         </div>
-        <div id="sprint1Summary" style="padding:4px 0;font-size:13px;color:var(--text2);line-height:1.7;"></div>
+        <div id="lastSprintSummary" style="padding:4px 0;font-size:13px;color:var(--text2);line-height:1.7;"></div>
       </div>
 
       <!-- Escalations -->
@@ -475,9 +475,16 @@ function render(d){
     'blocked':'color:#f87171;background:rgba(248,113,113,.12);',
     'paused':'color:#fbbf24;background:rgba(251,191,36,.12);'
   };
-  const osKey=(d.overall_status||'').toLowerCase();
-  osEl.textContent=osMap[osKey]||(d.overall_status||'—').toUpperCase();
-  osEl.style.cssText=(osStyle[osKey]||'')+'border-radius:6px;padding:3px 8px;';
+  // overall_status: JSON 값 대신 현재 스프린트 태스크 상태에서 자동 계산
+  const _autoStatus = (() => {
+    const t = d.tasks || [];
+    if (!t.length) return 'planning';
+    if (t.every(x => x.status === 'done')) return 'completed';
+    if (t.some(x => x.status === 'in_progress')) return 'in_progress';
+    return 'planning'; // 전부 pending
+  })();
+  osEl.textContent = osMap[_autoStatus] || _autoStatus.toUpperCase();
+  osEl.style.cssText = (osStyle[_autoStatus]||'') + 'border-radius:6px;padding:3px 8px;';
   const dt=new Date(d.updated_at);
   const fmt=dt.toLocaleDateString('ko-KR')+' '+dt.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('updatedTime').textContent=fmt;
@@ -669,14 +676,23 @@ function render(d){
 
   /* 알약 제거 — 탭과 중복, sprintPills div 없음 */
 
-  /* Sprint 1 이력 카드 */
-  if (s1) {
-    document.getElementById('sprint1Card').style.display = '';
-    document.getElementById('sprint1Summary').innerHTML = `
-      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">완료일:</span> ${s1.completed_at}</div>
-      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">테스트:</span> ${s1.tests} ✅</div>
-      <div style="margin-bottom:6px;"><span style="color:var(--green);font-weight:600;">태스크:</span> ${s1.tasks_done}/10 완료</div>
-      <div style="color:var(--text2);font-size:12px;line-height:1.6;">${s1.highlight}</div>
+  /* 마지막 완료 스프린트 카드 — sprintDefs에서 completed=true인 마지막 스프린트 */
+  const lastDone = [...sprintDefs].reverse().find(s => s.completed);
+  if (lastDone) {
+    const card = document.getElementById('lastSprintCard');
+    card.style.display = '';
+    document.getElementById('lastSprintTitle').textContent = `✅ ${lastDone.title}`;
+    document.getElementById('lastSprintBadge').textContent = lastDone.label;
+    const lt = lastDone.tasks || [];
+    const ltDone = lt.filter(t => t.status === 'done');
+    // 마지막 커밋 / 테스트 수 (sprint_summary 또는 tasks에서 추출)
+    const lastCommit = lt.map(t=>t.commit).filter(Boolean).pop() || '—';
+    const lastTests  = lt.map(t=>t.tests).filter(Boolean).pop() || '—';
+    document.getElementById('lastSprintSummary').innerHTML = `
+      <div style="margin-bottom:5px;"><span style="color:var(--green);font-weight:600;">완료 태스크:</span> ${ltDone.length}/${lt.length}</div>
+      <div style="margin-bottom:5px;"><span style="color:var(--green);font-weight:600;">최종 테스트:</span> ${lastTests} ✅</div>
+      <div style="margin-bottom:5px;"><span style="color:var(--green);font-weight:600;">최종 커밋:</span> <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:3px;">${lastCommit}</code></div>
+      <div style="color:var(--text2);font-size:12px;line-height:1.6;">${lastDone.goal||''}</div>
     `;
   }
 
