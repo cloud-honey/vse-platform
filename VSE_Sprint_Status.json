@@ -1045,71 +1045,118 @@
       "layer": "문서",
       "status": "done",
       "difficulty": 2,
-      "notes": "Design Spec v2.0 완료. 커밋 99fa19b",
-      "qa_status": "pass"
+      "commit": "99fa19b",
+      "tests": "283",
+      "reviewer": {
+        "GPT": "Pass",
+        "Gemini": "Pass",
+        "DeepSeek": "Pass"
+      }
     },
     {
       "id": "TASK-04-001",
-      "title": "경제 루프 활성화 (임대료 자동 수집, 건설 비용 차감)",
+      "title": "경제 루프 활성화",
       "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "pending",
+      "layer": "도메인",
+      "status": "done",
       "difficulty": 3,
-      "notes": "collectRent/payMaintenance Bootstrapper 연결, 잔액 부족 시 거부"
+      "commit": "008707a",
+      "tests": "290/290",
+      "reviewer": {
+        "GPT": "Fail→반영",
+        "Gemini": "Fail→반영",
+        "DeepSeek": "Conditional Pass"
+      }
     },
     {
       "id": "TASK-04-002",
-      "title": "NPC 계단 이동 (4층 이하 계단, 5층↑ 엘리베이터)",
+      "title": "NPC 계단 이동",
       "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "pending",
+      "layer": "도메인",
+      "status": "done",
       "difficulty": 3,
-      "notes": "AgentSystem 경로 선택 로직 추가"
+      "commit": "7afb53c",
+      "tests": "297/297",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Conditional Pass"
+      }
     },
     {
       "id": "TASK-04-003",
-      "title": "정기 결산 시스템 (일/주/분기 자동 결산)",
+      "title": "정기 결산 시스템",
       "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "pending",
+      "layer": "도메인",
+      "status": "done",
       "difficulty": 2,
-      "notes": "EconomyEngine::update 확장, 분기 세금/별점 재평가"
+      "commit": "c12be8b",
+      "tests": "303/303",
+      "reviewer": {
+        "GPT": "Fail→반영",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Approved"
+      }
     },
     {
       "id": "TASK-04-004",
-      "title": "게임 오버 + TOWER 달성 조건",
+      "title": "게임 오버 + TOWER 달성",
       "assignee": "붐2",
-      "layer": "Layer 1",
-      "status": "pending",
+      "layer": "도메인",
+      "status": "done",
       "difficulty": 2,
-      "notes": "파산(잔액 < 0 × 30일), TOWER 달성 모달"
+      "commit": "b08a779",
+      "tests": "310/310",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Pass"
+      }
     },
     {
       "id": "TASK-04-005",
-      "title": "메인 메뉴 + 새 게임/불러오기/일시정지",
+      "title": "메인 메뉴 + 상태 머신",
       "assignee": "붐2",
-      "layer": "Layer 3",
-      "status": "pending",
+      "layer": "코어",
+      "status": "done",
       "difficulty": 3,
-      "notes": "게임 상태 머신 (Menu→Playing→Paused→GameOver)"
+      "commit": "6fa4593",
+      "tests": "315/315",
+      "reviewer": {
+        "GPT": "Pass",
+        "Gemini": "Pass",
+        "DeepSeek": "Pass"
+      }
     },
     {
       "id": "TASK-04-006",
-      "title": "DI-005 해결 + 테스트 품질 개선",
+      "title": "DI-005 해결 + 테스트 품질",
       "assignee": "붐2",
       "layer": "테스트",
-      "status": "pending",
+      "status": "done",
       "difficulty": 2,
-      "notes": "MockGridSystem 엘리베이터 앵커 불일치, HUD 통합 테스트"
+      "commit": "1cfbbb5",
+      "tests": "320/320",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Conditional Pass"
+      }
     },
     {
       "id": "TASK-04-007",
-      "title": "통합 + Sprint 4 macOS + Windows 빌드",
+      "title": "통합 + Sprint 4 Windows 빌드",
       "assignee": "붐",
       "layer": "전체",
-      "status": "pending",
+      "status": "done",
       "difficulty": 4,
-      "notes": "맥미니 네이티브 빌드 포함"
+      "commit": "b4a092d",
+      "tests": "329/329",
+      "reviewer": {
+        "GPT": "Conditional Pass",
+        "Gemini": "Conditional Pass",
+        "DeepSeek": "Conditional Pass"
+      }
     }
   ],
   "roadmap": [
