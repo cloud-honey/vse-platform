@@ -699,6 +699,11 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 // registry_.clear() 이후 싱글턴 컴포넌트 재초기화
                 if (starRating_) starRating_->initRegistry(registry_);
                 setupInitialScene();
+                // 카메라 초기 위치: 로비(1층) 중앙에서 약간 위 (4층 높이)
+                camera_.centerOn(
+                    static_cast<float>(grid_->floorWidth() * tileSizePx_ / 2),
+                    static_cast<float>(4 * tileSizePx_)
+                );
                 gameState_.transition(GameState::Playing);  // MainMenu → Playing
                 simClock_.resume();
                 spdlog::info("New game started from state reset");

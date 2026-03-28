@@ -212,8 +212,8 @@ void InputMapper::processHeldKeys(std::vector<GameCommand>& outCommands)
     float dx = 0, dy = 0;
     if (keys[SDL_SCANCODE_LEFT]  || keys[SDL_SCANCODE_A]) dx -= panSpeed_;
     if (keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_D]) dx += panSpeed_;
-    if (keys[SDL_SCANCODE_UP]    || keys[SDL_SCANCODE_W]) dy -= panSpeed_;
-    if (keys[SDL_SCANCODE_DOWN]  || keys[SDL_SCANCODE_S]) dy += panSpeed_;
+    if (keys[SDL_SCANCODE_UP]    || keys[SDL_SCANCODE_W]) dy += panSpeed_;
+    if (keys[SDL_SCANCODE_DOWN]  || keys[SDL_SCANCODE_S]) dy -= panSpeed_;
 
     if (dx != 0.0f || dy != 0.0f) {
         outCommands.push_back(GameCommand::makeCameraPan(dx, dy));
