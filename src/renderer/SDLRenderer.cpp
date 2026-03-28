@@ -184,7 +184,19 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     drawFloorLabels(frame, camera);
 
     // ImGui 프레임 — NewFrame/Render는 매 프레임 호출 필수
-    // (Gemini 검토 반영: drawDebugInfo=false 시에도 내부 타이머/상태 정상 유지)
+    // ImGui_ImplSDL2_ProcessEvent는 NewFrame 직전에 호출되어야 버튼 클릭이 정상 작동
+    {
+        SDL_Event e;
+        // 이벤트 큐를 peek하여 ImGui에 전달 (실제 소비는 Bootstrapper에서)
+        // SDL_PeepEvents: SDL_PEEKEVENT로 큐 유지하면서 ImGui에 전달
+        SDL_PumpEvents();
+        SDL_Event peekEvents[32];
+        int n = SDL_PeepEvents(peekEvents, 32, SDL_PEEKEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+        for (int i = 0; i < n; ++i) {
+            ImGui_ImplSDL2_ProcessEvent(&peekEvents[i]);
+        }
+        (void)e;
+    }
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
