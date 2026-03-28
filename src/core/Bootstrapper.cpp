@@ -696,6 +696,8 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 }
                 registry_.clear();
                 if (gameOver_) gameOver_->reset();
+                // registry_.clear() 이후 싱글턴 컴포넌트 재초기화
+                if (starRating_) starRating_->initRegistry(registry_);
                 setupInitialScene();
                 gameState_.transition(GameState::Playing);  // MainMenu → Playing
                 simClock_.resume();
@@ -738,6 +740,7 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
             spdlog::info("Reset Game command received");
             // Clear registry and reinitialize
             registry_.clear();
+            if (starRating_) starRating_->initRegistry(registry_);
             setupInitialScene();
             gameState_.transition(GameState::MainMenu);
             simClock_.pause();
