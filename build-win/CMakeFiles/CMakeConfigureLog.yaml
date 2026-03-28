@@ -3188,3 +3188,608 @@ events:
         - "/"
       CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
 ...
+
+---
+events:
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "cmake/FetchDependencies.cmake:24 (find_package)"
+      - "CMakeLists.txt:34 (include)"
+    name: "SDL2_mixer"
+    configs:
+      -
+        filename: "SDL2_mixer.cps"
+        kind: "cps"
+      -
+        filename: "sdl2_mixer.cps"
+        kind: "cps"
+      -
+        filename: "SDL2_mixerConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "sdl2_mixer-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "SDL2_mixer"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles/pkgRedirects/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/share/pnpm/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.npm-global/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/SDL2_mixerConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sdl2_mixer-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/lib/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/lib/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cps/SDL2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cps/sdl2_mixer.cps"
+        mode: "cps"
+        reason: "no_exist"
+    found: null
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      CMAKE_MODULE_PATH:
+        - "/home/sykim/.openclaw/workspace/vse-platform/cmake"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/share/cmake-4.3/Modules/FindPkgConfig.cmake:517 (find_program)"
+      - "cmake/FetchDependencies.cmake:26 (find_package)"
+      - "CMakeLists.txt:34 (include)"
+    mode: "program"
+    variable: "PKG_CONFIG_EXECUTABLE"
+    description: "pkg-config executable"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "pkg-config"
+      - "pkgconf"
+    candidate_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/"
+      - "/usr/local/bin/"
+      - "/home/sykim/.local/bin/"
+      - "/home/sykim/.local/share/pnpm/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/home/sykim/.nvm/current/bin/"
+      - "/home/sykim/.npm-global/bin/"
+      - "/home/sykim/bin/"
+      - "/home/sykim/.volta/bin/"
+      - "/home/sykim/.asdf/shims/"
+      - "/home/sykim/.bun/bin/"
+      - "/home/sykim/.fnm/current/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/sbin/"
+      - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/bin/"
+      - "/sbin/"
+    searched_directories:
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/pkg-config"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/bin/pkgconf"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/pkg-config"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/sbin/pkgconf"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/pkg-config"
+      - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32/pkgconf"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/pkg-config"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/bin/pkgconf"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/pkg-config"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/sbin/pkgconf"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/pkg-config"
+      - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/pkgconf"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/pkg-config"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/bin/pkgconf"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/pkg-config"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/sbin/pkgconf"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/pkg-config"
+      - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/pkgconf"
+      - "/usr/local/bin/pkg-config"
+      - "/usr/local/bin/pkgconf"
+      - "/home/sykim/.local/bin/pkg-config"
+      - "/home/sykim/.local/bin/pkgconf"
+      - "/home/sykim/.local/share/pnpm/pkg-config"
+      - "/home/sykim/.local/share/pnpm/pkgconf"
+    found: "/usr/bin/pkg-config"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/tmp/SDL2-2.30.10/x86_64-w64-mingw32"
+        - "/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32"
+        - "/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+      ENV{PATH}:
+        - "/usr/local/bin"
+        - "/home/sykim/.local/bin"
+        - "/home/sykim/.local/share/pnpm"
+        - "/usr/bin"
+        - "/bin"
+        - "/home/sykim/.nvm/current/bin"
+        - "/home/sykim/.npm-global/bin"
+        - "/home/sykim/bin"
+        - "/home/sykim/.volta/bin"
+        - "/home/sykim/.asdf/shims"
+        - "/home/sykim/.bun/bin"
+        - "/home/sykim/.fnm/current/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/home/sykim/.local/lib/python3.12/site-packages/cmake/data"
+        - "/usr/local"
+        - "/"
+      CMAKE_FIND_ROOT_PATH: "/tmp/SDL2-2.30.10/x86_64-w64-mingw32;/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32;/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32"
+...

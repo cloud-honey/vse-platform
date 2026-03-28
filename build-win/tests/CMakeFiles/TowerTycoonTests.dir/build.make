@@ -912,6 +912,66 @@ tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.s: cmake
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.s"
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sykim/.openclaw/workspace/vse-platform/src/renderer/SaveLoadPanel.cpp -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.s
 
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/flags.make
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj: /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AudioEngine.cpp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj -MF CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj.d -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AudioEngine.cpp
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.i"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AudioEngine.cpp > CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.i
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.s"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sykim/.openclaw/workspace/vse-platform/src/renderer/AudioEngine.cpp -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.s
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/flags.make
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj: /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DayNightCycle.cpp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj -MF CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj.d -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DayNightCycle.cpp
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.i"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DayNightCycle.cpp > CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.i
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.s"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sykim/.openclaw/workspace/vse-platform/src/renderer/DayNightCycle.cpp -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.s
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/flags.make
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj: /home/sykim/.openclaw/workspace/vse-platform/src/renderer/TileRenderer.cpp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj -MF CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj.d -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/TileRenderer.cpp
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.i"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sykim/.openclaw/workspace/vse-platform/src/renderer/TileRenderer.cpp > CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.i
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.s"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sykim/.openclaw/workspace/vse-platform/src/renderer/TileRenderer.cpp -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.s
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/flags.make
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/includes_CXX.rsp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj: /home/sykim/.openclaw/workspace/vse-platform/src/renderer/ElevatorRenderer.cpp
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj: tests/CMakeFiles/TowerTycoonTests.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj -MF CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj.d -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj -c /home/sykim/.openclaw/workspace/vse-platform/src/renderer/ElevatorRenderer.cpp
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.i"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sykim/.openclaw/workspace/vse-platform/src/renderer/ElevatorRenderer.cpp > CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.i
+
+tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.s"
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /usr/bin/x86_64-w64-mingw32-g++-posix $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sykim/.openclaw/workspace/vse-platform/src/renderer/ElevatorRenderer.cpp -o CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.s
+
 # Object files for target TowerTycoonTests
 TowerTycoonTests_OBJECTS = \
 "CMakeFiles/TowerTycoonTests.dir/PlaceholderTest.cpp.obj" \
@@ -969,7 +1029,11 @@ TowerTycoonTests_OBJECTS = \
 "CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.obj" \
 "CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.obj" \
 "CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.obj" \
-"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.obj"
+"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.obj" \
+"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj" \
+"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj" \
+"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj" \
+"CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj"
 
 # External object files for target TowerTycoonTests
 TowerTycoonTests_EXTERNAL_OBJECTS =
@@ -1030,6 +1094,10 @@ tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/rendere
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/FontManager.cpp.obj
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/BuildCursor.cpp.obj
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SaveLoadPanel.cpp.obj
+tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj
+tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj
+tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj
+tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/build.make
 tests/TowerTycoonTests.exe: _deps/catch2-build/src/libCatch2Main.a
 tests/TowerTycoonTests.exe: _deps/spdlog-build/libspdlog.a
@@ -1041,9 +1109,8 @@ tests/TowerTycoonTests.exe: /tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/libSDL2.dll
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/linkLibs.rsp
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/objects1.rsp
 tests/TowerTycoonTests.exe: tests/CMakeFiles/TowerTycoonTests.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Linking CXX executable TowerTycoonTests.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/sykim/.openclaw/workspace/vse-platform/build-win/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Linking CXX executable TowerTycoonTests.exe"
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/TowerTycoonTests.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/sykim/.openclaw/workspace/vse-platform/build-win/tests && /home/sykim/.local/lib/python3.12/site-packages/cmake/data/bin/cmake -D TEST_TARGET=TowerTycoonTests -D TEST_EXECUTABLE=/home/sykim/.openclaw/workspace/vse-platform/build-win/tests/TowerTycoonTests.exe -D TEST_EXECUTOR= -D TEST_WORKING_DIR=/home/sykim/.openclaw/workspace/vse-platform/build-win/tests -D TEST_SPEC= -D TEST_EXTRA_ARGS= -D TEST_PROPERTIES= -D TEST_PREFIX= -D TEST_SUFFIX= -D TEST_LIST=TowerTycoonTests_TESTS -D TEST_REPORTER= -D TEST_OUTPUT_DIR= -D TEST_OUTPUT_PREFIX= -D TEST_OUTPUT_SUFFIX= -D TEST_DL_PATHS= -D CTEST_FILE=/home/sykim/.openclaw/workspace/vse-platform/build-win/tests/TowerTycoonTests-b12d07c_tests.cmake -P /home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/extras/CatchAddTests.cmake
 
 # Rule to build all files generated by this target.
 tests/CMakeFiles/TowerTycoonTests.dir/build: tests/TowerTycoonTests.exe

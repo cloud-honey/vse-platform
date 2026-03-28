@@ -1165,6 +1165,30 @@ src/renderer/AnimationSystem.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AnimationSystem.cpp.s
 .PHONY : src/renderer/AnimationSystem.cpp.s
 
+src/renderer/AudioEngine.obj: src/renderer/AudioEngine.cpp.obj
+.PHONY : src/renderer/AudioEngine.obj
+
+# target to build an object file
+src/renderer/AudioEngine.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AudioEngine.cpp.obj
+.PHONY : src/renderer/AudioEngine.cpp.obj
+
+src/renderer/AudioEngine.i: src/renderer/AudioEngine.cpp.i
+.PHONY : src/renderer/AudioEngine.i
+
+# target to preprocess a source file
+src/renderer/AudioEngine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AudioEngine.cpp.i
+.PHONY : src/renderer/AudioEngine.cpp.i
+
+src/renderer/AudioEngine.s: src/renderer/AudioEngine.cpp.s
+.PHONY : src/renderer/AudioEngine.s
+
+# target to generate assembly for a file
+src/renderer/AudioEngine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/AudioEngine.cpp.s
+.PHONY : src/renderer/AudioEngine.cpp.s
+
 src/renderer/BuildCursor.obj: src/renderer/BuildCursor.cpp.obj
 .PHONY : src/renderer/BuildCursor.obj
 
@@ -1213,6 +1237,30 @@ src/renderer/Camera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/Camera.cpp.s
 .PHONY : src/renderer/Camera.cpp.s
 
+src/renderer/DayNightCycle.obj: src/renderer/DayNightCycle.cpp.obj
+.PHONY : src/renderer/DayNightCycle.obj
+
+# target to build an object file
+src/renderer/DayNightCycle.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/DayNightCycle.cpp.obj
+.PHONY : src/renderer/DayNightCycle.cpp.obj
+
+src/renderer/DayNightCycle.i: src/renderer/DayNightCycle.cpp.i
+.PHONY : src/renderer/DayNightCycle.i
+
+# target to preprocess a source file
+src/renderer/DayNightCycle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/DayNightCycle.cpp.i
+.PHONY : src/renderer/DayNightCycle.cpp.i
+
+src/renderer/DayNightCycle.s: src/renderer/DayNightCycle.cpp.s
+.PHONY : src/renderer/DayNightCycle.s
+
+# target to generate assembly for a file
+src/renderer/DayNightCycle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/DayNightCycle.cpp.s
+.PHONY : src/renderer/DayNightCycle.cpp.s
+
 src/renderer/DebugPanel.obj: src/renderer/DebugPanel.cpp.obj
 .PHONY : src/renderer/DebugPanel.obj
 
@@ -1236,6 +1284,30 @@ src/renderer/DebugPanel.s: src/renderer/DebugPanel.cpp.s
 src/renderer/DebugPanel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/DebugPanel.cpp.s
 .PHONY : src/renderer/DebugPanel.cpp.s
+
+src/renderer/ElevatorRenderer.obj: src/renderer/ElevatorRenderer.cpp.obj
+.PHONY : src/renderer/ElevatorRenderer.obj
+
+# target to build an object file
+src/renderer/ElevatorRenderer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/ElevatorRenderer.cpp.obj
+.PHONY : src/renderer/ElevatorRenderer.cpp.obj
+
+src/renderer/ElevatorRenderer.i: src/renderer/ElevatorRenderer.cpp.i
+.PHONY : src/renderer/ElevatorRenderer.i
+
+# target to preprocess a source file
+src/renderer/ElevatorRenderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/ElevatorRenderer.cpp.i
+.PHONY : src/renderer/ElevatorRenderer.cpp.i
+
+src/renderer/ElevatorRenderer.s: src/renderer/ElevatorRenderer.cpp.s
+.PHONY : src/renderer/ElevatorRenderer.s
+
+# target to generate assembly for a file
+src/renderer/ElevatorRenderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/ElevatorRenderer.cpp.s
+.PHONY : src/renderer/ElevatorRenderer.cpp.s
 
 src/renderer/FontManager.obj: src/renderer/FontManager.cpp.obj
 .PHONY : src/renderer/FontManager.obj
@@ -1405,6 +1477,30 @@ src/renderer/SpriteSheet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/SpriteSheet.cpp.s
 .PHONY : src/renderer/SpriteSheet.cpp.s
 
+src/renderer/TileRenderer.obj: src/renderer/TileRenderer.cpp.obj
+.PHONY : src/renderer/TileRenderer.obj
+
+# target to build an object file
+src/renderer/TileRenderer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/TileRenderer.cpp.obj
+.PHONY : src/renderer/TileRenderer.cpp.obj
+
+src/renderer/TileRenderer.i: src/renderer/TileRenderer.cpp.i
+.PHONY : src/renderer/TileRenderer.i
+
+# target to preprocess a source file
+src/renderer/TileRenderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/TileRenderer.cpp.i
+.PHONY : src/renderer/TileRenderer.cpp.i
+
+src/renderer/TileRenderer.s: src/renderer/TileRenderer.cpp.s
+.PHONY : src/renderer/TileRenderer.s
+
+# target to generate assembly for a file
+src/renderer/TileRenderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/TowerTycoon.dir/build.make CMakeFiles/TowerTycoon.dir/src/renderer/TileRenderer.cpp.s
+.PHONY : src/renderer/TileRenderer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1521,15 +1617,24 @@ help:
 	@echo "... src/renderer/AnimationSystem.obj"
 	@echo "... src/renderer/AnimationSystem.i"
 	@echo "... src/renderer/AnimationSystem.s"
+	@echo "... src/renderer/AudioEngine.obj"
+	@echo "... src/renderer/AudioEngine.i"
+	@echo "... src/renderer/AudioEngine.s"
 	@echo "... src/renderer/BuildCursor.obj"
 	@echo "... src/renderer/BuildCursor.i"
 	@echo "... src/renderer/BuildCursor.s"
 	@echo "... src/renderer/Camera.obj"
 	@echo "... src/renderer/Camera.i"
 	@echo "... src/renderer/Camera.s"
+	@echo "... src/renderer/DayNightCycle.obj"
+	@echo "... src/renderer/DayNightCycle.i"
+	@echo "... src/renderer/DayNightCycle.s"
 	@echo "... src/renderer/DebugPanel.obj"
 	@echo "... src/renderer/DebugPanel.i"
 	@echo "... src/renderer/DebugPanel.s"
+	@echo "... src/renderer/ElevatorRenderer.obj"
+	@echo "... src/renderer/ElevatorRenderer.i"
+	@echo "... src/renderer/ElevatorRenderer.s"
 	@echo "... src/renderer/FontManager.obj"
 	@echo "... src/renderer/FontManager.i"
 	@echo "... src/renderer/FontManager.s"
@@ -1551,6 +1656,9 @@ help:
 	@echo "... src/renderer/SpriteSheet.obj"
 	@echo "... src/renderer/SpriteSheet.i"
 	@echo "... src/renderer/SpriteSheet.s"
+	@echo "... src/renderer/TileRenderer.obj"
+	@echo "... src/renderer/TileRenderer.i"
+	@echo "... src/renderer/TileRenderer.s"
 .PHONY : help
 
 

@@ -64,7 +64,7 @@
       "title": "건물 외벽 렌더링",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "pending",
+      "status": "done",
       "difficulty": 1,
       "notes": "building_facade.png — 에셋 필요"
     },

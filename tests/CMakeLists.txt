@@ -91,4 +91,9 @@ target_compile_definitions(TowerTycoonTests PRIVATE
 
 include(CTest)
 include(Catch)
-catch_discover_tests(TowerTycoonTests)
+# DISCOVERY_MODE PRE_TEST: 크로스컴파일(Windows) 시 exe 실행 없이 테스트 등록
+if(CMAKE_CROSSCOMPILING)
+    catch_discover_tests(TowerTycoonTests DISCOVERY_MODE PRE_TEST)
+else()
+    catch_discover_tests(TowerTycoonTests)
+endif()

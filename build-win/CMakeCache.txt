@@ -491,7 +491,7 @@ CMAKE_SYSTEM_NAME:UNINITIALIZED=Windows
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
 //No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=../cmake/mingw-toolchain.cmake
+CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=../cmake/toolchain-mingw.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -709,11 +709,20 @@ MSGPACK_USE_STD_VARIANT_ADAPTOR:BOOL=OFF
 //Use Boost X3 parse
 MSGPACK_USE_X3_PARSE:BOOL=OFF
 
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //The directory containing a CMake configuration file for SDL2.
 SDL2_DIR:PATH=/tmp/SDL2-2.30.10/x86_64-w64-mingw32/lib/cmake/SDL2
 
 //The directory containing a CMake configuration file for SDL2_image.
 SDL2_image_DIR:PATH=/tmp/SDL2_image-2.8.4/x86_64-w64-mingw32/lib/cmake/SDL2_image
+
+//The directory containing a CMake configuration file for SDL2_mixer.
+SDL2_mixer_DIR:PATH=SDL2_mixer_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for SDL2_ttf.
 SDL2_ttf_DIR:PATH=/tmp/SDL2_ttf-2.22.0/x86_64-w64-mingw32/lib/cmake/SDL2_ttf
@@ -813,6 +822,9 @@ TowerTycoon_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 TowerTycoon_SOURCE_DIR:STATIC=/home/sykim/.openclaw/workspace/vse-platform
+
+//Audio support disabled
+VSE_HAS_AUDIO:BOOL=0
 
 //Value Computed by CMake
 msgpack-cxx_BINARY_DIR:STATIC=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/msgpack-build
@@ -1177,10 +1189,40 @@ MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_SUPPRESSIONS_FILE
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
 NLOHMANN_JSON_CONFIG_INSTALL_DIR:INTERNAL=share/cmake/nlohmann_json
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+SDL2_MIXER_CFLAGS:INTERNAL=
+SDL2_MIXER_CFLAGS_I:INTERNAL=
+SDL2_MIXER_CFLAGS_OTHER:INTERNAL=
+SDL2_MIXER_FOUND:INTERNAL=
+SDL2_MIXER_INCLUDEDIR:INTERNAL=
+SDL2_MIXER_LIBDIR:INTERNAL=
+SDL2_MIXER_LIBS:INTERNAL=
+SDL2_MIXER_LIBS_L:INTERNAL=
+SDL2_MIXER_LIBS_OTHER:INTERNAL=
+SDL2_MIXER_LIBS_PATHS:INTERNAL=
+SDL2_MIXER_MODULE_NAME:INTERNAL=
+SDL2_MIXER_PREFIX:INTERNAL=
+SDL2_MIXER_SDL2_mixer_INCLUDEDIR:INTERNAL=
+SDL2_MIXER_SDL2_mixer_LIBDIR:INTERNAL=
+SDL2_MIXER_SDL2_mixer_PREFIX:INTERNAL=
+SDL2_MIXER_SDL2_mixer_VERSION:INTERNAL=
+SDL2_MIXER_STATIC_CFLAGS:INTERNAL=
+SDL2_MIXER_STATIC_CFLAGS_I:INTERNAL=
+SDL2_MIXER_STATIC_CFLAGS_OTHER:INTERNAL=
+SDL2_MIXER_STATIC_LIBDIR:INTERNAL=
+SDL2_MIXER_STATIC_LIBS:INTERNAL=
+SDL2_MIXER_STATIC_LIBS_L:INTERNAL=
+SDL2_MIXER_STATIC_LIBS_OTHER:INTERNAL=
+SDL2_MIXER_STATIC_LIBS_PATHS:INTERNAL=
+SDL2_MIXER_VERSION:INTERNAL=
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
 //Catch2 full path to CatchAddTests.cmake helper file
 _CATCH_DISCOVER_TESTS_SCRIPT:INTERNAL=/home/sykim/.openclaw/workspace/vse-platform/build-win/_deps/catch2-src/extras/CatchAddTests.cmake
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
+__pkg_config_checked_SDL2_MIXER:INTERNAL=1
 

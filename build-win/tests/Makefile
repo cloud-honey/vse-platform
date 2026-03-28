@@ -961,6 +961,30 @@ __/src/renderer/AnimationSystem.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AnimationSystem.cpp.s
 .PHONY : __/src/renderer/AnimationSystem.cpp.s
 
+__/src/renderer/AudioEngine.obj: __/src/renderer/AudioEngine.cpp.obj
+.PHONY : __/src/renderer/AudioEngine.obj
+
+# target to build an object file
+__/src/renderer/AudioEngine.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.obj
+.PHONY : __/src/renderer/AudioEngine.cpp.obj
+
+__/src/renderer/AudioEngine.i: __/src/renderer/AudioEngine.cpp.i
+.PHONY : __/src/renderer/AudioEngine.i
+
+# target to preprocess a source file
+__/src/renderer/AudioEngine.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.i
+.PHONY : __/src/renderer/AudioEngine.cpp.i
+
+__/src/renderer/AudioEngine.s: __/src/renderer/AudioEngine.cpp.s
+.PHONY : __/src/renderer/AudioEngine.s
+
+# target to generate assembly for a file
+__/src/renderer/AudioEngine.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/AudioEngine.cpp.s
+.PHONY : __/src/renderer/AudioEngine.cpp.s
+
 __/src/renderer/BuildCursor.obj: __/src/renderer/BuildCursor.cpp.obj
 .PHONY : __/src/renderer/BuildCursor.obj
 
@@ -1009,6 +1033,30 @@ __/src/renderer/Camera.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/Camera.cpp.s
 .PHONY : __/src/renderer/Camera.cpp.s
 
+__/src/renderer/DayNightCycle.obj: __/src/renderer/DayNightCycle.cpp.obj
+.PHONY : __/src/renderer/DayNightCycle.obj
+
+# target to build an object file
+__/src/renderer/DayNightCycle.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.obj
+.PHONY : __/src/renderer/DayNightCycle.cpp.obj
+
+__/src/renderer/DayNightCycle.i: __/src/renderer/DayNightCycle.cpp.i
+.PHONY : __/src/renderer/DayNightCycle.i
+
+# target to preprocess a source file
+__/src/renderer/DayNightCycle.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.i
+.PHONY : __/src/renderer/DayNightCycle.cpp.i
+
+__/src/renderer/DayNightCycle.s: __/src/renderer/DayNightCycle.cpp.s
+.PHONY : __/src/renderer/DayNightCycle.s
+
+# target to generate assembly for a file
+__/src/renderer/DayNightCycle.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DayNightCycle.cpp.s
+.PHONY : __/src/renderer/DayNightCycle.cpp.s
+
 __/src/renderer/DebugPanel.obj: __/src/renderer/DebugPanel.cpp.obj
 .PHONY : __/src/renderer/DebugPanel.obj
 
@@ -1032,6 +1080,30 @@ __/src/renderer/DebugPanel.s: __/src/renderer/DebugPanel.cpp.s
 __/src/renderer/DebugPanel.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/DebugPanel.cpp.s
 .PHONY : __/src/renderer/DebugPanel.cpp.s
+
+__/src/renderer/ElevatorRenderer.obj: __/src/renderer/ElevatorRenderer.cpp.obj
+.PHONY : __/src/renderer/ElevatorRenderer.obj
+
+# target to build an object file
+__/src/renderer/ElevatorRenderer.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.obj
+.PHONY : __/src/renderer/ElevatorRenderer.cpp.obj
+
+__/src/renderer/ElevatorRenderer.i: __/src/renderer/ElevatorRenderer.cpp.i
+.PHONY : __/src/renderer/ElevatorRenderer.i
+
+# target to preprocess a source file
+__/src/renderer/ElevatorRenderer.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.i
+.PHONY : __/src/renderer/ElevatorRenderer.cpp.i
+
+__/src/renderer/ElevatorRenderer.s: __/src/renderer/ElevatorRenderer.cpp.s
+.PHONY : __/src/renderer/ElevatorRenderer.s
+
+# target to generate assembly for a file
+__/src/renderer/ElevatorRenderer.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/ElevatorRenderer.cpp.s
+.PHONY : __/src/renderer/ElevatorRenderer.cpp.s
 
 __/src/renderer/FontManager.obj: __/src/renderer/FontManager.cpp.obj
 .PHONY : __/src/renderer/FontManager.obj
@@ -1200,6 +1272,30 @@ __/src/renderer/SpriteSheet.s: __/src/renderer/SpriteSheet.cpp.s
 __/src/renderer/SpriteSheet.cpp.s:
 	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/SpriteSheet.cpp.s
 .PHONY : __/src/renderer/SpriteSheet.cpp.s
+
+__/src/renderer/TileRenderer.obj: __/src/renderer/TileRenderer.cpp.obj
+.PHONY : __/src/renderer/TileRenderer.obj
+
+# target to build an object file
+__/src/renderer/TileRenderer.cpp.obj:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.obj
+.PHONY : __/src/renderer/TileRenderer.cpp.obj
+
+__/src/renderer/TileRenderer.i: __/src/renderer/TileRenderer.cpp.i
+.PHONY : __/src/renderer/TileRenderer.i
+
+# target to preprocess a source file
+__/src/renderer/TileRenderer.cpp.i:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.i
+.PHONY : __/src/renderer/TileRenderer.cpp.i
+
+__/src/renderer/TileRenderer.s: __/src/renderer/TileRenderer.cpp.s
+.PHONY : __/src/renderer/TileRenderer.s
+
+# target to generate assembly for a file
+__/src/renderer/TileRenderer.cpp.s:
+	cd /home/sykim/.openclaw/workspace/vse-platform/build-win && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/TowerTycoonTests.dir/build.make tests/CMakeFiles/TowerTycoonTests.dir/__/src/renderer/TileRenderer.cpp.s
+.PHONY : __/src/renderer/TileRenderer.cpp.s
 
 test_AgentElevator.obj: test_AgentElevator.cpp.obj
 .PHONY : test_AgentElevator.obj
@@ -2011,15 +2107,24 @@ help:
 	@echo "... __/src/renderer/AnimationSystem.obj"
 	@echo "... __/src/renderer/AnimationSystem.i"
 	@echo "... __/src/renderer/AnimationSystem.s"
+	@echo "... __/src/renderer/AudioEngine.obj"
+	@echo "... __/src/renderer/AudioEngine.i"
+	@echo "... __/src/renderer/AudioEngine.s"
 	@echo "... __/src/renderer/BuildCursor.obj"
 	@echo "... __/src/renderer/BuildCursor.i"
 	@echo "... __/src/renderer/BuildCursor.s"
 	@echo "... __/src/renderer/Camera.obj"
 	@echo "... __/src/renderer/Camera.i"
 	@echo "... __/src/renderer/Camera.s"
+	@echo "... __/src/renderer/DayNightCycle.obj"
+	@echo "... __/src/renderer/DayNightCycle.i"
+	@echo "... __/src/renderer/DayNightCycle.s"
 	@echo "... __/src/renderer/DebugPanel.obj"
 	@echo "... __/src/renderer/DebugPanel.i"
 	@echo "... __/src/renderer/DebugPanel.s"
+	@echo "... __/src/renderer/ElevatorRenderer.obj"
+	@echo "... __/src/renderer/ElevatorRenderer.i"
+	@echo "... __/src/renderer/ElevatorRenderer.s"
 	@echo "... __/src/renderer/FontManager.obj"
 	@echo "... __/src/renderer/FontManager.i"
 	@echo "... __/src/renderer/FontManager.s"
@@ -2041,6 +2146,9 @@ help:
 	@echo "... __/src/renderer/SpriteSheet.obj"
 	@echo "... __/src/renderer/SpriteSheet.i"
 	@echo "... __/src/renderer/SpriteSheet.s"
+	@echo "... __/src/renderer/TileRenderer.obj"
+	@echo "... __/src/renderer/TileRenderer.i"
+	@echo "... __/src/renderer/TileRenderer.s"
 	@echo "... test_AgentElevator.obj"
 	@echo "... test_AgentElevator.i"
 	@echo "... test_AgentElevator.s"
