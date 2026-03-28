@@ -472,6 +472,21 @@ void Bootstrapper::run() {
             }
         }
         
+        // 메뉴 버튼 액션 처리 (ImGui WantCaptureKeyboard 우회)
+        // 1=NewGame, 2=LoadGame, 3=Quit, 4=Resume, 5=Save, 6=MainMenu
+        int pendingMenuAction = 0;
+        if (sdlRenderer_.checkPendingMenuAction(pendingMenuAction)) {
+            switch (pendingMenuAction) {
+                case 1: commands.push_back(GameCommand::makeNewGame());   break;
+                case 2: commands.push_back(GameCommand::makeLoadGame());  break;
+                case 3: commands.push_back(GameCommand::makeQuit());      break;
+                case 4: commands.push_back(GameCommand::makeTogglePause()); break;
+                case 5: commands.push_back(GameCommand::makeSaveGame());  break;
+                case 6: commands.push_back(GameCommand::makeTransitionState(static_cast<int>(GameState::MainMenu))); break;
+                default: break;
+            }
+        }
+
         // TASK-05-004: Check for speed change from HUD speed buttons
         int pendingSpeed = -1;
         if (sdlRenderer_.checkPendingSpeedChange(pendingSpeed) && pendingSpeed > 0) {

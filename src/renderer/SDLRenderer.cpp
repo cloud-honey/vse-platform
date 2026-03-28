@@ -584,36 +584,21 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                // This will be handled by InputMapper via SDL events
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_n; // Use N key for New Game
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 1;
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Load Game", ImVec2(buttonWidth, buttonHeight))) {
-                // Use L key for Load Game
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_l;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 2;
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                // Use Q key for Quit
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_q;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 3;
             }
             break;
         }
@@ -641,48 +626,28 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Resume", ImVec2(buttonWidth, buttonHeight))) {
-                // ESC to resume (same as toggle pause)
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_ESCAPE;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 4;  // Resume
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Save", ImVec2(buttonWidth, buttonHeight))) {
-                // Use S key for Save
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_s;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 5;  // Save
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Main Menu", ImVec2(buttonWidth, buttonHeight))) {
-                // Use M key for Main Menu
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_m;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 6;  // MainMenu
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                // Use Q key for Quit
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_q;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 3;  // Quit
             }
             break;
         }
@@ -710,24 +675,14 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                // N key for New Game
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_n;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 1;
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                // Q key for Quit
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_q;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 3;
             }
             break;
         }
@@ -762,24 +717,14 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                // N key for New Game
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_n;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 1;
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                // Q key for Quit
-                SDL_Event event;
-                event.type = SDL_KEYDOWN;
-                event.key.keysym.sym = SDLK_q;
-                event.key.repeat = 0;
-                SDL_PushEvent(&event);
+                pendingMenuAction_ = 3;
             }
             break;
         }
@@ -823,6 +768,16 @@ bool SDLRenderer::checkPendingLoad(int& outSlotIndex)
     if (pendingLoadSlot_ >= 0) {
         outSlotIndex = pendingLoadSlot_;
         pendingLoadSlot_ = -1;
+        return true;
+    }
+    return false;
+}
+
+bool SDLRenderer::checkPendingMenuAction(int& outAction)
+{
+    if (pendingMenuAction_ != 0) {
+        outAction = pendingMenuAction_;
+        pendingMenuAction_ = 0;
         return true;
     }
     return false;
