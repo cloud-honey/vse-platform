@@ -41,7 +41,7 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         windowW, windowH,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
+        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
     );
     if (!window_) {
         spdlog::error("SDL_CreateWindow failed: {}", SDL_GetError());
