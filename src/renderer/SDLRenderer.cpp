@@ -221,21 +221,20 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         debugPanel_.draw(frame);
     }
 
-    // HUDPanel::draw() — 게임 HUD 렌더링
-    // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
-    hudPanel_.draw(frame);
-    
-    // Handle HUD interactions (TASK-05-004)
-    // Check for speed button clicks
-    int newSpeed = hudPanel_.drawSpeedButtons(frame.gameSpeed);
-    if (newSpeed != -1) {
-        pendingSpeedChange_ = newSpeed;
-    }
-    
-    // Check for construction toolbar clicks
-    int buildAction = hudPanel_.drawToolbar(frame.viewportH);
-    if (buildAction != 0) {
-        pendingBuildAction_ = buildAction;
+    // HUDPanel::draw() — Playing 상태에서만 렌더링 (MainMenu/Paused 등에서는 숨김)
+    if (frame.gameState == GameState::Playing) {
+        hudPanel_.draw(frame);
+        
+        // Handle HUD interactions (TASK-05-004)
+        int newSpeed = hudPanel_.drawSpeedButtons(frame.gameSpeed);
+        if (newSpeed != -1) {
+            pendingSpeedChange_ = newSpeed;
+        }
+        
+        int buildAction = hudPanel_.drawToolbar(frame.viewportH);
+        if (buildAction != 0) {
+            pendingBuildAction_ = buildAction;
+        }
     }
     
     // Handle pending toast from Bootstrapper
