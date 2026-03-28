@@ -157,14 +157,20 @@ bool Bootstrapper::init() {
         }
     });
 
+    // 게임 시간 오전 8시로 초기화 (workStartHour=9 직전)
+    simClock_.restoreState(8 * 60, 1, false);
     setupInitialScene();
 
     // ── Layer 3 초기화 (Config 기반) ────────────────────
     camera_ = Camera(windowW_, windowH_, tileSizePx_, zoomMin_, zoomMax_);
-    camera_.centerOn(
-        static_cast<float>(grid_->floorWidth() * tileSizePx_ / 2),
-        static_cast<float>(2 * tileSizePx_)
-    );
+    {
+        float visibleWorldH = windowH_ / 1.0f;
+        float lobbyOffsetY = visibleWorldH * 0.25f;
+        camera_.centerOn(
+            static_cast<float>(grid_->floorWidth() * tileSizePx_ / 2),
+            lobbyOffsetY
+        );
+    }
     inputMapper_.setPanSpeed(panSpeed_);
     float zoomStep = config_.getFloat("camera.zoomStep", 0.15f);
     inputMapper_.setZoomStep(zoomStep);
@@ -706,12 +712,21 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                 collector_->setAgentSource(agents_.get(), &registry_);
                 // registry_.clear() 이후 싱글턴 컴포넌트 재초기화
                 if (starRating_) starRating_->initRegistry(registry_);
+                // 게임 시간 오전 8시로 초기화 (workStartHour=9 직전 — NPC 곧 활성화)
+                simClock_.restoreState(8 * 60, 1, false);
                 setupInitialScene();
                 // 카메라 초기 위치: 로비(1층) 중앙에서 약간 위 (4층 높이)
-                camera_.centerOn(
-                    static_cast<float>(grid_->floorWidth() * tileSizePx_ / 2),
-                    static_cast<float>(4 * tileSizePx_)
-                );
+                // 로비가 화면 하단 25% 위치에 오도록 설정
+                // centerOn의 Y = 화면 중앙에 놓을 세계 좌표
+                // 로비(y=0) 위 약 30% 높이를 중앙에 → 로비는 화면 하단 쪽에 보임
+                {
+                    float visibleWorldH = windowH_ / 1.0f; // zoom=1 기준
+                    float lobbyOffsetY = visibleWorldH * 0.25f; // 로비를 화면 하단 25% 위에
+                    camera_.centerOn(
+                        static_cast<float>(grid_->floorWidth() * tileSizePx_ / 2),
+                        lobbyOffsetY
+                    );
+                }
                 gameState_.transition(GameState::Playing);  // MainMenu → Playing
                 simClock_.resume();
                 spdlog::info("New game started from state reset");
