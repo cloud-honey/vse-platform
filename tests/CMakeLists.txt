@@ -30,6 +30,8 @@ add_executable(TowerTycoonTests
     test_Sprint5Integration.cpp
     test_BuildCursor.cpp
     test_SaveLoadPanel.cpp
+    test_AudioEngine_Boom4.cpp
+    test_DayNightCycle_Boom4.cpp
 )
 
 target_link_libraries(TowerTycoonTests PRIVATE
