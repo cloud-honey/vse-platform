@@ -695,7 +695,15 @@ void Bootstrapper::processCommands(const std::vector<GameCommand>& cmds, bool& r
                     gameState_.transition(GameState::MainMenu);
                 }
                 registry_.clear();
-                if (gameOver_) gameOver_->reset();
+                // 도메인 시스템 전체 재생성 — grid/transport/agents 내부 상태 완전 초기화
+                grid_      = std::make_unique<GridSystem>(eventBus_, config_);
+                agents_    = std::make_unique<AgentSystem>(*grid_, eventBus_);
+                transport_ = std::make_unique<TransportSystem>(*grid_, eventBus_, config_);
+                economy_   = std::make_unique<EconomyEngine>(economyConfig_, eventBus_);
+                if (gameOver_) gameOver_ = std::make_unique<GameOverSystem>(*grid_, *agents_, eventBus_);
+                // collector도 새 grid/transport 참조로 갱신
+                collector_ = std::make_unique<RenderFrameCollector>(*grid_, *transport_, tileSizePx_);
+                collector_->setAgentSource(agents_.get(), &registry_);
                 // registry_.clear() 이후 싱글턴 컴포넌트 재초기화
                 if (starRating_) starRating_->initRegistry(registry_);
                 setupInitialScene();
