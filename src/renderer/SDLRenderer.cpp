@@ -555,6 +555,12 @@ void SDLRenderer::drawFloorLabels(const RenderFrame& frame, const Camera& camera
 }
 
 void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
+    // Playing 상태에서는 전체화면 창 생성 자체를 건너뜀
+    // 빈 전체화면 ImGui 창이 HUD/툴바 마우스 입력을 가로채는 버그 방지
+    if (frame.gameState == GameState::Playing) {
+        return;
+    }
+
     // Set up fullscreen window flags
     ImGuiWindowFlags window_flags = 
         ImGuiWindowFlags_NoDecoration | 
