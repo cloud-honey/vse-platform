@@ -461,82 +461,6 @@ void Bootstrapper::run() {
             inputMapper_.clearTenantPopupFlag();
         }
         
-        // TASK-05-001: Check for tenant selection from popup
-        int selectedTenantType = -1;
-        if (sdlRenderer_.checkTenantSelection(selectedTenantType)) {
-            // Update InputMapper's build mode with selected tenant type
-            BuildModeState currentMode = inputMapper_.getBuildMode();
-            if (currentMode.action == BuildAction::PlaceTenant) {
-                currentMode.tenantType = selectedTenantType;
-                inputMapper_.setBuildMode(currentMode);
-            }
-        }
-        
-        // TASK-05-004: Check for speed change from HUD speed buttons
-        int pendingSpeed = -1;
-        if (sdlRenderer_.checkPendingSpeedChange(pendingSpeed) && pendingSpeed > 0) {
-            GameCommand speedCmd{};
-            speedCmd.type = CommandType::SetSpeed;
-            speedCmd.setSpeed = {pendingSpeed};
-            commands.push_back(speedCmd);
-            spdlog::info("HUD speed button: {}x", pendingSpeed);
-        }
-
-        // TASK-05-004: Check for build action from HUD toolbar
-        int pendingBuildAction = 0;
-        int pendingTenantType  = 0;
-        if (sdlRenderer_.checkPendingBuildAction(pendingBuildAction, pendingTenantType)) {
-            if (pendingBuildAction == 1) {
-                // Floor mode — update InputMapper build mode
-                BuildModeState mode = inputMapper_.getBuildMode();
-                mode.action = BuildAction::BuildFloor;
-                mode.active = true;
-                inputMapper_.setBuildMode(mode);
-            } else if (pendingBuildAction >= 2 && pendingBuildAction <= 4) {
-                // Tenant mode: 2=Office, 3=Residential, 4=Commercial
-                BuildModeState mode = inputMapper_.getBuildMode();
-                mode.action = BuildAction::PlaceTenant;
-                mode.tenantType = pendingBuildAction - 2;  // 0/1/2
-                mode.active = true;
-                inputMapper_.setBuildMode(mode);
-            }
-        }
-
-        // TASK-05-003: Check for pending save/load slots
-        int pendingSaveSlot = -1;
-        if (sdlRenderer_.checkPendingSave(pendingSaveSlot)) {
-            if (saveLoad_ && pendingSaveSlot >= 0 && pendingSaveSlot < SaveLoadPanel::MAX_SLOTS) {
-                std::string path = saveLoad_->getSavePath(pendingSaveSlot);
-                auto result = saveLoad_->save(path);
-                if (result.ok()) {
-                    spdlog::info("Saved to slot {}", pendingSaveSlot);
-                    // Refresh slots after save
-                    refreshSaveSlots();
-                } else {
-                    spdlog::warn("Save failed: {}", static_cast<int>(result.error));
-                }
-                // Close panel after save action
-                saveLoadPanelOpen_ = false;
-            }
-        }
-        
-        int pendingLoadSlot = -1;
-        if (sdlRenderer_.checkPendingLoad(pendingLoadSlot)) {
-            if (saveLoad_ && pendingLoadSlot >= 0 && pendingLoadSlot < SaveLoadPanel::MAX_SLOTS) {
-                std::string path = saveLoad_->getSavePath(pendingLoadSlot);
-                auto result = saveLoad_->load(path);
-                if (result.ok()) {
-                    spdlog::info("Loaded from slot {}", pendingLoadSlot);
-                    gameState_.transition(GameState::Playing);
-                    simClock_.resume();
-                    // Close panel after load action
-                    saveLoadPanelOpen_ = false;
-                } else {
-                    spdlog::warn("Load failed: {}", static_cast<int>(result.error));
-                }
-            }
-        }
-        
         // TASK-05-003: Set save/load UI state in RenderFrame
         frame.showSaveLoadPanel = saveLoadPanelOpen_;
         frame.saveLoadPanelSave = saveLoadPanelSaveMode_;
@@ -551,6 +475,100 @@ void Bootstrapper::run() {
         wasPanelOpenLastFrame = sdlRenderer_.isSaveLoadPanelOpen();
         
         sdlRenderer_.render(frame, camera_);
+
+        // ── render 이후 ImGui 액션 처리 ─────────────────────────
+        // pending 값들은 render() 안 ImGui에서 설정됨 → 반드시 render 이후에 체크해야 함
+        {
+            std::vector<GameCommand> uiCmds;
+
+            // 테넌트 선택 팝업
+            int selectedTenantType = -1;
+            if (sdlRenderer_.checkTenantSelection(selectedTenantType)) {
+                BuildModeState currentMode = inputMapper_.getBuildMode();
+                if (currentMode.action == BuildAction::PlaceTenant) {
+                    currentMode.tenantType = selectedTenantType;
+                    inputMapper_.setBuildMode(currentMode);
+                }
+            }
+
+            // 배속 버튼
+            int pendingSpeed = -1;
+            if (sdlRenderer_.checkPendingSpeedChange(pendingSpeed) && pendingSpeed > 0) {
+                GameCommand speedCmd{};
+                speedCmd.type = CommandType::SetSpeed;
+                speedCmd.setSpeed = {pendingSpeed};
+                uiCmds.push_back(speedCmd);
+                spdlog::info("HUD speed button: {}x", pendingSpeed);
+            }
+
+            // 건설 툴바 버튼
+            int pendingBuildAction = 0, pendingTenantType = 0;
+            if (sdlRenderer_.checkPendingBuildAction(pendingBuildAction, pendingTenantType)) {
+                if (pendingBuildAction == 1) {
+                    BuildModeState mode = inputMapper_.getBuildMode();
+                    mode.action = BuildAction::BuildFloor;
+                    mode.active = true;
+                    inputMapper_.setBuildMode(mode);
+                } else if (pendingBuildAction >= 2 && pendingBuildAction <= 4) {
+                    BuildModeState mode = inputMapper_.getBuildMode();
+                    mode.action = BuildAction::PlaceTenant;
+                    mode.tenantType = pendingBuildAction - 2;
+                    mode.active = true;
+                    inputMapper_.setBuildMode(mode);
+                }
+            }
+
+            // 메뉴 버튼 (New Game / Load Game / Quit / Resume / Save / Main Menu)
+            // SDL_PushEvent 방식 대신 pendingMenuAction_ 플래그 사용 (WantCaptureKeyboard 우회)
+            int menuAction = 0;
+            if (sdlRenderer_.checkPendingMenuAction(menuAction)) {
+                switch (menuAction) {
+                    case 1: uiCmds.push_back(GameCommand::makeNewGame());   break;
+                    case 2: uiCmds.push_back(GameCommand::makeLoadGame());  break;
+                    case 3: uiCmds.push_back(GameCommand::makeQuit());      break;
+                    case 4: uiCmds.push_back(GameCommand::makeTogglePause()); break;
+                    case 5: uiCmds.push_back(GameCommand::makeSaveGame());  break;
+                    case 6: uiCmds.push_back(GameCommand::makeTransitionState(
+                                static_cast<int>(GameState::MainMenu))); break;
+                    default: break;
+                }
+            }
+
+            // Save/Load 패널
+            int pendingSaveSlot = -1;
+            if (sdlRenderer_.checkPendingSave(pendingSaveSlot)) {
+                if (saveLoad_ && pendingSaveSlot >= 0 && pendingSaveSlot < SaveLoadPanel::MAX_SLOTS) {
+                    std::string path = saveLoad_->getSavePath(pendingSaveSlot);
+                    auto result = saveLoad_->save(path);
+                    if (result.ok()) {
+                        spdlog::info("Saved to slot {}", pendingSaveSlot);
+                        refreshSaveSlots();
+                    } else {
+                        spdlog::warn("Save failed: {}", static_cast<int>(result.error));
+                    }
+                    saveLoadPanelOpen_ = false;
+                }
+            }
+            int pendingLoadSlot = -1;
+            if (sdlRenderer_.checkPendingLoad(pendingLoadSlot)) {
+                if (saveLoad_ && pendingLoadSlot >= 0 && pendingLoadSlot < SaveLoadPanel::MAX_SLOTS) {
+                    std::string path = saveLoad_->getSavePath(pendingLoadSlot);
+                    auto result = saveLoad_->load(path);
+                    if (result.ok()) {
+                        spdlog::info("Loaded from slot {}", pendingLoadSlot);
+                        gameState_.transition(GameState::Playing);
+                        simClock_.resume();
+                        saveLoadPanelOpen_ = false;
+                    } else {
+                        spdlog::warn("Load failed: {}", static_cast<int>(result.error));
+                    }
+                }
+            }
+
+            if (!uiCmds.empty()) {
+                processCommands(uiCmds, running_);
+            }
+        }
     }
 }
 

@@ -76,6 +76,8 @@ public:
     // HUD interaction handling (TASK-05-004)
     bool checkPendingBuildAction(int& outBuildAction, int& outTenantType);
     bool checkPendingSpeedChange(int& outSpeedMultiplier);
+    // 메뉴 버튼 액션: 1=NewGame, 2=LoadGame, 3=Quit, 4=Resume, 5=Save, 6=MainMenu
+    bool checkPendingMenuAction(int& outAction);
     
     // AudioEngine 접근
     AudioEngine& audioEngine() { return audioEngine_; }
@@ -130,6 +132,7 @@ private:
     
     // HUD interaction pending state (TASK-05-004)
     int pendingBuildAction_ = 0;      // 0=none, 1=floor, 2=office, 3=residential, 4=commercial
+    int pendingMenuAction_  = 0;      // 0=none, 1=NewGame, 2=LoadGame, 3=Quit, 4=Resume, 5=Save, 6=MainMenu
     int pendingSpeedChange_ = -1;     // -1 means no speed change pending
 };
 
