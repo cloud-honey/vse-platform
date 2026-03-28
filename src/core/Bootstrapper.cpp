@@ -329,6 +329,8 @@ void Bootstrapper::run() {
         std::vector<GameCommand> commands;
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
+            // ImGui에 먼저 전달 — NewFrame 전에 마우스/키보드 상태 반영
+            sdlRenderer_.feedEvent(event);
             inputMapper_.processEvent(event, commands);
         }
         inputMapper_.processHeldKeys(commands);
