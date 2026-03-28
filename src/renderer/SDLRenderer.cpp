@@ -111,6 +111,9 @@ void SDLRenderer::feedEvent(const SDL_Event& event)
     // Bootstrapper 이벤트 루프에서 SDL_PollEvent 직후 호출
     // ImGui가 이 이벤트를 NewFrame 전에 받아야 버튼 클릭/마우스 상태 정확히 반영됨
     ImGui_ImplSDL2_ProcessEvent(&event);
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        spdlog::info("[DEBUG] feedEvent: MOUSEBUTTONDOWN at ({}, {})", event.button.x, event.button.y);
+    }
 }
 
 void SDLRenderer::shutdown()
@@ -228,6 +231,7 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         int buildAction = hudPanel_.drawToolbar(frame.viewportH);
         if (buildAction != 0) {
             pendingBuildAction_ = buildAction;
+            spdlog::info("[DEBUG] Toolbar clicked: buildAction={}", buildAction);
         }
     }
     
@@ -590,6 +594,7 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
                 pendingMenuAction_ = 1;
+                spdlog::info("[DEBUG] New Game button clicked → pendingMenuAction_=1");
             }
             
             ImGui::Spacing();
@@ -597,6 +602,7 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             
             if (ImGui::Button("Load Game", ImVec2(buttonWidth, buttonHeight))) {
                 pendingMenuAction_ = 2;
+                spdlog::info("[DEBUG] Load Game button clicked → pendingMenuAction_=2");
             }
             
             ImGui::Spacing();
@@ -604,6 +610,7 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
                 pendingMenuAction_ = 3;
+                spdlog::info("[DEBUG] Quit button clicked → pendingMenuAction_=3");
             }
             break;
         }
@@ -781,6 +788,7 @@ bool SDLRenderer::checkPendingLoad(int& outSlotIndex)
 bool SDLRenderer::checkPendingMenuAction(int& outAction)
 {
     if (pendingMenuAction_ != 0) {
+        spdlog::info("[DEBUG] checkPendingMenuAction: returning action={}", pendingMenuAction_);
         outAction = pendingMenuAction_;
         pendingMenuAction_ = 0;
         return true;
