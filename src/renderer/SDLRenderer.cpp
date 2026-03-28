@@ -41,7 +41,7 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         windowW, windowH,
-        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
+        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI
     );
     if (!window_) {
         spdlog::error("SDL_CreateWindow failed: {}", SDL_GetError());
@@ -104,16 +104,6 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
 
     spdlog::info("SDLRenderer::init OK ({}x{})", windowW, windowH);
     return true;
-}
-
-void SDLRenderer::feedEvent(const SDL_Event& event)
-{
-    // Bootstrapper 이벤트 루프에서 SDL_PollEvent 직후 호출
-    // ImGui가 이 이벤트를 NewFrame 전에 받아야 버튼 클릭/마우스 상태 정확히 반영됨
-    ImGui_ImplSDL2_ProcessEvent(&event);
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-        spdlog::info("[DEBUG] feedEvent: MOUSEBUTTONDOWN at ({}, {})", event.button.x, event.button.y);
-    }
 }
 
 void SDLRenderer::shutdown()
@@ -193,7 +183,8 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // 층 번호 라벨
     drawFloorLabels(frame, camera);
 
-    // ImGui 프레임 시작 — feedEvent()로 이미 이벤트 전달됨
+    // ImGui 프레임 — NewFrame/Render는 매 프레임 호출 필수
+    // (Gemini 검토 반영: drawDebugInfo=false 시에도 내부 타이머/상태 정상 유지)
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
@@ -218,21 +209,21 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
         debugPanel_.draw(frame);
     }
 
-    // HUDPanel::draw() — Playing 상태에서만 렌더링 (MainMenu/Paused 등에서는 숨김)
-    if (frame.gameState == GameState::Playing) {
-        hudPanel_.draw(frame);
-        
-        // Handle HUD interactions (TASK-05-004)
-        int newSpeed = hudPanel_.drawSpeedButtons(frame.gameSpeed);
-        if (newSpeed != -1) {
-            pendingSpeedChange_ = newSpeed;
-        }
-        
-        int buildAction = hudPanel_.drawToolbar(frame.viewportH);
-        if (buildAction != 0) {
-            pendingBuildAction_ = buildAction;
-            spdlog::info("[DEBUG] Toolbar clicked: buildAction={}", buildAction);
-        }
+    // HUDPanel::draw() — 게임 HUD 렌더링
+    // frame.showHUD=false 또는 hudPanel_.isVisible()=false 시 패널 숨김
+    hudPanel_.draw(frame);
+    
+    // Handle HUD interactions (TASK-05-004)
+    // Check for speed button clicks
+    int newSpeed = hudPanel_.drawSpeedButtons(frame.gameSpeed);
+    if (newSpeed != -1) {
+        pendingSpeedChange_ = newSpeed;
+    }
+    
+    // Check for construction toolbar clicks
+    int buildAction = hudPanel_.drawToolbar(frame.viewportH);
+    if (buildAction != 0) {
+        pendingBuildAction_ = buildAction;
     }
     
     // Handle pending toast from Bootstrapper
@@ -593,24 +584,36 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 1;
-                spdlog::info("[DEBUG] New Game button clicked → pendingMenuAction_=1");
+                // This will be handled by InputMapper via SDL events
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n; // Use N key for New Game
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Load Game", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 2;
-                spdlog::info("[DEBUG] Load Game button clicked → pendingMenuAction_=2");
+                // Use L key for Load Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_l;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 3;
-                spdlog::info("[DEBUG] Quit button clicked → pendingMenuAction_=3");
+                // Use Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             break;
         }
@@ -638,28 +641,48 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Resume", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 4;  // Resume
+                // ESC to resume (same as toggle pause)
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_ESCAPE;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Save", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 5;  // Save
+                // Use S key for Save
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_s;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Main Menu", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 6;  // MainMenu
+                // Use M key for Main Menu
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_m;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 3;  // Quit
+                // Use Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             break;
         }
@@ -687,14 +710,24 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 1;
+                // N key for New Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 3;
+                // Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             break;
         }
@@ -729,14 +762,24 @@ void SDLRenderer::drawGameStateUI(const RenderFrame& frame) {
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("New Game", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 1;
+                // N key for New Game
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_n;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             
             ImGui::Spacing();
             ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
             
             if (ImGui::Button("Quit", ImVec2(buttonWidth, buttonHeight))) {
-                pendingMenuAction_ = 3;
+                // Q key for Quit
+                SDL_Event event;
+                event.type = SDL_KEYDOWN;
+                event.key.keysym.sym = SDLK_q;
+                event.key.repeat = 0;
+                SDL_PushEvent(&event);
             }
             break;
         }
@@ -780,17 +823,6 @@ bool SDLRenderer::checkPendingLoad(int& outSlotIndex)
     if (pendingLoadSlot_ >= 0) {
         outSlotIndex = pendingLoadSlot_;
         pendingLoadSlot_ = -1;
-        return true;
-    }
-    return false;
-}
-
-bool SDLRenderer::checkPendingMenuAction(int& outAction)
-{
-    if (pendingMenuAction_ != 0) {
-        spdlog::info("[DEBUG] checkPendingMenuAction: returning action={}", pendingMenuAction_);
-        outAction = pendingMenuAction_;
-        pendingMenuAction_ = 0;
         return true;
     }
     return false;

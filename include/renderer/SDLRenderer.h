@@ -47,9 +47,6 @@ public:
     // 프레임 렌더링
     void render(const RenderFrame& frame, const Camera& camera);
 
-    // SDL 이벤트를 ImGui에 전달 — Bootstrapper 이벤트 루프에서 SDL_PollEvent 직후 호출
-    void feedEvent(const SDL_Event& event);
-
     // SDL 핸들 (Dear ImGui 초기화용)
     SDL_Window*   window()   const { return window_; }
     SDL_Renderer* renderer() const { return renderer_; }
@@ -79,9 +76,6 @@ public:
     // HUD interaction handling (TASK-05-004)
     bool checkPendingBuildAction(int& outBuildAction, int& outTenantType);
     bool checkPendingSpeedChange(int& outSpeedMultiplier);
-
-    // Menu action (MainMenu/GameOver/Victory 버튼): 0=none, 1=NewGame, 2=LoadGame, 3=Quit
-    bool checkPendingMenuAction(int& outAction);
     
     // AudioEngine 접근
     AudioEngine& audioEngine() { return audioEngine_; }
@@ -137,7 +131,6 @@ private:
     // HUD interaction pending state (TASK-05-004)
     int pendingBuildAction_ = 0;      // 0=none, 1=floor, 2=office, 3=residential, 4=commercial
     int pendingSpeedChange_ = -1;     // -1 means no speed change pending
-    int pendingMenuAction_ = 0;       // 0=none, 1=NewGame, 2=LoadGame, 3=Quit
 };
 
 } // namespace vse

@@ -7,7 +7,8 @@ namespace vse {
 void InputMapper::processEvent(const SDL_Event& event,
                                 std::vector<GameCommand>& outCommands)
 {
-    // ImGui 이벤트 처리는 SDLRenderer::feedEvent()에서 담당 (NewFrame 전 올바른 타이밍)
+    // ImGui 이벤트 처리
+    ImGui_ImplSDL2_ProcessEvent(&event);
     ImGuiIO& io = ImGui::GetIO();
 
     // ImGui가 키보드/마우스 이벤트를 캡처하면 게임 커맨드로 변환하지 않음
