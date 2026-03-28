@@ -472,21 +472,6 @@ void Bootstrapper::run() {
             }
         }
         
-        // 메뉴 버튼 액션 처리 (ImGui WantCaptureKeyboard 우회)
-        // 1=NewGame, 2=LoadGame, 3=Quit, 4=Resume, 5=Save, 6=MainMenu
-        int pendingMenuAction = 0;
-        if (sdlRenderer_.checkPendingMenuAction(pendingMenuAction)) {
-            switch (pendingMenuAction) {
-                case 1: commands.push_back(GameCommand::makeNewGame());   break;
-                case 2: commands.push_back(GameCommand::makeLoadGame());  break;
-                case 3: commands.push_back(GameCommand::makeQuit());      break;
-                case 4: commands.push_back(GameCommand::makeTogglePause()); break;
-                case 5: commands.push_back(GameCommand::makeSaveGame());  break;
-                case 6: commands.push_back(GameCommand::makeTransitionState(static_cast<int>(GameState::MainMenu))); break;
-                default: break;
-            }
-        }
-
         // TASK-05-004: Check for speed change from HUD speed buttons
         int pendingSpeed = -1;
         if (sdlRenderer_.checkPendingSpeedChange(pendingSpeed) && pendingSpeed > 0) {
@@ -566,6 +551,25 @@ void Bootstrapper::run() {
         wasPanelOpenLastFrame = sdlRenderer_.isSaveLoadPanelOpen();
         
         sdlRenderer_.render(frame, camera_);
+
+        // render 이후 ImGui 버튼에서 발생한 메뉴 액션 처리
+        // (render 내에서 pendingMenuAction_ 설정됨 — 이 프레임 내 즉시 처리)
+        int pendingMenuActionPost = 0;
+        if (sdlRenderer_.checkPendingMenuAction(pendingMenuActionPost)) {
+            std::vector<GameCommand> postCmds;
+            switch (pendingMenuActionPost) {
+                case 1: postCmds.push_back(GameCommand::makeNewGame());   break;
+                case 2: postCmds.push_back(GameCommand::makeLoadGame());  break;
+                case 3: postCmds.push_back(GameCommand::makeQuit());      break;
+                case 4: postCmds.push_back(GameCommand::makeTogglePause()); break;
+                case 5: postCmds.push_back(GameCommand::makeSaveGame());  break;
+                case 6: postCmds.push_back(GameCommand::makeTransitionState(static_cast<int>(GameState::MainMenu))); break;
+                default: break;
+            }
+            if (!postCmds.empty()) {
+                processCommands(postCmds, running_);
+            }
+        }
     }
 }
 
