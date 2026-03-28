@@ -152,6 +152,16 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
     // 건물 배경 (건설된 층)
     drawGridBackground(frame, camera);
 
+    // 주야간 오버레이 — 배경(하늘) 위에만, 타일보다 먼저 그려야 건물 내부에 영향 없음
+    if (dayNightCycle_) {
+        SDL_Color overlay = dayNightCycle_->getOverlayColor();
+        if (overlay.a > 0) {
+            SDL_SetRenderDrawColor(renderer_, overlay.r, overlay.g, overlay.b, overlay.a);
+            SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
+            SDL_RenderFillRect(renderer_, nullptr);
+        }
+    }
+
     // 타일 렌더링 (테넌트 등)
     drawTiles(frame, camera);
 
@@ -165,16 +175,6 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 
     // 에이전트 렌더링 (TASK-03-003: Sprite Sheet 시스템)
     drawAgents(frame, camera, dt);
-
-    // 주야간 오버레이 렌더링 (TASK-06-005)
-    if (dayNightCycle_) {
-        SDL_Color overlay = dayNightCycle_->getOverlayColor();
-        if (overlay.a > 0) {
-            SDL_SetRenderDrawColor(renderer_, overlay.r, overlay.g, overlay.b, overlay.a);
-            SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
-            SDL_RenderFillRect(renderer_, nullptr);
-        }
-    }
 
     // 건설 모드 커서 SDL 오버레이 (TASK-05-001: SDL-only, ImGui tooltip은 NewFrame 이후에)
     buildCursor_.drawOverlay(renderer_, camera, frame.mouseX, frame.mouseY,
