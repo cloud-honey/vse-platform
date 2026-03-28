@@ -293,28 +293,28 @@ int HUDPanel::drawToolbar(int viewportH)
     int clickedAction = 0; // 0=none, 1=floor, 2=office, 3=residential, 4=commercial
     
     // Floor button
-    if (ImGui::Button("🏢 Floor", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+    if (ImGui::Button("Floor", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
         clickedAction = 1;
     }
     
     ImGui::SameLine();
     
     // Office button
-    if (ImGui::Button("🏢 Office", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+    if (ImGui::Button("Office", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
         clickedAction = 2;
     }
     
     ImGui::SameLine();
     
     // Residential button
-    if (ImGui::Button("🏠 Residential", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+    if (ImGui::Button("Residential", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
         clickedAction = 3;
     }
     
     ImGui::SameLine();
     
     // Commercial button
-    if (ImGui::Button("🏪 Commercial", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
+    if (ImGui::Button("Commercial", ImVec2(BUTTON_WIDTH, BUTTON_HEIGHT))) {
         clickedAction = 4;
     }
     
