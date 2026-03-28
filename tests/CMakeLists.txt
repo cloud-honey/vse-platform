@@ -73,6 +73,8 @@ target_sources(TowerTycoonTests PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/SaveLoadPanel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/AudioEngine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/DayNightCycle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/TileRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/../src/renderer/ElevatorRenderer.cpp
 )
 
 target_compile_options(TowerTycoonTests PRIVATE

@@ -35,10 +35,12 @@ struct Color {
  * Phase 1: 컬러 박스. Phase 2: spriteId 추가 예정.
  */
 struct RenderTile {
-    int   x;
-    int   floor;
-    Color color;
-    // [PHASE-2] uint16_t spriteId = 0;
+    int        x;
+    int        floor;
+    Color      color;          // kept for fallback
+    TenantType tenantType = TenantType::None;  // NEW: for sprite selection
+    bool       isElevatorShaft = false;        // NEW: shaft tiles
+    bool       isLobby = false;                // NEW: lobby tiles
 };
 
 /**

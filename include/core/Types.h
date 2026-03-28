@@ -68,7 +68,8 @@ struct GameTime {
 
 // ── Enums ───────────────────────────────────
 enum class TenantType : uint8_t {
-    Office = 0,
+    None = 0,
+    Office,
     Residential,
     Commercial,
     COUNT           // Always last

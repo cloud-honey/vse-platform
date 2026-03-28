@@ -55,7 +55,19 @@ RenderFrame RenderFrameCollector::collect() const
                 c = Color::fromRGBA(160, 160, 170, 230);     // 밝은 회색 (TASK-02-008)
             }
 
-            frame.tiles.push_back(RenderTile{x, f, c});
+            RenderTile rt;
+            rt.x = x;
+            rt.floor = f;
+            rt.color = c;
+            if (tileOpt.has_value()) {
+                rt.tenantType = tileOpt->tenantType;
+                rt.isElevatorShaft = tileOpt->isElevatorShaft;
+            } else {
+                rt.tenantType = TenantType::None;
+                rt.isElevatorShaft = false;
+            }
+            rt.isLobby = (f == 0);
+            frame.tiles.push_back(rt);
         }
     }
 
@@ -64,8 +76,14 @@ RenderFrame RenderFrameCollector::collect() const
         for (int x = 0; x < frame.floorWidth; ++x) {
             auto coord = TileCoord{x, 0};
             if (!grid_.isTileEmpty(coord)) continue;  // 이미 추가된 건 스킵
-            frame.tiles.push_back(RenderTile{x, 0,
-                Color::fromRGBA(70, 75, 90, 200)});
+            RenderTile rt;
+            rt.x = x;
+            rt.floor = 0;
+            rt.color = Color::fromRGBA(70, 75, 90, 200);
+            rt.tenantType = TenantType::None;
+            rt.isElevatorShaft = false;
+            rt.isLobby = true;
+            frame.tiles.push_back(rt);
         }
     }
 

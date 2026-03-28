@@ -10,6 +10,8 @@
 #include "renderer/BuildCursor.h"
 #include "renderer/AudioEngine.h"
 #include "renderer/DayNightCycle.h"
+#include "renderer/TileRenderer.h"
+#include "renderer/ElevatorRenderer.h"
 #include <unordered_map>
 #include <cstdint>
 #include <memory>
@@ -101,6 +103,12 @@ private:
     // Sprite sheet system
     std::unique_ptr<SpriteSheet> npcSheet_;
     AnimationSystem animationSystem_;
+    
+    // Tile rendering system
+    std::unique_ptr<TileRenderer> tileRenderer_;
+    
+    // Elevator rendering system
+    std::unique_ptr<ElevatorRenderer> elevatorRenderer_;
     
     // Font system
     FontManager fontManager_;

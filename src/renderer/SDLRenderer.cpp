@@ -69,6 +69,15 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
         spdlog::warn("Sprite sheet not loaded, using fallback rendering");
     }
 
+    // Initialize tile renderer
+    std::string spritesDir = std::string(VSE_PROJECT_ROOT) + "/content/sprites/";
+    tileRenderer_ = std::make_unique<TileRenderer>(renderer_);
+    tileRenderer_->loadSprites(spritesDir);
+    
+    // Initialize elevator renderer
+    elevatorRenderer_ = std::make_unique<ElevatorRenderer>(renderer_);
+    elevatorRenderer_->loadSprites(spritesDir);
+
     // Load font
     std::string fontPath = std::string(VSE_PROJECT_ROOT) + "/content/fonts/default.ttf";
     if (!fontManager_.load(fontPath, 16)) {
@@ -108,6 +117,10 @@ void SDLRenderer::shutdown()
         ImGui_ImplSDL2_Shutdown();
         ImGui::DestroyContext();
     }
+
+    // 텍스처 먼저 해제 (SDL_DestroyRenderer 전에 반드시 호출)
+    if (tileRenderer_)     { tileRenderer_->freeTextures();     tileRenderer_.reset(); }
+    if (elevatorRenderer_) { elevatorRenderer_->freeTextures(); elevatorRenderer_.reset(); }
 
     if (renderer_) { SDL_DestroyRenderer(renderer_); renderer_ = nullptr; }
     if (window_)   { SDL_DestroyWindow(window_);     window_   = nullptr; }
@@ -362,10 +375,7 @@ void SDLRenderer::drawTiles(const RenderFrame& frame, const Camera& camera)
         if (sx + tilePx < 0 || sx > camera.viewportW()) continue;
         if (sy + tilePx < 0 || sy > camera.viewportH()) continue;
 
-        SDL_SetRenderDrawColor(renderer_, tile.color.r, tile.color.g,
-                                tile.color.b, tile.color.a);
-        SDL_FRect rect = {sx, sy, tilePx, tilePx};
-        SDL_RenderFillRectF(renderer_, &rect);
+        if (tileRenderer_) tileRenderer_->drawTile(tile, sx, sy, tilePx);
     }
 }
 
@@ -381,17 +391,7 @@ void SDLRenderer::drawElevators(const RenderFrame& frame, const Camera& camera)
         float sx = camera.worldToScreenX(static_cast<float>(elev.shaftX * ts));
         float sy = camera.worldToScreenY(worldY);
 
-        SDL_SetRenderDrawColor(renderer_, elev.color.r, elev.color.g,
-                                elev.color.b, elev.color.a);
-        SDL_FRect rect = {sx, sy, tilePx, tilePx};
-        SDL_RenderFillRectF(renderer_, &rect);
-
-        // 문 상태 표시 (Boarding/DoorOpening: 밝은 테두리)
-        if (elev.state == ElevatorState::Boarding ||
-            elev.state == ElevatorState::DoorOpening) {
-            SDL_SetRenderDrawColor(renderer_, 255, 255, 200, 180);
-            SDL_RenderDrawRectF(renderer_, &rect);
-        }
+        if (elevatorRenderer_) elevatorRenderer_->drawElevator(elev, sx, sy, tilePx);
     }
 }
 

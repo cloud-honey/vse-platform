@@ -87,6 +87,8 @@ add_executable(TowerTycoon
     src/renderer/SaveLoadPanel.cpp
     src/renderer/AudioEngine.cpp
     src/renderer/DayNightCycle.cpp
+    src/renderer/TileRenderer.cpp
+    src/renderer/ElevatorRenderer.cpp
 )
 
 target_compile_definitions(TowerTycoon PRIVATE
