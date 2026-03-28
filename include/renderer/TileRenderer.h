@@ -33,6 +33,8 @@ private:
     SDL_Texture* texResidential_ = nullptr;
     SDL_Texture* texCommercial_  = nullptr;
     SDL_Texture* texLobby_       = nullptr;
+    SDL_Texture* texShaft_       = nullptr;
+    SDL_Texture* texFacade_      = nullptr;
 
     SDL_Texture* loadTexture(const std::string& path);
 };

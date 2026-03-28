@@ -67,6 +67,7 @@ RenderFrame RenderFrameCollector::collect() const
                 rt.isElevatorShaft = false;
             }
             rt.isLobby = (f == 0);
+            rt.isFacade = false;
             frame.tiles.push_back(rt);
         }
     }
@@ -83,7 +84,38 @@ RenderFrame RenderFrameCollector::collect() const
             rt.tenantType = TenantType::None;
             rt.isElevatorShaft = false;
             rt.isLobby = true;
+            rt.isFacade = false;
             frame.tiles.push_back(rt);
+        }
+    }
+
+    // 건물 외벽 (빈 타일) — built floors (f > 0)의 빈 타일
+    for (int f = 1; f < frame.maxFloors; ++f) {
+        if (!grid_.isFloorBuilt(f)) continue;
+
+        for (int x = 0; x < frame.floorWidth; ++x) {
+            auto coord = TileCoord{x, f};
+            if (!grid_.isTileEmpty(coord)) continue;  // 점유된 타일은 이미 추가됨
+
+            // 엘리베이터 샤프트인지 확인
+            bool isShaft = false;
+            auto tileOpt = grid_.getTile(coord);
+            if (tileOpt.has_value()) {
+                isShaft = tileOpt->isElevatorShaft;
+            }
+
+            // 엘리베이터 샤프트가 아닌 빈 타일만 외벽으로 처리
+            if (!isShaft) {
+                RenderTile rt;
+                rt.x = x;
+                rt.floor = f;
+                rt.color = Color::fromRGBA(160, 160, 170, 230); // 밝은 회색 (TASK-02-008)
+                rt.tenantType = TenantType::None;
+                rt.isElevatorShaft = false;
+                rt.isLobby = false;
+                rt.isFacade = true;
+                frame.tiles.push_back(rt);
+            }
         }
     }
 

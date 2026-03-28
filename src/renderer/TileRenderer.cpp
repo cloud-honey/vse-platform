@@ -30,6 +30,12 @@ bool TileRenderer::loadSprites(const std::string& spritesDir)
     texLobby_ = loadTexture(spritesDir + "/lobby_floor.png");
     if (texLobby_) anyLoaded = true;
     
+    texShaft_ = loadTexture(spritesDir + "/elevator_shaft.png");
+    if (texShaft_) anyLoaded = true;
+    
+    texFacade_ = loadTexture(spritesDir + "/building_facade.png");
+    if (texFacade_) anyLoaded = true;
+    
     if (!anyLoaded) {
         spdlog::warn("TileRenderer: No tile sprites loaded, will use color fallback");
     } else {
@@ -45,8 +51,11 @@ void TileRenderer::drawTile(const RenderTile& tile, float sx, float sy, float ti
     
     // Select texture based on tile properties
     if (tile.isElevatorShaft) {
-        // 엘리베이터 샤프트 — 컬러 폴백 (isLobby보다 우선)
-        texture = nullptr;
+        // 엘리베이터 샤프트 — 텍스처 사용 (isLobby보다 우선)
+        texture = texShaft_;
+    } else if (tile.isFacade) {
+        // 건물 외벽/빈 타일 — nullptr이면 컬러 폴백 (isElevatorShaft와 동일 패턴)
+        texture = texFacade_;
     } else if (tile.isLobby && texLobby_) {
         texture = texLobby_;
     } else {
@@ -107,6 +116,14 @@ void TileRenderer::freeTextures()
     if (texLobby_) {
         SDL_DestroyTexture(texLobby_);
         texLobby_ = nullptr;
+    }
+    if (texShaft_) {
+        SDL_DestroyTexture(texShaft_);
+        texShaft_ = nullptr;
+    }
+    if (texFacade_) {
+        SDL_DestroyTexture(texFacade_);
+        texFacade_ = nullptr;
     }
 }
 

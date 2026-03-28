@@ -19,7 +19,7 @@
       "title": "타일 스프라이트 렌더링",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "pending",
+      "status": "done",
       "difficulty": 3,
       "notes": "TileRenderer, office/residential/commercial/lobby PNG — 에셋 필요"
     },
@@ -28,7 +28,7 @@
       "title": "엘리베이터 스프라이트 애니메이션",
       "assignee": "붐2",
       "layer": "렌더러",
-      "status": "pending",
+      "status": "done",
       "difficulty": 2,
       "notes": "elevator_car.png, elevator_open.png — 에셋 필요"
     },

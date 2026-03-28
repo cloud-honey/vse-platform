@@ -41,6 +41,7 @@ struct RenderTile {
     TenantType tenantType = TenantType::None;  // NEW: for sprite selection
     bool       isElevatorShaft = false;        // NEW: shaft tiles
     bool       isLobby = false;                // NEW: lobby tiles
+    bool       isFacade = false;               // exterior wall / unoccupied floor tile
 };
 
 /**
