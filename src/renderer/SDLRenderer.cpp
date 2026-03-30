@@ -61,6 +61,15 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
 
     SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND);
 
+    // HiDPI: get drawable vs window size ratio and apply to ImGui
+    int drawW, drawH, winW, winH;
+    SDL_GetRendererOutputSize(renderer_, &drawW, &drawH);
+    SDL_GetWindowSize(window_, &winW, &winH);
+    float scaleX = (winW > 0) ? static_cast<float>(drawW) / winW : 1.0f;
+    float scaleY = (winH > 0) ? static_cast<float>(drawH) / winH : 1.0f;
+    dpiScaleX_ = scaleX;
+    dpiScaleY_ = scaleY;
+
     // Load sprite sheet
     std::string spritePath = std::string(VSE_PROJECT_ROOT) + "/content/sprites/npc_sheet.png";
     npcSheet_ = std::make_unique<SpriteSheet>(renderer_, spritePath);
@@ -90,6 +99,8 @@ bool SDLRenderer::init(int windowW, int windowH, const char* title, EventBus& bu
     ImGuiIO& io = ImGui::GetIO();
     io.IniFilename = nullptr;
     ImGui::StyleColorsDark();
+    // Set HiDPI scaling for ImGui
+    io.DisplayFramebufferScale = ImVec2(dpiScaleX_, dpiScaleY_);
     ImGui_ImplSDL2_InitForSDLRenderer(window_, renderer_);
     ImGui_ImplSDLRenderer2_Init(renderer_);
 
@@ -185,6 +196,19 @@ void SDLRenderer::render(const RenderFrame& frame, const Camera& camera)
 
     // ImGui 프레임 — NewFrame/Render는 매 프레임 호출 필수
     // (Gemini 검토 반영: drawDebugInfo=false 시에도 내부 타이머/상태 정상 유지)
+    
+    // Update HiDPI scaling each frame in case window is resized
+    {
+        int drawW, drawH, winW, winH;
+        SDL_GetRendererOutputSize(renderer_, &drawW, &drawH);
+        SDL_GetWindowSize(window_, &winW, &winH);
+        ImGuiIO& io = ImGui::GetIO();
+        io.DisplayFramebufferScale = ImVec2(
+            winW > 0 ? static_cast<float>(drawW)/winW : 1.0f,
+            winH > 0 ? static_cast<float>(drawH)/winH : 1.0f
+        );
+    }
+    
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();

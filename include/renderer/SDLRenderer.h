@@ -122,6 +122,10 @@ private:
     // Frame time tracking for animation
     float lastFrameTime_ = 0.0f;
     
+    // HiDPI scaling factors
+    float dpiScaleX_ = 1.0f;
+    float dpiScaleY_ = 1.0f;
+    
     // Tenant selection state (TASK-05-001)
     bool shouldOpenTenantPopup_ = false;
     int pendingTenantSelection_ = -1; // -1 means no selection pending
